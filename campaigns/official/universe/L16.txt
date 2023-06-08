@@ -1,0 +1,60 @@
+================================================================================
+LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 16
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Hungry Snake
+Level Description     := 
+Level Password        := ZDFMKHGA
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 5
+Set 1 Color           := &h80FF0000
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := -1
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h808080FF
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80204020
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0*
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80408040
+Set 4 Score Value     := 2
+Set 4 Hit Degrade     := 3*
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h8080FF80
+Set 5 Score Value     := 2
+Set 5 Hit Degrade     := 4
+Set 5 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|
+ 3|
+ 4|       
+ 5|    555555555555555
+ 6|    5555          5
+ 7|       5          5
+ 8|       5
+ 9| 5555555
+10| 5         1
+11| 5552     111
+12|           1
+13|
+14|
+15|
+16|
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

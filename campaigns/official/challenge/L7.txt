@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 7
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Ascension
+Level Description     := 
+Level Password        := UGLJPAJY
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &h80361525
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h8063052F
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80952B62
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h80D51ACA
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|43333333    33333334
+ 2|43                34
+ 3|43 33333 33 33333 34
+ 4|43 22222 22 22222 34
+ 5|43 11111 11 11111 34
+ 6|43                34
+ 7|43 11111 11 11111 34
+ 8|43 22222 22 22222 34
+ 9|43 33333 33 33333 34
+10|43       33       34
+11|43 333 333333 333 34
+12|   111 122221 111   
+13|  1222 212212 2221  
+14|  12   213312   21  
+15|  12 2221221222 21  
+16|       121121       
+17|4111 1123223211 1114
+18|31   1234334321   13
+19|21 11112322321111 12
+20|11 22223344332222 11
+
+================================================================================
+*END*
+================================================================================

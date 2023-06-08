@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 14
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Old School
+Level Description     := Old school meets New School
+Level Password        := OLDSKOOL
+Level game number     := &b0001000000000000
+Level time limit      := 210
+Number of Block Sets  := 6
+Set 1 Color           := &hFFFF0000
+Set 1 Score Value     := 70
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := TRUE
+Set 2 Color           := &hFFFF8000
+Set 2 Score Value     := 70
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := TRUE
+Set 3 Color           := &hFFFFFF00
+Set 3 Score Value     := 40
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := TRUE
+Set 4 Color           := &hFF00FF00
+Set 4 Score Value     := 40
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &hFF0000FF
+Set 5 Score Value     := 10
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &hFF8000FF
+Set 6 Score Value     := 10
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|
+ 3|
+ 4|
+ 5|11111111111111111111
+ 6|22222222222222222222
+ 7|33333333333333333333
+ 8|44444444444444444444
+ 9|55555555555555555555
+10|66666666666666666666
+11|
+12|
+13|
+14|
+15|
+16|
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

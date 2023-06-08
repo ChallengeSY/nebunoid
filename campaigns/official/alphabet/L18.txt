@@ -1,0 +1,88 @@
+================================================================================
+LEVEL DATA FILE - FORTIFIED LETTERS LEVEL 18
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Rhea
+Level Description     := 
+Level Password        := INCCLUCW
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 12
+Brush 1 Color         := &h808000FF
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h809020FF
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80A040FF
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h80B060FF
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Speed:= FALSE
+Brush 5 Color         := &h80C080FF
+Brush 5 Score Value   := 10*
+Brush 5 Hit Degrade   := 0
+Brush 5 Increase Speed:= FALSE
+Brush 6 Color         := &h80D0A0FF
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := 0
+Brush 6 Increase Speed:= FALSE
+Brush 7 Color         := &h80FF8000
+Brush 7 Score Value   := 10*
+Brush 7 Hit Degrade   := -1
+Brush 7 Increase Speed:= FALSE
+Brush 8 Color         := &h80404040
+Brush 8 Score Value   := 10*
+Brush 8 Hit Degrade   := 0
+Brush 8 Increase Speed:= FALSE
+Brush 9 Color         := &h80808080
+Brush 9 Score Value   := 2
+Brush 9 Hit Degrade   := 8
+Brush 9 Increase Speed:= FALSE
+Brush 10 Color        := &h80FFFFFF
+Brush 10 Score Value  := 2
+Brush 10 Hit Degrade  := 9
+Brush 10 Increase Speed:= FALSE
+Brush 11 Color        := &hB0FFD700
+Brush 11 Score Value  := 10*
+Brush 11 Hit Degrade  := 11
+Brush 11 Increase Speed:= FALSE
+Brush 12 Color        := &hB0CD7F32
+Brush 12 Score Value  := 2
+Brush 12 Hit Degrade  := 11
+Brush 12 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3|      CCCCCCCC      
+ 4|     C11111111C     
+ 5|     C22C77C22C     
+ 6|     C3C7777C3C     
+ 7|     C4C7777C4C     
+ 8|     C55CCCC55C     
+ 9|     C66666666C     
+10|     C7BBAAAAAC     
+11|     C7C BB         
+12|     C7C   BB       
+13|      C      BB     
+14|                    
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

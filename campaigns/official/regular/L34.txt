@@ -1,0 +1,52 @@
+================================================================================
+LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 34
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Don't give up!
+Level Description     := Only one... more... level...
+Level Password        := ++++++++
+Level game number     := &b0001000100000011
+Level time limit      := 0
+Number of Block Sets  := 3
+Set 1 Color           := &h80FF8000
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := -1
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &hB0FFD700
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 2
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &hB0CD7F32
+Set 3 Score Value     := 2
+Set 3 Hit Degrade     := 2
+Set 3 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|
+ 3| 11              11
+ 4|1221            1221
+ 5|3333            3333
+ 6|
+ 7|
+ 8|   333        333
+ 9|    31333  33313
+10|     3111111113
+11|      33333333
+12|
+13|
+14|
+15|
+16|
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

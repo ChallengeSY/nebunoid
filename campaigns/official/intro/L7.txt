@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - INTRODUCTION LEVEL 7
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Turbine
+Level Description     := 
+Level Password        := TZPSLMOR
+Level game number     := 3
+Level time limit      := 0
+Number of Block Sets  := 6
+Set 1 Color           := &h800000FF
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h800040FF
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h800080FF
+Set 3 Point Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h8000C0FF
+Set 4 Point Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h8000FFFF
+Set 5 Point Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80FF8000
+Set 6 Point Value     := 10*
+Set 6 Hit Degrade     := -1
+Set 6 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|         55
+ 2|        5555
+ 3|        4444
+ 4|        4444
+ 5|        3333
+ 6|        3333
+ 7|        2222
+ 8|        2222
+ 9| 544332211112233445
+10|55443322166122334455
+11|55443322166122334455
+12| 544332211112233445
+13|        2222
+14|        2222
+15|        3333
+16|        3333
+17|        4444
+18|        4444
+19|        5555
+20|         55
+
+================================================================================
+*END*
+================================================================================

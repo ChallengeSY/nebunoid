@@ -1,0 +1,60 @@
+================================================================================
+LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 5
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Outrider Scout
+Level Description     :=
+Level Password        := ++++++++
+Level game number     := &b0000000000010011
+Level time limit      := 0
+Number of Block Sets  := 5
+Set 1 Color           := 0
+Set 1 Point Value     := 2
+Set 1 Hit Degrade     := 2
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80FF00FF
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80CCCCCC
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80EEEEEE
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80AAAAAA
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|
+ 3|
+ 4|
+ 5|
+ 6|          111111
+ 7|         11333311
+ 8|        1133443311
+ 9| 111111113343343311
+10| 13333333343  34331
+11| 13333333353  35331
+12| 111111113353353311
+13|        1133553311
+14|         11333311
+15|          111111
+16|
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

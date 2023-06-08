@@ -1,0 +1,68 @@
+================================================================================
+LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 21
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Concave
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 1
+Level time limit      := 0
+Number of Brushes     := 7
+Brush 1 Color         := &h80404040
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h80808080
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80FFFFFF
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &hB0FFD700
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 4
+Brush 4 Increase Speed:= TRUE
+Brush 5 Color         := &hB0CD7F32
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Speed:= FALSE
+Brush 6 Color         := &h80FF00FF
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := 0
+Brush 6 Increase Speed:= FALSE
+Brush 7 Color         := &h00000000
+Brush 7 Score Value   := 2
+Brush 7 Hit Degrade   := 6
+Brush 7 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|44444444444444444444
+ 2|44444444444444444444
+ 3|44444444444444444444
+ 4|44444444444444444444
+ 5|44444444444444444444
+ 6|44444444444444444444
+ 7|44444444444444444444
+ 8|44444444444444444444
+ 9|44444444444444444444
+10|44444444444444444444
+11|44444444455444444444
+12|44444444533544444444
+13|44444445377354444444
+14|444444537  735444444
+15|44444537    73544444
+16|4444537      7354444
+17|444537        735444
+18|44537          73544
+19|4537            7354
+20|53777777777777777735
+
+================================================================================
+*END*
+================================================================================

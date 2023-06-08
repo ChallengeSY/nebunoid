@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - INTRODUCTION LEVEL 9
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Layered Honeycomb
+Level Description     := 
+Level Password        := AAPBTIAL
+Level game number     := 3
+Level time limit      := 0
+Number of Block Sets  := 6
+Set 1 Color           := &h80FF0000
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80FF4040
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80FF8080
+Set 3 Point Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80FFC0C0
+Set 4 Point Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80FFF0F0
+Set 5 Point Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80FF8000
+Set 6 Point Value     := 10*
+Set 6 Hit Degrade     := -1
+Set 6 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|    116666666611
+ 2|   11622222222611
+ 3|  1162266666622611
+ 4| 116226333333622611
+ 5|11622633666633622611
+ 6|16226336444463362261
+ 7|62263364466446336226
+ 8|22633644655644633622
+ 9|26336446555564463362
+10|63364465555556446336
+11|26336446555564463362
+12|22633644655644633622
+13|62263364466446336226
+14|16226336444463362261
+15|11622633666633622611
+16| 116226333333622611
+17|  1162266666622611
+18|   11622222222611
+19|    116666666611
+20|     1111111111
+
+================================================================================
+*END*
+================================================================================

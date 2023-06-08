@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - ALPHABET CAMPAIGN LEVEL 26
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Zhang
+Level Description     := This is the last level! Good luck!
+Level Password        := --------
+Level game number     := &b0001000000000011
+Level time limit      := 0
+Number of Block Sets  := 4
+Set 1 Color           := &hB0FFD700
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 1
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &hB0CD7F32
+Set 2 Score Value     := 2
+Set 2 Hit Degrade     := 1
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := 0
+Set 3 Score Value     := 2
+Set 3 Hit Degrade     := 4
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80FF00FF
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|12222222222222222221
+ 2|2                  2
+ 3|2                  2
+ 4|23333322222222333332
+ 5|2    2111111112    2
+ 6|2    3222211112    2
+ 7|2    3    21123    2
+ 8|2    3   2112 3    2
+ 9|2    3  2112  3    2
+10|2    3 2112   3    2
+11|2    32112    3    2
+12|2    2111122223    2
+13|2    2111111112    2
+14|23333322222222333332
+15|2                  2
+16|2                  2
+17|12233223322332233221
+18|2                  2
+19|2                  2
+20|23322332233223322332
+
+================================================================================
+*END*
+================================================================================

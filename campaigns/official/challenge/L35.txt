@@ -1,0 +1,61 @@
+================================================================================
+LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 35
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Armored Mothership
+Level Description     := The mothership returns for revenge!
+Level Password        := --------
+Level game number     := &b0000001000000011
+Level time limit      := 0
+Level boss health     := 850
+Number of Block Sets  := 5
+Set 1 Color           := &h808080FF
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 1
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80404080
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 2
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80802020
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0*
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80FF4040
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 3
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &hB0FFD700
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 5
+Set 5 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|
+ 3|      55544555
+ 4|     5444444445
+ 5|   54441422414445
+ 6|  4441444444441444
+ 7|  5444444444444445
+ 8|   54445544554445
+ 9|    55        55
+10|
+11|
+12|
+13|
+14|
+15|
+16|
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 16
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Bioclash
+Level Description     := 
+Level Password        := GKBSOPMR
+Level game number     := 4099
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &h80FF8000
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := -1
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h80204020
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0*
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80408040
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2*
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h8080FF80
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|  444          444  
+ 3|  414          414  
+ 4|  44444      44444  
+ 5|    414 4444 414    
+ 6|  44444      44444  
+ 7|  414          414  
+ 8|  444          444  
+ 9|                    
+10|                    
+11|                    
+12|                    
+13|                    
+14|                    
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

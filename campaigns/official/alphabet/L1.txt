@@ -1,0 +1,69 @@
+================================================================================
+LEVEL DATA FILE - ALPHABET CAMPAIGN LEVEL 1
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Amalthea
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 7
+Set 1 Color           := &h80FF0000
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80FF2020
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80FF4040
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80FF6060
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80FF8080
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80FFA0A0
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+Set 7 Color           := &h80FF8000
+Set 7 Score Value     := 10*
+Set 7 Hit Degrade     := -1
+Set 7 Increase Speed  := FALSE
+
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|
+ 3|         11
+ 4|        2772
+ 5|       373373
+ 6|      474  474
+ 7|     555    555
+ 8|     676    676
+ 9|     5757777575
+10|     4744444474
+11|     373    373
+12|     272    272
+13|     11      11
+14|
+15|
+16|
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

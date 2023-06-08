@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 44
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Klondike
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 6
+Set 1 Color           := &h80DDDDFF
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80202020
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80FF0000
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80000040
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80000080
+Set 5 Score Value     := 2
+Set 5 Hit Degrade     := 4
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h800000FF
+Set 6 Score Value     := 2
+Set 6 Hit Degrade     := 5
+Set 6 Increase Speed  := FALSE
+
+Level Grid  1111111111222222222233333333334
+   1234567890123456789012345678901234567890
+-------------------------------------------
+ 1|2222    2222      3333  3333  3333  3333
+ 2|26622   2112      3  3  3  3  3  3  3  3
+ 3|265522  2112      3  3  3  3  3  3  3  3 
+ 4|225442  2222      3333  3333  3333  3333
+ 5| 22442
+ 6|  2222
+ 7|
+ 8|
+ 9|2222  4444  5555  6666  6666  6666  6666
+10|2112  2222  4444  5555  6666  6666  6666
+11|2112  2112  2222  4444  5555  6666  6666
+12|2222  2112  2112  2222  4444  5555  6666
+13|      2222  2112  2112  2222  4444  5555
+14|            2222  2112  2112  2222  4444
+15|                  2222  2112  2112  2222
+16|                        2222  2112  2112
+17|                              2222  2112
+18|                                    2222
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

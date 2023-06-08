@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 7
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := White Dwarf
+Level Description     :=
+Level Password        := ++++++++
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 6
+Set 1 Color           := &h80303030
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80606060
+Set 2 Point Value     := 2
+Set 2 Hit Degrade     := 1
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80909090
+Set 3 Point Value     := 2
+Set 3 Hit Degrade     := 2
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80CCCCCC
+Set 4 Point Value     := 2
+Set 4 Hit Degrade     := 3
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80FFFFFF
+Set 5 Point Value     := 2
+Set 5 Hit Degrade     := 4
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80FFFF00
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := 6
+Set 6 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|66666666666666666666
+ 2|6  66666666666666  6
+ 3|6  66666666666666  6
+ 4|6  66666666666666  6
+ 5|6  6            6  6
+ 6|6  6            6  6
+ 7|6  6            6  6
+ 8|6  6     44     6  6
+ 9|6  6    4554    6  6
+10|6  6   455554   6  6
+11|6  6   455554   6  6
+12|6  6    4554    6  6
+13|6  6     44     6  6
+14|6  6            6  6
+15|6  6            6  6
+16|6  6            6  6
+17|6  6   66  66   6  6
+18|6  6  66    66  6  6
+19|6  6 66      66 6  6
+20|666666   66   666666
+
+================================================================================
+*END*
+================================================================================

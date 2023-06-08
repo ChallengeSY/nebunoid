@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 7
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Blockade
+Level Description     := Beware of invincible blocks!
+Level Password        := XUZILCVS
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 6
+Set 1 Color           := &h8000FF00
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h8080FF00
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h8080FF80
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h8000FF80
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &hB0FFD700
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 5
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80FF8000
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := -1
+Set 6 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|
+ 3|
+ 4|
+ 5|11551111111111115511
+ 6|11651111111111115611
+ 7|22652222222222225622
+ 8|22652222222222225622
+ 9|33653333333333335633
+10|33653333333333335633
+11|44654444444444445644
+12|44654444444444445644
+13|5555            5555
+14|
+15|
+16|
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

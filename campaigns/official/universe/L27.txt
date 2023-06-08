@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 27
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Snowman
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 6
+Set 1 Color           := &h80FF00FF
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 00
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := 0
+Set 2 Score Value     := 2
+Set 2 Hit Degrade     := 1
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80404040
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80808080
+Set 4 Score Value     := 2
+Set 4 Hit Degrade     := 3
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80FFFFFF
+Set 5 Score Value     := 2
+Set 5 Hit Degrade     := 4
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80FF0000
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|
+ 3|
+ 4|
+ 5|   4    5555    4 
+ 6|       525525
+ 7| 4     555555     4
+ 8|       525525
+ 9|   4    5225    4
+10|       566665
+11| 4     556655     4
+12|       556655
+13|   4    5665    4
+14|       555665
+15| 4    55556655    4
+16|      55556655
+17|   4  55555555  4
+18|      55555555
+19| 4    55555555    4
+20|       555555
+
+================================================================================
+*END*
+================================================================================

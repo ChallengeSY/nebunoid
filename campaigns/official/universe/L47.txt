@@ -1,0 +1,76 @@
+================================================================================
+LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 47
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Frozen World
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 9
+Set 1 Color           := &h80404040
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80808080
+Set 2 Score Value     := 2
+Set 2 Hit Degrade     := 1
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80FFFFFF
+Set 3 Score Value     := 2
+Set 3 Hit Degrade     := 2
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80004040
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80008080
+Set 5 Score Value     := 2
+Set 5 Hit Degrade     := 4
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h8000FFFF
+Set 3 Score Value     := 2
+Set 6 Hit Degrade     := 5
+Set 6 Increase Speed  := FALSE
+Set 7 Color           := &h80000040
+Set 7 Score Value     := 10*
+Set 7 Hit Degrade     := 0
+Set 7 Increase Speed  := FALSE
+Set 8 Color           := &h80000080
+Set 8 Score Value     := 2
+Set 8 Hit Degrade     := 7
+Set 8 Increase Speed  := FALSE
+Set 9 Color           := &h800000FF
+Set 9 Score Value     := 2
+Set 9 Hit Degrade     := 8
+Set 9 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|    999999999999
+ 2|   99999999999999
+ 3|  6999999999999996
+ 4| 996999966669999699
+ 5|99996996666669969999 
+ 6|99999666666666699999 
+ 7|99999666666666699999 
+ 8|99996666333366669999 
+ 9|99966663333336666999 
+10|99966663333336666999 
+11|99966663333336666999 
+12|99966663333336666999 
+13|99996666333366669999 
+14|99999666666666699999 
+15|99999666666666699999 
+16|99996996666669969999 
+17| 996999966669999699 
+18|  6999999999999996 
+19|   99999999999999 
+20|    999999999999 
+
+================================================================================
+*END*
+================================================================================

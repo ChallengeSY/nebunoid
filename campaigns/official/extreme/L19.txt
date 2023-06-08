@@ -1,0 +1,72 @@
+================================================================================
+LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 19
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Ordnance Storage
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 4099
+Level time limit      := 0
+Number of Brushes     := 8
+Brush 1 Color         := &h80404040
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h80808080
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80FFFFFF
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h80204020
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0*
+Brush 4 Increase Speed:= FALSE
+Brush 5 Color         := &h80408040
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4*
+Brush 5 Increase Speed:= FALSE
+Brush 6 Color         := &h8080FF80
+Brush 6 Score Value   := 2
+Brush 6 Hit Degrade   := 5
+Brush 6 Increase Speed:= FALSE
+Brush 7 Color         := &hB0FFD700
+Brush 7 Score Value   := 10*
+Brush 7 Hit Degrade   := 7
+Brush 7 Increase Speed:= TRUE
+Brush 8 Color         := &hB0CD7F32
+Brush 8 Score Value   := 2
+Brush 8 Hit Degrade   := 7
+Brush 8 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|66  66866  66866  66
+ 2|6    666    666    6
+ 3|  33     33     33  
+ 4|  33     33     33  
+ 5|6    666    666    6
+ 6|66  66866  66866  66
+ 7|86  68786  68786  68
+ 8|66  66866  66866  66
+ 9|6    666    666    6
+10|  33     33     33  
+11|  33     33     33  
+12|6    666    666    6
+13|66  66866  66866  66
+14|86  68786  68786  68
+15|66  66866  66866  66
+16|6    666    666    6
+17|  33     33     33  
+18|  33     33     33  
+19|6    666    666    6
+20|66  66866  66866  66
+
+================================================================================
+*END*
+================================================================================

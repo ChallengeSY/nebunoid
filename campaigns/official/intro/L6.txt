@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - INTRODUCTION LEVEL 6
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Distortion
+Level Description     := 
+Level Password        := ACPXXCMB
+Level game number     := 3
+Level time limit      := 0
+Number of Block Sets  := 6
+Set 1 Color           := &h800000FF
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h804000FF
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h808000FF
+Set 3 Point Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80C000FF
+Set 4 Point Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80FF00FF
+Set 5 Point Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80FF8000
+Set 6 Point Value     := 10*
+Set 6 Hit Degrade     := -1
+Set 6 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|
+ 3|
+ 4|
+ 5|
+ 6|     5554444555
+ 7|     56      65
+ 8|     5 332233 5
+ 9|     4 36  63 4
+10|     4 2 11 3 4
+11|     4 2 11 3 4
+12|     4 36  63 4
+13|     5 332233 5
+14|     56      65
+15|     5554444555
+16|
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

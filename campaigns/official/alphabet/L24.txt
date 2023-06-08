@@ -1,0 +1,88 @@
+================================================================================
+LEVEL DATA FILE - FORTIFIED LETTERS LEVEL 24
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Xiangliu
+Level Description     := 
+Level Password        := WGHTKNCA
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 12
+Brush 1 Color         := &h800000FF
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h802020FF
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h804040FF
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h806060FF
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Speed:= FALSE
+Brush 5 Color         := &h808080FF
+Brush 5 Score Value   := 10*
+Brush 5 Hit Degrade   := 0
+Brush 5 Increase Speed:= FALSE
+Brush 6 Color         := &h80A0A0FF
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := 0
+Brush 6 Increase Speed:= FALSE
+Brush 7 Color         := &h80FF8000
+Brush 7 Score Value   := 10*
+Brush 7 Hit Degrade   := -1
+Brush 7 Increase Speed:= FALSE
+Brush 8 Color         := &h80404040
+Brush 8 Score Value   := 10*
+Brush 8 Hit Degrade   := 0
+Brush 8 Increase Speed:= FALSE
+Brush 9 Color         := &h80808080
+Brush 9 Score Value   := 2
+Brush 9 Hit Degrade   := 8
+Brush 9 Increase Speed:= FALSE
+Brush 10 Color        := &h80FFFFFF
+Brush 10 Score Value  := 2
+Brush 10 Hit Degrade  := 9
+Brush 10 Increase Speed:= FALSE
+Brush 11 Color        := &hB0FFD700
+Brush 11 Score Value  := 10*
+Brush 11 Hit Degrade  := 11
+Brush 11 Increase Speed:= FALSE
+Brush 12 Color        := &hB0CD7F32
+Brush 12 Score Value  := 2
+Brush 12 Hit Degrade  := 11
+Brush 12 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3|      C      C      
+ 4|     C7C    C7C     
+ 5|     C11C  C11C     
+ 6|      C22CC22C      
+ 7|       A3333A       
+ 8|        A  A        
+ 9|       A4444A       
+10|      C55CC55C      
+11|     C66C  C66C     
+12|     C7C    C7C     
+13|      C      C      
+14|                    
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

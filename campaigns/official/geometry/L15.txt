@@ -1,0 +1,68 @@
+================================================================================
+LEVEL DATA FILE - GEOMETRIC DESIGNS LEVEL 15
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Tears through the fabrics
+Level Description     := 
+Level Password        := --------
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 7
+Brush 1 Color         := &h80C00040
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h80C00060
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80C00080
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h80E00080
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Speed:= FALSE
+Brush 5 Color         := &h80E000A0
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Speed:= FALSE
+Brush 6 Color         := &h80E000C0
+Brush 6 Score Value   := 2
+Brush 6 Hit Degrade   := 5
+Brush 6 Increase Speed:= FALSE
+Brush 7 Color         := &h80FF00C0
+Brush 7 Score Value   := 2
+Brush 7 Hit Degrade   := 6
+Brush 7 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3|  111 11 11 11 111  
+ 4|  12 22 2222 22 21  
+ 5|  1 33333  33333 1  
+ 6|   234 444444 432   
+ 7|  123 55 55 55 321  
+ 8|  1 34566  66543 1  
+ 9|   234 677776 432   
+10|  12 45 7  7 54 21  
+11|  12 45 7  7 54 21  
+12|   234 677776 432   
+13|  1 34566  66543 1  
+14|  123 55 55 55 321  
+15|   234 444444 432   
+16|  1 33333  33333 1  
+17|  12 22 2222 22 21  
+18|  111 11 11 11 111  
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

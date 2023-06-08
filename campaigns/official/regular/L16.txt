@@ -1,0 +1,92 @@
+================================================================================
+LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 16
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Rainbow Challenge
+Level Description     :=
+Level Password        := EBYQRCFO
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 13
+Set 1 Color           := &h80FF0000
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80FF8000
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80FFFF00
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h8000FF00
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h800000FF
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h806000B0
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+Set 7 Color           := &h80FF00FF
+Set 7 Score Value     := 10*
+Set 7 Hit Degrade     := 0
+Set 7 Increase Speed  := FALSE
+Set 8 Color           := &h80404040
+Set 8 Score Value     := 10*
+Set 8 Hit Degrade     := 0
+Set 8 Increase Speed  := FALSE
+Set 9 Color           := &h80808080
+Set 9 Score Value     := 2
+Set 9 Hit Degrade     := 8
+Set 9 Increase Speed  := FALSE
+Set 10 Color          := &h80FFFFFF
+Set 10 Score Value    := 2
+Set 10 Hit Degrade    := 9
+Set 10 Increase Speed := FALSE
+Set 11 Color          := &hB0FFD700
+Set 11 Score Value    := 10*
+Set 11 Hit Degrade    := 11
+Set 11 Increase Speed := FALSE
+Set 12 Color          := &hB0CD7F32
+Set 12 Score Value    := 2
+Set 12 Hit Degrade    := 11
+Set 12 Increase Speed := FALSE
+Set 13 Color          := &h80FF4000
+Set 13 Score Value    := 10*
+Set 13 Hit Degrade    := -1
+Set 13 Increase Speed := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|CCCCCCCCCCCCCCCCCCCC
+ 3|AAAAAAAAAAAAAAAAAAAA
+ 4|DDDDDDDDDDDDDDDDDDDD
+ 5|AAAAAAAAAAAAAAAAAAAA
+ 6|12345671234567123456
+ 7|AAAAAAAAAAAAAAAAAAAA
+ 8|                 4
+ 9|      2         444
+10|     222    3  44D44
+11|  1 22D22  333  444
+12| 111 222  33D33  4
+13|11D11 2    333  6
+14| 111   5    3  666
+15|  1   555     66D66
+16|     55D55  7  666
+17|      555  777  6
+18|       5  77D77
+19|           777
+20|            7
+
+================================================================================
+*END*
+================================================================================

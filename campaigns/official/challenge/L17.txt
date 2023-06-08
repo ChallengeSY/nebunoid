@@ -1,0 +1,60 @@
+================================================================================
+LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 17
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Squishy
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 4099
+Level time limit      := 0
+Number of Brushes     := 5
+Brush 1 Color         := &h80404040
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h80808080
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80FFFFFF
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &hB0FFD700
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 4
+Brush 4 Increase Speed:= TRUE
+Brush 5 Color         := &hB0CD7F32
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3|  5555555555555555  
+ 4|33555555555555555533
+ 5|                    
+ 6|                    
+ 7|55555555    55555555
+ 8|55555555333355555555
+ 9|                    
+10|                    
+11|                    
+12|                    
+13|                    
+14|                    
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

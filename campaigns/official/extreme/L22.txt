@@ -1,0 +1,68 @@
+================================================================================
+LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 22
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Instability
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 4105
+Level time limit      := 0
+Number of Brushes     := 7
+Brush 1 Color         := &h00000000
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 1
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &hB0FFD700
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 2
+Brush 2 Increase Speed:= TRUE
+Brush 3 Color         := &h00000000
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h80FF00FF
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Speed:= FALSE
+Brush 5 Color         := &h00000000
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Speed:= FALSE
+Brush 6 Color         := &h80FF0000
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := 0
+Brush 6 Increase Speed:= FALSE
+Brush 7 Color         := &h80FF8000
+Brush 7 Score Value   := 10*
+Brush 7 Hit Degrade   := 0
+Brush 7 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|11111111111111111111
+ 2|                    
+ 3|                    
+ 4|      5  77  5      
+ 5|     5356776535     
+ 6|    533567765335    
+ 7|   53135666653135   
+ 8|  5311355555531135  
+ 9| 531111333333111135 
+10|  5311355555531135  
+11|   53135666653135   
+12|    533567765335    
+13|     5356776535     
+14|      5  77  5      
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

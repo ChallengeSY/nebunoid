@@ -1,0 +1,60 @@
+================================================================================
+LEVEL DATA FILE - REGULAR SEASON LEVEL 27
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Armored Starbase
+Level Description     := 
+Level Password        := MZGKNOUY
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 5
+Brush 1 Color         := &h80404040
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h80808080
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80FFFFFF
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h00000000
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 5
+Brush 4 Increase Speed:= FALSE
+Brush 5 Color         := &h800000FF
+Brush 5 Score Value   := 10*
+Brush 5 Hit Degrade   := 0
+Brush 5 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|        4444        
+ 2|      44433444      
+ 3|   44443333334444   
+ 4|44443333333333334444
+ 5|43333333333333333334
+ 6|44433333333333333444
+ 7|  4443333333333444  
+ 8|    444333333444    
+ 9|   44433333333444   
+10|   43333333333334   
+11|   44333333333344   
+12|    444333333444    
+13|      43333334      
+14|      44333344      
+15|       433334       
+16|       443344       
+17|        4334        
+18|        4334        
+19|        4444        
+20|                    
+
+================================================================================
+*END*
+================================================================================

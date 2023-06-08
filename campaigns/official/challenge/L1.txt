@@ -1,0 +1,80 @@
+================================================================================
+LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 1
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Already Nasty
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 10
+Brush 1 Color         := &h80FF0000
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h80FF8000
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80FFFF00
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h8000FF00
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Speed:= FALSE
+Brush 5 Color         := &h800000FF
+Brush 5 Score Value   := 10*
+Brush 5 Hit Degrade   := 0
+Brush 5 Increase Speed:= FALSE
+Brush 6 Color         := &h806000B0
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := 0
+Brush 6 Increase Speed:= FALSE
+Brush 7 Color         := &h80FF00FF
+Brush 7 Score Value   := 10*
+Brush 7 Hit Degrade   := 0
+Brush 7 Increase Speed:= FALSE
+Brush 8 Color         := &hB0FFD700
+Brush 8 Score Value   := 10*
+Brush 8 Hit Degrade   := 8
+Brush 8 Increase Speed:= FALSE
+Brush 9 Color         := &hB0CD7F32
+Brush 9 Score Value   := 2
+Brush 9 Hit Degrade   := 8
+Brush 9 Increase Speed:= FALSE
+Brush 10 Color        := &h80FF4000
+Brush 10 Score Value  := 10*
+Brush 10 Hit Degrade  := -1
+Brush 10 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3|        9999        
+ 4|        1111        
+ 5|       999999       
+ 6|       22AA22       
+ 7|      99999999      
+ 8|      33AAAA33      
+ 9|     9999999999     
+10|     44AAAAAA44     
+11|    999999999999    
+12|     55AAAAAA55     
+13|     9999999999     
+14|      66AAAA66      
+15|      99999999      
+16|       77AA77       
+17|       999999       
+18|        1111        
+19|        9999        
+20|                    
+
+================================================================================
+*END*
+================================================================================

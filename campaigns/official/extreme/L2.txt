@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 2
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Semi-Fused
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 259
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &h80505050
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h80909090
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80D0D0D0
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h80FFFFFF
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2| 11111111  11111111 
+ 3| 12 2 2 2  2 2 2 21 
+ 4| 1 33 33    33 33 1 
+ 5| 12344444  44444321 
+ 6| 1  4 33    33 4  1 
+ 7| 123432 2112 234321 
+ 8| 1 343 112211 343 1 
+ 9| 12 4 21 33 12 4 21 
+10|      12344321      
+11|      12344321      
+12| 12 4 21 33 12 4 21 
+13| 1 343 112211 343 1 
+14| 123432 2112 234321 
+15| 1  4 33    33 4  1 
+16| 12344444  44444321 
+17| 1 33 33    33 33 1 
+18| 12 2 2 2  2 2 2 21 
+19| 11111111  11111111 
+20|                    
+
+================================================================================
+*END*
+================================================================================

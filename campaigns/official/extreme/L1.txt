@@ -1,0 +1,57 @@
+================================================================================
+LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 1
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Scout Fleet
+Level Description     := Destroy the alien scout fleet before they can escape
+Level Password        := ++++++++
+Level game number     := 515
+Level time limit      := 120
+Level boss health     := 750
+Number of Brushes     := 4
+Brush 1 Color         := &h808080FF
+Brush 1 Score Value   := 25*
+Brush 1 Hit Degrade   := 1
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h80401010
+Brush 2 Score Value   := 25*
+Brush 2 Hit Degrade   := 0*
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80802020
+Brush 3 Score Value   := 25*
+Brush 3 Hit Degrade   := 2*
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h80FF4040
+Brush 4 Score Value   := 25*
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3|  44  44    44  44  
+ 4|  444444    444444  
+ 5|   4444      4444   
+ 6|  44  44    44  44  
+ 7|  4    4    4    4  
+ 8|  1    1    1    1  
+ 9|  4    4    4    4  
+10|                    
+11|       44  44       
+12|       444444       
+13|        4444        
+14|       44  44       
+15|       4    4       
+16|       1    1       
+17|       4    4       
+18|                    
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

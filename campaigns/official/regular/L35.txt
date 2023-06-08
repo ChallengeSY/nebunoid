@@ -1,0 +1,61 @@
+================================================================================
+LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 35
+================================================================================
+Since this is the first boss battle, the degrade settings work differently.
+
+There is a unique field that determines how much HP the boss gets. HP loss is
+determined by the ball's speed.
+
+The level is set up as if bioregenerative blocks are being set up; only they
+regenerate in 1 frame and deduct boss HP.
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Alien Mothership
+Level Description     := Destroy the alien mothership to clear the campaign!
+Level Password        := --------
+Level game number     := &b0000001000000011
+Level time limit      := 0
+Level boss health     := 1000
+Number of Block Sets  := 3
+Set 1 Color           := &h808080FF
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 1
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80802020
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0*
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80FF4040
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 2
+Set 3 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|
+ 3|         33
+ 4|      33333333
+ 5|    333131131333
+ 6|  3331333333331333
+ 7|  3333333333333333
+ 8|   3333  33  3333
+ 9|    33        33
+10|
+11|
+12|
+13|
+14|
+15|
+16|
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

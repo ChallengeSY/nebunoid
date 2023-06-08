@@ -1,0 +1,60 @@
+================================================================================
+LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 26
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Free the Love
+Level Description     := Free your friends, and they will join your side
+Level Password        := EZSIWNTC
+Level game number     := &b0000000000010011
+Level time limit      := 0
+Number of Block Sets  := 5
+Set 1 Color           := &h80FF0000
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80FF8080
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80800000
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80FF00FF
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := 0
+Set 5 Score Value     := 2
+Set 5 Hit Degrade     := 4
+Set 5 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|    222      222
+ 2|   21113    21113
+ 3|  2111113  2111113
+ 4| 211111113211111113
+ 5| 211111111111111113
+ 6|21111  111111  11113
+ 7|21111  111111  11113
+ 8|21111111111111111113
+ 9|21111111111111111113
+10|21111111111111111113
+11|21111511111111511113
+12| 2111   1  1   1113
+13|  2111111111111113
+14|   21111111111113
+15|    211111111113
+16|     2111111113
+17|      21111113
+18|       211113
+19|        2113
+20|         33
+
+================================================================================
+*END*
+================================================================================

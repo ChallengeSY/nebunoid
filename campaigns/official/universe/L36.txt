@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 36
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Starry Sky
+Level Description     :=
+Level Password        := MEGEXBWG
+Level game number     := &b0000010110000011
+Level time limit      := 0
+Number of Block Sets  := 6
+Set 1 Color           := &h808080FF
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80C0C0FF
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80FFFFFF
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80FFFF00
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80FF8000
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80FF2020
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|    1      1     1
+ 2| 4      1     2  
+ 3|      2        4 
+ 4|  1      1       3
+ 5|     2     2
+ 6|   4     5
+ 7| 1        2       3
+ 8|    3    4      1
+ 9| 1    4    2     1
+10|   3    1   2   4
+11|    5      2   1   
+12|       2     3
+13| 2      6     1
+14|      3    4     2
+15|     4         4
+16|4   2       1    3
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

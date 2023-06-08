@@ -1,0 +1,92 @@
+================================================================================
+LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 30
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Vortex
+Level Description     := Good luck overcoming this... final level?
+Level Password        := --------
+Level game number     := &b0001000100001111
+Level time limit      := 0
+Number of Block Sets  := 13
+Set 1 Color           := &h80FF0000
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80FF8000
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80FFFF00
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h8000FF00
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h800000FF
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h806000B0
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+Set 7 Color           := &h80FF00FF
+Set 7 Score Value     := 10*
+Set 7 Hit Degrade     := 0
+Set 7 Increase Speed  := FALSE
+Set 8 Color           := &h80404040
+Set 8 Score Value     := 10*
+Set 8 Hit Degrade     := 0
+Set 8 Increase Speed  := FALSE
+Set 9 Color           := &h80808080
+Set 9 Score Value     := 2
+Set 9 Hit Degrade     := 8
+Set 9 Increase Speed  := FALSE
+Set 10 Color          := &h80FFFFFF
+Set 10 Score Value    := 2
+Set 10 Hit Degrade    := 9
+Set 10 Increase Speed := FALSE
+Set 11 Color          := &hB0FFD700
+Set 11 Score Value    := 10*
+Set 11 Hit Degrade    := 11
+Set 11 Increase Speed := FALSE
+Set 12 Color          := &hB0CD7F32
+Set 12 Score Value    := 2
+Set 12 Hit Degrade    := 11
+Set 12 Increase Speed := FALSE
+Set 13 Color          := &h8000FFFF
+Set 13 Score Value    := 10*
+Set 13 Hit Degrade    := 0
+Set 13 Increase Speed := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|11111111111111111111
+ 2|12222222222222222221
+ 3|12333333333333333321
+ 4|12344444444444444321
+ 5|1234DDDDDDDDDDDD4321
+ 6|1234D5555555555D4321
+ 7|1234D5666666665D4321
+ 8|1234D5677777765D4321
+ 9|1234D567AAAA765D4321
+10|1234D567ACCA765D4321
+11|1234D567ACCA765D4321
+12|1234D567AAAA765D4321
+13|1234D5677777765D4321
+14|1234D5666666665D4321
+15|1234D5555555555D4321
+16|1234DDDDDDDDDDDD4321
+17|12344444444444444321
+18|12333333333333333321
+19|12222222222222222221
+20|11111111111111111111
+
+================================================================================
+*END*
+================================================================================

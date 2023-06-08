@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 32
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Secret unlocked!
+Level Description     := Congratulations! You found the secret levels!
+Level Password        := SCZTUXIU
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 6
+Set 1 Color           := &h80FF8000
+Set 1 Score Value     := 0
+Set 1 Hit Degrade     := -1
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &hB0FFD700
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 2
+Set 2 Increase Speed  := TRUE
+Set 3 Color           := &hB0CD7F32
+Set 3 Score Value     := 25*
+Set 3 Hit Degrade     := 2
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80808080
+Set 4 Score Value     := 5
+Set 4 Hit Degrade     := 6
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80FFFFFF
+Set 5 Score Value     := 5
+Set 5 Hit Degrade     := 4
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80404040
+Set 6 Score Value     := 25*
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|11111111111111111111
+ 2|12222222222222222221
+ 3|1                 21
+ 4|1                 21
+ 5|123333333333333   21
+ 6|12                21
+ 7|12                21
+ 8|12   333333333333321
+ 9|12                21
+10|12                21
+11|12333333333333355521
+12|111111111111112   21
+13|222222222222222   22
+14|             5555555
+15|
+16|
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

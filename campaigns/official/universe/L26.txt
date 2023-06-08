@@ -1,0 +1,100 @@
+================================================================================
+LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 26
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Suspicious Columns
+Level Description     :=
+Level Password        := PKRCNDWK
+Level game number     := &b0000010000000011
+Level time limit      := 0
+Number of Block Sets  := 15
+Set 1 Color           := &h80FF0000
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80FF8000
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80FFFF00
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h8000FF00
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h800000FF
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h806000B0
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+Set 7 Color           := &h80FF00FF
+Set 7 Score Value     := 10*
+Set 7 Hit Degrade     := 0
+Set 7 Increase Speed  := FALSE
+Set 8 Color           := &h80404040
+Set 8 Score Value     := 10*
+Set 8 Hit Degrade     := 0
+Set 8 Increase Speed  := FALSE
+Set 9 Color           := &h80808080
+Set 9 Score Value     := 2
+Set 9 Hit Degrade     := 8
+Set 9 Increase Speed  := FALSE
+Set 10 Color          := &h80FFFFFF
+Set 10 Score Value    := 2
+Set 10 Hit Degrade    := 9
+Set 10 Increase Speed := FALSE
+Set 11 Color          := &hB0FFD700
+Set 11 Score Value    := 10*
+Set 11 Hit Degrade    := 11
+Set 11 Increase Speed := FALSE
+Set 12 Color          := &hB0CD7F32
+Set 12 Score Value    := 2
+Set 12 Hit Degrade    := 11
+Set 12 Increase Speed := FALSE
+Set 13 Color          := &h8000FFFF
+Set 13 Score Value    := 10*
+Set 13 Hit Degrade    := 0
+Set 13 Increase Speed := FALSE
+Set 14 Color          := 0
+Set 14 Score Value    := 10*
+Set 14 Hit Degrade    := 14
+Set 14 Increase Speed := FALSE
+Set 15 Color          := &h80FF4000
+Set 15 Score Value    := 10*
+Set 15 Hit Degrade    := -1
+Set 15 Increase Speed := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|FFFFFFFFFFFFFFFFFFFF
+ 2|1CCCCCCCCCCCCCCCCCC1
+ 3|1111E1111EE1111E1111
+ 4|1221E1221EE1221E1221
+ 5|2222E2222EE2222E2222
+ 6|2332E2332EE2332E2332
+ 7|3333E3333EE3333E3333
+ 8|3443E3443EE3443E3443
+ 9|4444E4444EE4444E4444
+10|4DD4E4DD4EE4DD4E4DD4
+11|DDDDEDDDDEEDDDDEDDDD
+12|D55DED55DEED55DED55D
+13|5555E5555EE5555E5555
+14|5665E5665EE5665E5665
+15|6666E6666EE6666E6666
+16|6776E6776EE6776E6776
+17|7777E7777EE7777E7777
+18|7AA7E7AA7EE7AA7E7AA7
+19|AAAAEAAAAEEAAAAEAAAA
+20|    E    EE    E    
+
+================================================================================
+*END*
+================================================================================

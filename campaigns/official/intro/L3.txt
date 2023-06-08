@@ -1,0 +1,60 @@
+================================================================================
+LEVEL DATA FILE - INTRODUCTION LEVEL 3
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := More blocks
+Level Description     := The top frame has been separated to allow greater height. Enjoy!
+Level Password        := ZOOZPNWG
+Level game number     := 3
+Level time limit      := 0
+Number of Block Sets  := 5
+Set 1 Color           := &h8000FF00
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h8040FF00
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h8080FF00
+Set 3 Point Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80C0FF00
+Set 4 Point Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80FFFF00
+Set 5 Point Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|1                  1
+ 2| 1                1 
+ 3|  2              2
+ 4|   2            2
+ 5|    3          3
+ 6|     3        3 
+ 7|      4      4
+ 8|       4    4
+ 9|        5  5
+10|         55
+11|         55
+12|        5  5
+13|       4    4
+14|      4      4
+15|     3        3 
+16|    3          3
+17|   2            2
+18|  2              2
+19| 1                1 
+20|1                  1
+
+================================================================================
+*END*
+================================================================================

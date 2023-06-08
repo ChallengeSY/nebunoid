@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 3
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Sturdy Diamonds
+Level Description     := Those bright white bricks require three hits to destroy.
+Level Password        := YSXXBZHK
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 6
+Set 1 Color           := &h80404040
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80808080
+Set 2 Score Value     := 2
+Set 2 Hit Degrade     := 1
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80FFFFFF
+Set 3 Score Value     := 2
+Set 3 Hit Degrade     := 2
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h800000FF
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h800080FF
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h808080FF
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                  65
+ 2|         1       654
+ 3|        121     654
+ 4|       12321   654
+ 5|        121   6541
+ 6|  1      1   654121
+ 7| 121        65412321
+ 8|12321      654  121
+ 9| 121      654    1
+10|  1      654  1
+11|        654  121
+12|       654  12321
+13|   1  654    121
+14|  121654      1
+15| 123254
+16|  1254    1
+17|  654    121
+18| 654    12321
+19|654      121
+20|54        1
+
+================================================================================
+*END*
+================================================================================

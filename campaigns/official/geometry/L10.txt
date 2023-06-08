@@ -1,0 +1,68 @@
+================================================================================
+GEOMETRY LEVEL DATA FILE - LEVEL 10
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Exterior Angles
+Level Description     :=
+Level Password        := ++++++++
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 7
+Set 1 Color           := &h80FFD700
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 1
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80800000
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80404040
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80808080
+Set 4 Score Value     := 2
+Set 4 Hit Degrade     := 3
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80FFFFFF
+Set 5 Score Value     := 2
+Set 5 Hit Degrade     := 4
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80FF00FF
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+Set 7 Color           := 0
+Set 7 Score Value     := 2
+Set 7 Hit Degrade     := 6
+Set 7 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|             5
+ 2|            525
+ 3|           52225
+ 4|             2
+ 5|             2
+ 6|             2
+ 7|             2
+ 8|             11111
+ 9|            11  11
+10|           11  1 1
+11|  5       11  1  1
+12| 5277777711  1   1
+13|5222222221111111117
+14| 527777777      727
+15|  5             727
+16|                727
+17|                727
+18|               52225
+19|                525
+20|                 5
+
+================================================================================
+*END*
+================================================================================

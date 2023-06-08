@@ -1,0 +1,64 @@
+================================================================================
+LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 38
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Nebunoid Stadium
+Level Description     :=
+Level Password        := ++++++++
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 6
+Set 1 Color           := &h804040FF
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80FF8000
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := -1
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80C0FFC0
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80404040
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80808080
+Set 5 Score Value     := 2
+Set 5 Hit Degrade     := 4
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80FFFFFF
+Set 6 Score Value     := 2
+Set 6 Hit Degrade     := 5
+Set 6 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|12121211111111111111
+ 2|11222111111111111111
+ 3|12212211111111111111
+ 4|11222111111111111111
+ 5|12121211111111111111
+ 6|11111111111111111111
+ 7|11111111111111111111
+ 8|11111111111111111111
+ 9|11111111111111111111
+10|11111666666666611111
+11|11116666666666661111
+12|11166666666666666111
+13|11166666666666666111
+14|11666666666666666611
+15|11666666666666666611
+16|11666666666666666611
+17|33333333333333333333
+18|33333333333333333333
+19|33333333333333333333
+20|33333333333333333333
+
+================================================================================
+*END*
+================================================================================

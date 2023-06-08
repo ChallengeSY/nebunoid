@@ -1,0 +1,60 @@
+================================================================================
+LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 4
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Side bowls
+Level Description     := 
+Level Password        := QJEKUVXA
+Level game number     := 7
+Level time limit      := 0
+Number of Brushes     := 5
+Brush 1 Color         := &hB0FFD700
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 1
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &hB0CD7F32
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80404040
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h80808080
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Speed:= FALSE
+Brush 5 Color         := &h80FFFFFF
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|    222255552222    
+ 2|       2    2       
+ 3|  5  5 2    2 5  5  
+ 4|  5  5 2    2 5  5  
+ 5|  5  5 2    2 5  5  
+ 6|  5  5 2    2 5  5  
+ 7|  5  5 2    2 5  5  
+ 8|  5  5 2    2 5  5  
+ 9|  5  5 2    2 5  5  
+10|  5  5 2    2 5  5  
+11|  5  5 2    2 5  5  
+12|  5  5 2    2 5  5  
+13|  5  5 2    2 5  5  
+14|  5  5 2    2 5  5  
+15|  5  5 2    2 5  5  
+16|  5  5 2    2 5  5  
+17|  5  5 2    2 5  5  
+18|  5  5 2    2 5  5  
+19|       2    2       
+20|    222255552222    
+
+================================================================================
+*END*
+================================================================================

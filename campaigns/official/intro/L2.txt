@@ -1,0 +1,60 @@
+================================================================================
+LEVEL DATA FILE - INTRODUCTION LEVEL 2
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Powerup Capsules
+Level Description     := Collect non-red capsules to acquire special abilities
+Level Password        := NXPPZNBO
+Level game number     := 1
+Level time limit      := 0
+Number of Block Sets  := 5
+Set 1 Color           := &h8000FF00
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h8000FF40
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h8000FF80
+Set 3 Point Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h8000FFC0
+Set 4 Point Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h8000FFFF
+Set 5 Point Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|
+ 2|
+ 3|
+ 4|
+ 5|      12344321
+ 6|     1234554321
+ 7|      12344321
+ 8|       123321
+ 9|        1221
+10|         11
+11|
+12|
+13|
+14|
+15|
+16|
+17|
+18|
+19|
+20|
+
+================================================================================
+*END*
+================================================================================

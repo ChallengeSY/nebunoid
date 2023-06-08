@@ -1,0 +1,52 @@
+================================================================================
+LEVEL DATA FILE - GEOMETRIC DESIGNS LEVEL 11
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := A point, a line, a square...
+Level Description     := ... that would be called a "cube".
+Level Password        := PYTRIPLE
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 3
+Brush 1 Color         := &h80FF00FF
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h80FF8000
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h00000000
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 1
+Brush 3 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3|     2222222222222  
+ 4|    2           22  
+ 5|   2           2 2  
+ 6|  2222222222222  2  
+ 7|  2333333333332  2  
+ 8|  23         32  2  
+ 9|  23         32  2  
+10|  23         32  2  
+11|  23         32  2  
+12|  23         32  2  
+13|  23         32  2  
+14|  23         32  2  
+15|  23         32  2  
+16|  23         32 2   
+17|  23333333333322    
+18|  2222222222222     
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

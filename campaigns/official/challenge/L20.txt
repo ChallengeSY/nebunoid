@@ -1,0 +1,92 @@
+================================================================================
+LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 19
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Quad Trouble
+Level Description     := Multiple variations are at work. Can you identify them all?
+Level Password        := ++++++++
+Level game number     := &b0001010000001111
+Level time limit      := 0
+Number of Block Sets  := 13
+Set 1 Color           := &h800000FF
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h802020FF
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 0
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h804040FF
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h806060FF
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80A0A0FF
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80C0C0FF
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+Set 7 Color           := &h80E0E0FF
+Set 7 Score Value     := 10*
+Set 7 Hit Degrade     := 0
+Set 7 Increase Speed  := FALSE
+Set 8 Color           := &h80404040
+Set 8 Score Value     := 10*
+Set 8 Hit Degrade     := 0
+Set 8 Increase Speed  := FALSE
+Set 9 Color           := &h80808080
+Set 9 Score Value     := 2
+Set 9 Hit Degrade     := 8
+Set 9 Increase Speed  := FALSE
+Set 10 Color          := &h80FFFFFF
+Set 10 Score Value    := 2
+Set 10 Hit Degrade    := 9
+Set 10 Increase Speed := FALSE
+Set 11 Color          := &hB0FFD700
+Set 11 Score Value    := 10*
+Set 11 Hit Degrade    := 11
+Set 11 Increase Speed := FALSE
+Set 12 Color          := &hB0CD7F32
+Set 12 Score Value    := 2
+Set 12 Hit Degrade    := 11
+Set 12 Increase Speed := FALSE
+Set 13 Color          := &h808080FF
+Set 13 Score Value    := 10*
+Set 13 Hit Degrade    := 0
+Set 13 Increase Speed := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|C111111111111111111C
+ 2|BC8888888888888888CB
+ 3|C2C22222222222222C2C
+ 4|C99C999999999999C99C
+ 5|CAAACAAAAAAAAAACAAAC
+ 6|C                  C
+ 7|BC3333333333333333CB
+ 8|C8C88888888888888C8C
+ 9|C44C444444444444C44C
+10|C999C9999999999C999C
+11|C                  C
+12|BCDDDDDDDDDDDDDDDDCB
+13|C C              C C
+14|C55C555555555555C55C
+15|C888C8888888888C888C
+16|C                  C
+17|66666666666666666666
+18|
+19|77777777777777777777
+20|
+
+================================================================================
+*END*
+================================================================================

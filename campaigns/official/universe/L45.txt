@@ -1,0 +1,68 @@
+================================================================================
+LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 45
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Snake Puzzle
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := &b0000000000011001
+Level time limit      := 0
+Number of Block Sets  := 7
+Set 1 Color           := &h80404040
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 0
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80808080
+Set 2 Score Value     := 2
+Set 2 Hit Degrade     := 1
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80FFFFFF
+Set 3 Score Value     := 2
+Set 3 Hit Degrade     := 2
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80FF8000
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := -1
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80404000
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := 0
+Set 6 Score Value     := 2
+Set 6 Hit Degrade     := 7
+Set 6 Increase Speed  := FALSE
+Set 7 Color           := &h80FFFF00
+Set 7 Score Value     := 10*
+Set 7 Hit Degrade     := 7
+Set 7 Increase Speed  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1| 6666666   66666666
+ 2|64321  66  666    66
+ 3|64321   6  6611    6
+ 4| 66666  666661166116
+ 5| 66666  6   64466  6
+ 6|66      6   66666  6
+ 7|6      666666  66116
+ 8|6  6666666666  66  6
+ 9|666666    6662266  6
+10|64466      66  66116
+11|62266  662266  66116
+12|611    66  66  66  6
+13|66    666  66  66  6
+14| 661166662266  66116
+15| 66226666      66  6
+16| 664467766    666  6
+17| 6666666666666666116
+18|66       1         6
+19|6        1        66 
+20|6556666666666666666
+
+================================================================================
+*END*
+================================================================================

@@ -1,0 +1,72 @@
+================================================================================
+LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 4
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Sinister Rotation
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 5123
+Level time limit      := 0
+Number of Brushes     := 8
+Brush 1 Color         := &h80FF0000
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Speed:= FALSE
+Brush 2 Color         := &h80FF2020
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Speed:= FALSE
+Brush 3 Color         := &h80FF4040
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Speed:= FALSE
+Brush 4 Color         := &h80FF6060
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Speed:= FALSE
+Brush 5 Color         := &h80FF8080
+Brush 5 Score Value   := 10*
+Brush 5 Hit Degrade   := 0
+Brush 5 Increase Speed:= FALSE
+Brush 6 Color         := &h80FFA0A0
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := 0
+Brush 6 Increase Speed:= FALSE
+Brush 7 Color         := &hB0FFD700
+Brush 7 Score Value   := 10*
+Brush 7 Hit Degrade   := 7
+Brush 7 Increase Speed:= FALSE
+Brush 8 Color         := &hB0CD7F32
+Brush 8 Score Value   := 2
+Brush 8 Hit Degrade   := 7
+Brush 8 Increase Speed:= FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3| 88 88888  88888 88 
+ 4|11811118111181111811
+ 5|22822228222282222822
+ 6|33833338333383333833
+ 7|44844448444484444844
+ 8|55855558555585555855
+ 9|66866668666686666866
+10|  877778    877778  
+11|                    
+12|                    
+13|                    
+14|                    
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

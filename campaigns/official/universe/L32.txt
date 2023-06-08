@@ -1,0 +1,116 @@
+================================================================================
+LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 32
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Remote solar system
+Level Description     :=
+Level Password        := ++++++++
+Level game number     := &b0000000000000011
+Level time limit      := 0
+Number of Block Sets  := 19
+Set 1 Color           := &h80FF8000
+Set 1 Score Value     := 10*
+Set 1 Hit Degrade     := 2
+Set 1 Increase Speed  := FALSE
+Set 2 Color           := &h80FF0000
+Set 2 Score Value     := 10*
+Set 2 Hit Degrade     := 3
+Set 2 Increase Speed  := FALSE
+Set 3 Color           := &h80800000
+Set 3 Score Value     := 10*
+Set 3 Hit Degrade     := 0
+Set 3 Increase Speed  := FALSE
+Set 4 Color           := &h80FF80FF
+Set 4 Score Value     := 10*
+Set 4 Hit Degrade     := 0
+Set 4 Increase Speed  := FALSE
+Set 5 Color           := &h80804080
+Set 5 Score Value     := 10*
+Set 5 Hit Degrade     := 0
+Set 5 Increase Speed  := FALSE
+Set 6 Color           := &h80FF0000
+Set 6 Score Value     := 10*
+Set 6 Hit Degrade     := 0
+Set 6 Increase Speed  := FALSE
+Set 7 Color           := &h80800000
+Set 7 Score Value     := 10*
+Set 7 Hit Degrade     := 0
+Set 7 Increase Speed  := FALSE
+Set 8 Color           := &h8040FF40
+Set 8 Score Value     := 10*
+Set 8 Hit Degrade     := 0
+Set 8 Increase Speed  := FALSE
+Set 9 Color           := &h80FF00CC
+Set 9 Score Value     := 10*
+Set 9 Hit Degrade     := 0
+Set 9 Increase Speed  := FALSE
+Set 10 Color          := &h80FF8080
+Set 10 Score Value    := 10*
+Set 10 Hit Degrade    := 0
+Set 10 Increase Speed := FALSE
+Set 11 Color          := &h80804040
+Set 11 Score Value    := 10*
+Set 11 Hit Degrade    := 0
+Set 11 Increase Speed := FALSE
+Set 12 Color          := &h80BBFFBB
+Set 12 Score Value    := 10*
+Set 12 Hit Degrade    := 0
+Set 12 Increase Speed := FALSE
+Set 13 Color          := &h80688068
+Set 13 Score Value    := 10*
+Set 13 Hit Degrade    := 0
+Set 13 Increase Speed := FALSE
+Set 14 Color          := &h80CCCCFF
+Set 14 Score Value    := 10*
+Set 14 Hit Degrade    := 0
+Set 14 Increase Speed := FALSE
+Set 15 Color          := &h808080FF
+Set 15 Score Value    := 10*
+Set 15 Hit Degrade    := 0
+Set 15 Increase Speed := FALSE
+Set 16 Color          := &h80CC00FF
+Set 16 Score Value    := 10*
+Set 16 Hit Degrade    := 0
+Set 16 Increase Speed := FALSE
+Set 17 Color          := &h80600080
+Set 17 Score Value    := 10*
+Set 17 Hit Degrade    := 0
+Set 17 Increase Speed := FALSE
+Set 18 Color          := &h80000080
+Set 18 Score Value    := 10*
+Set 18 Hit Degrade    := 0
+Set 18 Increase Speed := FALSE
+Set 19 Color          := &h80000040
+Set 19 Score Value    := 10*
+Set 19 Hit Degrade    := 0
+Set 19 Increase Speed := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|         JJ
+ 2| 99     JIIJ
+ 3| 99     JIIJ
+ 4|         JJ
+ 5|         55     FEEF
+ 6|        5445    EEEE
+ 7|        5445    EEEE
+ 8|         55     FEEF
+ 9|BAAB     33
+10|AAAA    3113
+11|AAAA    3113
+12|BAAB     33
+13|             77  HH
+14|     88     7667HGGH
+15|     88     7667HGGH
+16|             77  HH
+17|            DCCD
+18|            CCCC
+19|            CCCC
+20|            DCCD
+
+================================================================================
+*END*
+================================================================================
