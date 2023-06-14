@@ -1,8 +1,10 @@
+#IFNDEF __FB_DOS__
 #DEFINE __USE_FBSOUND__
+#ENDIF
 
 #include "Nebunoid.bi"
 #include "NNCampaign.bas"
-windowtitle "Nebunoid"
+windowtitle "Nebunoid 1.01"
 
 if FileExists("portable") = 0 then
 	#IF defined(__FB_WIN32__)

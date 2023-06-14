@@ -1,51 +1,51 @@
 ================================================================================
-LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 34
+LEVEL DATA FILE - REGULAR SEASON LEVEL 34
 ================================================================================
 *BEGIN*
 ================================================================================
 
-Level Name            := Don't give up!
-Level Description     := Only one... more... level...
-Level Password        := ++++++++
-Level game number     := &b0001000100000011
+Level Name            := Hyper Smiley
+Level Description     := 
+Level Password        := LBHOGHOX
+Level game number     := 4355
 Level time limit      := 0
-Number of Block Sets  := 3
-Set 1 Color           := &h80FF8000
-Set 1 Score Value     := 10*
-Set 1 Hit Degrade     := -1
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &hB0FFD700
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 2
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := &hB0CD7F32
-Set 3 Score Value     := 2
-Set 3 Hit Degrade     := 2
-Set 3 Increase Speed  := FALSE
+Number of Brushes     := 3
+Brush 1 Color         := &h80FF8000
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := -1
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &hB0FFD700
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 2
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &hB0CD7F32
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|
- 2|
- 3| 11              11
+ 1|                    
+ 2|                    
+ 3| 11              11 
  4|1221            1221
  5|3333            3333
- 6|
- 7|
- 8|   333        333
- 9|    31333  33313
-10|     3111111113
-11|      33333333
-12|
-13|
-14|
-15|
-16|
-17|
-18|
-19|
-20|
+ 6|                    
+ 7|                    
+ 8|   333        333   
+ 9|    31333  33313    
+10|     3111111113     
+11|      33333333      
+12|                    
+13|                    
+14|                    
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
 
 ================================================================================
 *END*

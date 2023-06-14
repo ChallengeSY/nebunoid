@@ -4,8 +4,8 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 29
 *BEGIN*
 ================================================================================
 
-Level Name            := Almost there...
-Level Description     := So close... yet so very far.
+Level Name            := Slim Pickings
+Level Description     := 
 Level Password        := CPNGCSOF
 Level game number     := 3
 Level time limit      := 300

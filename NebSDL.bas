@@ -6,10 +6,13 @@ enum SoundFX
 	SFX_POWER_UP
 	SFX_POWER_DOWN
 	SFX_DEATH
-	SFX_SHOOT
+	SFX_SHOOT_BULLET
+	SFX_SHOOT_MISSILE
 	SFX_LIFE
-	SFX_BALL = 10
-	SFX_WALL = 28
+	SFX_BRICKS_RESPAWN
+	SFX_WALL_BROKEN
+	SFX_BALL
+	SFX_WALL
 	SFX_MAX
 end enum
 
@@ -32,6 +35,7 @@ const clipCount = SFX_MAX - 1
 dim shared as Mix_Chunk ptr clip(clipCount)
 dim shared as integer clipChannel(clipCount), clipPause(clipCount)
 dim shared music as Mix_Music ptr
+dim as string SFXNames(clipCount)
 for CID as ubyte = 0 to clipCount
 	clip(CID) = NULL
 	clipChannel(CID) = -1
@@ -53,18 +57,25 @@ if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers)) then
 	close #1
 	end 1
 end if
-clip(SFX_BRICK) = Mix_LoadWAV("sfx/modern/brick.wav")
-for SPD as byte = 8 to 26
-	clip(int(SFX_BALL+SPD-9)) = Mix_LoadWAV("sfx/modern/paddle"+str(SPD)+".wav")
-next SPD
-clip(SFX_EXPLODE) = Mix_LoadWAV("sfx/modern/explode.wav")
-clip(SFX_HARDEN) = Mix_LoadWAV("sfx/modern/harden.wav")
-clip(SFX_INVINCIBLE) = Mix_LoadWAV("sfx/modern/invincible.wav")
-clip(SFX_POWER_UP) = Mix_LoadWAV("sfx/modern/powerup.wav")
-clip(SFX_POWER_DOWN) = Mix_LoadWAV("sfx/modern/powerdown.wav")
-clip(SFX_DEATH) = Mix_LoadWAV("sfx/modern/death.wav")
-clip(SFX_SHOOT) = Mix_LoadWAV("sfx/modern/shoot.wav")
-clip(SFX_WALL) = Mix_LoadWAV("sfx/modern/wall.wav")
+
+SFXNames(SFX_BRICK) = "brick"
+SFXNames(SFX_EXPLODE) = "explode"
+SFXNames(SFX_HARDEN) = "harden"
+SFXNames(SFX_INVINCIBLE) = "invincible"
+SFXNames(SFX_POWER_UP) = "powerup"
+SFXNames(SFX_POWER_DOWN) = "powerdown"
+SFXNames(SFX_DEATH) = "death"
+SFXNames(SFX_SHOOT_BULLET) = "bullet"
+SFXNames(SFX_SHOOT_MISSILE) = "missile"
+SFXNames(SFX_LIFE) = "life"
+SFXNames(SFX_BRICKS_RESPAWN) = "respawn"
+SFXNames(SFX_WALL_BROKEN) = "wallBroken"
+SFXNames(SFX_BALL) = "paddle"
+SFXNames(SFX_WALL) = "wall"
+
+for PID as short = 0 to clipCount
+	clip(PID) = Mix_LoadWAV("sfx/modern/"+SFXNames(PID)+".wav")
+next PID
 music = NULL
 
 sub play_clip(ID as byte, Panning as short = 320, HertzMod as short = 100)
@@ -72,7 +83,7 @@ sub play_clip(ID as byte, Panning as short = 320, HertzMod as short = 100)
 		dim as ubyte PauseLength(0 to clipCount)
 		for clipID as ubyte = 0 to  clipCount
 			select case clipID
-				case SFX_SHOOT
+				case SFX_SHOOT_BULLET
 					PauseLength(clipID) = 15
 				case SFX_POWER_UP, SFX_POWER_DOWN
 					PauseLength(clipID) = 12
@@ -89,13 +100,7 @@ sub play_clip(ID as byte, Panning as short = 320, HertzMod as short = 100)
 	end if
 end sub
 sub dynamic_speed_clip(BallSpeed as double, Panning as short = 320)
-	if int(BallSpeed) > MaxSpeed then
-		play_clip(SFX_BALL+17)
-	elseif int(BallSpeed) >= DefaultSpeed then
-		play_clip(SFX_BALL+BallSpeed-8)
-	else
-		play_clip(SFX_BALL-1)
-	end if
+	play_clip(SFX_BALL)
 end sub
 sub decrement_pauses
 	for ID as ubyte = 0 to clipCount

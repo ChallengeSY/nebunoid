@@ -24,6 +24,7 @@ Masterdir = curdir
 #ELSE
 #include "NebNull.bas"
 #ENDIF
+
 #include "WordWrap.bi"
 #IFDEF __FB_WIN32__
 #include "windows.bi"

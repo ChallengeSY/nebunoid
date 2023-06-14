@@ -1260,7 +1260,7 @@ sub save_level(SaveLvNum as short)
 			else
 				print #2,
 			end if
-			print #2, "Brush "+str(BID)+" Increase Speed"+space(1-len(str(BID)))+":= "+SpeedIncrease
+			print #2, "Brush "+str(BID)+" Increase Spd"+space(3-len(str(BID)))+":= "+SpeedIncrease
 		end with
 	next BID
 	print #2,

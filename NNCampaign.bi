@@ -660,19 +660,20 @@ sub shuffle_levels
 end sub
 
 function level_list as string
-	dim as short SelectLevel = 1, LevelsRegistered, LegalLevel, LegalChoice
+	dim as short SelectLevel = 1, LevelsRegistered, AdjustPagination, LegalLevel, LegalChoice
 	dim as string LevelPass, OutPass
 
 	do
+		AdjustPagination = min(max(SelectLevel-15,0),max(LevelsRegistered-29,0))
 		LevelsRegistered = 0
 		cls
 		gfxstring("Level list for "+CampaignName,0,0,5,4,4,rgb(0,255,255))
 		for LevelID as short = 1 to HighLevel
-			LevelPass = check_level(LevelID)
 			if LevelID = 1 then
 				LegalLevel = 1
 				LevelPass = "++++++++"
 			else
+				LevelPass = check_level(LevelID)
 				if LevelPass <> "--------" AND LevelPass <> "++++++++" then
 					LegalLevel = 1
 				else
@@ -683,13 +684,15 @@ function level_list as string
 			if LegalLevel then
 				LevelsRegistered += 1
 				
-				if LevelsRegistered = SelectLevel then
-					line(0,18+LevelsRegistered*25)-(1023,41+LevelsRegistered*25),rgb(0,0,128),bf
-					LegalChoice = LegalLevel
-					OutPass = LevelPass
+				if LevelsRegistered-AdjustPagination > 0 AND LevelsRegistered-AdjustPagination < 30 then
+					if LevelsRegistered = SelectLevel then
+						line(0,18+(LevelsRegistered-AdjustPagination)*25)-(1023,41+(LevelsRegistered-AdjustPagination)*25),rgb(0,0,128),bf
+						LegalChoice = LegalLevel
+						OutPass = LevelPass
+					end if
+					
+					gfxstring("["+LevelPass+"] Level "+str(LevelID),0,20+(LevelsRegistered-AdjustPagination)*25,4,4,3,rgb(255,255,255))
 				end if
-				
-				gfxstring("["+LevelPass+"] Level "+str(LevelID),0,20+LevelsRegistered*25,4,4,3,rgb(255,255,255))
 			end if
 		next LevelID
 		screencopy
