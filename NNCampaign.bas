@@ -51,6 +51,7 @@ sub campaign_gameplay
 		.InitialLevel = 1
 		.LevelNum = 1
 		.BossMaxHealth = PlayerSlot(1).BossMaxHealth
+		.BulletAmmo = PlayerSlot(1).BulletAmmo
 		empty_hand(0)
 	end with
 	for PID as ubyte = 1 to 4
@@ -487,7 +488,7 @@ sub campaign_gameplay
 				if (GameStyle AND (1 SHL STYLE_BOSS)) OR (GameStyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
 					if .BossHealth <= 0 then
 						.BossHealth = 0
-						if (GameStyle AND (1 SHL STYLE_BOSS)) then
+						if .BossLastHit = 1 AND (GameStyle AND (1 SHL STYLE_BOSS)) then
 							play_clip(SFX_WALL_BROKEN)
 							for YID as ubyte = 1 to 24
 								for XID as ubyte = 1 to 20*(CondensedLevel+1)
