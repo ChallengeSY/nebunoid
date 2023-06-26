@@ -1,65 +1,65 @@
 ================================================================================
-LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 13
+LEVEL DATA FILE - REGULAR SEASON LEVEL 13
 ================================================================================
 *BEGIN*
 ================================================================================
 
 Level Name            := Armored Obstacle
-Level Description     :=
+Level Description     := 
 Level Password        := SOSQJJLC
-Level game number     := &b0000000000000011
+Level game number     := 3
 Level time limit      := 0
-Number of Block Sets  := 7
-Set 1 Color           := &hB0FFD700
-Set 1 Score Value     := 10*
-Set 1 Hit Degrade     := 1
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &hB0CD7F32
-Set 2 Score Value     := 2
-Set 2 Hit Degrade     := 1
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := &h80404040
-Set 3 Score Value     := 10*
-Set 3 Hit Degrade     := 0
-Set 3 Increase Speed  := FALSE
-Set 4 Color           := &h80808080
-Set 4 Score Value     := 2
-Set 4 Hit Degrade     := 3
-Set 4 Increase Speed  := FALSE
-Set 5 Color           := &h80FFFFFF
-Set 5 Score Value     := 2
-Set 5 Hit Degrade     := 4
-Set 5 Increase Speed  := FALSE
-Set 6 Color           := &h80FF00FF
-Set 6 Score Value     := 10*
-Set 6 Hit Degrade     := 0
-Set 6 Increase Speed  := FALSE
-Set 7 Color           := 0
-Set 7 Score Value     := 2
-Set 7 Hit Degrade     := 6
-Set 7 Increase Speed  := FALSE
+Number of Brushes     := 7
+Brush 1 Color         := &hB0FFD700
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 1
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &hB0CD7F32
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80404040
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80808080
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Spd  := FALSE
+Brush 5 Color         := &h80FFFFFF
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Spd  := FALSE
+Brush 6 Color         := &h80FF00FF
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := 0
+Brush 6 Increase Spd  := FALSE
+Brush 7 Color         := &h00000000
+Brush 7 Score Value   := 2
+Brush 7 Hit Degrade   := 6
+Brush 7 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
  1|12222222222222222221
- 2|2      7           2
+ 2|1      7           1
  3|2     757          2
  4|2    75257         2
- 5|2   7521257        2
- 6|2    75257   7     2
+ 5|1   7521257        1
+ 6|1    75257   7     1
  7|2     757   757    2
  8|2      7   75257   2
- 9|2         7521257  2
-10|2          75257   2
+ 9|1         7521257  1
+10|1          75257   1
 11|2           757    2
 12|2   7        7     2
-13|2  757             2
-14|2 75257            2
+13|1  757             1
+14|1 75257            1
 15|27521257           2
 16|2 75257            2
-17|2  757             2
-18|2   7              2
+17|1  757             1
+18|1   7              1
 19|2                  2
 20|55555555555555555555
 
