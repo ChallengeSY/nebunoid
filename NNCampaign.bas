@@ -488,6 +488,7 @@ sub campaign_gameplay
 					if .BossHealth <= 0 then
 						.BossHealth = 0
 						if (GameStyle AND (1 SHL STYLE_BOSS)) then
+							play_clip(SFX_WALL_BROKEN)
 							for YID as ubyte = 1 to 24
 								for XID as ubyte = 1 to 20*(CondensedLevel+1)
 									Tileset(XID,YID).BrickID = 0
@@ -2862,7 +2863,7 @@ sub campaign_gameplay
 			LastPlayed = timer
 			FrameTime = timer
 		elseif InType = FunctionTwelve then
-			play_clip(SFX_EXPLODE)
+			play_clip(SFX_BRICKS_RESPAWN)
 			bsave("screen"+str(ShotIndex)+".bmp",0)
 			ShotIndex += 1
 		end if
