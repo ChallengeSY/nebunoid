@@ -130,7 +130,12 @@ shuffle_backs
 if FileExists("conf.ini") then
 	open "conf.ini" for input as #10
 	for PID as byte = 1 to 4
-		input #10, NullString,PlayerSlot(PID).Difficulty
+		with PlayerSlot(PID)
+			input #10, NullString,.Difficulty
+			if .Difficulty < 1.0 then
+				.Difficulty = 1.0
+			end if
+		end with 
 	next PID
 	input #10, NullString,AllowHandicap
 	input #10, NullString,DisableHints
@@ -865,10 +870,13 @@ sub shop
 			HoldClick = 0
 		end if
 		InType = inkey
+		if InType = XBox then
+			clean_up
+			end 0
+		end if
 		screenevent(@e)
 		screencopy
 		sleep 10
 	loop until InType = EscapeKey
 	erase Filter, HelpText, TotalCount, CustomItem, CampaignTxt
-	release_music
 end sub

@@ -1867,12 +1867,14 @@ sub campaign_gameplay
 					end if
 				end with
 			else
-				if NumPlayers > 1 then
-					Instructions = "Game paused. Press P to resume, Player "+str(Player)+" (or press ESC to end this player)"
-				else
-					Instructions = "Game paused. Press P to resume, or press ESC to end current game"
+				if left(Instructions,9) <> "Tampering" then
+					if NumPlayers > 1 then
+						Instructions = "Game paused. Press P to resume, Player "+str(Player)+" (or press ESC to end this player)"
+					else
+						Instructions = "Game paused. Press P to resume, or press ESC to end current game"
+					end if
+					InstructExpire = timer + 1
 				end if
-				InstructExpire = timer + 1
 				if multikey(SC_TAB) then
 					auxillary_view(InstruAlpha, InstruBeta)
 				end if
@@ -2572,6 +2574,7 @@ sub campaign_gameplay
 								else
 									.Threshold = InitialExtraLife
 								end if
+								.BossMaxHealth = PlayerSlot(1).BossMaxHealth
 								.Lives = StartingLives + sgn(ExtraBarrierPoint * CampaignBarrier)
 							end with
 							for PID as ubyte = 1 to NumPlayers
@@ -2958,6 +2961,8 @@ sub campaign_gameplay
 			else
 				exit do
 			end if
+		elseif InType = XBox then
+			exit do
 		end if
 	loop
 	release_music
@@ -2966,6 +2971,7 @@ sub campaign_gameplay
 		with PlayerSlot(PID)
 			if .Lives > 0 AND DQ = 0 then
 				TotalXP += int(.Score * .Difficulty)
+				high_score_input(PID,1)
 			end if
 		end with
 	next PID
@@ -2977,6 +2983,11 @@ sub campaign_gameplay
 		end if
 	end if
 	kill("Stats.dat")
+	if InType = XBox then
+		clean_up
+		end 0
+	end if
 	setmouse(,,0,0)
 end sub
+
 

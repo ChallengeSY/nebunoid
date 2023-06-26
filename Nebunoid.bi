@@ -33,6 +33,7 @@ Masterdir = curdir
 '#DEFINE __GAME_DEBUG__
 declare sub shop
 declare sub generate_campaign_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
+'Keyboard commands
 const EscapeKey = chr(27)
 const FunctionFour = chr(255,62)
 const FunctionSeven = chr(255,65)
@@ -45,6 +46,9 @@ const PageDn = chr(255,81)
 const EnterKey = chr(13)
 const Backspace = chr(8)
 const XBox = chr(255,107)
+const FunctionOne = chr(255,59)
+const FunctionTwelve = chr(255,134)
+
 const FPS = 60
 const SavedHighSlots = 10
 const TotalHighSlots = SavedHighSlots + 4
@@ -52,16 +56,19 @@ const MaxBullets = 40
 const BaseFlash = 128
 const LevelClearDelay = 640
 const ExplodeDelay = -6
-const DIFF_KIDS = 1
-const DIFF_VEASY = 2
-const DIFF_EASY = 3
-const DIFF_MEASY = 4
-const DIFF_MEDIUM = 5
-const DIFF_MHARD = 6
-const DIFF_HARD = 7
-const DIFF_VHARD = 8
-const DIFF_EXTREME = 9
-const DIFF_INSANE = 10
+
+enum Difficulties
+	DIFF_KIDS = 1
+	DIFF_VEASY
+	DIFF_EASY
+	DIFF_MEASY
+	DIFF_MEDIUM
+	DIFF_MHARD
+	DIFF_HARD
+	DIFF_VHARD
+	DIFF_EXTREME
+	DIFF_INSANE
+end enum
 enum DifferentGames
 	STYLE_POWERUPS
 	STYLE_EXTRA_HEIGHT
@@ -80,6 +87,7 @@ enum DifferentGames
 	STYLE_FATAL_TIMER
 	STYLE_BONUS
 end enum
+
 enum CapsuleDesigns
 	CAP_SLOW = 1
 	CAP_FAST
@@ -117,6 +125,7 @@ enum CapsuleDesigns
 	CAP_GEM_W
 	CAP_MAX
 end enum
+
 enum ControlTypes
 	CTRL_DESKTOP = 0
 	CTRL_LAPTOP
@@ -139,6 +148,7 @@ enum BallDesigns
 	BALL_MED
 	BALL_LG
 end enum
+
 type Basics
 	'Common Stuff
 	X as single
@@ -173,6 +183,7 @@ type ParticleSpecs
 	Blending as short
 	Coloring as uinteger
 end type
+
 type PalleteSpecs
 	PColoring as uinteger
 	ScoreValue as ushort
@@ -205,6 +216,7 @@ type PlayerSpecs
 	Difficulty as double
 	BulletAmmo as short
 	MissileAmmo as short
+	HotseatStamp as double
 
 	'Campaign exclusive specs
 	WarpTimer as short
@@ -236,6 +248,7 @@ const NumBalls = 128
 const MaxFallCaps = 12
 const Particount = 1250
 const BackCount = 99
+
 dim shared as string NullString
 dim shared as TileSpecs Tileset(41,24)
 dim shared as ushort MinSize, StandardSize, MaxSize, CapsFalling, BulletsInPlay, _
@@ -259,13 +272,12 @@ dim shared as ubyte DQ, Player, NumPlayers, DispLives, Invis, GfxStyle, ExploTic
 dim shared as byte EnhancedGFX, GamePaused, TourneyValid, TotalMessages, TotalUnread
 dim shared as any ptr BulletPic, MissilePic, SoftBrickPic, MultihitPic, InvinciblePic, ExplodePic, BaseExplode, SoftBrickPicMini, MultihitPicMini, InvincibleMini, _
 	CapsulePic(26), CapsuleBar(5), CapsuleBarFrame, PokerBar(5), Background, FramesetMerged, Sideframes, Topframe, DiffStick, DiffSelector, PaddlePic, BasePaddle, PaddleBar
-const Interpolation = 120
+
+const Interpolation = 120 'Ball updates per frame
 const PerPage = 20
 const PaddleHeight = 18
 const CustomizePadding = 150
 const CustomizeSelect = CustomizePadding - 5
-const FunctionOne = chr(255,59)
-const FunctionTwelve = chr(255,134)
 enum BounceDirections
 	BOUNCE_E = 1
 	BOUNCE_NE

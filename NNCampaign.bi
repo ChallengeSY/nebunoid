@@ -1204,12 +1204,21 @@ sub export_board
 		next XID
 	next YID
 	close #5
+	
+	PlayerSlot(Player).HotseatStamp = FileDateTime("Hotseat"+str(Player)+".dat")
 end sub
 
 sub import_board
 	dim as string LevelFile = CampaignFolder+"/L"+str(PlayerSlot(Player).LevelNum)
 	load_level(PlayerSlot(Player).LevelNum)
 	if FileExists("Hotseat"+str(Player)+".dat") then
+		'Penalize anomalies
+		if abs(FileDateTime("Hotseat"+str(Player)+".dat") - PlayerSlot(Player).HotseatStamp) > 1e-6 then
+			PlayerSlot(Player).Lives = max(PlayerSlot(Player).Lives - 1,1)
+			Instructions = "Tampering detected!!! Penalty -1 life for incoming player!"
+			InstructExpire = timer + 30
+		end if
+		
 		open "Hotseat"+str(Player)+".dat" for input as #6
 		input #6, Gamestyle
 		for YID as ubyte = 1 to 24
@@ -1354,8 +1363,8 @@ sub auxillary_view(ByRef TextAlpha as short, ByRef TextBeta as short)
 	
 end sub
 
-sub high_score_input(PlayerNum as byte)
-	if DQ OR CampaignName = PlaytestName then
+sub high_score_input(PlayerNum as byte, Automatic as byte = 0)
+	if DQ OR CampaignName = PlaytestName OR PlayerSlot(PlayerNum).Difficulty > 12 then
 		exit sub
 	end if
 
@@ -1385,40 +1394,42 @@ sub high_score_input(PlayerNum as byte)
 		end if
 		
 		if NewPosition <= SavedHighSlots then
-			do
-				screenevent(@e)
-				line(302,349)-(721,449),rgb(0,0,0),bf
-				line(302,349)-(721,449),rgb(255,255,255),b
-				
-				if NewPosition = 1 then
-					PrintStr = "High Score achieved, Player "+str(PlayerNum)+"!!!"
-				else
-					PrintStr = "Position "+str(NewPosition)+" achieved, Player "+str(PlayerNum)+"!"
-				end if
-				CenterX = 512-gfxlength(PrintStr,4,3,3)/2
-				gfxstring(PrintStr,CenterX,359,4,3,3,rgb(255,255,255))
-				
-				PrintStr = "Type to enter your name"
-				CenterX = 512-gfxlength(PrintStr,4,3,3)/2
-				gfxstring(PrintStr,CenterX,389,4,3,3,rgb(255,255,255))
-				
-				PrintStr = NewName
-				CenterX = 512-gfxlength(PrintStr,4,3,3)/2
-				gfxstring(PrintStr,CenterX,419,4,3,3,rgb(255,255,255))
-				
-				draw_box(372,414,651,443)
-		
-				sleep 10
-				InType = inkey
-				screencopy
-				
-				if (InType >= "A" AND InType <= "Z") OR (InType >= "a" AND InType <= "z") OR (InType >= "0" AND InType <= "9") then
-					NewName += InType
-				elseif InType = Backspace then
-					NewName = left(NewName,len(NewName)-1)
-				end if
-			loop until InType = chr(13)
-			InType = chr(255)
+			if Automatic = 0 then
+				do
+					screenevent(@e)
+					line(302,349)-(721,449),rgb(0,0,0),bf
+					line(302,349)-(721,449),rgb(255,255,255),b
+					
+					if NewPosition = 1 then
+						PrintStr = "High Score achieved, Player "+str(PlayerNum)+"!!!"
+					else
+						PrintStr = "Position "+str(NewPosition)+" achieved, Player "+str(PlayerNum)+"!"
+					end if
+					CenterX = 512-gfxlength(PrintStr,4,3,3)/2
+					gfxstring(PrintStr,CenterX,359,4,3,3,rgb(255,255,255))
+					
+					PrintStr = "Type to enter your name"
+					CenterX = 512-gfxlength(PrintStr,4,3,3)/2
+					gfxstring(PrintStr,CenterX,389,4,3,3,rgb(255,255,255))
+					
+					PrintStr = NewName
+					CenterX = 512-gfxlength(PrintStr,4,3,3)/2
+					gfxstring(PrintStr,CenterX,419,4,3,3,rgb(255,255,255))
+					
+					draw_box(372,414,651,443)
+			
+					sleep 10
+					InType = inkey
+					screencopy
+					
+					if (InType >= "A" AND InType <= "Z") OR (InType >= "a" AND InType <= "z") OR (InType >= "0" AND InType <= "9") then
+						NewName += InType
+					elseif InType = Backspace then
+						NewName = left(NewName,len(NewName)-1)
+					end if
+				loop until InType = chr(13)
+				InType = chr(255)
+			end if
 			if NewName = "" then
 				NewName = "Anonymous"
 			end if
@@ -1539,6 +1550,10 @@ sub game_over
 		elseif InType = UpArrow then
 			UseChoice -= 1
 			if UseChoice < 0 then UseChoice = 2
+		end if
+		if InType = XBox then
+			UseChoice = 2
+			exit do
 		end if
 	loop until InType = chr(13) AND ValidChoice(UseChoice)
 	InType = chr(255)
