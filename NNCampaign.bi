@@ -706,6 +706,10 @@ function level_list as string
 			SelectLevel -= 1
 		elseif InType = DownArrow then
 			SelectLevel += 1
+		elseif InType = PageUp then
+			SelectLevel -= 28
+		elseif InType = PageDn then
+			SelectLevel += 28
 		end if
 		
 		if SelectLevel < 1 then

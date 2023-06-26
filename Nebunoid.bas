@@ -4,7 +4,7 @@
 
 #include "Nebunoid.bi"
 #include "NNCampaign.bas"
-windowtitle "Nebunoid 1.01"
+windowtitle "Nebunoid 1.02"
 
 if FileExists("portable") = 0 then
 	#IF defined(__FB_WIN32__)

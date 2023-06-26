@@ -50,6 +50,7 @@ sub campaign_gameplay
 		.Lives = 0
 		.InitialLevel = 1
 		.LevelNum = 1
+		.BossMaxHealth = PlayerSlot(1).BossMaxHealth
 		empty_hand(0)
 	end with
 	for PID as ubyte = 1 to 4
