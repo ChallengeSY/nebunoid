@@ -590,6 +590,7 @@ end function
 sub respawn_blocks(BrushID as short)
 	dim as ushort BlocksRespawned = 0
 	
+	'Respawns all blocks that were origianlly bound to the selected brush
 	for YID as ubyte = 1 to 24
 		for XID as ubyte = 1 to 20*(CondensedLevel+1)
 			with Tileset(XID,YID)
@@ -603,6 +604,13 @@ sub respawn_blocks(BrushID as short)
 	next YID
 	
 	if BlocksRespawned > 0 then
+		'Damages the ceiling slightly
+		with PlayerSlot(Player)
+			.BossLastHealth = .BossHealth
+			.BossLastHit = 0
+			.BossHealth -= max(int(.BossMaxHealth/100),1)
+		end with
+		
 		play_clip(SFX_BRICKS_RESPAWN)
 	end if
 end sub
@@ -832,7 +840,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 		next XID
 	next YID
 	
-	if (Gamestyle AND (1 SHL STYLE_BREAKABLE_CEILING)) AND DispSetting < 2 then
+	if (Gamestyle AND (1 SHL STYLE_BREAKABLE_CEILING)) AND DispSetting < 2 AND PlayerSlot(Player).BossHealth > 0 then
 		for BID as ubyte = 1 to BlockBrushes
 			if Pallete(BID).UsedInlevel > 0 AND BlocksInPallete(BID) = 0 then
 				respawn_blocks(BID)
