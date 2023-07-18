@@ -258,11 +258,7 @@ do
 					SecretLevels = 0
 					clear_level
 				end if
-				if abs(InstruAlpha) = 320 then
-					InstruAlpha = -316
-				end if
-				MirrorEditing = 0
-				SelectedBrush = 0
+				reset_editor_specs
 				.LevelNum = 1
 			end if
 		elseif InType = chr(19) AND CampaignFolder <> "" then
@@ -319,16 +315,12 @@ do
 			
 			if LevelUnsaved = 0 then
 				.LevelNum += 1
-				if abs(InstruAlpha) = 320 then
-					InstruAlpha = -316
-				end if
-				SelectedBrush = 0
-				MirrorEditing = 0
 				if FileExists(MasterDir + "/campaigns/" + CampaignFolder + "/L" + str(.LevelNum) + ".txt") then
 					load_level(.LevelNum)
 				else
 					clear_level
 				end if
+				reset_editor_specs
 			end if
 		elseif (InType = "-" OR InType = "_") AND .LevelNum > 1 then
 			if LevelUnsaved then
@@ -348,12 +340,8 @@ do
 			
 			if LevelUnsaved = 0 then
 				.LevelNum -= 1
-				if abs(InstruAlpha) = 320 then
-					InstruAlpha = -316
-				end if
-				SelectedBrush = 0
-				MirrorEditing = 0
 				load_level(.LevelNum)
+				reset_editor_specs
 			end if
 		elseif InType = EscapeKey OR InType = XBox then
 			if LevelUnsaved OR CampaignUnsaved then

@@ -1353,3 +1353,13 @@ sub save_campaign(SaveLvNum as short)
 	Instructions = "Save successful"
 	InstructExpire = timer + 5
 end sub
+
+sub reset_editor_specs
+	MirrorEditing = 0
+	SelectedBrush = 0
+	if LevelDescription = "" then
+		InstructExpire = 0
+	else
+		Instructions = LevelDescription
+	end if
+end sub

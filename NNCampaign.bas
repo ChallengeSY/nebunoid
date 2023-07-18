@@ -30,7 +30,7 @@ sub campaign_gameplay
 	if QuickPlayFile = "" then
 		LoadErrors = load_settings
 	else
-		CampaignName = "Quick Playtest Level" 
+		CampaignName = PlaytestName
 		
 		StartingLives = 9
 		ExtraBarrierPoint = 1
@@ -296,10 +296,15 @@ sub campaign_gameplay
 				dim as uinteger TargetColoring
 				
 				if NumPlayers = 1 then
-					do
-						ModdedHiScore = ceil(HighScore(TargetPos).RawScore * HighScore(TargetPos).Difficulty / .Difficulty)
-						TargetPos -= 1
-					loop until TargetPos = 0 OR .Score < ModdedHiScore
+					if CampaignName = PlaytestName then
+						ModdedHiScore = 0
+						TargetPos = -1
+					else
+						do
+							ModdedHiScore = ceil(HighScore(TargetPos).RawScore * HighScore(TargetPos).Difficulty / .Difficulty)
+							TargetPos -= 1
+						loop until TargetPos = 0 OR .Score < ModdedHiScore
+					end if
 				else
 					ModdedHiScore = 0
 					for PID as byte = 1 to NumPlayers
@@ -318,7 +323,9 @@ sub campaign_gameplay
 				end if
 				
 				TargetColoring = rgba(255,255,255,224)
-				if TargetPos = 0 then
+				if TargetPos = -1 then
+					TargetColoring = rgba(128,128,128,224)
+				elseif TargetPos = 0 then
 					if .Score < ModdedHiScore then
 						TargetColoring = rgba(255,215,0,224)
 					else
