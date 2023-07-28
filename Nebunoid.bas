@@ -129,24 +129,40 @@ wend
 shuffle_backs
 
 if FileExists("conf.ini") then
+	dim as byte PlayersFound = 0
 	open "conf.ini" for input as #10
-	for PID as byte = 1 to 4
-		with PlayerSlot(PID)
-			input #10, NullString,.Difficulty
-			.Difficulty = max(.Difficulty,1.0)
-		end with 
-	next PID
-	input #10, NullString,AllowHandicap
-	input #10, NullString,DisableHints
-	input #10, NullString,CampaignFolder
-	input #10, NullString,EnhancedGFX
-	input #10, NullString,ControlStyle
-	input #10, NullString,CampaignBarrier
-	input #10, NullString,ShuffleLevels
-	if eof(10) = 0 then
-		input #10, NullString,BGBrightness
-		BGBrightness = max(min(BGBrightness,100),0)
-	end if
+	do
+		input #10, NullString
+		select case NullString
+			case "difficulty"
+				PlayersFound += 1
+				if PlayersFound <= 4 then
+					with PlayerSlot(PlayersFound)
+						input #10, .Difficulty
+						.Difficulty = max(.Difficulty,1.0)
+					end with
+				else
+					input #10, NullString
+				end if
+			case "handicap"
+				input #10, AllowHandicap
+			case "nohints"
+				input #10, DisableHints
+			case "campaign"
+				line input #10, CampaignFolder
+			case "enhanced"
+				input #10, EnhancedGFX
+			case "controls"
+				input #10, ControlStyle
+			case "campbarr"
+				input #10, CampaignBarrier
+			case "shuffle"
+				input #10, ShuffleLevels
+			case "bgbright"
+				input #10, BGBrightness
+				BGBrightness = max(min(BGBrightness,100),0)
+		end select
+	loop until eof(10)
 	close #10
 end if
 if FileExists("xp.dat") then
