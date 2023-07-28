@@ -1,0 +1,60 @@
+================================================================================
+LEVEL DATA FILE - PATRIARCH MEMORIAL LEVEL 7
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Hexes and counter
+Level Description     := 
+Level Password        := XRJRZNYH
+Level game number     := 19
+Level time limit      := 0
+Number of Brushes     := 5
+Brush 1 Color         := &h80268BB3
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80BEFD40
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80404040
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80808080
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Spd  := FALSE
+Brush 5 Color         := &h80FFFFFF
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|242              242
+ 2| 242            242 
+ 3|  242          242  
+ 4|   24222222222242   
+ 5|    255555555552    
+ 6|   25222222222252   
+ 7|  2522111111112252  
+ 8| 252221 1111 122252 
+ 9|25222211111111222252
+10|522222111  111222225
+11|522222111  111222225
+12|25222211111111222252
+13| 252221 1111 122252 
+14|  2522111111112252  
+15|   25222222222252   
+16|    255555555552    
+17|   24222222222242   
+18|  242          242  
+19| 242            242 
+20|242              242
+
+================================================================================
+*END*
+================================================================================

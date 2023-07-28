@@ -1,11 +1,9 @@
 ## Nebunoid Manual
-
 Nebunoid is a nebula themed Arkanoid/Breakout-type game. In this game, your objective is to bash through various colored blocks with a ball and a paddle, scoring as many points as you can while also clearing as many levels as possible.
 
 When a campaign is started from scratch or resumed from a password, up to four players may play the game, alternating turns when a level is finished or when a life is lost by dropping the *last* ball.
 
 ### Gameplay
-
 At the beginning of each life, the ball starts off slow, making it easy to rebound. Hitting the blocks, walls, and the paddle will make it go faster; making it harder to keep the ball in play.
 
 Some blocks may *explode* upon contact, destroying themselves and adjacent blocks, and potentially triggering chain reactions. These blocks are also the only ones that will always be hit by weakened balls.
@@ -13,7 +11,6 @@ Some blocks may *explode* upon contact, destroying themselves and adjacent block
 As soon as all of the scorable blocks are *eliminated* (from a regular ball's perspective), the level is cleared, bonuses are awarded, and a new level begins. The process repeats until either every life is exhausted (although a continue may be used to gain more lives), or until the campaign has been completed.
 
 ### Difficulty Levels
-
 Nebunoid supports a difficulty scale for *each* player, allowing players of varying skill to participate.
 
 | Difficulty  | Rating Range | Paddle Specs | Ball Speed | Capsule Chance(1) | Continue Penalty(2) | Extra perks  |
@@ -43,7 +40,6 @@ Nebunoid has 27 capsules of varying power, and rarity. The power-up capsules are
 These capsules also provide a little bit of recovery when in a boss battle.
 
 #### Gem capsules
-
 In addition, there is a collection of 7 gem-themed capsules available outside of Effortless difficulty. These capsules are used to form 5-gem poker-style hands. If a decent hand is formed this way, extra points will be awarded once the hand is complete. Unused gems at the end of the campaign also award points based on the same mechanics.
 
 | Hand            | Value(1) |
@@ -77,6 +73,9 @@ Geometric Designs is a shorter than usual 10-level campaign. Although less accom
 #### Fortified Letters
 Fortified Letters is moderately more challenging than Regular Season. Every English letter is represented in this campaign, for a total of 26 levels. Save points are present in every level, except for the final level (which disallows continues instead).
 
+#### Patriarch Memorial
+Patriarch Memorial is a moderate 25-level campaign, comprised mostly of artistic levels designed as a memory of the past. Save points are present in every level up to level 23. No continues are permitted beyond this level.
+
 #### Challenge Campaign
 The 30-level Challenge Campaign amps up the difficulty several notches by spamming strong blocks like it is hard to believe. Every level demonstrates one or more of the following: Invincible blocks, strong blocks (some will be bio-regenerative), and invisible blocks that may lead to any of the preceding elements
 
@@ -90,4 +89,4 @@ Celestial Journey is the longest official campaign, at 40 levels. It makes plent
 
 Like Maximum Insanity, save points appear every five levels starting with level 1. Unlike previous campaigns, every ten levels starting at level 10 is a boss battle, and continues are disallowed on these levels.
 
-*Nebunoid 1.00 (C) 2023 Paul Ruediger. Nebulae artwork courtesy of NASA, ESA, and/or other astrophysical observatories and stations. Please check the [credits](credits.md) for more details.*
+*Nebunoid (C) 2023 Paul Ruediger. Nebulae artwork courtesy of NASA, ESA, and/or other astrophysical observatories and stations. Please check the [credits](credits.md) for more details.*

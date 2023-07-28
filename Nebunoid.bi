@@ -258,7 +258,7 @@ dim shared as HighSlot HighScore(TotalHighSlots)
 dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP
 dim shared as uinteger GameStyle, TourneyStyle, TourneyScore, ShotIndex
 dim shared as ubyte Fullscreen, JoyAnalog, JoyInvertAxes, ControlStyle, TapWindow, CondensedLevel
-dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue
+dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness
 dim shared as single JoyAxis(7)
 dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, BlockBrushes
 dim shared as double ProgressiveQuota, InstructExpire, MisnExpire, TimeRem, Reminder = -1, _
@@ -576,6 +576,7 @@ sub save_unlocks
 	print #10, "controls,";ControlStyle
 	print #10, "campbarr,";CampaignBarrier
 	print #10, "shuffle,";ShuffleLevels
+	print #10, "bgbright,";BGBrightness
 	close #10
 	open "xp.dat" for output as #10
 	print #10, TotalXP
@@ -609,6 +610,10 @@ sub respawn_blocks(BrushID as short)
 			.BossLastHealth = .BossHealth
 			.BossLastHit = 0
 			.BossHealth -= max(int(.BossMaxHealth/100),1)
+			
+			if .BossHealth <= 0 then
+				play_clip(SFX_WALL_BROKEN)
+			end if
 		end with
 		
 		play_clip(SFX_BRICKS_RESPAWN)

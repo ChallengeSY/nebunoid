@@ -4,7 +4,7 @@
 
 #include "Nebunoid.bi"
 #include "NNCampaign.bas"
-windowtitle "Nebunoid 1.02"
+windowtitle "Nebunoid 1.03"
 
 if FileExists("portable") = 0 then
 	#IF defined(__FB_WIN32__)
@@ -116,6 +116,7 @@ line PaddleBar,(635,5)-(635,26),rgb(255,255,255)
 #ENDIF
 
 'Background pooling
+BGBrightness = 50
 Background = ImageCreate(1024,768)
 line Background,(0,0)-(1023,767),rgb(0,0,0),bf
 NullString = dir(MasterDir + "/gfx/back/*.bmp",fbNormal)
@@ -132,9 +133,7 @@ if FileExists("conf.ini") then
 	for PID as byte = 1 to 4
 		with PlayerSlot(PID)
 			input #10, NullString,.Difficulty
-			if .Difficulty < 1.0 then
-				.Difficulty = 1.0
-			end if
+			.Difficulty = max(.Difficulty,1.0)
 		end with 
 	next PID
 	input #10, NullString,AllowHandicap
@@ -144,6 +143,10 @@ if FileExists("conf.ini") then
 	input #10, NullString,ControlStyle
 	input #10, NullString,CampaignBarrier
 	input #10, NullString,ShuffleLevels
+	if eof(10) = 0 then
+		input #10, NullString,BGBrightness
+		BGBrightness = max(min(BGBrightness,100),0)
+	end if
 	close #10
 end if
 if FileExists("xp.dat") then
@@ -255,7 +258,7 @@ sub shop
 		"Choose a difficulty", _
 		"Choose control style", _
 		"Manage other options"}
-	dim as ubyte TotalCount(0 to MISC) => {0, 8, 0, 0, 12, 5}
+	dim as ubyte TotalCount(0 to MISC) => {0, 9, 0, 0, 12, 6}
 	dim as ubyte CTRL_BUTTON_ACTION, CTRL_AXIS_MOVEMENT
 
 	dim as string ItemDesc, CommunityFolder, CustomItem(MISC,42)
@@ -282,17 +285,22 @@ sub shop
 	MinXP(3) = 7.5e4
 	CustomItem(1,4) = "Fortified Letters    "
 	MinXP(4) = 2e5
-	CustomItem(1,5) = "Challenge Campaign   "
-	MinXP(5) = 7.5e5
-	CustomItem(1,6) = "Maximum Insantiy     "
-	MinXP(6) = 2.5e6
-	CustomItem(1,7) = "Celestial Journey    "
-	MinXP(7) = 7.5e6
-	CustomItem(1,8) = "Nebunoid Boss Rush   "
-	MinXP(8) = 2e7
+	CustomItem(1,5) = "Patriarch Memorial   "
+	MinXP(5) = 4.25e5
+	CustomItem(1,6) = "Challenge Campaign   "
+	MinXP(6) = 7.5e5
+	CustomItem(1,7) = "Maximum Insantiy     "
+	MinXP(7) = 2.5e6
+	CustomItem(1,8) = "Celestial Journey    "
+	MinXP(8) = 7.5e6
+	CustomItem(1,9) = "Nebunoid Boss Rush   "
+	MinXP(9) = 2e7
 
-	if TotalXP < MinXP(8) * 0.75 then
+	'Hide secret campaign if not even close to unlocking
+	if TotalXP < MinXP(9) * 0.75 then
 		TotalCount(1) -= 1
+	elseif TotalXP < MinXP(9) * 0.9 then
+		CustomItem(1,9) = "???????? ???? ????   "
 	end if
 
 	dim as string Filter(0 to MISC) => {_
@@ -302,12 +310,13 @@ sub shop
 		"Difficulty", _
 		"Controls", _
 		"Miscellaneous"}
-	dim as string ShortCampaignNames(1 to 42) => {"intro", "regular", "geometry", "alphabet", "challenge", "extreme", "universe", "bossrush"}
+	dim as string ShortCampaignNames(1 to 42) => {"intro", "regular", "geometry", "alphabet", "memorial", "challenge", "extreme", "universe", "bossrush"}
 	dim as string CampaignTxt(1 to 42) => {_
 		"Introductory Training serves as a shorter, easier campaign for new players.",_
 		"The Regular Season is a balanced campaign, and is recommended for all skill levels.",_
 		"The Geometric Designs is another short campaign, of modest difficulty.",_
 		"The Fortified Letters has levels that are, well, shaped into letters.", _
+		"Designed in memory of a father, Patriarch Memorial is a moderate artistic set.", _
 		"The Challenge Campaign makes heavy use of invincible and otherwise very strong blocks!", _
 		"Do you have what it takes to overcome Maximum Insanity?", _
 		"Celestial Journey is a massive campaign mostly depicting deep space elements!", _
@@ -327,6 +336,7 @@ sub shop
 	CustomItem(MISC,3) = "Campaign barrier system"
 	CustomItem(MISC,4) = "Shuffle levels         "
 	CustomItem(MISC,5) = "Full screen setting    "
+	CustomItem(MISC,6) = "Background brightness  "
 	for PID as ubyte = 1 to 42
 		if ShortCampaignNames(PID) <> "" then
 			ShortCampaignNames(PID) = "official/"+ShortCampaignNames(PID)
@@ -343,9 +353,6 @@ sub shop
 		wend
 	next PID
 	
-	if TotalXP < MinXP(8) * 0.9 then
-		CustomItem(1,8) = "???????? ???? ????   "
-	end if
 
 	do
 		MouseColor = rgb(0,255,128)
@@ -778,6 +785,8 @@ sub shop
 							ItemDesc = "Shuffles most levels in a campaign, resulting in a different experience with each play"
 						case 5
 							ItemDesc = "Toggle between Full Screen and a Windowed application (Shortcut: F7)"
+						case 6
+							ItemDesc = "Determines how dark to make the backgrounds."
 					end select
 				end if
 				
@@ -802,6 +811,17 @@ sub shop
 								case 5
 									toggle_fullscreen(-1)
 							end select
+						end if
+					end if
+				elseif PID = 6 then
+					gfxstring(CustomItem(MISC,PID)+" ("+str(BGBrightness)+"%)",5,PosY,4,4,3,rgb(255,255,255))
+					if MouseY > = SelY AND MouseY < SelY+30 then
+						draw_box(0,SelY,1023,SelY+29)
+						if ButtonCombo > 0 AND HoldClick = 0 then
+							BGBrightness -= 25
+							if BGBrightness < 0 then
+							 	BGBrightness = 75
+							end if
 						end if
 					end if
 				else

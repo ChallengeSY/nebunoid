@@ -265,7 +265,7 @@ sub campaign_gameplay
 			end if
 			
 			put(0,0),Background,pset
-			line(0,0)-(1023,767),rgba(0,0,0,128),bf
+			line(0,0)-(1023,767),rgba(0,0,0,255-(BGBrightness/100*255)),bf
 			if (MinPlayHeight > 0) then
 				ShowTopUI = 60
 				put(0,0),FramesetMerged,trans
@@ -1439,6 +1439,7 @@ sub campaign_gameplay
 											.BossLastHealth = .BossHealth
 											.BossLastHit = 0
 											.BossHealth -= int(Ball(BID).Speed)
+											.Score += int(Ball(BID).Speed) * ball_ct_bonus
 											if .BossHealth <= 0 then
 												play_clip(SFX_WALL_BROKEN)
 											end if

@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - PATRIARCH MEMORIAL LEVEL 8
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Pizza Pizza
+Level Description     := 
+Level Password        := GQVUIPVA
+Level game number     := 7
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &h80C08060
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80804000
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80FFFF00
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80C00000
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|        11          
+ 2|      1134          
+ 3|     13333          
+ 4|     34323          
+ 5|     33333          
+ 6|     33433          
+ 7|      2333          
+ 8|       343          
+ 9|        33          
+10|         3          
+11|          3         
+12|          33        
+13|          343       
+14|          3332      
+15|          33433     
+16|          33333     
+17|          32343     
+18|          33331     
+19|          4311      
+20|          11        
+
+================================================================================
+*END*
+================================================================================
