@@ -25,10 +25,10 @@ Masterdir = curdir
 #include "NebNull.bas"
 #ENDIF
 
-#include "WordWrap.bi"
 #IFDEF __FB_WIN32__
 #include "windows.bi"
 #ENDIF
+#include "WordWrap.bi"
 
 '#DEFINE __GAME_DEBUG__
 declare sub shop
