@@ -172,8 +172,8 @@ end if
 shuffle_music
 
 open "sfx/mus/Settings.txt" for input as #2
-input #2, "", OtherMusVol
-input #2, "", TrackerVol
+input #2, NullString, OtherMusVol
+input #2, NullString, TrackerVol
 close #2
 
 for Stream as short = 0 to MusicLoaded - 1

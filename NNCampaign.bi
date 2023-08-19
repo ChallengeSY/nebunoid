@@ -530,7 +530,7 @@ function load_level_file(LoadLevel as string) as integer
 					.BrickID = 0
 				else
 					.BrickID = convert_char(mid(LoadData,3+XID,1))
-					if .BrickID > 0 AND Tileset(XID,YID).BrickID < > Pallete(Tileset(XID,YID).BrickID).HitDegrade AND _
+					if .BrickID > 0 AND Tileset(XID,YID).BrickID <> Pallete(Tileset(XID,YID).BrickID).HitDegrade AND _
 						Pallete(.BrickID).CalcedInvulnerable < 2 then
 						CampaignBricks += 1
 						BrickCount += 1
@@ -747,9 +747,9 @@ sub campaign_collisions(BallID as short)
 			with Ball(BallID)
 				if XID > 0 AND XID <= 40 AND YID > 0 AND YID <= 20 AND .Invul = 0 AND _
 					Tileset(XID,YID).BrickID > 0 AND (.LHX <> XID OR .LHY <> YID) AND _
-					.X > = 32-BallSize+(XID-1)*48/(CondensedLevel + 1) AND _
-					.X < = 32+BallSize+(XID)*48/(CondensedLevel + 1) AND _
-					.Y > = 96-BallSize+(YID-1)*24 AND .Y < = 96+BallSize+(YID)*24 then
+					.X >= 32-BallSize+(XID-1)*48/(CondensedLevel + 1) AND _
+					.X <= 32+BallSize+(XID)*48/(CondensedLevel + 1) AND _
+					.Y >= 96-BallSize+(YID-1)*24 AND .Y <= 96+BallSize+(YID)*24 then
 					if .Power <= 1 then
 						.LHX = XID
 						.LHY = YID

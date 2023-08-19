@@ -8,14 +8,14 @@ windowtitle "Nebunoid 1.03"
 
 if FileExists("portable") = 0 then
 	#IF defined(__FB_WIN32__)
-	if environ("APPDATA") < > "" then
+	if environ("APPDATA") <> "" then
 		if Dir(environ("APPDATA")+"\Nebunoid",fbDirectory) = "" then
 			mkdir(environ("APPDATA")+"\Nebunoid")
 		end if
 		chdir(environ("APPDATA")+"\Nebunoid")
 	end if
 	#ELSE
-	if environ("HOME") < > "" then
+	if environ("HOME") <> "" then
 		if Dir(environ("HOME")+"/.nebunoid",fbDirectory) = "" then
 			mkdir(environ("HOME")+"/.nebunoid")
 		end if
@@ -224,24 +224,24 @@ do
 	end if
 	
 	if MouseX >= 32 AND MouseX < 992 then
-		if MouseY > = 140 AND MouseY < 185 AND CampaignFolder <> "" then
+		if MouseY >= 140 AND MouseY < 185 AND CampaignFolder <> "" then
 			draw_box(32,140,991,184)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				campaign_gameplay
 				load_title_capsules
 				MenuCapsules = 0
-				while inkey < > "":wend
+				while inkey <> "":wend
 			end if
-		elseif MouseY > = 190 AND MouseY < 235 then
+		elseif MouseY >= 190 AND MouseY < 235 then
 			draw_box(32,190,991,234)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				HoldClick = 1
 				shop
 				MenuCapsules = 0
-				while inkey < > "":wend
+				while inkey <> "":wend
 			end if
 		end if
-		if MouseY > = 240 AND MouseY < 285 then
+		if MouseY >= 240 AND MouseY < 285 then
 			draw_box(32,240,991,284)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				exit do
@@ -381,16 +381,16 @@ sub shop
 			if FID = 0 then
 				gfxstring(Filter(FID),5,50+(FID*30),4,4,3,rgb(128,0,255))
 			elseif AFilter = FID then
-				if FID < = 3 then
+				if FID <= 3 then
 					gfxstring(Filter(FID),5,50+(FID*30),4,4,3,rgb(128,0,128))
 				else
 					gfxstring(Filter(FID),517,50+((FID-3)*30),4,4,3,rgb(128,0,128))
 				end if
 			else
-				if FID < = 3 then
+				if FID <= 3 then
 					if TotalCount(2) > 0 OR FID <> 2 then 
 						gfxstring(Filter(FID),5,50+(FID*30),4,4,3,rgb(255,0,255))
-						if MouseY > = 45+(FID*30) AND MouseY < 75+(FID*30) AND MouseX < 512 then
+						if MouseY >= 45+(FID*30) AND MouseY < 75+(FID*30) AND MouseX < 512 then
 							draw_box(0,45+(FID*30),511,74+(FID*30))
 							if ButtonCombo > 0 AND HoldClick = 0 then
 								AFilter = FID
@@ -403,7 +403,7 @@ sub shop
 					end if
 				else
 					gfxstring(Filter(FID),517,50+((FID-3)*30),4,4,3,rgb(255,0,255))
-					if MouseY > = 45+((FID-3)*30) AND MouseY < 75+((FID-3)*30) AND MouseX > = 512 then
+					if MouseY >= 45+((FID-3)*30) AND MouseY < 75+((FID-3)*30) AND MouseX >= 512 then
 						draw_box(512,45+((FID-3)*30),1023,74+((FID-3)*30))
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							AFilter = FID
@@ -425,12 +425,12 @@ sub shop
 				end if
 				if CampaignFolder = ShortCampaignNames(PID) then
 					gfxstring(CustomItem(1,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
-					if MouseY > = CustomizeSelect+(PID*30) AND MouseY < SelY+25 then
+					if MouseY >= CustomizeSelect+(PID*30) AND MouseY < SelY+25 then
 						ItemDesc = CampaignTxt(PID)
 					end if
 				elseif TotalXP < MinXP(PID) then
 					gfxstring(CustomItem(1,PID)+" ("+commaSep(MinXP(PID))+" XP)",5,PosY,4,4,3,rgb(128,128,128))
-					if MouseY > = CustomizeSelect+(PID*30) AND MouseY < SelY+30 then
+					if MouseY >= CustomizeSelect+(PID*30) AND MouseY < SelY+30 then
 						ItemDesc = "You must reach the required experience total to unlock this campaign."
 					end if
 				else
@@ -439,7 +439,7 @@ sub shop
 					else
 						gfxstring(CustomItem(1,PID)+" (unlocked)",5,PosY,4,4,3,rgb(255,255,255))
 					end if
-					if MouseY > = CustomizeSelect+(PID*30) AND MouseY < SelY+30 then
+					if MouseY >= CustomizeSelect+(PID*30) AND MouseY < SelY+30 then
 						draw_box(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							CampaignFolder = ShortCampaignNames(PID)
@@ -460,7 +460,7 @@ sub shop
 					gfxstring(CustomItem(2,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
 				else
 					gfxstring(CustomItem(2,PID)+" (available)",5,PosY,4,4,3,rgb(255,255,255))
-					if MouseY > = CustomizeSelect+(PID*30) AND MouseY < SelY+30 then
+					if MouseY >= CustomizeSelect+(PID*30) AND MouseY < SelY+30 then
 						draw_box(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							CampaignFolder = "community/"+trim(CustomItem(2,PID))
@@ -581,7 +581,7 @@ sub shop
 
 			if AllowHandicap then
 				gfxstring("Handicap system: ON",5,700,4,4,3,rgb(255,0,255))
-				if MouseY > = 695 AND MouseY < 724 AND MouseX < 512 then
+				if MouseY >= 695 AND MouseY < 724 AND MouseX < 512 then
 					draw_box(0,695,511,724)
 					if ButtonCombo > 0 AND HoldClick = 0 then
 						HoldClick = 1
@@ -591,7 +591,7 @@ sub shop
 				end if
 				
 				gfxstring("Next player",517,700,4,4,3,rgb(255,0,255))
-				if MouseY > = 695 AND MouseY < 724 AND MouseX > = 512 then
+				if MouseY >= 695 AND MouseY < 724 AND MouseX >= 512 then
 					draw_box(512,695,1023,724)
 					if ButtonCombo > 0 AND HoldClick = 0 then
 						HoldClick = 1
@@ -603,7 +603,7 @@ sub shop
 				end if
 			else
 				gfxstring("Handicap system: OFF",5,700,4,4,3,rgb(255,0,255))
-				if MouseY > = 695 AND MouseY < 724 AND MouseX < 512 then
+				if MouseY >= 695 AND MouseY < 724 AND MouseX < 512 then
 					draw_box(0,695,511,724)
 					if ButtonCombo > 0 AND HoldClick = 0 then
 						HoldClick = 1
@@ -637,7 +637,7 @@ sub shop
 					exit for
 				end if
 				
-				if MouseY > = SelY AND MouseY < SelY+30 AND CustomItem(4,PID) <> "" then
+				if MouseY >= SelY AND MouseY < SelY+30 AND CustomItem(4,PID) <> "" then
 					select case PID-1
 						case CTRL_DESKTOP
 							ItemDesc = "Default: Move mouse to control paddle and click to perform actions (Release Ball / Shoot)"
@@ -654,12 +654,12 @@ sub shop
 				
 				if PID = ControlStyle + 1 then
 					gfxstring(CustomItem(4,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
-					if PID - 1 > CTRL_KEYBOARD AND MouseY > = SelY AND MouseY < SelY+30 then
+					if PID - 1 > CTRL_KEYBOARD AND MouseY >= SelY AND MouseY < SelY+30 then
 						ItemDesc = "Customize below. For safety reasons, this setting is not remembered across sessions"
 					end if
 				elseif PID <= 4 then
 					gfxstring(CustomItem(4,PID)+" (available)",5,PosY,4,4,3,rgb(255,255,255))
-					if MouseY > = SelY AND MouseY < SelY+30 then
+					if MouseY >= SelY AND MouseY < SelY+30 then
 						draw_box(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 then
 							ControlStyle = PID - 1
@@ -670,12 +670,12 @@ sub shop
 					
 					if JoyError(RefJoy) then
 						gfxstring(CustomItem(4,PID)+" (disabled)",5,PosY,4,4,3,rgb(128,128,128))
-						if MouseY > = SelY AND MouseY < SelY+30 then
+						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "No controller detected at this port"
 						end if
 					else
 						gfxstring(CustomItem(4,PID)+" (available)",5,PosY,4,4,3,rgb(255,255,255))
-						if MouseY > = SelY AND MouseY < SelY+30 then
+						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Use and customize this USB Controller to play"
 							
 							draw_box(0,SelY,1023,SelY+29)
@@ -689,7 +689,7 @@ sub shop
 				elseif PID = 10 then
 					if ControlStyle <= CTRL_KEYBOARD then
 						gfxstring(CustomItem(4,PID)+" (overridden)",5,PosY,4,4,3,rgb(128,128,128))
-						if MouseY > = SelY AND MouseY < SelY+30 then
+						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Controller Type is available only for USB Controllers"
 						end if
 					else
@@ -698,7 +698,7 @@ sub shop
 						else
 							gfxstring(CustomItem(4,PID)+" (Analog Controller)",5,PosY,4,4,3,rgb(255,255,255))
 						end if
-						if MouseY > = SelY AND MouseY < SelY+30 then
+						if MouseY >= SelY AND MouseY < SelY+30 then
 							if JoyAnalog = 0 then
 								ItemDesc = "A Digital Controller has only rigid axes. Click to change"
 							else
@@ -717,7 +717,7 @@ sub shop
 				elseif PID = 11 then
 					if ControlStyle <= CTRL_KEYBOARD then
 						gfxstring(CustomItem(4,PID)+" (overridden)",5,PosY,4,4,3,rgb(128,128,128))
-						if MouseY > = SelY AND MouseY < SelY+30 then
+						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Invert Axes is available only for USB Controllers"
 						end if
 					else
@@ -726,7 +726,7 @@ sub shop
 						else
 							gfxstring(CustomItem(4,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
 						end if
-						if MouseY > = SelY AND MouseY < SelY+30 then
+						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Inverts all Controller axes to improve flexibility"
 
 							draw_box(0,SelY,1023,SelY+29)
@@ -739,12 +739,12 @@ sub shop
 				elseif PID = 12 then
 					if ControlStyle <= CTRL_TABLET then
 						gfxstring(CustomItem(4,PID),5,PosY,4,4,3,rgb(128,128,128))
-						if MouseY > = SelY AND MouseY < SelY+30 then
+						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Customization is unavailable for this control style."
 						end if
 					elseif ControlStyle = CTRL_KEYBOARD then
 						gfxstring(CustomItem(4,PID)+" ("+str(KeyboardSpeed)+" px/frame)",5,PosY,4,4,3,rgb(255,128,0))
-						if MouseY > = SelY AND MouseY < SelY+30 then
+						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "How quickly the paddle moves when using a keyboard. -+ to change rate"
 						end if
 						
@@ -760,7 +760,7 @@ sub shop
 						end if
 						
 						gfxstring(CustomItem(4,PID)+" (button "+str(JoyKeySetting)+")",5,PosY,4,4,3,rgb(255,128,0))
-						if MouseY > = SelY AND MouseY < SelY+30 then
+						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "The primary button. Other buttons grant finer movement. All axes move the paddle"
 						end if
 					else
@@ -772,7 +772,7 @@ sub shop
 						next AxisID
 						
 						gfxstring(CustomItem(4,PID)+" (axis "+str(JoyKeySetting)+")",5,PosY,4,4,3,rgb(255,128,0))
-						if MouseY > = SelY AND MouseY < SelY+30 then
+						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "The chosen axis will be used to move the paddle. Any button performs actions"
 						end if
 					end if
@@ -789,7 +789,7 @@ sub shop
 					exit for
 				end if
 				
-				if MouseY > = SelY AND MouseY < SelY+30 then
+				if MouseY >= SelY AND MouseY < SelY+30 then
 					select case PID
 						case 1
 							ItemDesc = "While active, no game or capsule hints will be given, except mystery capsules"
@@ -812,7 +812,7 @@ sub shop
 					(PID = 4 AND ShuffleLevels = 1) OR _
 					(PID = 5 AND FullScreen = 1) then
 					gfxstring(CustomItem(MISC,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
-					if MouseY > = SelY AND MouseY < SelY+30 then
+					if MouseY >= SelY AND MouseY < SelY+30 then
 						draw_box(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							select case PID
@@ -831,7 +831,7 @@ sub shop
 					end if
 				elseif PID = 6 then
 					gfxstring(CustomItem(MISC,PID)+" ("+str(BGBrightness)+"%)",5,PosY,4,4,3,rgb(255,255,255))
-					if MouseY > = SelY AND MouseY < SelY+30 then
+					if MouseY >= SelY AND MouseY < SelY+30 then
 						draw_box(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							BGBrightness -= 25
@@ -842,7 +842,7 @@ sub shop
 					end if
 				else
 					gfxstring(CustomItem(MISC,PID)+" (inactive)",5,PosY,4,4,3,rgb(255,255,255))
-					if MouseY > = SelY AND MouseY < SelY+30 then
+					if MouseY >= SelY AND MouseY < SelY+30 then
 						draw_box(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							select case PID
@@ -867,7 +867,7 @@ sub shop
 		elseif AFilter = 2 then
 			if PageNum > 1 then
 				gfxstring("Previous page",5,700,4,4,3,rgb(255,0,255))
-				if MouseY > = 695 AND MouseY < 724 AND MouseX < 512 then
+				if MouseY >= 695 AND MouseY < 724 AND MouseX < 512 then
 					draw_box(0,695,511,724)
 					if ButtonCombo > 0 AND HoldClick = 0 then
 						Pagenum -= 1
@@ -878,7 +878,7 @@ sub shop
 			end if
 			if PageNum < int(TotalCount(AFilter)/PerPage+1-1e-10) then
 				gfxstring("Next page",517,700,3,3,2,rgb(255,0,255))
-				if MouseY > = 695 AND MouseY < 724 AND MouseX > = 512 then
+				if MouseY >= 695 AND MouseY < 724 AND MouseX >= 512 then
 					draw_box(512,695,1023,724)
 					if ButtonCombo > 0 AND HoldClick = 0 then
 						Pagenum += 1
@@ -891,7 +891,7 @@ sub shop
 			gfxstring(ItemDesc,5,700,4,3,2,rgb(255,0,255))
 		end if
 		gfxstring("Exit",5,730,4,4,3,rgb(255,255,255))
-		if MouseY > = 725 AND MouseY < 754 then
+		if MouseY >= 725 AND MouseY < 754 then
 			draw_box(0,725,1023,754)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				exit do

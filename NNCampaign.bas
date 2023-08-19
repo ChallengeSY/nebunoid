@@ -177,7 +177,7 @@ sub campaign_gameplay
 						if .BrickID = 1 then
 							AttackBricks += 1
 						elseif .BrickID > 0 AND Pallete(.BrickID).CanRegen > 0 AND _
-							.BrickID < > Pallete(.BrickID).CanRegen then
+							.BrickID <> Pallete(.BrickID).CanRegen then
 							dim as short ComputeDamage
 							.BrickID = Pallete(.BrickID).CanRegen
 							
@@ -1306,8 +1306,8 @@ sub campaign_gameplay
 							for PaddleID as byte = 1 to 2
 								if .Y > Paddle(PaddleID).Y - BallSize AND .Y < Paddle(PaddleID).Y + PaddleHeight + BallSize AND _
 									remainder(.Angle+3600,360) > 180 AND _
-									.X > = Paddle(PaddleID).X-PaddleSize/2-BallSize AND _
-									.X < = Paddle(PaddleID).X+PaddleSize/2+BallSize AND _
+									.X >= Paddle(PaddleID).X-PaddleSize/2-BallSize AND _
+									.X <= Paddle(PaddleID).X+PaddleSize/2+BallSize AND _
 									PaddleSize > 0 then
 									'Bounce off paddle
 									
@@ -1374,7 +1374,7 @@ sub campaign_gameplay
 										ProhibitSpawn = 2
 										for BID as ubyte = 2 to NumBalls
 											with Ball(BID)
-												if .Speed < = 0 then
+												if .Speed <= 0 then
 													if PlayerSlot(Player).Difficulty >= 3.5 then
 														.Speed = DefaultSpeed - irandom(0,30) / 100
 													else
@@ -1700,10 +1700,10 @@ sub campaign_gameplay
 							line(.X-BallSize,.Y-BallSize)-(.X+BallSize,.Y+BallSize),rgb(0,0,0),b,&b1010101010101010
 						end if
 
-						if .Invul > 0 AND .Y < = 360+BallSize then
+						if .Invul > 0 AND .Y <= 360+BallSize then
 							dim as ubyte RowFilled
 							for YID as ubyte = 1 to 20
-								if .Y > = 60+BallSize+(YID-1)*15 AND .Y < = 60-BallSize+(YID)*15 then
+								if .Y >= 60+BallSize+(YID-1)*15 AND .Y <= 60-BallSize+(YID)*15 then
 									RowFilled = 0
 									for XID as ubyte = 1 to 20*(CondensedLevel+1)
 										if Tileset(XID,YID).BrickID > 0 then
@@ -2630,7 +2630,7 @@ sub campaign_gameplay
 			end if
 		end if
 
-		if GameHints(1) = 0 AND Ball(1).Speed > = 9 AND Ball(1).Speed < 10 then
+		if GameHints(1) = 0 AND Ball(1).Speed >= 9 AND Ball(1).Speed < 10 then
 			Instructions = "The ball speeds up automatically on its own"
 			InstructExpire = timer + 10
 			GameHints(1) = 1

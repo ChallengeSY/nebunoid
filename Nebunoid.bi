@@ -12,7 +12,7 @@ const DefaultSpeed = 8
 const MinSpeed = 6
 randomize timer
 
-dim shared as string Masterdir
+dim shared as string NullString, Masterdir
 dim as byte ScreenCreated = 0
 dim shared as any ptr TitleBanner
 Masterdir = curdir
@@ -249,7 +249,6 @@ const MaxFallCaps = 12
 const Particount = 1250
 const BackCount = 99
 
-dim shared as string NullString
 dim shared as TileSpecs Tileset(41,24)
 dim shared as ushort MinSize, StandardSize, MaxSize, CapsFalling, BulletsInPlay, _
 	Credits, CoinsPerCredit, CeleYear, BrickCount, XplodeCount, ZappableCount, Combo
@@ -761,7 +760,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 											printgfx(PrintChar,53+(XID-1)*48,103+(YID-1)*24,2,rgb(255,255,255))
 										end if
 									end if
-									if Tileset(XID,YID).BrickID < > .HitDegrade AND .CalcedInvulnerable < 2 then
+									if Tileset(XID,YID).BrickID <> .HitDegrade AND .CalcedInvulnerable < 2 then
 										Count += 1
 									end if
 								elseif (Invis > 0 OR (GameStyle AND (1 SHL STYLE_INVIS)) = 0 OR total_lives = 0) then
@@ -804,7 +803,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 										line(32+(XID-1)*48,96+(YID-1)*24)-_
 											(31+(XID)*48,95+(YID)*24),.PColoring,bf
 									end if
-								elseif Tileset(XID,YID).BrickID < > .HitDegrade AND .CalcedInvulnerable < 2 then
+								elseif Tileset(XID,YID).BrickID <> .HitDegrade AND .CalcedInvulnerable < 2 then
 									Count += 1
 								end if
 							end with
