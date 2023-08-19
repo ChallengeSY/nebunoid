@@ -4,7 +4,7 @@ Usually, a package comes with binaries pre-compiled for Windows. Thus, all you h
 To build new Windows binaries isn't *that* difficult, but you'll need to install additional libraries to ensure proper linking. Afterwards, just type in `fbc Nebunoid.bas Nebunoid.rc -s gui` in a command shell to compile the main game, or use an IDE able to pass that command. `fbc NebEdit.bas Nebunoid.rc -s gui` will instead build the level editor.
 
 ### Common Libraries
-Regardless of platform, you will need to install [FBSound](https://www.freebasic.net/forum/viewtopic.php?t=17740).
+Regardless of platform, you will need to install [FBSound](https://www.freebasic.net/forum/viewtopic.php?t=28905).
 
 ### GNU/Linux
 Installing under GNU/Linux, on the other hand, is not so simple. Since the architecture for this system is all over the place, no binaries are provided for GNU/Linux. A simple makefile is supplied.
