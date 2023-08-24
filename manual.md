@@ -55,7 +55,9 @@ In addition, there is a collection of 7 gem-themed capsules available outside of
 ----
 
 ### Campaigns
-There are 171 levels, split into seven (7) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
+There are 196 levels, split into eight (8) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
+
+Stars are earned by completing levels for the first time. Harder campaigns require a certain number of stars to break their locks open.
 
 A [level editor](editor.md) also exists, allowing community campaigns to be created.
 

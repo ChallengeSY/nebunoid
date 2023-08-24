@@ -4,6 +4,7 @@ Main engine + sound effects + foreground assets by Paul Ruediger. Licensed under
 ### Included music compositions
 * **Beatrave Tales** by Paul Ruediger. Remixed from SideWinder's **Beatwave** and **Tales from the Rave II**.
 * **Ethno Raiders** by Paul Ruediger. Remixed from Roland's **Ethno Pa** and SideWinder's **Dust Raiders**.
+* **Lunarbase Construction** by Paul Ruediger. Remixed from SideWinder's **Behind the Moon Remix**, and a piece of soundtrack from the ill-fated **VGA Planets 5: StarCube**.
 
 ### Included nebulae backgrounds
 * **Crab Neubla** courtesy of NASA, ESA, and the Arizona State University. Public domain.

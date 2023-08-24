@@ -4,7 +4,7 @@
 
 #include "Nebunoid.bi"
 #include "NNCampaign.bas"
-windowtitle "Nebunoid 1.03"
+windowtitle "Nebunoid 1.04"
 
 if FileExists("portable") = 0 then
 	#IF defined(__FB_WIN32__)
@@ -148,8 +148,6 @@ if FileExists("conf.ini") then
 				input #10, AllowHandicap
 			case "nohints"
 				input #10, DisableHints
-			case "campaign"
-				line input #10, CampaignFolder
 			case "enhanced"
 				input #10, EnhancedGFX
 			case "controls"
@@ -196,48 +194,105 @@ do
 	Result = getmouse(MouseX,MouseY,0,ButtonCombo)
 	put (40,10),TitleBanner,trans
 	gfxstring("Copyright (C) 2023 Paul Ruediger",0,753,3,3,2,rgb(255,255,255))
+
 	gfxstring("Exit",40,250,5,5,3,rgb(255,255,255))
 
-	if CampaignFolder = "" then
-		gfxstring("Play the game",40,150,5,5,3,rgb(128,128,128))
+	if MenuMode > 0 then
+		gfxstring("Play the game",40,150,5,5,3,rgb(255,255,0))
 	else
 		gfxstring("Play the game",40,150,5,5,3,rgb(255,255,255))
 	end if
 	
 	gfxstring("Customize",40,200,5,5,3,rgb(255,255,255))
 	
-	gfxstring("Powerup Capsules",40,350,5,4,3,rgb(255,255,255))
-	for PID as byte = 1 to 13
-		put(40,375+PID*25),CapsulePic(PID),trans
-		gfxstring(TitleCapNames(PID),80,375+PID*25,4,4,3,rgb(255,255,255))
-	next PID
+	if MenuMode = 0 then
+		gfxstring("Powerup Capsules",40,350,5,4,3,rgb(255,255,255))
+		for PID as byte = 1 to 13
+			put(40,375+PID*25),CapsulePic(PID),trans
+			gfxstring(TitleCapNames(PID),80,375+PID*25,4,4,3,rgb(255,255,255))
+		next PID
 
-	gfxstring("Powerdown/Neutral Capsules",520,350,5,4,3,rgb(255,255,255))
-	for PID as byte = 14 to 26
-		put(520,375+(PID-13)*25),CapsulePic(PID),trans
-		gfxstring(TitleCapNames(PID),560,375+(PID-13)*25,4,4,3,rgb(255,255,255))
-	next PID
-	
-	MenuCapsules += 1
-	if MenuCapsules >= 300 then
-		MenuCapsules *= -1
+		gfxstring("Powerdown/Neutral Capsules",520,350,5,4,3,rgb(255,255,255))
+		for PID as byte = 14 to 26
+			put(520,375+(PID-13)*25),CapsulePic(PID),trans
+			gfxstring(TitleCapNames(PID),560,375+(PID-13)*25,4,4,3,rgb(255,255,255))
+		next PID
+	elseif MenuMode = 1 then
+		dim as uinteger Availability
+		gfxstring("Official Campaign Selection",40,350,5,4,3,rgb(255,192,64))
+		gfxstring(commaSep(TotalLevels)+" stars",820,350,5,4,3,rgb(255,192,64))
+		for Item as byte = 1 to CampaignsPerPage+1
+			with OfficialCampaigns(Item)
+				if .Namee <> "" then
+					if Item < CampaignsPerPage+1 then
+						if .XPtoUnlock = 0 AND .StarsToUnlock = 0 then
+							.SetLocked = 0
+							Availability = rgb(255,255,255)
+							gfxstring("(Free)",340,351+Item*30,4,3,3,Availability)
+						elseif (TotalXP >= .XPtoUnlock AND .XPtoUnlock > 0) OR (TotalLevels >= .StarsToUnlock AND .StarsToUnlock > 0) then
+							.SetLocked = 0
+							Availability = rgb(255,255,255)
+							gfxstring("(Unlocked)",340,351+Item*30,4,3,3,Availability)
+						else
+							.SetLocked = -1
+							Availability = rgb(128,128,128)
+							if .XPtoUnlock > 0 AND .StarsToUnlock > 0 then
+								gfxstring("("+commaSep(.XPtoUnlock)+" XP or "+commaSep(.StarsToUnlock)+" stars to unlock)",340,351+Item*28,4,3,3,Availability)
+							elseif .XPtoUnlock > 0 then
+								gfxstring("("+commaSep(.XPtoUnlock)+" XP to unlock)",340,351+Item*30,4,3,3,Availability)
+							else
+								gfxstring("("+commaSep(.StarsToUnlock)+" stars to unlock)",340,351+Item*30,4,3,3,Availability)
+							end if
+						end if
+					else
+						if .SetSize > 0 then
+							Availability = rgb(255,255,255)
+						else
+							Availability = rgb(128,128,128)
+						end if
+						.SetLocked = (.SetSize = 0)
+					end if
+					gfxstring(.Namee,40,351+Item*30,4,3,3,Availability)
+					if .SetMastered then
+						gfxstring("Size "+str(.SetSize),820,351+Item*30,4,3,3,rgb(255,215,0))
+					else
+						gfxstring("Size "+str(.SetSize),820,351+Item*30,4,3,3,Availability)
+					end if
+				end if
+			end with
+		next Item
+	else
+		dim as uinteger Availability
+		gfxstring("Community Campaign Selection",40,350,5,4,3,rgb(255,192,64))
+		for Item as byte = 1*(MenuMode-2)*CampaignsPerPage to min((MenuMode-1)*CampaignsPerPage,OfficialCampaigns(12).SetSize)
+			with CommunityCampaigns(Item)
+				if .Namee <> "" then
+					gfxstring(.Namee,40,351+Item*30,4,3,3,rgb(255,255,255))
+				end if
+			end with
+		next Item
+		
+		if MenuMode >= 1 + ceil(OfficialCampaigns(12).SetSize/11) then
+			gfxstring("(Back to official campaigns)",40,351+(CampaignsPerPage+1)*30,4,3,3,rgb(255,255,255))
+		else
+			gfxstring("(More community campaigns)",40,351+(CampaignsPerPage+1)*30,4,3,3,rgb(255,255,255))
+		end if
 	end if
 	
 	if MouseX >= 32 AND MouseX < 992 then
 		if MouseY >= 140 AND MouseY < 185 AND CampaignFolder <> "" then
 			draw_box(32,140,991,184)
 			if ButtonCombo > 0 AND HoldClick = 0 then
-				campaign_gameplay
-				load_title_capsules
-				MenuCapsules = 0
-				while inkey <> "":wend
+				read_campaigns
+				MenuMode = iif(MenuMode = 0,1,0)
+				HoldClick = 1
 			end if
 		elseif MouseY >= 190 AND MouseY < 235 then
 			draw_box(32,190,991,234)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				HoldClick = 1
 				shop
-				MenuCapsules = 0
+				MenuMode = 0
 				while inkey <> "":wend
 			end if
 		end if
@@ -245,6 +300,67 @@ do
 			draw_box(32,240,991,284)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				exit do
+			end if
+		end if
+		
+		if MenuMode = 1 then
+			'Official campaign mouse input
+			for YID as ubyte = 1 to CampaignsPerPage+1
+				with OfficialCampaigns(YID)
+					if MouseY >= 346+YID*30 AND MouseY <= 375+YID*30 AND .Namee <> "" AND .SetLocked = 0 then
+						draw_box(32,346+YID*30,991,375+YID*30)
+						if ButtonCombo > 0 AND HoldClick = 0 then
+							if YID = 12 then
+								'Switch to community campaigns
+								MenuMode += 1
+								HoldClick = 1
+							else
+								CampaignFolder = .Folder
+								campaign_gameplay
+								load_title_capsules
+								MenuMode = 0
+								while inkey <> "":wend
+							end if
+						end if
+					end if
+				end with
+			next YID
+		elseif MenuMode > 1 then
+			dim as integer ReadID
+			
+			'Community campaign mouse input
+			for YID as ubyte = 1 to CampaignsPerPage+1
+				ReadID = YID + (MenuMode-2)*CampaignsPerPage
+				
+				with CommunityCampaigns(ReadID)
+					if MouseY >= 346+YID*30 AND MouseY <= 375+YID*30 AND .Namee <> "" AND ReadID <= OfficialCampaigns(12).SetSize then
+						draw_box(32,346+YID*30,991,375+YID*30)
+						if ButtonCombo > 0 AND HoldClick = 0 then
+							if YID = 12 then
+								MenuMode += 1
+							else
+								CampaignFolder = .Folder
+								campaign_gameplay
+								load_title_capsules
+								MenuMode = 0
+								while inkey <> "":wend
+							end if
+						end if
+					end if
+				end with
+			next YID
+			
+			if MouseY >= 346+(CampaignsPerPage+1)*30 AND MouseY <= 375+(CampaignsPerPage+1)*30 then
+				draw_box(32,346+(CampaignsPerPage+1)*30,991,375+(CampaignsPerPage+1)*30)
+				if ButtonCombo > 0 AND HoldClick = 0 then
+					'Cycle community campaign pages; or go back to official campaigns if final page
+					if MenuMode >= 1 + ceil(OfficialCampaigns(12).SetSize/11) then
+						MenuMode = 1
+					else
+						MenuMode += 1
+					end if
+					HoldClick = 1
+				end if
 			end if
 		end if
 	end if
@@ -267,109 +383,41 @@ end if
 save_unlocks
 
 sub shop
-	dim as string HelpText(0 to MISC) => {_
-		"Select Folder", _
-		"Choose an official campaign", _
-		"Download and play community campaigns", _
-		"Choose a difficulty", _
-		"Choose control style", _
-		"Manage other options"}
-	dim as ubyte TotalCount(0 to MISC) => {0, 9, 0, 0, 12, 6}
+	dim as ubyte TotalCount(0 to MISC) => {0, 0, 12, 6}
 	dim as ubyte CTRL_BUTTON_ACTION, CTRL_AXIS_MOVEMENT
 
-	dim as string ItemDesc, CommunityFolder, CustomItem(MISC,42)
+	dim as string ItemDesc, CommunityFolder, CustomItem(MISC,12)
 	dim as ubyte AFilter, PageNum, LongLen
 	dim as ushort PosY, SelY
-	dim as integer MinXP(42), JoyError(4), JoyButtons
+	dim as integer JoyError(4), JoyButtons
 	
 	for JoyID as byte = 1 to 4
 		JoyError(JoyID) = getJoystick(JoyID-1)
 	next JoyID
 	
-	CommunityFolder = Dir(MasterDir+"/campaigns/community/*",fbDirectory)
-	while len( CommunityFolder ) > 0 AND TotalCount(2) < 42
-		if CommunityFolder <> "." AND CommunityFolder <> ".." then
-			TotalCount(2) += 1
-			CustomItem(2,TotalCount(2)) = CommunityFolder
-		end if
-		CommunityFolder = Dir()
-	wend
-	
-	CustomItem(1,1) = "Introductory Training"
-	CustomItem(1,2) = "Regular Season       "
-	CustomItem(1,3) = "Geometric Designs    "
-	MinXP(3) = 7.5e4
-	CustomItem(1,4) = "Fortified Letters    "
-	MinXP(4) = 2e5
-	CustomItem(1,5) = "Patriarch Memorial   "
-	MinXP(5) = 4.25e5
-	CustomItem(1,6) = "Challenge Campaign   "
-	MinXP(6) = 7.5e5
-	CustomItem(1,7) = "Maximum Insantiy     "
-	MinXP(7) = 2.5e6
-	CustomItem(1,8) = "Celestial Journey    "
-	MinXP(8) = 7.5e6
-	CustomItem(1,9) = "Nebunoid Boss Rush   "
-	MinXP(9) = 2e7
-
-	'Hide secret campaign if not even close to unlocking
-	if TotalXP < MinXP(9) * 0.75 then
-		TotalCount(1) -= 1
-	elseif TotalXP < MinXP(9) * 0.9 then
-		CustomItem(1,9) = "???????? ???? ????   "
-	end if
-
 	dim as string Filter(0 to MISC) => {_
-		"Select Folder", _
-		"Official Campaigns ("+str(TotalCount(1))+")", _
-		"Community Campaigns ("+str(TotalCount(2))+")", _
+		"Folders", _
 		"Difficulty", _
 		"Controls", _
 		"Miscellaneous"}
-	dim as string ShortCampaignNames(1 to 42) => {"intro", "regular", "geometry", "alphabet", "memorial", "challenge", "extreme", "universe", "bossrush"}
-	dim as string CampaignTxt(1 to 42) => {_
-		"Introductory Training serves as a shorter, easier campaign for new players.",_
-		"The Regular Season is a balanced campaign, and is recommended for all skill levels.",_
-		"The Geometric Designs is another short campaign, of modest difficulty.",_
-		"The Fortified Letters has levels that are, well, shaped into letters.", _
-		"Designed in memory of a father, Patriarch Memorial is a moderate artistic set.", _
-		"The Challenge Campaign makes heavy use of invincible and otherwise very strong blocks!", _
-		"Do you have what it takes to overcome Maximum Insanity?", _
-		"Celestial Journey is a massive campaign mostly depicting deep space elements!", _
-		"Mastered the bosses of Nebunoid? Defeat them all again, without continuing!"}
-	CustomItem(4,1) = "Desktop controls "
-	CustomItem(4,2) = "Laptop controls  "
-	CustomItem(4,3) = "Tablet controls  "
-	CustomItem(4,4) = "Keyboard controls"
-	CustomItem(4,5) = "USB controller 1 "
-	CustomItem(4,6) = "USB controller 2 "
-	CustomItem(4,7) = "USB controller 3 "
-	CustomItem(4,8) = "USB controller 4 "
-	CustomItem(4,10) = "Controller type"
-	CustomItem(4,11) = "Invert axes    "
+
+	CustomItem(2,1) = "Desktop controls "
+	CustomItem(2,2) = "Laptop controls  "
+	CustomItem(2,3) = "Tablet controls  "
+	CustomItem(2,4) = "Keyboard controls"
+	CustomItem(2,5) = "USB controller 1 "
+	CustomItem(2,6) = "USB controller 2 "
+	CustomItem(2,7) = "USB controller 3 "
+	CustomItem(2,8) = "USB controller 4 "
+	CustomItem(2,10) = "Controller type"
+	CustomItem(2,11) = "Invert axes    "
 	CustomItem(MISC,1) = "Disable game hints     "
 	CustomItem(MISC,2) = "Enhanced particle GFX  "
 	CustomItem(MISC,3) = "Campaign barrier system"
 	CustomItem(MISC,4) = "Shuffle levels         "
 	CustomItem(MISC,5) = "Full screen setting    "
 	CustomItem(MISC,6) = "Background brightness  "
-	for PID as ubyte = 1 to 42
-		if ShortCampaignNames(PID) <> "" then
-			ShortCampaignNames(PID) = "official/"+ShortCampaignNames(PID)
-		end if
-		
-		if len(CustomItem(2,PID)) > LongLen then
-			LongLen = len(CustomItem(2,PID))
-		end if
-	next PID
-
-	for PID as ubyte = 1 to TotalCount(2)
-		while len(CustomItem(2,PID)) < LongLen
-			CustomItem(2,PID) += space(1)
-		wend
-	next PID
 	
-
 	do
 		MouseColor = rgb(0,255,128)
 		cls
@@ -379,97 +427,22 @@ sub shop
 
 		for FID as ubyte = 0 to MISC
 			if FID = 0 then
-				gfxstring(Filter(FID),5,50+(FID*30),4,4,3,rgb(128,0,255))
+				gfxstring(Filter(FID),5+256*FID,50,4,4,3,rgb(128,0,255))
 			elseif AFilter = FID then
-				if FID <= 3 then
-					gfxstring(Filter(FID),5,50+(FID*30),4,4,3,rgb(128,0,128))
-				else
-					gfxstring(Filter(FID),517,50+((FID-3)*30),4,4,3,rgb(128,0,128))
-				end if
+				gfxstring(Filter(FID),5+256*FID,50,4,4,3,rgb(128,0,128))
 			else
-				if FID <= 3 then
-					if TotalCount(2) > 0 OR FID <> 2 then 
-						gfxstring(Filter(FID),5,50+(FID*30),4,4,3,rgb(255,0,255))
-						if MouseY >= 45+(FID*30) AND MouseY < 75+(FID*30) AND MouseX < 512 then
-							draw_box(0,45+(FID*30),511,74+(FID*30))
-							if ButtonCombo > 0 AND HoldClick = 0 then
-								AFilter = FID
-								PageNum = 1
-								Filter(0) = HelpText(FID)
-							end if
-						end if
-					else
-						gfxstring(Filter(FID),5,50+(FID*30),4,4,3,rgb(128,128,128))
-					end if
-				else
-					gfxstring(Filter(FID),517,50+((FID-3)*30),4,4,3,rgb(255,0,255))
-					if MouseY >= 45+((FID-3)*30) AND MouseY < 75+((FID-3)*30) AND MouseX >= 512 then
-						draw_box(512,45+((FID-3)*30),1023,74+((FID-3)*30))
-						if ButtonCombo > 0 AND HoldClick = 0 then
-							AFilter = FID
-							PageNum = 1
-							Filter(0) = HelpText(FID)
-						end if
+				gfxstring(Filter(FID),5+256*FID,50,4,4,3,rgb(255,0,255))
+				if MouseY >= 45 AND MouseY < 75 AND MouseX > 256*FID AND MouseX < 256*(FID+1) then
+					draw_box(256*FID,45,256*(FID+1)-1,74)
+					if ButtonCombo > 0 AND HoldClick = 0 then
+						AFilter = FID
+						PageNum = 1
 					end if
 				end if
 			end if
 		next FID
 
 		if AFilter = 1 then
-			ItemDesc = "Mouse over a campaign to see its description."
-			for PID as ubyte = (PageNum-1)*PerPage+1 to (PageNum)*PerPage
-				PosY = CustomizePadding+(PID*30)-((PageNum-1)*(PerPage*30))
-				SelY = CustomizeSelect+(PID*30)-((PageNum-1)*(PerPage*30))
-				if PID > TotalCount(AFilter) then
-					exit for
-				end if
-				if CampaignFolder = ShortCampaignNames(PID) then
-					gfxstring(CustomItem(1,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
-					if MouseY >= CustomizeSelect+(PID*30) AND MouseY < SelY+25 then
-						ItemDesc = CampaignTxt(PID)
-					end if
-				elseif TotalXP < MinXP(PID) then
-					gfxstring(CustomItem(1,PID)+" ("+commaSep(MinXP(PID))+" XP)",5,PosY,4,4,3,rgb(128,128,128))
-					if MouseY >= CustomizeSelect+(PID*30) AND MouseY < SelY+30 then
-						ItemDesc = "You must reach the required experience total to unlock this campaign."
-					end if
-				else
-					if MinXP(PID) = 0 then
-						gfxstring(CustomItem(1,PID)+" (free)",5,PosY,4,4,3,rgb(255,255,255))
-					else
-						gfxstring(CustomItem(1,PID)+" (unlocked)",5,PosY,4,4,3,rgb(255,255,255))
-					end if
-					if MouseY >= CustomizeSelect+(PID*30) AND MouseY < SelY+30 then
-						draw_box(0,SelY,1023,SelY+29)
-						if ButtonCombo > 0 AND HoldClick = 0 then
-							CampaignFolder = ShortCampaignNames(PID)
-						end if
-						ItemDesc = CampaignTxt(PID)
-					end if
-				end if
-			next PID
-			
-		elseif AFilter = 2 then
-			for PID as ubyte = (PageNum-1)*PerPage+1 to (PageNum)*PerPage
-				PosY = CustomizePadding+(PID*30)-((PageNum-1)*(PerPage*30))
-				SelY = CustomizeSelect+(PID*30)-((PageNum-1)*(PerPage*30))
-				if PID > TotalCount(AFilter) then
-					exit for
-				end if
-				if CampaignFolder = "community/"+trim(CustomItem(2,PID)) then
-					gfxstring(CustomItem(2,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
-				else
-					gfxstring(CustomItem(2,PID)+" (available)",5,PosY,4,4,3,rgb(255,255,255))
-					if MouseY >= CustomizeSelect+(PID*30) AND MouseY < SelY+30 then
-						draw_box(0,SelY,1023,SelY+29)
-						if ButtonCombo > 0 AND HoldClick = 0 then
-							CampaignFolder = "community/"+trim(CustomItem(2,PID))
-						end if
-					end if
-				end if
-			next PID
-			
-		elseif AFilter = 3 then
 			dim as short InX, CalcX, WarpSystem
 			dim as double ApproxDiff, DiffUnlocked
 			dim as string DiffTxt, ContinueSpecs, ExtraInfo
@@ -560,9 +533,18 @@ sub shop
 			dim as double ComputeDiff = ApproxDiff + 1e-6
 			
 			if AllowHandicap then
-				gfxstring("Difficulty for player "+str(PageNum)+": "+DiffTxt+" ("+left(str(ComputeDiff),len(str(int(ComputeDiff)))+2)+")",5,180,4,4,3,rgb(128,192,255))
+				dim as uinteger PlrColor
+				
+				for PID as ubyte = 1 to 4
+					if PageNum = PID then
+						PlrColor = rgb(128,192,255)
+					else
+						PlrColor = rgb(128,128,255)
+					end if
+					gfxstring("Difficulty for player "+str(PID)+": "+DiffTxt+" ("+left(str(ComputeDiff),len(str(int(ComputeDiff)))+2)+")",5,(PID+2)*30,4,4,3,PlrColor)
+				next PID
 			else
-				gfxstring("Difficulty for everyone: "+DiffTxt+" ("+left(str(ComputeDiff),len(str(int(ComputeDiff)))+2)+")",5,180,4,4,3,rgb(128,192,255))
+				gfxstring("Difficulty for everyone: "+DiffTxt+" ("+left(str(ComputeDiff),len(str(int(ComputeDiff)))+2)+")",5,90,4,4,3,rgb(128,192,255))
 			end if
 			if DiffUnlocked < 12 then
 				gfxstring("Next difficulty unlock : "+commaSep(NextXPUnlock)+" XP",5,210,4,4,3,rgb(255,128,128))
@@ -617,27 +599,27 @@ sub shop
 				next
 			end if
 			
-		elseif AFilter = 4 then
+		elseif AFilter = 2 then
 			ItemDesc = "Mouse over a control style to see its description."
 			
 			if ControlStyle <= CTRL_TABLET then
-				CustomItem(4,12) = "No settings    "
+				CustomItem(2,12) = "No settings    "
 			elseif ControlStyle = CTRL_KEYBOARD then
-				CustomItem(4,12) = "Movement speed "
+				CustomItem(2,12) = "Movement speed "
 			elseif JoyAnalog = 0 then
-				CustomItem(4,12) = "Action button  "
+				CustomItem(2,12) = "Action button  "
 			else
-				CustomItem(4,12) = "Paddle axis    "
+				CustomItem(2,12) = "Paddle axis    "
 			end if
 
-			for PID as ubyte = (PageNum-1)*PerPage+1 to (PageNum)*PerPage
-				PosY = CustomizePadding+(PID*30)-((PageNum-1)*(PerPage*30))
-				SelY = CustomizeSelect+(PID*30)-((PageNum-1)*(PerPage*30))
+			for PID as ubyte = (PageNum-1)*CustomizePerPage+1 to (PageNum)*CustomizePerPage
+				PosY = CustomizePadding+(PID*30)-((PageNum-1)*(CustomizePerPage*30))
+				SelY = CustomizeSelect+(PID*30)-((PageNum-1)*(CustomizePerPage*30))
 				if PID > TotalCount(AFilter) then
 					exit for
 				end if
 				
-				if MouseY >= SelY AND MouseY < SelY+30 AND CustomItem(4,PID) <> "" then
+				if MouseY >= SelY AND MouseY < SelY+30 AND CustomItem(2,PID) <> "" then
 					select case PID-1
 						case CTRL_DESKTOP
 							ItemDesc = "Default: Move mouse to control paddle and click to perform actions (Release Ball / Shoot)"
@@ -653,12 +635,12 @@ sub shop
 				end if
 				
 				if PID = ControlStyle + 1 then
-					gfxstring(CustomItem(4,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
+					gfxstring(CustomItem(2,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
 					if PID - 1 > CTRL_KEYBOARD AND MouseY >= SelY AND MouseY < SelY+30 then
 						ItemDesc = "Customize below. For safety reasons, this setting is not remembered across sessions"
 					end if
 				elseif PID <= 4 then
-					gfxstring(CustomItem(4,PID)+" (available)",5,PosY,4,4,3,rgb(255,255,255))
+					gfxstring(CustomItem(2,PID)+" (available)",5,PosY,4,4,3,rgb(255,255,255))
 					if MouseY >= SelY AND MouseY < SelY+30 then
 						draw_box(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 then
@@ -669,12 +651,12 @@ sub shop
 					dim as byte RefJoy = PID-4
 					
 					if JoyError(RefJoy) then
-						gfxstring(CustomItem(4,PID)+" (disabled)",5,PosY,4,4,3,rgb(128,128,128))
+						gfxstring(CustomItem(2,PID)+" (disabled)",5,PosY,4,4,3,rgb(128,128,128))
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "No controller detected at this port"
 						end if
 					else
-						gfxstring(CustomItem(4,PID)+" (available)",5,PosY,4,4,3,rgb(255,255,255))
+						gfxstring(CustomItem(2,PID)+" (available)",5,PosY,4,4,3,rgb(255,255,255))
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Use and customize this USB Controller to play"
 							
@@ -688,15 +670,15 @@ sub shop
 					end if
 				elseif PID = 10 then
 					if ControlStyle <= CTRL_KEYBOARD then
-						gfxstring(CustomItem(4,PID)+" (overridden)",5,PosY,4,4,3,rgb(128,128,128))
+						gfxstring(CustomItem(2,PID)+" (overridden)",5,PosY,4,4,3,rgb(128,128,128))
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Controller Type is available only for USB Controllers"
 						end if
 					else
 						if JoyAnalog = 0 then
-							gfxstring(CustomItem(4,PID)+" (Digital Controller)",5,PosY,4,4,3,rgb(255,255,255))
+							gfxstring(CustomItem(2,PID)+" (Digital Controller)",5,PosY,4,4,3,rgb(255,255,255))
 						else
-							gfxstring(CustomItem(4,PID)+" (Analog Controller)",5,PosY,4,4,3,rgb(255,255,255))
+							gfxstring(CustomItem(2,PID)+" (Analog Controller)",5,PosY,4,4,3,rgb(255,255,255))
 						end if
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							if JoyAnalog = 0 then
@@ -716,15 +698,15 @@ sub shop
 					end if
 				elseif PID = 11 then
 					if ControlStyle <= CTRL_KEYBOARD then
-						gfxstring(CustomItem(4,PID)+" (overridden)",5,PosY,4,4,3,rgb(128,128,128))
+						gfxstring(CustomItem(2,PID)+" (overridden)",5,PosY,4,4,3,rgb(128,128,128))
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Invert Axes is available only for USB Controllers"
 						end if
 					else
 						if JoyInvertAxes = 0 then
-							gfxstring(CustomItem(4,PID)+" (inactive)",5,PosY,4,4,3,rgb(255,255,255))
+							gfxstring(CustomItem(2,PID)+" (inactive)",5,PosY,4,4,3,rgb(255,255,255))
 						else
-							gfxstring(CustomItem(4,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
+							gfxstring(CustomItem(2,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
 						end if
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Inverts all Controller axes to improve flexibility"
@@ -738,12 +720,12 @@ sub shop
 					end if
 				elseif PID = 12 then
 					if ControlStyle <= CTRL_TABLET then
-						gfxstring(CustomItem(4,PID),5,PosY,4,4,3,rgb(128,128,128))
+						gfxstring(CustomItem(2,PID),5,PosY,4,4,3,rgb(128,128,128))
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Customization is unavailable for this control style."
 						end if
 					elseif ControlStyle = CTRL_KEYBOARD then
-						gfxstring(CustomItem(4,PID)+" ("+str(KeyboardSpeed)+" px/frame)",5,PosY,4,4,3,rgb(255,128,0))
+						gfxstring(CustomItem(2,PID)+" ("+str(KeyboardSpeed)+" px/frame)",5,PosY,4,4,3,rgb(255,128,0))
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "How quickly the paddle moves when using a keyboard. -+ to change rate"
 						end if
@@ -759,7 +741,7 @@ sub shop
 							JoyKeySetting = int(exLog(JoyButtons,2))
 						end if
 						
-						gfxstring(CustomItem(4,PID)+" (button "+str(JoyKeySetting)+")",5,PosY,4,4,3,rgb(255,128,0))
+						gfxstring(CustomItem(2,PID)+" (button "+str(JoyKeySetting)+")",5,PosY,4,4,3,rgb(255,128,0))
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "The primary button. Other buttons grant finer movement. All axes move the paddle"
 						end if
@@ -771,7 +753,7 @@ sub shop
 							end if
 						next AxisID
 						
-						gfxstring(CustomItem(4,PID)+" (axis "+str(JoyKeySetting)+")",5,PosY,4,4,3,rgb(255,128,0))
+						gfxstring(CustomItem(2,PID)+" (axis "+str(JoyKeySetting)+")",5,PosY,4,4,3,rgb(255,128,0))
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "The chosen axis will be used to move the paddle. Any button performs actions"
 						end if
@@ -782,9 +764,9 @@ sub shop
 		elseif AFilter = MISC then
 			ItemDesc = "Mouse over an item to see its description."
 
-			for PID as ubyte = (PageNum-1)*PerPage+1 to (PageNum)*PerPage
-				PosY = CustomizePadding+(PID*30)-((PageNum-1)*(PerPage*30))
-				SelY = CustomizeSelect+(PID*30)-((PageNum-1)*(PerPage*30))
+			for PID as ubyte = (PageNum-1)*CustomizePerPage+1 to (PageNum)*CustomizePerPage
+				PosY = CustomizePadding+(PID*30)-((PageNum-1)*(CustomizePerPage*30))
+				SelY = CustomizeSelect+(PID*30)-((PageNum-1)*(CustomizePerPage*30))
 				if PID > TotalCount(AFilter) then
 					exit for
 				end if
@@ -862,32 +844,7 @@ sub shop
 				end if
 			next PID
 		end if
-		if AFilter = 1 OR AFilter = 4 OR AFilter = 5 then
-			gfxstring(ItemDesc,5,700,4,3,2,rgb(255,0,255))
-		elseif AFilter = 2 then
-			if PageNum > 1 then
-				gfxstring("Previous page",5,700,4,4,3,rgb(255,0,255))
-				if MouseY >= 695 AND MouseY < 724 AND MouseX < 512 then
-					draw_box(0,695,511,724)
-					if ButtonCombo > 0 AND HoldClick = 0 then
-						Pagenum -= 1
-					end if
-				end if
-			else
-				gfxstring("Previous page",5,700,4,4,3,rgb(128,0,128))
-			end if
-			if PageNum < int(TotalCount(AFilter)/PerPage+1-1e-10) then
-				gfxstring("Next page",517,700,3,3,2,rgb(255,0,255))
-				if MouseY >= 695 AND MouseY < 724 AND MouseX >= 512 then
-					draw_box(512,695,1023,724)
-					if ButtonCombo > 0 AND HoldClick = 0 then
-						Pagenum += 1
-					end if
-				end if
-			else
-				gfxstring("Next page",517,700,4,4,3,rgb(128,0,128))
-			end if
-		elseif AFilter = 4 then
+		if AFilter > 1 then
 			gfxstring(ItemDesc,5,700,4,3,2,rgb(255,0,255))
 		end if
 		gfxstring("Exit",5,730,4,4,3,rgb(255,255,255))
@@ -914,5 +871,5 @@ sub shop
 		screencopy
 		sleep 10
 	loop until InType = EscapeKey
-	erase Filter, HelpText, TotalCount, CustomItem, CampaignTxt
+	erase Filter, TotalCount, CustomItem
 end sub

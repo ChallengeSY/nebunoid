@@ -229,6 +229,15 @@ type PlayerSpecs
 	LevelNum as short
 	PokerHand(5) as byte
 end type
+type LevelsetSpecs
+	Namee as string
+	Folder as string
+	SetSize as integer
+	XPtoUnlock as integer
+	StarsToUnlock as integer
+	SetLocked as byte
+	SetMastered as byte
+end type
 type HighSlot
 	Namee as string
 	RawScore as uinteger
@@ -242,7 +251,7 @@ const InvinZapped = 36
 dim shared as PlayerSpecs PlayerSlot(4), NewPlrSlot
 dim shared as PalleteSpecs Pallete(InvinZapped)
 dim shared as FB.event e
-const MISC = 5
+const MISC = 3
 const ExplodeAniRate = 1
 const NumBalls = 128
 const MaxFallCaps = 12
@@ -252,10 +261,11 @@ const BackCount = 99
 dim shared as TileSpecs Tileset(41,24)
 dim shared as ushort MinSize, StandardSize, MaxSize, CapsFalling, BulletsInPlay, _
 	Credits, CoinsPerCredit, CeleYear, BrickCount, XplodeCount, ZappableCount, Combo
-dim shared as short PaddleSize, CampaignBarrier, BulletStart, BacksLoaded, BoxGlow, MenuCapsules
+dim shared as short PaddleSize, CampaignBarrier, BulletStart, BacksLoaded, BoxGlow
 dim shared as HighSlot HighScore(TotalHighSlots)
-dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP
+dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP, TotalLevels
 dim shared as uinteger GameStyle, TourneyStyle, TourneyScore, ShotIndex
+
 dim shared as ubyte Fullscreen, JoyAnalog, JoyInvertAxes, ControlStyle, TapWindow, CondensedLevel
 dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness
 dim shared as single JoyAxis(7)
@@ -263,9 +273,11 @@ dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed
 dim shared as double ProgressiveQuota, InstructExpire, MisnExpire, TimeRem, Reminder = -1, _
 	FrameTime, PaddlePercent
 dim shared as string InType, ScoreFile, Instructions, CampaignFolder, BackList(BackCount)
+
 dim shared as BackSpecs BackSlot(BackCount)
 dim shared as Basics Paddle(2), Capsule(MaxFallCaps), Ball(NumBalls), Bullet(MaxBullets), LaserBeams(20,15)
 dim shared as ParticleSpecs Particles(Particount)
+
 dim shared as ubyte DQ, Player, NumPlayers, DispLives, Invis, GfxStyle, ExploTick, _
 	BallSize, AllowHandicap, DisableHints, ShuffleLevels, MenuMode, HoldClick, HoldAction
 dim shared as byte EnhancedGFX, GamePaused, TourneyValid, TotalMessages, TotalUnread
@@ -273,10 +285,14 @@ dim shared as any ptr BulletPic, MissilePic, SoftBrickPic, MultihitPic, Invincib
 	CapsulePic(26), CapsuleBar(5), CapsuleBarFrame, PokerBar(5), Background, FramesetMerged, Sideframes, Topframe, DiffStick, DiffSelector, PaddlePic, BasePaddle, PaddleBar
 
 const Interpolation = 120 'Ball updates per frame
-const PerPage = 20
+const CampaignsPerPage = 11 
+const CustomizePerPage = 20
 const PaddleHeight = 18
-const CustomizePadding = 150
+const CustomizePadding = 60
 const CustomizeSelect = CustomizePadding - 5
+dim shared as LevelsetSpecs OfficialCampaigns(CampaignsPerPage+1)
+redim shared as LevelsetSpecs CommunityCampaigns(1)
+
 enum BounceDirections
 	BOUNCE_E = 1
 	BOUNCE_NE
@@ -298,6 +314,102 @@ function total_lives as integer
 	
 	return LivesFound
 end function
+
+sub read_campaigns
+	dim as integer CommunityFoldersFound = 0, LevelsCleared
+	dim as string CommunityFolder
+	TotalLevels = 0
+	
+	for OCID as ubyte = 1 to 12 'Official campaigns first
+		with OfficialCampaigns(OCID)
+			select case OCID
+				case 1
+					.Namee = "Introductory Training"
+					.Folder = "official/intro"
+					.SetSize = 10
+				case 2
+					.Namee = "Regular Season"
+					.Folder = "official/regular"
+					.SetSize = 30
+				case 3
+					.Namee = "Geometric Designs"
+					.Folder = "official/geometry"
+					.SetSize = 10
+				case 4
+					.Namee = "Fortified Letters"
+					.Folder = "official/alphabet"
+					.SetSize = 26
+				case 5
+					.Namee = "Patriarch Memorial"
+					.Folder = "official/memorial"
+					.SetSize = 25
+				case 6
+					.Namee = "Challenge Campaign"
+					.Folder = "official/challenge"
+					.SetSize = 30
+					.XPtoUnlock = 5e5
+					.StarsToUnlock = 25
+				case 7
+					.Namee = "Maximum Insanity"
+					.Folder = "official/extreme"
+					.SetSize = 25
+					.XPtoUnlock = 1.5e6
+					.StarsToUnlock = 75
+				case 8
+					.Namee = "Celestial Journey"
+					.Folder = "official/universe"
+					.SetSize = 40
+					.XPtoUnlock = 7.5e6
+					.StarsToUnlock = 125
+				case 9
+					if TotalLevels >= 196 then
+						.Namee = "Nebunoid Boss Rush"
+						.Folder = "official/bossrush"
+						.SetSize = 4
+						.StarsToUnlock = 221 'Yes, secret levels included
+					end if
+				case 12
+					.Namee = "(Community campaigns)"
+					.SetSize = 0
+				case else
+					.Namee = ""
+					.SetSize = 0
+					.SetLocked = -1
+			end select
+			
+			if .Namee <> "" then
+				if FileExists(.Namee+".dat") then
+					open .Namee+".dat" for input as #19
+					input #19, LevelsCleared
+					close #19
+				else
+					LevelsCleared = 0
+				end if
+				
+				if OCID <= CampaignsPerPage then
+					.SetMastered = (FileExists(MasterDir+"/"+.Folder+"/L"+str(LevelsCleared+1)+".txt") = 0)
+					.SetSize = LevelsCleared
+					TotalLevels += LevelsCleared
+				end if
+			end if
+		end with
+	next OCID
+	
+	CommunityFolder = Dir(MasterDir+"/campaigns/community/*",fbDirectory)
+	while len( CommunityFolder ) > 0
+		if CommunityFolder <> "." AND CommunityFolder <> ".." then
+			CommunityFoldersFound += 1
+			redim preserve CommunityCampaigns(CommunityFoldersFound)
+			with CommunityCampaigns(CommunityFoldersFound)
+				.Namee = CommunityFolder
+				.Folder = "community/"+CommunityFolder
+			end with
+		end if
+		CommunityFolder = Dir()
+	wend
+	
+	OfficialCampaigns(12).SetSize = CommunityFoldersFound
+end sub
 
 sub load_title_capsules
 	dim as string TitleCaps(1 to 26) => {"slow", "split", "grab", "spread", "detonate", "zap", "bullet", "blizzard", "fire", "thru", "missile", "warp", "life", _
@@ -570,7 +682,6 @@ sub save_unlocks
 	next Plr
 	print #10, "handicap,";AllowHandicap
 	print #10, "nohints,";DisableHints
-	print #10, "campaign,";CampaignFolder
 	print #10, "enhanced,"& EnhancedGFX
 	print #10, "controls,";ControlStyle
 	print #10, "campbarr,";CampaignBarrier
