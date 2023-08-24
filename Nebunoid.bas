@@ -159,6 +159,8 @@ if FileExists("conf.ini") then
 			case "bgbright"
 				input #10, BGBrightness
 				BGBrightness = max(min(BGBrightness,100),0)
+			case "xp"
+				input #10, TotalXP
 		end select
 	loop until eof(10)
 	close #10
@@ -220,29 +222,23 @@ do
 	elseif MenuMode = 1 then
 		dim as uinteger Availability
 		gfxstring("Official Campaign Selection",40,350,5,4,3,rgb(255,192,64))
-		gfxstring(commaSep(TotalLevels)+" stars",820,350,5,4,3,rgb(255,192,64))
+		gfxstring(commaSep(TotalStars)+" stars",820,350,5,4,3,rgb(255,192,64))
 		for Item as byte = 1 to CampaignsPerPage+1
 			with OfficialCampaigns(Item)
 				if .Namee <> "" then
 					if Item < CampaignsPerPage+1 then
-						if .XPtoUnlock = 0 AND .StarsToUnlock = 0 then
+						if .StarsToUnlock = 0 then
 							.SetLocked = 0
 							Availability = rgb(255,255,255)
 							gfxstring("(Free)",340,351+Item*30,4,3,3,Availability)
-						elseif (TotalXP >= .XPtoUnlock AND .XPtoUnlock > 0) OR (TotalLevels >= .StarsToUnlock AND .StarsToUnlock > 0) then
+						elseif TotalStars >= .StarsToUnlock then
 							.SetLocked = 0
 							Availability = rgb(255,255,255)
 							gfxstring("(Unlocked)",340,351+Item*30,4,3,3,Availability)
 						else
 							.SetLocked = -1
 							Availability = rgb(128,128,128)
-							if .XPtoUnlock > 0 AND .StarsToUnlock > 0 then
-								gfxstring("("+commaSep(.XPtoUnlock)+" XP or "+commaSep(.StarsToUnlock)+" stars to unlock)",340,351+Item*28,4,3,3,Availability)
-							elseif .XPtoUnlock > 0 then
-								gfxstring("("+commaSep(.XPtoUnlock)+" XP to unlock)",340,351+Item*30,4,3,3,Availability)
-							else
-								gfxstring("("+commaSep(.StarsToUnlock)+" stars to unlock)",340,351+Item*30,4,3,3,Availability)
-							end if
+							gfxstring("("+commaSep(.StarsToUnlock)+" stars to unlock)",340,351+Item*30,4,3,3,Availability)
 						end if
 					else
 						if .SetSize > 0 then
@@ -418,12 +414,14 @@ sub shop
 	CustomItem(MISC,5) = "Full screen setting    "
 	CustomItem(MISC,6) = "Background brightness  "
 	
+	read_campaigns(1)
+	
 	do
 		MouseColor = rgb(0,255,128)
 		cls
 		Result = getmouse(MouseX,MouseY,0,ButtonCombo)
 		gfxstring("Customize",5,5,7,7,3,rgb(255,128,0))
-		gfxstring(commaSep(TotalXP)+" XP",517,5,7,7,3,rgb(0,128,255))
+		gfxstring(commaSep(TotalStars)+" stars",517,5,7,7,3,rgb(0,128,255))
 
 		for FID as ubyte = 0 to MISC
 			if FID = 0 then
@@ -447,14 +445,14 @@ sub shop
 			dim as double ApproxDiff, DiffUnlocked
 			dim as string DiffTxt, ContinueSpecs, ExtraInfo
 			
-			dim as integer DiffXPUnlock(6) => {25000,350000,750000,1250000,2000000,3000000,5000000}
-			dim as integer NextXPUnlock
+			dim as integer DiffStarsUnlock(4) => {25,50,75,100,125}
+			dim as integer NextStarsUnlock
 			
 			DiffUnlocked = 12
-			for UID as byte = 0 to 6
-				if TotalXP < DiffXPUnlock(UID) then
-					DiffUnlocked = UID + 5
-					NextXPUnlock = DiffXPUnlock(UID)
+			for UID as byte = 0 to ubound(DiffStarsUnlock)
+				if TotalStars < DiffStarsUnlock(UID) then
+					DiffUnlocked = UID + 7
+					NextStarsUnlock = DiffStarsUnlock(UID)
 					exit for
 				end if
 			next UID
@@ -545,9 +543,12 @@ sub shop
 				next PID
 			else
 				gfxstring("Difficulty for everyone: "+DiffTxt+" ("+left(str(ComputeDiff),len(str(int(ComputeDiff)))+2)+")",5,90,4,4,3,rgb(128,192,255))
+				for PID as ubyte = 2 to 4
+					gfxstring("Difficulty for player "+str(PID)+": "+DiffTxt+" ("+left(str(ComputeDiff),len(str(int(ComputeDiff)))+2)+")",5,(PID+2)*30,4,4,3,rgb(64,64,128))
+				next PID
 			end if
 			if DiffUnlocked < 12 then
-				gfxstring("Next difficulty unlock : "+commaSep(NextXPUnlock)+" XP",5,210,4,4,3,rgb(255,128,128))
+				gfxstring("Next difficulty unlock : "+commaSep(NextStarsUnlock)+" stars",5,210,4,4,3,rgb(255,128,128))
 			else
 				gfxstring("All difficulties unlocked",5,210,4,4,3,rgb(128,128,128))
 			end if
@@ -555,9 +556,9 @@ sub shop
 			gfxstring("Speed increase  : Every "+left(str(100/ApproxDiff),4)+" bounces/blocks",5,550,4,4,3,rgb(128,128,255))
 			gfxstring("Continue penalty: "+ContinueSpecs,5,580,4,4,3,rgb(128,128,255))
 			if WarpSystem then
-				gfxstring("Warp system: Enabled",5,610,4,4,3,rgb(128,128,255))
+				gfxstring("Level select: Enabled",5,610,4,4,3,rgb(128,128,255))
 			else
-				gfxstring("Warp system: Disabled",5,610,4,4,3,rgb(128,128,255))
+				gfxstring("Level select: Disabled",5,610,4,4,3,rgb(128,128,255))
 			end if
 			gfxstring("Perks: "+ExtraInfo,5,640,4,4,3,rgb(128,128,255))
 

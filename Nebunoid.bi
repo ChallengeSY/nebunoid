@@ -233,7 +233,6 @@ type LevelsetSpecs
 	Namee as string
 	Folder as string
 	SetSize as integer
-	XPtoUnlock as integer
 	StarsToUnlock as integer
 	SetLocked as byte
 	SetMastered as byte
@@ -263,7 +262,7 @@ dim shared as ushort MinSize, StandardSize, MaxSize, CapsFalling, BulletsInPlay,
 	Credits, CoinsPerCredit, CeleYear, BrickCount, XplodeCount, ZappableCount, Combo
 dim shared as short PaddleSize, CampaignBarrier, BulletStart, BacksLoaded, BoxGlow
 dim shared as HighSlot HighScore(TotalHighSlots)
-dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP, TotalLevels
+dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP, TotalStars
 dim shared as uinteger GameStyle, TourneyStyle, TourneyScore, ShotIndex
 
 dim shared as ubyte Fullscreen, JoyAnalog, JoyInvertAxes, ControlStyle, TapWindow, CondensedLevel
@@ -315,10 +314,10 @@ function total_lives as integer
 	return LivesFound
 end function
 
-sub read_campaigns
+sub read_campaigns(StarsOnly as ubyte = 0)
 	dim as integer CommunityFoldersFound = 0, LevelsCleared
 	dim as string CommunityFolder
-	TotalLevels = 0
+	TotalStars = 0
 	
 	for OCID as ubyte = 1 to 12 'Official campaigns first
 		with OfficialCampaigns(OCID)
@@ -347,22 +346,19 @@ sub read_campaigns
 					.Namee = "Challenge Campaign"
 					.Folder = "official/challenge"
 					.SetSize = 30
-					.XPtoUnlock = 5e5
 					.StarsToUnlock = 25
 				case 7
 					.Namee = "Maximum Insanity"
 					.Folder = "official/extreme"
 					.SetSize = 25
-					.XPtoUnlock = 1.5e6
 					.StarsToUnlock = 75
 				case 8
 					.Namee = "Celestial Journey"
 					.Folder = "official/universe"
 					.SetSize = 40
-					.XPtoUnlock = 7.5e6
 					.StarsToUnlock = 125
 				case 9
-					if TotalLevels >= 196 then
+					if TotalStars >= 196 then
 						.Namee = "Nebunoid Boss Rush"
 						.Folder = "official/bossrush"
 						.SetSize = 4
@@ -387,28 +383,32 @@ sub read_campaigns
 				end if
 				
 				if OCID <= CampaignsPerPage then
-					.SetMastered = (FileExists(MasterDir+"/"+.Folder+"/L"+str(LevelsCleared+1)+".txt") = 0)
-					.SetSize = LevelsCleared
-					TotalLevels += LevelsCleared
+					dim as integer NextLevel = LevelsCleared + 1
+					.SetMastered = (FileExists(MasterDir+"/campaigns/"+.Folder+"/L"+str(NextLevel)+".txt") = 0)
+					.SetSize = max(.SetSize,LevelsCleared)
+					TotalStars += LevelsCleared
 				end if
 			end if
 		end with
 	next OCID
 	
-	CommunityFolder = Dir(MasterDir+"/campaigns/community/*",fbDirectory)
-	while len( CommunityFolder ) > 0
-		if CommunityFolder <> "." AND CommunityFolder <> ".." then
-			CommunityFoldersFound += 1
-			redim preserve CommunityCampaigns(CommunityFoldersFound)
-			with CommunityCampaigns(CommunityFoldersFound)
-				.Namee = CommunityFolder
-				.Folder = "community/"+CommunityFolder
-			end with
-		end if
-		CommunityFolder = Dir()
-	wend
-	
-	OfficialCampaigns(12).SetSize = CommunityFoldersFound
+	if StarsOnly = 0 then
+		'Scan community campaigns afterwards
+		CommunityFolder = Dir(MasterDir+"/campaigns/community/*",fbDirectory)
+		while len( CommunityFolder ) > 0
+			if CommunityFolder <> "." AND CommunityFolder <> ".." then
+				CommunityFoldersFound += 1
+				redim preserve CommunityCampaigns(CommunityFoldersFound)
+				with CommunityCampaigns(CommunityFoldersFound)
+					.Namee = CommunityFolder
+					.Folder = "community/"+CommunityFolder
+				end with
+			end if
+			CommunityFolder = Dir()
+		wend
+		
+		OfficialCampaigns(12).SetSize = CommunityFoldersFound
+	end if
 end sub
 
 sub load_title_capsules
@@ -687,10 +687,9 @@ sub save_unlocks
 	print #10, "campbarr,";CampaignBarrier
 	print #10, "shuffle,";ShuffleLevels
 	print #10, "bgbright,";BGBrightness
+	print #10, "xp,"& TotalXP
 	close #10
-	open "xp.dat" for output as #10
-	print #10, TotalXP
-	close #10
+	kill("xp.dat")
 end sub
 
 function ball_ct_bonus as byte
