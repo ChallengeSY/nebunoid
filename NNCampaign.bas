@@ -1741,6 +1741,7 @@ sub campaign_gameplay
 							Instructions = "Level progress deleted"
 							HighLevel = 1
 							kill(CampaignName+".dat")
+							kill(CampaignName+".flag")
 						elseif DebugCode = "NEXTRACK" then
 							Instructions = "Music player has changed tracks"
 							rotate_music
@@ -2940,6 +2941,11 @@ sub campaign_gameplay
 					if DQ = 0 then
 						TotalXP += int(.Score * .Difficulty * 2)
 						high_score_input(Player)
+						if FileExists(CampaignName+".flag") = 0 then
+							'Intentionally empty file; simply use it to record campaigns which have been truly won
+							open CampaignName+".flag" for output as #21
+							close #21
+						end if
 					end if
 					empty_hand(Player)
 	

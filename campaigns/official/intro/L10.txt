@@ -5,7 +5,7 @@ LEVEL DATA FILE - INTRODUCTION LEVEL 10
 ================================================================================
 
 Level Name            := Prismatic Beam
-Level Description     := This is the final level of the campaign. Good luck!
+Level Description     := 
 Level Password        := HDUFRLTV
 Level game number     := 1
 Level time limit      := 0

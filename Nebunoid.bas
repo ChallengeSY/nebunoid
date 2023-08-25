@@ -263,7 +263,13 @@ do
 		for Item as byte = 1*(MenuMode-2)*CampaignsPerPage to min((MenuMode-1)*CampaignsPerPage,OfficialCampaigns(12).SetSize)
 			with CommunityCampaigns(Item)
 				if .Namee <> "" then
-					gfxstring(.Namee,40,351+Item*30,4,3,3,rgb(255,255,255))
+					if .SetSize > 0 then
+						Availability = rgb(255,255,255)
+					else
+						Availability = rgb(128,128,128)
+					end if
+					gfxstring(.Namee,40,351+Item*30,4,3,3,Availability)
+					gfxstring("Size "+str(.SetSize),820,351+Item*30,4,3,3,Availability)
 				end if
 			end with
 		next Item
@@ -329,7 +335,7 @@ do
 				ReadID = YID + (MenuMode-2)*CampaignsPerPage
 				
 				with CommunityCampaigns(ReadID)
-					if MouseY >= 346+YID*30 AND MouseY <= 375+YID*30 AND .Namee <> "" AND ReadID <= OfficialCampaigns(12).SetSize then
+					if ReadID <= OfficialCampaigns(12).SetSize AND MouseY >= 346+YID*30 AND MouseY <= 375+YID*30 AND .Namee <> "" AND .SetSize > 0 then
 						draw_box(32,346+YID*30,991,375+YID*30)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							if YID = 12 then

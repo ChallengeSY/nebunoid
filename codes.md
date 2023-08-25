@@ -1,6 +1,6 @@
 ## Nebunoid Cheats
 
-Nebunoid comes with a collection of cheat codes, accessed via F11 while the game is running. Cheat codes which alter gameplay require acknowledgement that they will disqualify high scores and void experience earnings before they can be used.
+Nebunoid comes with a collection of cheat codes, accessed via F11 while the game is running. Cheat codes which alter gameplay require acknowledgement that they will disqualify high scores and void star earnings before they can be used.
 
 * NexTrack: Skips to the next song in the playlist.
 * Scratch: Stops the current song. Effective until turns change or overridden with the code above.

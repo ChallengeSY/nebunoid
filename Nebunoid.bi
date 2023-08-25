@@ -379,14 +379,19 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					open .Namee+".dat" for input as #19
 					input #19, LevelsCleared
 					close #19
+					
+					.SetMastered = -abs(sgn(FileExists(.Namee+".flag")))
+					if .SetMastered = 0 then
+						'Campaign has not yet been cleared; exclude a star from this calculation
+						LevelsCleared -= 1
+					end if
 				else
 					LevelsCleared = 0
 				end if
 				
 				if OCID <= CampaignsPerPage then
-					dim as integer NextLevel = LevelsCleared + 1
-					.SetMastered = (FileExists(MasterDir+"/campaigns/"+.Folder+"/L"+str(NextLevel)+".txt") = 0)
-					.SetSize = max(.SetSize,LevelsCleared)
+					'In case a player died on a secret level, register it as having been seen
+					.SetSize = max(.SetSize,LevelsCleared + 1 + .SetMastered)
 					TotalStars += LevelsCleared
 				end if
 			end if
@@ -403,6 +408,13 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 				with CommunityCampaigns(CommunityFoldersFound)
 					.Namee = CommunityFolder
 					.Folder = "community/"+CommunityFolder
+					
+					for LID as short = 1 to 999
+						if FileExists(MasterDir+"/campaigns/"+.Folder+"/L"+str(LID)+".txt") = 0 then
+							.SetSize = LID - 1
+							exit for
+						end if
+					next LID
 				end with
 			end if
 			CommunityFolder = Dir()
