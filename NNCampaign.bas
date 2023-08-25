@@ -1744,6 +1744,9 @@ sub campaign_gameplay
 						elseif DebugCode = "NEXTRACK" then
 							Instructions = "Music player has changed tracks"
 							rotate_music
+						elseif DebugCode = "SCRATCH" then
+							Instructions = "Music player has encountered a record scratch"
+							release_music
 						elseif DebugCode = "IWANTTOPLAY" then
 							if NumPlayers >= 4 then
 								Instructions = "No room to add another player"
@@ -1911,7 +1914,7 @@ sub campaign_gameplay
 			end if
 		end if
 		
-		if InType = chr(255,133) AND total_lives > 0 then
+		if InType = FunctionEleven AND total_lives > 0 then
 			DebugCode = ""
 			DebugConsole = 1 
 		end if

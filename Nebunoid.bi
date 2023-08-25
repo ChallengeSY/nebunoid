@@ -47,6 +47,7 @@ const EnterKey = chr(13)
 const Backspace = chr(8)
 const XBox = chr(255,107)
 const FunctionOne = chr(255,59)
+const FunctionEleven = chr(255,133)
 const FunctionTwelve = chr(255,134)
 
 const FPS = 60
