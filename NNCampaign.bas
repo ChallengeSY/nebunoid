@@ -513,10 +513,6 @@ sub campaign_gameplay
 						next YID
 					end if
 				end if
-				
-				if ShowTopUI < 59 then
-					line(53,36)-(987,64),rgb(255,255,255),b
-				end if
 	
 				if .BossLastHit < 64 then
 					line(53,36)-(53+.BossLastHealth/.BossMaxHealth*934,64),_
@@ -527,6 +523,10 @@ sub campaign_gameplay
 					line(53,36)-(53+.BossHealth/.BossMaxHealth*934,64),_
 						rgb(255-.BossHealth/.BossMaxHealth*255,_
 						.BossHealth/.BossMaxHealth*192,0),bf
+				end if
+				
+				if ShowTopUI < 59 then
+					line(53,36)-(987,64),rgb(255,255,255),b
 				end if
 			end if
 
