@@ -6,6 +6,8 @@ To build new Windows binaries isn't *that* difficult, but you'll need to install
 ### Common Libraries
 Regardless of platform, you will need to install [FBSound](https://www.freebasic.net/forum/viewtopic.php?t=28905).
 
+Alternatively, SDL_mixer can be used in place of FBSound, but music support is currently omitted from the SDL foundation. Some other unique functionality is not supported by SDL.
+
 ### GNU/Linux
 Installing under GNU/Linux, on the other hand, is not so simple. Since the architecture for this system is all over the place, no binaries are provided for GNU/Linux. A simple makefile is supplied.
 
