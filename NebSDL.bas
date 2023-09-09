@@ -27,7 +27,7 @@ Libraries needed (5):
 * LibVorbisFile
 '/
 dim shared as double LastVolume
-dim shared as ubyte SoundVolume
+dim shared as ubyte SoundVolume, MusicActive
 dim shared as short MusicLoaded = 0
 const clipCount = SFX_MAX - 1
 #include "SDL\SDL.bi"
@@ -116,6 +116,9 @@ sub release_music
 	Mix_HaltMusic
 	Mix_FreeMusic(music)
 	music = NULL
+end sub
+sub rotate_music
+	'Currently unimplemented with the SDL framework
 end sub
 sub cleanSDL destructor
 	release_music

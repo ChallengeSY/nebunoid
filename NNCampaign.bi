@@ -5,13 +5,12 @@ dim shared as string CampaignName, CampaignLevelName, CampaignPassword, LevelDes
 dim shared as ushort StartingLives, HighLevel, CampaignBricks, _
 	SecretLevels, AttackBricks
 dim shared as integer BaseCapsuleValue, PowerTick, PaddleHealth, InitialExtraLife, SubsequentExtraLives, LevelTimeLimit
-dim shared as short SpeedMod, MusicIter, BackIter
+dim shared as short SpeedMod, BackIter
 dim shared as ubyte CapID, ExtraBarrierPoint, GameHints(NumHints), LevelDesc, ContinuousSplit
-dim shared as byte ConstIncrease, PaddleAdjust, MusicActive
+dim shared as byte ConstIncrease, PaddleAdjust
 dim shared as double BoostIncrease, AttackTick, BaseMaxSpeed
 redim shared as integer ShuffleList(1)
 
-MusicIter = irandom(0,MusicLoaded-1)
 BackIter = irandom(0,BacksLoaded-1)
 
 sub apply_diff_specs
@@ -1235,25 +1234,6 @@ sub import_board
 	generate_cavity
 end sub
 
-sub rotate_music
-	#IFDEF __USE_FBSOUND__
-	if MusicLoaded > 1 OR (MusicActive = 0 AND MusicLoaded > 0) then
-		release_music
-		
-		do
-			MusicIter += 1
-			if MusicIter >= MusicLoaded then
-				MusicIter = 0
-			end if
-		loop until PlaySlot(MusicIter).ErrorFound = 0
-		
-		with PlaySlot(MusicIter)
-			fbs_Play_Wave(.Waveform,-1,1,.Volume/100,0,@musicPlr)
-		end with
-		MusicActive = 1
-	end if
-	#ENDIF
-end sub
 sub rotate_back(ForceLoad as byte = 0)
 	if BacksLoaded > 1 OR (ForceLoad > 0 AND BacksLoaded > 0) then
 		BackIter += 1

@@ -4,17 +4,16 @@
 
 #include "Nebunoid.bi"
 #include "NNCampaign.bas"
-windowtitle "Nebunoid 1.04"
 
 if FileExists("portable") = 0 then
-	#IF defined(__FB_WIN32__)
+	#IFDEF __FB_WIN32__
 	if environ("APPDATA") <> "" then
 		if Dir(environ("APPDATA")+"\Nebunoid",fbDirectory) = "" then
 			mkdir(environ("APPDATA")+"\Nebunoid")
 		end if
 		chdir(environ("APPDATA")+"\Nebunoid")
 	end if
-	#ELSE
+	#ELSEIF NOT defined(__FB_DOS__)
 	if environ("HOME") <> "" then
 		if Dir(environ("HOME")+"/.nebunoid",fbDirectory) = "" then
 			mkdir(environ("HOME")+"/.nebunoid")
@@ -31,8 +30,13 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 	else
 		screen 20,24,2,GFX_ALPHA_PRIMITIVES OR GFX_NO_SWITCH
 	end if
-	windowtitle "Nebunoid"
+
+	if ScreenCreated = 0 then
+		TitleBanner = ImageCreate(281,60)
+		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
+	end if
 end if
+windowtitle "Nebunoid 1.05"
 
 'Foreground assets
 SoftBrickPic = ImageCreate(48,24)
@@ -115,6 +119,8 @@ line PaddleBar,(5,26)-(635,26),rgb(255,255,255)
 line PaddleBar,(635,5)-(635,26),rgb(255,255,255)
 #ENDIF
 
+MusicPlrEnabled = 1
+
 'Background pooling
 BGBrightness = 50
 Background = ImageCreate(1024,768)
@@ -156,6 +162,8 @@ if FileExists("conf.ini") then
 				input #10, CampaignBarrier
 			case "shuffle"
 				input #10, ShuffleLevels
+			case "musplayer"
+				input #10, MusicPlrEnabled
 			case "bgbright"
 				input #10, BGBrightness
 				BGBrightness = max(min(BGBrightness,100),0)
@@ -385,7 +393,7 @@ end if
 save_unlocks
 
 sub shop
-	dim as ubyte TotalCount(0 to MISC) => {0, 0, 12, 6}
+	dim as ubyte TotalCount(0 to MISC) => {0, 0, 12, 7}
 	dim as ubyte CTRL_BUTTON_ACTION, CTRL_AXIS_MOVEMENT
 
 	dim as string ItemDesc, CommunityFolder, CustomItem(MISC,12)
@@ -419,6 +427,7 @@ sub shop
 	CustomItem(MISC,4) = "Shuffle levels         "
 	CustomItem(MISC,5) = "Full screen setting    "
 	CustomItem(MISC,6) = "Background brightness  "
+	CustomItem(MISC,7) = "Music player           "
 	
 	read_campaigns(1)
 	
@@ -792,14 +801,27 @@ sub shop
 							ItemDesc = "Toggle between Full Screen and a Windowed application (Shortcut: F7)"
 						case 6
 							ItemDesc = "Determines how dark to make the backgrounds."
+						case 7
+							ItemDesc = "Determines whether music will play while a game is in progress (Shortcut: F5)"
 					end select
 				end if
 				
-				if (PID = 1 AND DisableHints = 1) OR _
+				#IFNDEF __USE_FBSOUND__
+				if PID = 7 then
+					gfxstring(CustomItem(MISC,PID)+" (unsupported)",5,PosY,4,4,3,rgb(128,128,128))
+				elseif (PID = 1 AND DisableHints = 1) OR _
 					(PID = 2 AND EnhancedGFX = 1) OR _
 					(PID = 3 AND CampaignBarrier = 1) OR _
 					(PID = 4 AND ShuffleLevels = 1) OR _
 					(PID = 5 AND FullScreen = 1) then
+				#ELSE
+				if (PID = 1 AND DisableHints = 1) OR _
+					(PID = 2 AND EnhancedGFX = 1) OR _
+					(PID = 3 AND CampaignBarrier = 1) OR _
+					(PID = 4 AND ShuffleLevels = 1) OR _
+					(PID = 5 AND FullScreen = 1) OR _
+					(PID = 7 AND MusicPlrEnabled = 1) then
+				#ENDIF
 					gfxstring(CustomItem(MISC,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
 					if MouseY >= SelY AND MouseY < SelY+30 then
 						draw_box(0,SelY,1023,SelY+29)
@@ -815,6 +837,8 @@ sub shop
 									ShuffleLevels = 0
 								case 5
 									toggle_fullscreen(-1)
+								case 7
+									MusicPlrEnabled = 0
 							end select
 						end if
 					end if
@@ -845,6 +869,8 @@ sub shop
 									ShuffleLevels = 1
 								case 5
 									toggle_fullscreen(1)
+								case 7
+									MusicPlrEnabled = 1
 							end select
 						end if
 					end if

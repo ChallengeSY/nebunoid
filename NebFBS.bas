@@ -42,7 +42,7 @@ const clipCount = SFX_MAX - 1
 const musCount = 32
 dim shared as string data_path
 data_path = MasterDir+"/sfx/"
-dim shared as integer clipPause(clipCount), Flash, LoadColor
+dim shared as integer clipPause(clipCount), Flash, LoadColor, MusicIter, MusicActive
 dim as string SFXNames(clipCount), IntroMessage
 dim as any ptr LoadingBar
 
@@ -250,6 +250,7 @@ sub shuffle_music
 		SlotUsed(UseSlot) = 1
 	next Stream
 	
+	MusicIter = irandom(0,MusicLoaded-1)
 	erase SlotUsed
 end sub
 
@@ -278,6 +279,25 @@ sub decrement_pauses
 		end if
 	next ID
 end sub
+
 sub release_music
 	fbs_Destroy_Sound(@musicPlr)
+	MusicActive = 0
+end sub
+sub rotate_music
+	if MusicPlrEnabled AND (MusicLoaded > 1 OR (MusicActive = 0 AND MusicLoaded > 0)) then
+		release_music
+		
+		do
+			MusicIter += 1
+			if MusicIter >= MusicLoaded then
+				MusicIter = 0
+			end if
+		loop until PlaySlot(MusicIter).ErrorFound = 0
+		
+		with PlaySlot(MusicIter)
+			fbs_Play_Wave(.Waveform,-1,1,.Volume/100,0,@musicPlr)
+		end with
+		MusicActive = 1
+	end if
 end sub

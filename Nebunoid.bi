@@ -14,6 +14,7 @@ randomize timer
 
 dim shared as string NullString, Masterdir
 dim as byte ScreenCreated = 0
+dim shared as byte MusicPlrEnabled
 dim shared as any ptr TitleBanner
 Masterdir = curdir
 #IFDEF __USE_SDL__
@@ -35,8 +36,6 @@ declare sub shop
 declare sub generate_campaign_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 'Keyboard commands
 const EscapeKey = chr(27)
-const FunctionFour = chr(255,62)
-const FunctionSeven = chr(255,65)
 const UpArrow = chr(255,72)
 const DownArrow = chr(255,80)
 const LeftArrow = chr(255,75)
@@ -47,6 +46,9 @@ const EnterKey = chr(13)
 const Backspace = chr(8)
 const XBox = chr(255,107)
 const FunctionOne = chr(255,59)
+const FunctionFour = chr(255,62)
+const FunctionFive = chr(255,63)
+const FunctionSeven = chr(255,65)
 const FunctionEleven = chr(255,133)
 const FunctionTwelve = chr(255,134)
 
@@ -266,7 +268,8 @@ dim shared as HighSlot HighScore(TotalHighSlots)
 dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP, TotalStars
 dim shared as uinteger GameStyle, TourneyStyle, TourneyScore, ShotIndex
 
-dim shared as ubyte Fullscreen, JoyAnalog, JoyInvertAxes, ControlStyle, TapWindow, CondensedLevel
+dim shared as ubyte Fullscreen, JoyAnalog, JoyInvertAxes, ControlStyle, TapWindow, CondensedLevel, _
+	AllowHandicap, DisableHints, ShuffleLevels
 dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness
 dim shared as single JoyAxis(7)
 dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, BlockBrushes
@@ -279,10 +282,11 @@ dim shared as Basics Paddle(2), Capsule(MaxFallCaps), Ball(NumBalls), Bullet(Max
 dim shared as ParticleSpecs Particles(Particount)
 
 dim shared as ubyte DQ, Player, NumPlayers, DispLives, Invis, GfxStyle, ExploTick, _
-	BallSize, AllowHandicap, DisableHints, ShuffleLevels, MenuMode, HoldClick, HoldAction
+	BallSize,  MenuMode, HoldClick, HoldAction
 dim shared as byte EnhancedGFX, GamePaused, TourneyValid, TotalMessages, TotalUnread
-dim shared as any ptr BulletPic, MissilePic, SoftBrickPic, MultihitPic, InvinciblePic, ExplodePic, BaseExplode, SoftBrickPicMini, MultihitPicMini, InvincibleMini, _
-	CapsulePic(26), CapsuleBar(5), CapsuleBarFrame, PokerBar(5), Background, FramesetMerged, Sideframes, Topframe, DiffStick, DiffSelector, PaddlePic, BasePaddle, PaddleBar
+dim shared as any ptr BulletPic, MissilePic, SoftBrickPic, MultihitPic, InvinciblePic, ExplodePic, BaseExplode, _
+	SoftBrickPicMini, MultihitPicMini, InvincibleMini, CapsulePic(26), CapsuleBar(5), CapsuleBarFrame, _
+	PokerBar(5), Background, FramesetMerged, Sideframes, Topframe, DiffStick, DiffSelector, PaddlePic, BasePaddle, PaddleBar
 
 const Interpolation = 120 'Ball updates per frame
 const CampaignsPerPage = 11 
@@ -700,6 +704,7 @@ sub save_unlocks
 	print #10, "campbarr,";CampaignBarrier
 	print #10, "shuffle,";ShuffleLevels
 	print #10, "bgbright,";BGBrightness
+	print #10, "musplayer,"& MusicPlrEnabled
 	print #10, "xp,"& TotalXP
 	close #10
 	kill("xp.dat")

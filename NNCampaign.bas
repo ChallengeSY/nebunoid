@@ -489,33 +489,9 @@ sub campaign_gameplay
 	
 				'Level display
 				ui_element(str(.LevelNum),935,6,3,rgb(255,255,255))
-				
 				GameInfo = CampaignName + ": " + CampaignLevelName
-	
-				if (GameStyle AND (1 SHL STYLE_BOSS)) OR (GameStyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
-					if .BossHealth <= 0 then
-						.BossHealth = 0
-						if .BossLastHit = 1 AND (GameStyle AND (1 SHL STYLE_BOSS)) then
-							play_clip(SFX_WALL_BROKEN)
-							for YID as ubyte = 1 to 24
-								for XID as ubyte = 1 to 20*(CondensedLevel+1)
-									Tileset(XID,YID).BrickID = 0
-								next XID
-							next YID
-						end if
-					end if
-		
-					if .BossLastHit < 64 then
-						line(53,36)-(53+.BossLastHealth/.BossMaxHealth*934,64),_
-							rgba(255,255,255,192-(.BossLastHit * 3)),bf
-						.BossLastHit += 1
-					end if
-					if .BossHealth > 0 then
-						line(53,36)-(53+.BossHealth/.BossMaxHealth*934,64),_
-							rgb(255-.BossHealth/.BossMaxHealth*255,_
-							.BossHealth/.BossMaxHealth*192,0),bf
-					end if
-				else
+				
+				if (GameStyle AND (1 SHL STYLE_BOSS)) = 0 AND (GameStyle AND (1 SHL STYLE_BREAKABLE_CEILING)) = 0 then
 					if BrickCount > CampaignBricks then
 						line(53,36)-(987,64),rgb(128,0,64),bf
 					elseif BrickCount > 0 then
@@ -523,32 +499,39 @@ sub campaign_gameplay
 					end if
 				end if
 				
-				gfxstring(GameInfo,54,38,5,3,3,rgb(255,255,255))
-			else
-				if (GameStyle AND (1 SHL STYLE_BOSS)) OR (GameStyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
-					if .BossHealth <= 0 then
-						.BossHealth = 0
-						if (GameStyle AND (1 SHL STYLE_BOSS)) then
-							for YID as ubyte = 1 to 24
-								for XID as ubyte = 1 to 20*(CondensedLevel+1)
-									Tileset(XID,YID).BrickID = 0
-								next XID
-							next YID
-						end if
+			end if
+			
+			if (GameStyle AND (1 SHL STYLE_BOSS)) OR (GameStyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
+				if .BossHealth <= 0 then
+					.BossHealth = 0
+					if .BossLastHit = 1 AND (GameStyle AND (1 SHL STYLE_BOSS)) then
+						play_clip(SFX_WALL_BROKEN)
+						for YID as ubyte = 1 to 24
+							for XID as ubyte = 1 to 20*(CondensedLevel+1)
+								Tileset(XID,YID).BrickID = 0
+							next XID
+						next YID
 					end if
-					
-					if .BossLastHit < 64 then
-						line(53,36)-(53+.BossLastHealth/.BossMaxHealth*934,64),_
-							rgba(255,255,255,192-(.BossLastHit * 3)),bf
-						.BossLastHit += 1
-					end if
-					if .BossHealth > 0 then
-						line(53,36)-(53+.BossHealth/.BossMaxHealth*934,64),_
-							rgb(255-.BossHealth/.BossMaxHealth*255,_
-							.BossHealth/.BossMaxHealth*192,0),bf
-					end if
+				end if
+				
+				if ShowTopUI < 59 then
 					line(53,36)-(987,64),rgb(255,255,255),b
 				end if
+	
+				if .BossLastHit < 64 then
+					line(53,36)-(53+.BossLastHealth/.BossMaxHealth*934,64),_
+						rgba(255,255,255,192-(.BossLastHit * 3)),bf
+					.BossLastHit += 1
+				end if
+				if .BossHealth > 0 then
+					line(53,36)-(53+.BossHealth/.BossMaxHealth*934,64),_
+						rgb(255-.BossHealth/.BossMaxHealth*255,_
+						.BossHealth/.BossMaxHealth*192,0),bf
+				end if
+			end if
+
+			if ShowTopUI >= 60 then
+				gfxstring(GameInfo,54,38,5,3,3,rgb(255,255,255))
 			end if
 	
 		end with
@@ -1742,12 +1725,6 @@ sub campaign_gameplay
 							HighLevel = 1
 							kill(CampaignName+".dat")
 							kill(CampaignName+".flag")
-						elseif DebugCode = "NEXTRACK" then
-							Instructions = "Music player has changed tracks"
-							rotate_music
-						elseif DebugCode = "SCRATCH" then
-							Instructions = "Music player has encountered a record scratch"
-							release_music
 						elseif DebugCode = "IWANTTOPLAY" then
 							if NumPlayers >= 4 then
 								Instructions = "No room to add another player"
@@ -2519,7 +2496,6 @@ sub campaign_gameplay
 
 			setmouse(,,0,0)
 			release_music
-			MusicActive = 0
 			Paddle(1).Blizzard = 0
 			Paddle(1).Grabbing = 0
 			if ucase(InType) >= "A" AND ucase(InType) <= "Z" AND PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignName <> PlaytestName then
@@ -2868,7 +2844,20 @@ sub campaign_gameplay
 			end with
 		end if
 		
-		if InType = FunctionSeven then
+		if InType = FunctionFive AND total_lives > 0 then
+			#IFDEF __USE_FBSOUND__
+			MusicPlrEnabled = 1 - MusicPlrEnabled
+			
+			if MusicPlrEnabled then
+				Instructions = "Music player activated"
+				rotate_music
+			else
+				Instructions = "Music player disabled"
+				release_music
+			end if
+			InstructExpire = timer + 5
+			#ENDIF
+		elseif InType = FunctionSeven then
 			toggle_fullscreen
 			if total_lives > 0 AND LevelClear = 0 then
 				GamePaused = 1
@@ -2985,7 +2974,6 @@ sub campaign_gameplay
 		end if
 	loop
 	release_music
-	MusicActive = 0
 	for PID as ubyte = 1 to 4
 		with PlayerSlot(PID)
 			if .Lives > 0 AND DQ = 0 then

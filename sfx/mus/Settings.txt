@@ -1,2 +1,2 @@
-OGG,90
-Tracker,70
+OGG,100
+Tracker,75

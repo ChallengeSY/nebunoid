@@ -17,7 +17,7 @@ enum SoundFX
 end enum
 
 'These functions are intentionally blank to allow for flexibility
-dim as integer MusicLoaded = 0
+dim shared as integer MusicLoaded = 0, MusicActive
 
 sub play_clip(ID as byte, Panning as short = 320, HertzMod as short = 100)
 
@@ -29,6 +29,9 @@ sub decrement_pauses
 
 end sub
 sub release_music
+
+end sub
+sub rotate_music
 
 end sub
 function convert_speed(InSpeed as double) as short
