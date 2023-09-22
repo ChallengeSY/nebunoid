@@ -1,5 +1,5 @@
 #include "Nebunoid.bi"
-#include "NNCampaign.bas"
+#include "NNLocal.bas"
 
 #IF defined(__FB_WIN32__) OR defined(__FB_DOS__)
 const GameProgram = "\Nebunoid.exe"
@@ -23,7 +23,7 @@ CondensedLevel = 0
 sub clear_level
 	for YID as ubyte = 1 to 24
 		for XID as ubyte = 1 to 40
-			with Tileset(XID,YID)
+			with PlayerSlot(Player).Tileset(XID,YID)
 				.BrickID = 0
 			end with
 		next XID
@@ -635,7 +635,7 @@ sub delete_brush(DelID as integer)
 	
 	for YID as ubyte = 1 to 24
 		for XID as ubyte = 1 to 40
-			with TileSet(XID,YID)
+			with PlayerSlot(Player).TileSet(XID,YID)
 				if .BrickID = DelID then
 					.BrickID = 0
 					.Flash = BaseFlash
@@ -1004,7 +1004,7 @@ sub draw_bricks(PaintX as byte, PaintY as byte)
 	dim as byte SupportX, SupportY, SupportZ
 	
 	if PaintX > 0 AND PaintY > 0 AND PaintX <= 20*(1+CondensedLevel) AND PaintY <= 24 then
-		with TileSet(PaintX,PaintY)
+		with PlayerSlot(Player).TileSet(PaintX,PaintY)
 			.Flash = max(.Flash,32)
 			
 			if SelectedBrush > 0 AND ButtonCombo = 1 then
@@ -1023,7 +1023,7 @@ sub draw_bricks(PaintX as byte, PaintY as byte)
 			SupportX = 1+20*(1+CondensedLevel)-PaintX 
 			SupportY = PaintY
 			
-			with TileSet(SupportX,SupportY)
+			with PlayerSlot(Player).TileSet(SupportX,SupportY)
 				.Flash = max(.Flash,32)
 				
 				if SelectedBrush > 0 AND ButtonCombo = 1 then
@@ -1043,7 +1043,7 @@ sub draw_bricks(PaintX as byte, PaintY as byte)
 			SupportX = PaintX 
 			SupportY = 21-PaintY
 			
-			with TileSet(SupportX,SupportY)
+			with PlayerSlot(Player).TileSet(SupportX,SupportY)
 				.Flash = max(.Flash,32)
 				
 				if SelectedBrush > 0 AND ButtonCombo = 1 then
@@ -1063,7 +1063,7 @@ sub draw_bricks(PaintX as byte, PaintY as byte)
 			SupportX = 1+20*(1+CondensedLevel)-PaintX 
 			SupportY = 21-PaintY
 			
-			with TileSet(SupportX,SupportY)
+			with PlayerSlot(Player).TileSet(SupportX,SupportY)
 				.Flash = max(.Flash,32)
 				
 				if SelectedBrush > 0 AND ButtonCombo = 1 then
@@ -1088,7 +1088,7 @@ sub draw_bricks(PaintX as byte, PaintY as byte)
 				SupportY = PaintX
 			end if
 						
-			with TileSet(SupportX,SupportY)
+			with PlayerSlot(Player).TileSet(SupportX,SupportY)
 				.Flash = max(.Flash,32)
 				
 				if SelectedBrush > 0 AND ButtonCombo = 1 then
@@ -1106,7 +1106,7 @@ sub draw_bricks(PaintX as byte, PaintY as byte)
 			if (MirrorEditing AND (1 SHL 0)) then
 				SupportX = 1+20*(1+CondensedLevel)-SupportX 
 				
-				with TileSet(SupportX,SupportY)
+				with PlayerSlot(Player).TileSet(SupportX,SupportY)
 					.Flash = max(.Flash,32)
 					
 					if SelectedBrush > 0 AND ButtonCombo = 1 then
@@ -1126,7 +1126,7 @@ sub draw_bricks(PaintX as byte, PaintY as byte)
 			if (MirrorEditing AND (1 SHL 1)) then
 				SupportY = 21-SupportY
 				
-				with TileSet(SupportX,SupportY)
+				with PlayerSlot(Player).TileSet(SupportX,SupportY)
 					.Flash = max(.Flash,32)
 					
 					if SelectedBrush > 0 AND ButtonCombo = 1 then
@@ -1147,7 +1147,7 @@ sub draw_bricks(PaintX as byte, PaintY as byte)
 				SupportX = 1+20*(1+CondensedLevel)-SupportX 
 				SupportY = 21-SupportY
 				
-				with TileSet(SupportX,SupportY)
+				with PlayerSlot(Player).TileSet(SupportX,SupportY)
 					.Flash = max(.Flash,32)
 					
 					if SelectedBrush > 0 AND ButtonCombo = 1 then
@@ -1181,15 +1181,15 @@ sub shift_field(ShiftX as byte, ShiftY as byte)
 	if ShiftX = -1 then
 		for YID as byte = 1 to 24
 			for XID as byte = 0 to MaxCols-1
-				TileSet(XID,YID) = TileSet(XID+1,YID)
+				PlayerSlot(Player).TileSet(XID,YID) = PlayerSlot(Player).TileSet(XID+1,YID)
 			next XID
-			TileSet(MaxCols,YID) = TileSet(0,YID)
+			PlayerSlot(Player).TileSet(MaxCols,YID) = PlayerSlot(Player).TileSet(0,YID)
 		next YID
 	elseif ShiftX = 1 then
 		for YID as byte = 1 to 24
-			TileSet(0,YID) = TileSet(MaxCols,YID)
+			PlayerSlot(Player).TileSet(0,YID) = PlayerSlot(Player).TileSet(MaxCols,YID)
 			for XID as byte = MaxCols to 1 step -1
-				TileSet(XID,YID) = TileSet(int(XID-1),YID)
+				PlayerSlot(Player).TileSet(XID,YID) = PlayerSlot(Player).TileSet(int(XID-1),YID)
 			next XID
 		next YID
 	end if
@@ -1197,15 +1197,15 @@ sub shift_field(ShiftX as byte, ShiftY as byte)
 	if ShiftY = -1 then
 		for XID as byte = 1 to MaxCols
 			for YID as byte = 0 to MaxRows-1
-				TileSet(XID,YID) = TileSet(XID,YID+1)
+				PlayerSlot(Player).TileSet(XID,YID) = PlayerSlot(Player).TileSet(XID,YID+1)
 			next YID
-			TileSet(XID,MaxRows) = TileSet(XID,0)
+			PlayerSlot(Player).TileSet(XID,MaxRows) = PlayerSlot(Player).TileSet(XID,0)
 		next XID
 	elseif ShiftY = 1 then
 		for XID as byte = 1 to MaxCols
-			TileSet(XID,0) = TileSet(XID,MaxRows)
+			PlayerSlot(Player).TileSet(XID,0) = PlayerSlot(Player).TileSet(XID,MaxRows)
 			for YID as byte = MaxRows to 1 step -1
-				TileSet(XID,YID) = TileSet(XID,int(YID-1))
+				PlayerSlot(Player).TileSet(XID,YID) = PlayerSlot(Player).TileSet(XID,int(YID-1))
 			next YID
 		next XID
 	end if
@@ -1272,7 +1272,7 @@ sub save_level(SaveLvNum as short)
 		for YID as ubyte = 1 to SaveRows
 			print #2, space(2-len(str(YID)))+str(YID)+"|";
 			for XID as ubyte = 1 to 40
-				with TileSet(XID,YID)
+				with PlayerSlot(Player).TileSet(XID,YID)
 					if .BrickID = 0 then
 						PrintBlockChar = " "
 					elseif .BrickID < 10 then
@@ -1292,7 +1292,7 @@ sub save_level(SaveLvNum as short)
 		for YID as ubyte = 1 to SaveRows
 			print #2, space(2-len(str(YID)))+str(YID)+"|";
 			for XID as ubyte = 1 to 20
-				with TileSet(XID,YID)
+				with PlayerSlot(Player).TileSet(XID,YID)
 					if .BrickID = 0 then
 						PrintBlockChar = " "
 					elseif .BrickID < 10 then
@@ -1363,3 +1363,4 @@ sub reset_editor_specs
 		Instructions = LevelDescription
 	end if
 end sub
+

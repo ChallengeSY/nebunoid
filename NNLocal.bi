@@ -224,16 +224,31 @@ sub destroy_capsules
 		Capsule(CID).Y = 800
 	next CID
 end sub
+sub copy_wall
+	with NewPlrSlot
+		.InitialLevel = .LevelNum
+
+		for YID as byte = 1 to 24  
+			for XID as byte = 1 to 40
+				.Tileset(XID,YID) = PlayerSlot(1).Tileset(XID,YID)
+			next XID
+		next YID
+
+		.SavedGameStyle = PlayerSlot(1).SavedGameStyle
+		.BossMaxHealth = PlayerSlot(1).BossMaxHealth
+		.BulletAmmo = PlayerSlot(1).BulletAmmo
+	end with
+end sub
 function box_detection(StartX as byte,StartY as byte,EndX as byte,EndY as byte) as byte
 	dim as ubyte BoxSatisfied = 1
 	for YID as byte = StartY to EndY 
 		for XID as byte = StartX to EndX
 			if XID = StartX OR XID = EndX OR YID = StartY OR YID = EndY then
-			if Tileset(XID,YID).BrickID = 0 then
+			if PlayerSlot(Player).TileSet(XID,YID).BrickID = 0 then
 					BoxSatisfied = 0
 					exit for,for
 				end if
-			elseif Tileset(XID,YID).BrickID > 0 then
+			elseif PlayerSlot(Player).TileSet(XID,YID).BrickID > 0 then
 				BoxSatisfied = 0
 				exit for,for
 			end if
@@ -460,7 +475,7 @@ function load_level_file(LoadLevel as string) as integer
 	LevelTimeLimit = valint(right(LoadData,len(LoadData)-25))
 	
 	input #1, LoadData
-	if left(LoadData,17) = "Level boss health" then
+	if lcase(left(LoadData,17)) = "level boss health" then
 		PlayerSlot(Player).BossMaxHealth = valint(right(LoadData,len(LoadData)-25))
 		input #1, LoadData
 	else
@@ -517,31 +532,50 @@ function load_level_file(LoadLevel as string) as integer
 		MaxHeight = 24
 	end if
 	
-	'Phase 3 - Create layout
-	for YID as ubyte = 1 to 24
-		line input #1, LoadData
-		for XID as ubyte = 1 to 40
-			with Tileset(XID,YID)
-				.Flash = 0
-				.HitTime = 0
-				.LastBall = 0
-				if LoadData = "*END*" OR len(LoadData) < XID OR YID > MaxHeight then
-					.BrickID = 0
-				else
-					.BrickID = convert_char(mid(LoadData,3+XID,1))
-					if .BrickID > 0 AND Tileset(XID,YID).BrickID <> Pallete(Tileset(XID,YID).BrickID).HitDegrade AND _
+	'Phase 3 - Create layout, but only if this is a fresh level
+	if PlayerSlot(Player).PerfectClear > 0 AND PlayerSlot(Player).SetCleared = 0 then
+		for YID as ubyte = 1 to 24
+			line input #1, LoadData
+			for XID as ubyte = 1 to 40
+				with PlayerSlot(Player).TileSet(XID,YID)
+					.Flash = 0
+					.HitTime = 0
+					.LastBall = 0
+					if LoadData = "*END*" OR len(LoadData) < XID OR YID > MaxHeight then
+						.BrickID = 0
+					else
+						.BrickID = convert_char(mid(LoadData,3+XID,1))
+						if .BrickID > 0 AND .BrickID <> Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade AND _
+							Pallete(.BrickID).CalcedInvulnerable < 2 then
+							CampaignBricks += 1
+							BrickCount += 1
+						end if
+					end if
+					.BaseBrickID = .BrickID
+					if .BaseBrickID > 0 AND .BaseBrickID <= 35 AND Pallete(.BaseBrickID).CalcedInvulnerable = 0 then
+						Pallete(.BaseBrickID).UsedInlevel = 1
+					end if
+				end with
+			next XID
+		next YID
+		
+		PlayerSlot(Player).SavedGameStyle = GameStyle
+	else
+		'If a life had been lost, read level data instead
+		GameStyle = PlayerSlot(Player).SavedGameStyle
+
+		for YID as ubyte = 1 to 24
+			for XID as ubyte = 1 to 40
+				with PlayerSlot(Player).TileSet(XID,YID)
+					if .BrickID > 0 AND .BrickID <> Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade AND _
 						Pallete(.BrickID).CalcedInvulnerable < 2 then
 						CampaignBricks += 1
 						BrickCount += 1
 					end if
-				end if
-				.BaseBrickID = .BrickID
-				if .BaseBrickID > 0 AND .BaseBrickID <= 35 AND Pallete(.BaseBrickID).CalcedInvulnerable = 0 then
-					Pallete(.BaseBrickID).UsedInlevel = 1
-				end if
-			end with
-		next XID
-	next YID
+				end with
+			next XID
+		next YID
+	end if
 	close #1
 	
 	return 0
@@ -727,7 +761,7 @@ function level_list as string
 	return OutPass
 end function
 
-sub campaign_collisions(BallID as short)
+sub brick_collisions(BallID as short)
 	dim as ubyte HitFailed, PointsScored, ChooseParticle
 	dim as uinteger ColorDestroyed
 	dim as short ScoreMultiplier, BonusMultiplier, ActualGain, MinX, MaxX, MinY, MaxY
@@ -745,7 +779,7 @@ sub campaign_collisions(BallID as short)
 		for XID as byte = MinX to MaxX
 			with Ball(BallID)
 				if XID > 0 AND XID <= 40 AND YID > 0 AND YID <= 20 AND .Invul = 0 AND _
-					Tileset(XID,YID).BrickID > 0 AND (.LHX <> XID OR .LHY <> YID) AND _
+					PlayerSlot(Player).TileSet(XID,YID).BrickID > 0 AND (.LHX <> XID OR .LHY <> YID) AND _
 					.X >= 32-BallSize+(XID-1)*48/(CondensedLevel + 1) AND _
 					.X <= 32+BallSize+(XID)*48/(CondensedLevel + 1) AND _
 					.Y >= 96-BallSize+(YID-1)*24 AND .Y <= 96+BallSize+(YID)*24 then
@@ -755,14 +789,14 @@ sub campaign_collisions(BallID as short)
 					end if
 
 					if .Power < 0 AND .Duration > 0 AND rnd < .4 AND _
-						Pallete(Tileset(XID,YID).BrickID).HitDegrade >= 0 then
+						Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade >= 0 then
 						HitFailed = 1
 					end if
 					
 					if .Spawned = 0 AND .Power > -2 then
-						Tileset(XID,YID).Flash = BaseFlash
-						Tileset(XID,YID).HitTime = 0
-						Tileset(XID,YID).LastBall = BallID
+						PlayerSlot(Player).TileSet(XID,YID).Flash = BaseFlash
+						PlayerSlot(Player).TileSet(XID,YID).HitTime = 0
+						PlayerSlot(Player).TileSet(XID,YID).LastBall = BallID
 					end if
 					
 					if .Power = -2 then
@@ -770,7 +804,7 @@ sub campaign_collisions(BallID as short)
 					elseif HitFailed AND .Spawned = 0 then
 						optimal_direction(BallID,XID,YID)
 						
-						if Pallete(Tileset(XID,YID).BrickID).IncreaseSpeed then
+						if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).IncreaseSpeed then
 							if .Speed < 12 then
 								.Speed = 12
 							else
@@ -788,9 +822,9 @@ sub campaign_collisions(BallID as short)
 							optimal_direction(BallID,XID,YID)
 						end if
 
-						if Pallete(Tileset(XID,YID).BrickID).HitDegrade = Tileset(XID,YID).BrickID AND .Power <= 0 then
+						if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade = PlayerSlot(Player).TileSet(XID,YID).BrickID AND .Power <= 0 then
 							play_clip(SFX_INVINCIBLE,.X,convert_speed(.Speed))
-							if Pallete(Tileset(XID,YID).BrickID).IncreaseSpeed then
+							if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).IncreaseSpeed then
 								if .Speed < 12 then
 									.Speed = 12
 								else
@@ -827,9 +861,9 @@ sub campaign_collisions(BallID as short)
 							NewBrick = Pallete(PalleteRef).HitDegrade
 							
 							if .Power = 1 OR .Power = 2 then
-								PalleteRef = Pallete(Tileset(XID,YID).BrickID).ZapDegrade
+								PalleteRef = Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).ZapDegrade
 							else
-								PalleteRef = Tileset(XID,YID).BrickID
+								PalleteRef = PlayerSlot(Player).TileSet(XID,YID).BrickID
 							end if
 							
 							if .Power <= 0 then
@@ -900,7 +934,7 @@ sub campaign_collisions(BallID as short)
 							
 							ActualGain = int(Pallete(PalleteRef).ScoreValue * ball_ct_bonus * ScoreMultiplier / 100)
 
-							with Pallete(Tileset(XID,YID).BrickID)
+							with Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID)
 								PlayerSlot(Player).Score += ActualGain
 								PointsScored += ActualGain
 								ColorRef = .HitDegrade
@@ -916,7 +950,7 @@ sub campaign_collisions(BallID as short)
 										(retrivePrimary(.PColoring,RGBA_BLUE)+255)/2)
 								end if
 							end with
-							if Pallete(Tileset(XID,YID).BrickID).IncreaseSpeed then
+							if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).IncreaseSpeed then
 								if .Speed < 12 then
 									.Speed = 12
 								else
@@ -929,33 +963,33 @@ sub campaign_collisions(BallID as short)
 								adjust_speed(BallID,PlayerSlot(Player).Difficulty / 100)
 							end if
 							
-							generate_campaign_capsule(XID,YID)
-							if Pallete(Tileset(XID,YID).BrickID).HitDegrade < 0 OR .Power = 2 OR .Power = 4 then
+							generate_capsule(XID,YID)
+							if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade < 0 OR .Power = 2 OR .Power = 4 then
 								if .Power = 2 then
 									PlayerSlot(Player).Score += 2 * ball_ct_bonus
 									PointsScored += 2 * ball_ct_bonus
 								end if
-								Tileset(XID,YID).BrickID = ExplodeDelay
-							elseif .Power = 3 AND Pallete(Tileset(XID,YID).BrickID).CalcedInvulnerable >= 2 then
-								Tileset(XID,YID).BrickID = 0
+								PlayerSlot(Player).TileSet(XID,YID).BrickID = ExplodeDelay
+							elseif .Power = 3 AND Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).CalcedInvulnerable >= 2 then
+								PlayerSlot(Player).TileSet(XID,YID).BrickID = 0
 								play_clip(SFX_BRICK,.X)
 							elseif .Power = 1 then
 								if .Duration > 0 then
 									PlayerSlot(Player).Score += 2 * ball_ct_bonus
 									PointsScored += 2 * ball_ct_bonus
 								end if
-								Tileset(XID,YID).BrickID = 0
+								PlayerSlot(Player).TileSet(XID,YID).BrickID = 0
 								play_clip(SFX_BRICK,.X)
-							elseif Pallete(Tileset(XID,YID).BrickID).HitDegrade = Tileset(XID,YID).BrickID then
-								Tileset(XID,YID).BrickID = 0
+							elseif Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade = PlayerSlot(Player).TileSet(XID,YID).BrickID then
+								PlayerSlot(Player).TileSet(XID,YID).BrickID = 0
 								play_clip(SFX_BRICK,.X)
 							else
-								if Pallete(Tileset(XID,YID).BrickID).HitDegrade = 0 then
+								if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade = 0 then
 									play_clip(SFX_BRICK,.X)
 								else
 									play_clip(SFX_HARDEN,.X,convert_speed(.Speed))
 								end if
-								Tileset(XID,YID).BrickID = Pallete(Tileset(XID,YID).BrickID).HitDegrade
+								PlayerSlot(Player).TileSet(XID,YID).BrickID = Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade
 							end if
 						end if
 						Invis = 12
@@ -968,7 +1002,7 @@ sub campaign_collisions(BallID as short)
 		next XID
 	next YID
 end sub
-sub generate_campaign_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
+sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 	dim as ubyte Award, CapWeight(CAP_MAX)
 	dim as short TotalWeight, RollPower, MaxRoll, CapsuleChance
 	dim as string CapPic
@@ -1188,50 +1222,6 @@ sub generate_campaign_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 			.Angle = Award
 		end if
 	end with
-end sub 
-sub export_board
-	open "Hotseat"+str(Player)+".dat" for output as #5
-	print #5, Gamestyle
-	for YID as ubyte = 1 to 24
-		for XID as ubyte = 1 to 40
-			print #5, ""& Tileset(XID,YID).BrickID;
-			if XID < 40 then
-				print #5, ",";
-			else
-				print #5, 
-			end if
-		next XID
-	next YID
-	close #5
-	
-	PlayerSlot(Player).HotseatStamp = FileDateTime("Hotseat"+str(Player)+".dat")
-end sub
-
-sub import_board
-	dim as string LevelFile = CampaignFolder+"/L"+str(PlayerSlot(Player).LevelNum)
-	load_level(PlayerSlot(Player).LevelNum)
-	if FileExists("Hotseat"+str(Player)+".dat") then
-		'Penalize anomalies
-		if abs(FileDateTime("Hotseat"+str(Player)+".dat") - PlayerSlot(Player).HotseatStamp) > 1e-6 then
-			PlayerSlot(Player).Lives = max(PlayerSlot(Player).Lives - 1,1)
-			Instructions = "Tampering detected!!! Penalty -1 life for incoming player!"
-			InstructExpire = timer + 30
-		end if
-		
-		open "Hotseat"+str(Player)+".dat" for input as #6
-		input #6, Gamestyle
-		for YID as ubyte = 1 to 24
-			for XID as ubyte = 1 to 40
-				with Tileset(XID,YID)
-					input #6, .BrickID
-					.HitTime = 0
-					.LastBall = 0
-				end with
-			next XID
-		next YID
-		close #6
-	end if
-	generate_cavity
 end sub
 
 sub rotate_back(ForceLoad as byte = 0)
@@ -1551,9 +1541,9 @@ sub game_over
 				end if
 			end if
 			
+			fresh_level(Player)
 			load_level(.LevelNum)
 			generate_cavity
-			fresh_level(Player)
 			.Score = 0
 			.DispScore = 0
 			.InitialLevel = .LevelNum
@@ -1583,9 +1573,6 @@ sub transfer_control(GameEnded as ubyte = 0)
 	
 	if NumPlayers > 1 then
 		OldPlayer = Player
-		if GameEnded = 0 then
-			export_board
-		end if
 		
 		do
 			Player += 1
@@ -1593,8 +1580,9 @@ sub transfer_control(GameEnded as ubyte = 0)
 				Player = 1
 			end if
 		loop until Player = OldPlayer OR Playerslot(Player).Lives > 0 OR GameEnded > 0
-		import_board
+		generate_cavity
 		rotate_back
+		load_level(PlayerSlot(Player).LevelNum)
 		
 		if Playerslot(Player).Lives > 0 then
 			GamePaused = 1

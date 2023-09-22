@@ -2,9 +2,8 @@
 #include "fbgfx.bi"
 using FB
 #include "vbcompat.bi"
-declare function convert_clip(ID as ubyte, Gfxstyle as ubyte) as byte
 dim shared as string QuickPlayFile
-declare sub campaign_gameplay
+declare sub local_gameplay
 const PlaytestName = "Quick Playtest Level"
 
 'Speed range specs
@@ -33,7 +32,7 @@ Masterdir = curdir
 
 '#DEFINE __GAME_DEBUG__
 declare sub shop
-declare sub generate_campaign_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
+declare sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 'Keyboard commands
 const EscapeKey = chr(27)
 const UpArrow = chr(255,72)
@@ -219,9 +218,7 @@ type PlayerSpecs
 	Difficulty as double
 	BulletAmmo as short
 	MissileAmmo as short
-	HotseatStamp as double
 
-	'Campaign exclusive specs
 	WarpTimer as short
 	BossHealth as short
 	BossMaxHealth as short
@@ -231,10 +228,15 @@ type PlayerSpecs
 	InitialLevel as short
 	LevelNum as short
 	PokerHand(5) as byte
+	SetCleared as byte
+	
+	Tileset(41,24) as TileSpecs
+	SavedGameStyle as uinteger
 end type
 type LevelsetSpecs
 	Namee as string
 	Folder as string
+	Difficulty as string
 	SetSize as integer
 	StarsToUnlock as integer
 	SetLocked as byte
@@ -260,7 +262,6 @@ const MaxFallCaps = 12
 const Particount = 1250
 const BackCount = 99
 
-dim shared as TileSpecs Tileset(41,24)
 dim shared as ushort MinSize, StandardSize, MaxSize, CapsFalling, BulletsInPlay, _
 	Credits, CoinsPerCredit, CeleYear, BrickCount, XplodeCount, ZappableCount, Combo
 dim shared as short PaddleSize, CampaignBarrier, BulletStart, BacksLoaded, BoxGlow
@@ -275,7 +276,7 @@ dim shared as single JoyAxis(7)
 dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, BlockBrushes
 dim shared as double ProgressiveQuota, InstructExpire, MisnExpire, TimeRem, Reminder = -1, _
 	FrameTime, PaddlePercent
-dim shared as string InType, ScoreFile, Instructions, CampaignFolder, BackList(BackCount)
+dim shared as string InType, ScoreFile, Instructions, CampaignFolder, BackList(BackCount), DiffTxt
 
 dim shared as BackSpecs BackSlot(BackCount)
 dim shared as Basics Paddle(2), Capsule(MaxFallCaps), Ball(NumBalls), Bullet(MaxBullets), LaserBeams(20,15)
@@ -330,42 +331,51 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 				case 1
 					.Namee = "Introductory Training"
 					.Folder = "official/intro"
+					.Difficulty = "Easy"
 					.SetSize = 10
 				case 2
 					.Namee = "Regular Season"
 					.Folder = "official/regular"
+					.Difficulty = "Easy to Hard"
 					.SetSize = 30
 				case 3
 					.Namee = "Geometric Designs"
 					.Folder = "official/geometry"
+					.Difficulty = "Medium"
 					.SetSize = 10
 				case 4
 					.Namee = "Fortified Letters"
 					.Folder = "official/alphabet"
+					.Difficulty = "Medium to Hard"
 					.SetSize = 26
 				case 5
 					.Namee = "Patriarch Memorial"
 					.Folder = "official/memorial"
+					.Difficulty = "Medium to Hard"
 					.SetSize = 25
 				case 6
 					.Namee = "Challenge Campaign"
 					.Folder = "official/challenge"
+					.Difficulty = "Hard to Extreme"
 					.SetSize = 30
 					.StarsToUnlock = 25
 				case 7
 					.Namee = "Maximum Insanity"
 					.Folder = "official/extreme"
+					.Difficulty = "Very Hard to Extreme"
 					.SetSize = 25
 					.StarsToUnlock = 75
 				case 8
 					.Namee = "Celestial Journey"
 					.Folder = "official/universe"
+					.Difficulty = "Hard to Extreme"
 					.SetSize = 40
 					.StarsToUnlock = 125
 				case 9
-					if TotalStars >= 196 then
+					if TotalStars >= 188 then
 						.Namee = "Nebunoid Boss Rush"
 						.Folder = "official/bossrush"
+						.Difficulty = "Hard to Extreme"
 						.SetSize = 4
 						.StarsToUnlock = 221 'Yes, secret levels included
 					end if
@@ -483,6 +493,36 @@ sub draw_box(StartX as short,StartY as short,EndX as short,EndY as short)
 		line(StartX+BID+1,EndY-BID)-(EndX-BID-1,EndY-BID),DrawColor
 	next BID
 end sub
+
+sub get_difficulty_names(DifficultyAmt as double)
+	select case int(DifficultyAmt+0.5)
+		case DIFF_KIDS
+			DiffTxt = "Effortless"
+		case DIFF_VEASY
+			DiffTxt = "Very Easy"
+		case DIFF_EASY
+			DiffTxt = "Easy"
+		case DIFF_MEASY
+			DiffTxt = "Medium Easy"
+		case DIFF_MEDIUM
+			DiffTxt = "Medium"
+		case DIFF_MHARD
+			DiffTxt = "Medium Hard"
+		case DIFF_HARD
+			DiffTxt = "Hard"
+		case DIFF_VHARD
+			DiffTxt = "Very Hard"
+		case DIFF_EXTREME
+			DiffTxt = "Extreme"
+		case else
+			if DifficultyAmt < 11 then
+				DiffTxt = "Insane"
+			else
+				DiffTxt = "Nightmare"
+			end if
+	end select
+end sub
+
 sub render_paddle(NewSize as short)
 	if NewSize > 960 then
 		NewSize = 960
@@ -583,19 +623,19 @@ sub optimal_direction(InBall as short, BrickX as byte, BrickY as byte)
 	StartY = 96+(BrickY-1)*BHeight
 
 	'Consolidate adjacent bricks to form a larger mass
-	if BrickX = 1 OR Tileset(int(BrickX-1),BrickY).BrickID > 0 then
+	if BrickX = 1 OR PlayerSlot(Player).TileSet(int(BrickX-1),BrickY).BrickID > 0 then
 		StartX -= 48/(CondensedLevel + 1)
 		BWidth += 48/(CondensedLevel + 1)
 	end if
-	if BrickX >= 20 * (CondensedLevel + 1) OR Tileset(int(BrickX+1),BrickY).BrickID > 0 then
+	if BrickX >= 20 * (CondensedLevel + 1) OR PlayerSlot(Player).TileSet(int(BrickX+1),BrickY).BrickID > 0 then
 		BWidth += 48/(CondensedLevel + 1)
 	end if
 
-	if BrickY > 1 AND Tileset(BrickX,int(BrickY-1)).BrickID > 0 then
+	if BrickY > 1 AND PlayerSlot(Player).TileSet(BrickX,int(BrickY-1)).BrickID > 0 then
 		StartY -= 24
 		BHeight += 24
 	end if
-	if BrickY < 20 AND Tileset(BrickX,int(BrickY+1)).BrickID > 0 then
+	if BrickY < 20 AND PlayerSlot(Player).TileSet(BrickX,int(BrickY+1)).BrickID > 0 then
 		BHeight += 24
 	end if
 
@@ -721,7 +761,7 @@ sub respawn_blocks(BrushID as short)
 	'Respawns all blocks that were origianlly bound to the selected brush
 	for YID as ubyte = 1 to 24
 		for XID as ubyte = 1 to 20*(CondensedLevel+1)
-			with Tileset(XID,YID)
+			with PlayerSlot(Player).TileSet(XID,YID)
 				if .BrickID = 0 AND .BaseBrickID = BrushID then
 					BlocksRespawned += 1
 					.BrickID = .BaseBrickID
@@ -784,7 +824,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 	
 	for YID as ubyte = 1 to 24
 		for XID as ubyte = 1 to 20*(CondensedLevel+1)
-			with Tileset(XID,YID)
+			with PlayerSlot(Player).Tileset(XID,YID)
 				if YID <= MaxY then
 					if .BrickID < -1 then
 						'Exploding in progress
@@ -819,7 +859,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 						for YDID as byte = YID - 1 to YID + 1
 							for XDID as byte = XID - 1 to XID + 1
 								if XDID > 0 AND XDID <= 20*(CondensedLevel+1) AND YDID > 0 AND YDID <= 20 then
-									RefPallete = Tileset(XDID,YDID).BrickID
+									RefPallete = PlayerSlot(Player).TileSet(XDID,YDID).BrickID
 									
 									if RefPallete > 0 OR (XDID = XID AND YDID = YID) then
 										if (RefPallete > 0 AND Pallete(RefPallete).HitDegrade >= 0) OR _
@@ -832,23 +872,23 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 											end if
 											
 											PlayerSlot(Player).Score += ScoreBonus
-											Tileset(XDID,YDID).BrickID = 0
-											Tileset(XDID,YDID).Flash = BaseFlash
+											PlayerSlot(Player).TileSet(XDID,YDID).BrickID = 0
+											PlayerSlot(Player).TileSet(XDID,YDID).Flash = BaseFlash
 											Invis = 12
-											generate_campaign_capsule(XDID,YDID,1)
+											generate_capsule(XDID,YDID,1)
 											generate_particles(ScoreBonus,XDID,YDID,rgb(255,192,160))
 											
 										else
-											Tileset(XDID,YDID).BrickID = ExplodeDelay
+											PlayerSlot(Player).TileSet(XDID,YDID).BrickID = ExplodeDelay
 											
 											if (XDID > XID AND YID = YDID) OR YDID > YID then
-												Tileset(XDID,YDID).BrickID -= 1 
-												Tileset(XDID,YDID).HitTime = 0 
-												Tileset(XDID,YDID).LastBall = 0 
+												PlayerSlot(Player).TileSet(XDID,YDID).BrickID -= 1 
+												PlayerSlot(Player).TileSet(XDID,YDID).HitTime = 0 
+												PlayerSlot(Player).TileSet(XDID,YDID).LastBall = 0 
 											end if
 											
-											Tileset(XDID,YDID).Flash = BaseFlash
-											generate_campaign_capsule(XDID,YDID,1)
+											PlayerSlot(Player).TileSet(XDID,YDID).Flash = BaseFlash
+											generate_capsule(XDID,YDID,1)
 											Invis = 12
 										end if
 										
@@ -870,10 +910,10 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 							with Pallete(.BrickID)
 								if .PColoring = 0 then
 									if DispSetting = 2 then
-										if Tileset(XID,YID).BrickID < 10 then
-											PrintChar = str(Tileset(XID,YID).BrickID)
+										if PlayerSlot(Player).TileSet(XID,YID).BrickID < 10 then
+											PrintChar = str(PlayerSlot(Player).TileSet(XID,YID).BrickID)
 										else	
-											PrintChar = chr(55+Tileset(XID,YID).BrickID)
+											PrintChar = chr(55+PlayerSlot(Player).TileSet(XID,YID).BrickID)
 										end if
 	
 										if CondensedLevel then
@@ -888,12 +928,12 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 											printgfx(PrintChar,53+(XID-1)*48,103+(YID-1)*24,2,rgb(255,255,255))
 										end if
 									end if
-									if Tileset(XID,YID).BrickID <> .HitDegrade AND .CalcedInvulnerable < 2 then
+									if PlayerSlot(Player).TileSet(XID,YID).BrickID <> .HitDegrade AND .CalcedInvulnerable < 2 then
 										Count += 1
 									end if
 								elseif (Invis > 0 OR (GameStyle AND (1 SHL STYLE_INVIS)) = 0 OR total_lives = 0) then
 									if CondensedLevel then
-										if Tileset(XID,YID).BrickID = .HitDegrade OR .CalcedInvulnerable >= 2 then
+										if PlayerSlot(Player).TileSet(XID,YID).BrickID = .HitDegrade OR .CalcedInvulnerable >= 2 then
 											put(32+(XID-1)*24,96+(YID-1)*24),InvincibleMini,pset
 										elseif .CalcedInvulnerable > 0 then
 											put(32+(XID-1)*24,96+(YID-1)*24),InvincibleMini,pset
@@ -912,7 +952,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 										line(32+(XID-1)*24,96+(YID-1)*24)-_
 											(31+(XID)*24,95+(YID)*24),.PColoring,bf
 									else
-										if Tileset(XID,YID).BrickID = .HitDegrade OR .CalcedInvulnerable >= 2 then
+										if PlayerSlot(Player).TileSet(XID,YID).BrickID = .HitDegrade OR .CalcedInvulnerable >= 2 then
 											put(32+(XID-1)*48,96+(YID-1)*24),InvinciblePic,pset
 										elseif .CalcedInvulnerable > 0 then
 											put(32+(XID-1)*48,96+(YID-1)*24),InvinciblePic,pset
@@ -931,7 +971,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 										line(32+(XID-1)*48,96+(YID-1)*24)-_
 											(31+(XID)*48,95+(YID)*24),.PColoring,bf
 									end if
-								elseif Tileset(XID,YID).BrickID <> .HitDegrade AND .CalcedInvulnerable < 2 then
+								elseif PlayerSlot(Player).TileSet(XID,YID).BrickID <> .HitDegrade AND .CalcedInvulnerable < 2 then
 									Count += 1
 								end if
 							end with
@@ -995,15 +1035,6 @@ sub disp_mouse(MX as integer, MY as integer, MC as uinteger)
 	line (MX+20,MY+10)-(MX+10,MY+10),rgb(0,0,0)
 	line (MX+10,MY+10)-(MX+10,MY+20),rgb(0,0,0)
 end sub
-
-function convert_clip(ID as ubyte, Gfxstyle as ubyte) as byte
-	select case ID
-		case 24,25,26,27,28,29
-			return 0
-		case else
-			return ID
-	end select
-end function
 
 sub shuffle_backs
 	randomize timer

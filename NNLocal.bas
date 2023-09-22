@@ -1,5 +1,5 @@
-#include "NNCampaign.bi"
-sub campaign_gameplay
+#include "NNLocal.bi"
+sub local_gameplay
 	dim as string InMusic, InPassword
 	dim as short LevelClear, PassInput, InstruAlpha, InstruBeta, InstruGamma, Phase, AboveLine, HeadingUpwards, RotationFrame, _
 		ProhibitSpawn, WepCooldown, DebugConsole, FreezeStr, ScoreTick, MinPlayHeight, ShowTopUI, RecalcGems
@@ -17,16 +17,13 @@ sub campaign_gameplay
 	PaddleHealth = 6600
 	ShowTopUI = 60
 
-	for Bull as ubyte = 1 to MaxBullets
-		Bullet(Bull).Y = -25
-	next Bull
 	BulletStart = 1
-	for CID as ubyte = 1 to MaxFallCaps
-		Capsule(CID).Y = 800
-	next CID
 	DQ = 0
+	destroy_ammo
+	destroy_capsules
 	destroy_balls
 	ShuffleList(1) = 1
+	PlayerSlot(1).PerfectClear = 1
 	if QuickPlayFile = "" then
 		LoadErrors = load_settings
 	else
@@ -42,24 +39,28 @@ sub campaign_gameplay
 		SecretLevels = 2
 		load_level(1)
 	end if
-	rotate_back(1)
-	reset_paddle
 	with NewPlrSlot
 		.DispScore = 0
 		.Score = 0
 		.Lives = 0
-		.InitialLevel = 1
 		.LevelNum = 1
-		.BossMaxHealth = PlayerSlot(1).BossMaxHealth
-		.BulletAmmo = PlayerSlot(1).BulletAmmo
+		.PerfectClear = 1
+		if InitialExtraLife = 0 then
+			.Threshold = SubsequentExtraLives
+		else
+			.Threshold = InitialExtraLife
+		end if
 		empty_hand(0)
 	end with
+	copy_wall
 	for PID as ubyte = 1 to 4
 		DifficultyRAM(PID) = PlayerSlot(PID).Difficulty
 		PlayerSlot(PID) = NewPlrSlot
 		PlayerSlot(PID).Difficulty = DifficultyRAM(PID)
 		fresh_level(PID)
 	next PID
+	rotate_back(1)
+	reset_paddle
 	
 	if LoadErrors then
 		exit sub
@@ -83,6 +84,7 @@ sub campaign_gameplay
 		next LsrPt
 	next LsrID
 
+	NewPlrSlot.Lives = StartingLives + (ExtraBarrierPoint * CampaignBarrier)
 	FrameTime = timer
 	InPassword = "--------"
 	do
@@ -128,22 +130,22 @@ sub campaign_gameplay
 				dim as short MapX(40), FlashX(40), LastHitX(40)
 				dim as TileSpecs TilesetX(40)
 				for YID as ubyte = 1 to 24
-					if Pallete(Tileset(1,YID).BrickID).CalcedInvulnerable = 0 then
+					if Pallete(PlayerSlot(Player).TileSet(1,YID).BrickID).CalcedInvulnerable = 0 then
 						for DXID as byte = 20*(CondensedLevel+1) to 2 step -1
-							if Pallete(Tileset(DXID,YID).BrickID).CalcedInvulnerable = 0 then
-								TilesetX(1) = Tileset(DXID,YID)
+							if Pallete(PlayerSlot(Player).TileSet(DXID,YID).BrickID).CalcedInvulnerable = 0 then
+								TilesetX(1) = PlayerSlot(Player).TileSet(DXID,YID)
 								exit for
 							end if
 						next DXID
 					else
-						TilesetX(1) = Tileset(1,YID)
+						TilesetX(1) = PlayerSlot(Player).TileSet(1,YID)
 					end if
 
 					for XID as ubyte = 2 to 20*(CondensedLevel+1)
-						if Pallete(Tileset(XID,YID).BrickID).CalcedInvulnerable = 0 then
+						if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).CalcedInvulnerable = 0 then
 							for DXID as byte = XID - 1 to 1 step -1
-								if Pallete(Tileset(DXID,YID).BrickID).CalcedInvulnerable = 0 then
-									TilesetX(XID) = Tileset(DXID,YID)
+								if Pallete(PlayerSlot(Player).TileSet(DXID,YID).BrickID).CalcedInvulnerable = 0 then
+									TilesetX(XID) = PlayerSlot(Player).TileSet(DXID,YID)
 									exit for
 								end if
 
@@ -152,12 +154,12 @@ sub campaign_gameplay
 								end if
 							next DXID
 						else
-							TilesetX(XID) = Tileset(XID,YID)
+							TilesetX(XID) = PlayerSlot(Player).TileSet(XID,YID)
 						end if
 					next XID
 
 					for XID as ubyte = 1 to 20*(CondensedLevel+1)
-						Tileset(XID,YID) = TilesetX(XID)
+						PlayerSlot(Player).TileSet(XID,YID) = TilesetX(XID)
 					next XID
 				next YID
 			end if
@@ -173,7 +175,7 @@ sub campaign_gameplay
 		if (GameStyle AND (1 SHL STYLE_BOSS)) then
 			for YID as ubyte = 1 to 20
 				for XID as byte = 20*(CondensedLevel+1) to 1 step -1
-					with Tileset(XID,YID)
+					with PlayerSlot(Player).TileSet(XID,YID)
 						if .BrickID = 1 then
 							AttackBricks += 1
 						elseif .BrickID > 0 AND Pallete(.BrickID).CanRegen > 0 AND _
@@ -216,7 +218,7 @@ sub campaign_gameplay
 								do
 									NewX = irandom(1,20)
 									NewY = irandom(1,20)
-								loop until Tileset(NewX,NewY).BrickID = 1
+								loop until PlayerSlot(Player).TileSet(NewX,NewY).BrickID = 1
 							end if
 						end with
 	
@@ -508,7 +510,7 @@ sub campaign_gameplay
 						play_clip(SFX_WALL_BROKEN)
 						for YID as ubyte = 1 to 24
 							for XID as ubyte = 1 to 20*(CondensedLevel+1)
-								Tileset(XID,YID).BrickID = 0
+								PlayerSlot(Player).TileSet(XID,YID).BrickID = 0
 							next XID
 						next YID
 					end if
@@ -525,7 +527,7 @@ sub campaign_gameplay
 						.BossHealth/.BossMaxHealth*192,0),bf
 				end if
 				
-				if ShowTopUI < 59 then
+				if ShowTopUI < 60 then
 					line(53,36)-(987,64),rgb(255,255,255),b
 				end if
 			end if
@@ -1055,11 +1057,11 @@ sub campaign_gameplay
 						BulletsInPlay += 1
 						if .Power = 0 then
 							put(.X-2,.Y),BulletPic,trans
-							if YRef > 0 AND YRef <= 20 AND Tileset(XRef,YRef).BrickID > 0 then
-								if Pallete(Tileset(XRef,YRef).BrickID).HitDegrade = 0 then
+							if YRef > 0 AND YRef <= 20 AND PlayerSlot(Player).TileSet(XRef,YRef).BrickID > 0 then
+								if Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade = 0 then
 									ScoreBrick = 1
 									play_clip(SFX_BRICK,.X)
-								elseif Pallete(Tileset(XRef,YRef).BrickID).HitDegrade <> Tileset(XRef,YRef).BrickID then
+								elseif Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade <> PlayerSlot(Player).TileSet(XRef,YRef).BrickID then
 									ScoreBrick = 1
 									play_clip(SFX_HARDEN,.X)
 								else
@@ -1067,16 +1069,16 @@ sub campaign_gameplay
 								end if
 								
 								if ScoreBrick then
-									generate_campaign_capsule(XRef,YRef)
-									with Pallete(Tileset(XRef,YRef).BrickID)
+									generate_capsule(XRef,YRef)
+									with Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID)
 										PlayerSlot(Player).Score += .ScoreValue
 										generate_particles(.ScoreValue,XRef,YRef,rgb(255,255,255))
 									end with
 								end if
 								
 								Invis = 12
-								with Tileset(XRef,YRef)
-									.BrickID = Pallete(Tileset(XRef,YRef).BrickID).HitDegrade 
+								with PlayerSlot(Player).TileSet(XRef,YRef)
+									.BrickID = Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade 
 									.Flash = BaseFlash
 									.HitTime = 0
 									.LastBall = 0
@@ -1085,17 +1087,17 @@ sub campaign_gameplay
 							end if
 						else
 							put(.X-5,.Y),MissilePic,trans
-							if YRef > 0 AND YRef <= 20 AND Tileset(XRef,YRef).BrickID > 0 then
-								ScoreBrick = Pallete(Tileset(XRef,YRef).BrickID).ZapDegrade
+							if YRef > 0 AND YRef <= 20 AND PlayerSlot(Player).TileSet(XRef,YRef).BrickID > 0 then
+								ScoreBrick = Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).ZapDegrade
 																
-								generate_campaign_capsule(XRef,YRef)
+								generate_capsule(XRef,YRef)
 								with Pallete(ScoreBrick)
 									PlayerSlot(Player).Score += .ScoreValue
 									generate_particles(.ScoreValue,XRef,YRef,rgb(255,255,255))
 								end with
 								
 								Invis = 12
-								with Tileset(XRef,YRef)
+								with PlayerSlot(Player).TileSet(XRef,YRef)
 									.BrickID = ExplodeDelay 
 									.Flash = BaseFlash
 									.HitTime = 0
@@ -1283,7 +1285,7 @@ sub campaign_gameplay
 								end if
 								.Angle = 180 - .Angle
 							end if
-							campaign_collisions(BID)
+							brick_collisions(BID)
 							
 							'Bounce off paddle(s)
 							for PaddleID as byte = 1 to 2
@@ -1311,16 +1313,19 @@ sub campaign_gameplay
 	
 									if ProgressiveBounces >= ProgressiveQuota AND (GameStyle AND (1 SHL STYLE_PROGRESSIVE)) then
 										ProgressiveBounces = 0
+										if ProgressiveQuota > 4 then
+											ProgressiveQuota -= .25
+										end if
 										if ProgressiveQuota > 1 then
 											ProgressiveQuota -= .25
 										end if
 										for XID as ubyte = 1 to 40
-											Tileset(XID,0) = Tileset(XID,24)
+											PlayerSlot(Player).TileSet(XID,0) = PlayerSlot(Player).TileSet(XID,24)
 										next XID
 
 										for YID as byte = 24 to 1 step -1
 											for XID as ubyte = 1 to 40
-												Tileset(XID,YID) = Tileset(XID,(YID-1))
+												PlayerSlot(Player).TileSet(XID,YID) = PlayerSlot(Player).TileSet(XID,(YID-1))
 											next XID
 										next YID
 										
@@ -1522,7 +1527,7 @@ sub campaign_gameplay
 							
 				for YID as ubyte = 1 to 24			
 					for XID as ubyte = 1 to 20*(CondensedLevel+1)
-						if Tileset(XID,YID).BrickID <> 0 then
+						if PlayerSlot(Player).TileSet(XID,YID).BrickID <> 0 then
 							Bonuses(2) = 0
 							exit for,for
 						end if
@@ -1689,7 +1694,7 @@ sub campaign_gameplay
 								if .Y >= 60+BallSize+(YID-1)*15 AND .Y <= 60-BallSize+(YID)*15 then
 									RowFilled = 0
 									for XID as ubyte = 1 to 20*(CondensedLevel+1)
-										if Tileset(XID,YID).BrickID > 0 then
+										if PlayerSlot(Player).TileSet(XID,YID).BrickID > 0 then
 											RowFilled += 1
 										end if
 									next XID
@@ -1756,8 +1761,6 @@ sub campaign_gameplay
 									fresh_level(NumPlayers)
 								end with
 								
-								kill("Hotseat"+str(NumPlayers)+".dat")
-
 								Instructions = "Here comes a new challenger! Turns will cycle as usual."
 							end if
 						elseif DebugCode = "PUMPKINEATER" then
@@ -1776,7 +1779,7 @@ sub campaign_gameplay
 								render_paddle(PaddleSize + 70)
 							elseif DebugCode = "CAPSHOWER" then
 								for GenID as byte = 1 to 120
-									generate_campaign_capsule(irandom(1,20*(CondensedLevel+1)),irandom(1,20))
+									generate_capsule(irandom(1,20*(CondensedLevel+1)),irandom(1,20))
 								next GenID
 								Instructions = "Capsule shower granted"
 							elseif DebugCode = "WARPAWAY" then
@@ -1858,14 +1861,12 @@ sub campaign_gameplay
 					end if
 				end with
 			else
-				if left(Instructions,9) <> "Tampering" then
-					if NumPlayers > 1 then
-						Instructions = "Game paused. Press P to resume, Player "+str(Player)+" (or press ESC to end this player)"
-					else
-						Instructions = "Game paused. Press P to resume, or press ESC to end current game"
-					end if
-					InstructExpire = timer + 1
+				if NumPlayers > 1 then
+					Instructions = "Game paused. Press P to resume, Player "+str(Player)+" (or press ESC to end this player)"
+				else
+					Instructions = "Game paused. Press P to resume, or press ESC to end current game"
 				end if
+				InstructExpire = timer + 1
 				if multikey(SC_TAB) then
 					auxillary_view(InstruAlpha, InstruBeta)
 				end if
@@ -2051,8 +2052,8 @@ sub campaign_gameplay
 										capsule_message("ZAP BLOCKS: Remaining blocks are visible and soft")
 										for YID as ubyte = 1 to 24
 											for XID as ubyte = 1 to 20*(CondensedLevel+1)
-												with Pallete(Tileset(XID,YID).BrickID)
-													with Tileset(XID,YID)
+												with Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID)
+													with PlayerSlot(Player).TileSet(XID,YID)
 														if .BrickID > 0 then
 															.BrickID = Pallete(.BrickID).ZapDegrade
 															.Flash = BaseFlash
@@ -2334,7 +2335,7 @@ sub campaign_gameplay
 										capsule_message("SPREAD EXPLODING")
 										for YID as byte = 1 to 20
 											for XID as byte = 1 to 20*(CondensedLevel+1)
-												with Pallete(Tileset(XID,YID).BrickID)
+												with Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID)
 													if .HitDegrade < 0 AND AlreadySpread(XID,YID) = 0 then
 														AlreadySpread(XID,YID) = 1
 		
@@ -2343,9 +2344,9 @@ sub campaign_gameplay
 																if XDID > 0 AND XDID <= 20*(CondensedLevel+1) AND _
 																	YDID > 0 AND YDID <= 20 AND _
 																	abs(XDID-XID) + abs(YDID-YID) = 1 AND _
-																	Tileset(XDID,YDID).BrickID <> Tileset(XID,YID).BrickID then
+																	PlayerSlot(Player).TileSet(XDID,YDID).BrickID <> PlayerSlot(Player).TileSet(XID,YID).BrickID then
 																	AlreadySpread(XDID,YDID) = 1
-																	Tileset(XDID,YDID).BrickID = Tileset(XID,YID).BrickID
+																	PlayerSlot(Player).TileSet(XDID,YDID).BrickID = PlayerSlot(Player).TileSet(XID,YID).BrickID
 																end if
 															next XDID
 														next YDID
@@ -2359,9 +2360,9 @@ sub campaign_gameplay
 										capsule_message("DETONATE EXPLODING")
 										for YID as ubyte = 1 to 20
 											for XID as ubyte = 1 to 20*(CondensedLevel+1)
-												with Pallete(Tileset(XID,YID).BrickID)
+												with Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID)
 													if .HitDegrade < 0 then
-													Tileset(XID,YID).BrickID = -1
+													PlayerSlot(Player).TileSet(XID,YID).BrickID = -1
 													end if
 												end with
 											next XID
@@ -2536,14 +2537,16 @@ sub campaign_gameplay
 							rotate_music
 							InstructExpire = timer + 7
 
-							for FID as ubyte = 1 to NumBalls
-								with Ball(FID)
-									.Speed = 0
-									.X = 320
-									.Power = 0
-								end with
-							next FID
+							destroy_balls
+							PlayerSlot(Player).PerfectClear = 1
 							load_level_file(CampaignFolder+"/L"+str(TestNum))
+							NewPlrSlot.LevelNum = TestNum
+							copy_wall
+							for PID as ubyte = 1 to NumPlayers
+								PlayerSlot(PID) = NewPlrSlot
+								PlayerSlot(PID).Difficulty = DifficultyRAM(PID)
+								fresh_level(PID)
+							next PID
 							generate_cavity
 							for Bull as ubyte = 1 to MaxBullets
 								Bullet(Bull).Y = -20
@@ -2552,33 +2555,7 @@ sub campaign_gameplay
 								HighScore(HID).NewEntry = 0
 							next HID
 							reset_paddle
-							with NewPlrSlot
-								.LevelNum = TestNum
-								.InitialLevel = TestNum
-								
-								.DispScore = 0
-								empty_hand(0)
-								.Score = 0
-								if InitialExtraLife = 0 then
-									.Threshold = SubsequentExtraLives
-								else
-									.Threshold = InitialExtraLife
-								end if
-								.BossMaxHealth = PlayerSlot(1).BossMaxHealth
-								.Lives = StartingLives + sgn(ExtraBarrierPoint * CampaignBarrier)
-							end with
-							for PID as ubyte = 1 to NumPlayers
-								PlayerSlot(PID) = NewPlrSlot
-								PlayerSlot(PID).Difficulty = DifficultyRAM(PID)
-								fresh_level(PID)
-							next PID
 							render_hand
-
-							if NumPlayers > 1 then
-								for PDID as ubyte = 1 to NumPlayers
-									kill("Hotseat"+str(PDID)+".dat")
-								next PDID
-							end if
 
 							exit do
 						end if
@@ -2788,24 +2765,14 @@ sub campaign_gameplay
 					destroy_ammo
 					destroy_balls
 					setmouse(,,0,1)
+					
 					LevelDesc = 0
+					PlayerSlot(Player).PerfectClear = 1
 					load_level(1)
 					generate_cavity
 					reset_paddle
-					with NewPlrSlot
-						.LevelNum = 1
-						.InitialLevel = 1
-						.DispScore = 0
-						.Score = 0
-						empty_hand(0)
-						if InitialExtraLife = 0 then
-							.Threshold = SubsequentExtraLives
-						else
-							.Threshold = InitialExtraLife
-						end if
-						.Lives = StartingLives + (ExtraBarrierPoint * CampaignBarrier)
-					end with
-					
+					NewPlrSlot.LevelNum = 1
+					copy_wall
 					for PDID as ubyte = 1 to NumPlayers
 						PlayerSlot(PDID) = NewPlrSlot
 						PlayerSlot(PDID).Difficulty = DifficultyRAM(PID)
@@ -2816,12 +2783,6 @@ sub campaign_gameplay
 					rotate_back
 					Instructions = ""
 					InstructExpire = timer
-					
-					if NumPlayers > 1 then
-						for PDID as ubyte = 1 to NumPlayers
-							kill("Hotseat"+str(PDID)+".dat")
-						next PDID
-					end if
 				end if
 			next PID
 			
@@ -2887,6 +2848,7 @@ sub campaign_gameplay
 					.Lives += 1
 				end if
 				.LevelNum += 1
+				.PerfectClear = 1
 				ProhibitSpawn = 0
 				LevelDesc = 0
 
@@ -2910,6 +2872,7 @@ sub campaign_gameplay
 					FrameTime = timer
 					.LevelNum -= 1
 					.Lives = 0
+					.SetCleared = 1
 					save_unlocks
 				elseif check_level(.LevelNum) <> "" then
 					Gamestyle = 0
@@ -2940,6 +2903,7 @@ sub campaign_gameplay
 	
 					LastPlayed = timer
 					FrameTime = timer
+					.SetCleared = 1
 					.LevelNum -= 1
 					.Lives = 0
 					save_unlocks

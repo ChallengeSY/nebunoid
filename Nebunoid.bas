@@ -3,7 +3,7 @@
 #ENDIF
 
 #include "Nebunoid.bi"
-#include "NNCampaign.bas"
+#include "NNLocal.bas"
 
 if FileExists("portable") = 0 then
 	#IFDEF __FB_WIN32__
@@ -36,7 +36,7 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.05"
+windowtitle "Nebunoid 1.06"
 
 'Foreground assets
 SoftBrickPic = ImageCreate(48,24)
@@ -186,7 +186,7 @@ screenset 1,0
 setmouse(,,0,0)
 if Command(1) = "-l" then 
 	QuickPlayFile = Command(2)
-	campaign_gameplay
+	local_gameplay
 	end 0
 end if
 dim as string TitleCapNames(1 to 26) => {"Slower Balls", "Split Balls", "Grabbing Paddle", "Spread Exploding", "Detonate Exploding", "Zap Blocks", _
@@ -208,9 +208,9 @@ do
 	gfxstring("Exit",40,250,5,5,3,rgb(255,255,255))
 
 	if MenuMode > 0 then
-		gfxstring("Play the game",40,150,5,5,3,rgb(255,255,0))
+		gfxstring("Play local game",40,150,5,5,3,rgb(255,255,0))
 	else
-		gfxstring("Play the game",40,150,5,5,3,rgb(255,255,255))
+		gfxstring("Play local game",40,150,5,5,3,rgb(255,255,255))
 	end if
 	
 	gfxstring("Customize",40,200,5,5,3,rgb(255,255,255))
@@ -235,14 +235,10 @@ do
 			with OfficialCampaigns(Item)
 				if .Namee <> "" then
 					if Item < CampaignsPerPage+1 then
-						if .StarsToUnlock = 0 then
+						if TotalStars >= .StarsToUnlock then
 							.SetLocked = 0
 							Availability = rgb(255,255,255)
-							gfxstring("(Free)",340,351+Item*30,4,3,3,Availability)
-						elseif TotalStars >= .StarsToUnlock then
-							.SetLocked = 0
-							Availability = rgb(255,255,255)
-							gfxstring("(Unlocked)",340,351+Item*30,4,3,3,Availability)
+							gfxstring("("+.Difficulty+")",340,351+Item*30,4,3,3,Availability)
 						else
 							.SetLocked = -1
 							Availability = rgb(128,128,128)
@@ -326,7 +322,7 @@ do
 								HoldClick = 1
 							else
 								CampaignFolder = .Folder
-								campaign_gameplay
+								local_gameplay
 								load_title_capsules
 								MenuMode = 0
 								while inkey <> "":wend
@@ -350,7 +346,7 @@ do
 								MenuMode += 1
 							else
 								CampaignFolder = .Folder
-								campaign_gameplay
+								local_gameplay
 								load_title_capsules
 								MenuMode = 0
 								while inkey <> "":wend
@@ -457,8 +453,8 @@ sub shop
 
 		if AFilter = 1 then
 			dim as short InX, CalcX, WarpSystem
-			dim as double ApproxDiff, DiffUnlocked
-			dim as string DiffTxt, ContinueSpecs, ExtraInfo
+			dim as double ApproxDiff, DiffUnlocked, ComputeDiff, BallDiff
+			dim as string ContinueSpecs, ExtraInfo
 			
 			dim as integer DiffStarsUnlock(4) => {25,50,75,100,125}
 			dim as integer NextStarsUnlock
@@ -498,67 +494,67 @@ sub shop
 			end if
 			
 			ContinueSpecs = "None"
-			WarpSystem = 1
+			WarpSystem = abs(sgn(ApproxDiff + 0.5 < DIFF_HARD))
 			ExtraInfo = "None"
+			get_difficulty_names(ApproxDiff)
 			select case int(ApproxDiff+0.5)
 				case DIFF_KIDS
-					DiffTxt = "Effortless"
 					ExtraInfo = "Metal / No red caps / Restock / Slow speed / Bullet ammo"
 				case DIFF_VEASY
-					DiffTxt = "Very Easy"
 					ExtraInfo = "Metal balls / Limit red caps / Life Restock / Slower speed"
 				case DIFF_EASY
-					DiffTxt = "Easy"
 					ExtraInfo = "Life Restock / Slower speed"
-				case DIFF_MEASY
-					DiffTxt = "Medium Easy"
-				case DIFF_MEDIUM
-					DiffTxt = "Medium"
-				case DIFF_MHARD
-					DiffTxt = "Medium Hard"
 				case DIFF_HARD
-					DiffTxt = "Hard"
 					ContinueSpecs = "Difficulty -0.5 per continue"
-					WarpSystem = 0
 				case DIFF_VHARD
-					DiffTxt = "Very Hard"
 					ContinueSpecs = "Difficulty -0.5 per continue"
-					WarpSystem = 0
 				case DIFF_EXTREME
-					DiffTxt = "Extreme"
 					ContinueSpecs = "Difficulty -1.0 per continue"
-					WarpSystem = 0
 				case else
-					'' Special exception: Nightmare is not available until difficulty 11.0 or higher
-					if ApproxDiff < 11 then
-						DiffTxt = "Insane"
-						ContinueSpecs = "Difficulty -1.0 per continue"
-						WarpSystem = 0
-					else
-						DiffTxt = "Nightmare"
+					if ApproxDiff >= 11 then
+						'Nightmare difficulty
 						ExtraInfo = "No red capsules"
 						ContinueSpecs = "Difficulty drop to 10.0"
-						WarpSystem = 0
+					elseif ApproxDiff >= 9.5 then
+						'Insane difficulty
+						DiffTxt = "Insane"
+						ContinueSpecs = "Difficulty -1.0 per continue"
 					end if
 			end select
 			
-			
-			dim as double ComputeDiff = ApproxDiff + 1e-6
+			ComputeDiff = ApproxDiff + 1e-6
+			BallDiff = ApproxDiff
 			
 			if AllowHandicap then
 				dim as uinteger PlrColor
 				
 				for PID as ubyte = 1 to 4
+					ApproxDiff = int(PlayerSlot(PID).Difficulty * 10 + 0.51) / 10
+					ComputeDiff = ApproxDiff + 1e-6
+					get_difficulty_names(ApproxDiff)
+					
 					if PageNum = PID then
 						PlrColor = rgb(128,192,255)
 					else
 						PlrColor = rgb(128,128,255)
 					end if
 					gfxstring("Difficulty for player "+str(PID)+": "+DiffTxt+" ("+left(str(ComputeDiff),len(str(int(ComputeDiff)))+2)+")",5,(PID+2)*30,4,4,3,PlrColor)
+
+					if PID = PageNum then
+						BallDiff = ApproxDiff
+					elseif MouseY >= (PID+2)*30-5 AND MouseY < (PID+3)*30-5 then
+						draw_box(0,(PID+2)*30-5,1023,(PID+3)*30-6)
+						
+						if ButtonCombo AND HoldClick = 0 then
+							PageNum = PID
+							HoldClick = 1
+						end if
+					end if
 				next PID
 			else
 				gfxstring("Difficulty for everyone: "+DiffTxt+" ("+left(str(ComputeDiff),len(str(int(ComputeDiff)))+2)+")",5,90,4,4,3,rgb(128,192,255))
 				for PID as ubyte = 2 to 4
+					PlayerSlot(PID).Difficulty = PlayerSlot(1).Difficulty
 					gfxstring("Difficulty for player "+str(PID)+": "+DiffTxt+" ("+left(str(ComputeDiff),len(str(int(ComputeDiff)))+2)+")",5,(PID+2)*30,4,4,3,rgb(64,64,128))
 				next PID
 			end if
@@ -568,7 +564,7 @@ sub shop
 				gfxstring("All difficulties unlocked",5,210,4,4,3,rgb(128,128,128))
 			end if
 			
-			gfxstring("Speed increase  : Every "+left(str(100/ApproxDiff),4)+" bounces/blocks",5,550,4,4,3,rgb(128,128,255))
+			gfxstring("Speed increase  : Every "+left(str(100/BallDiff),4)+" bounces/blocks",5,550,4,4,3,rgb(128,128,255))
 			gfxstring("Continue penalty: "+ContinueSpecs,5,580,4,4,3,rgb(128,128,255))
 			if WarpSystem then
 				gfxstring("Level select: Enabled",5,610,4,4,3,rgb(128,128,255))
@@ -579,40 +575,23 @@ sub shop
 
 			if AllowHandicap then
 				gfxstring("Handicap system: ON",5,700,4,4,3,rgb(255,0,255))
-				if MouseY >= 695 AND MouseY < 724 AND MouseX < 512 then
-					draw_box(0,695,511,724)
+				if MouseY >= 695 AND MouseY < 724 then
+					draw_box(0,695,1023,724)
 					if ButtonCombo > 0 AND HoldClick = 0 then
 						HoldClick = 1
 						PageNum = 1
 						AllowHandicap = 0
 					end if
 				end if
-				
-				gfxstring("Next player",517,700,4,4,3,rgb(255,0,255))
-				if MouseY >= 695 AND MouseY < 724 AND MouseX >= 512 then
-					draw_box(512,695,1023,724)
-					if ButtonCombo > 0 AND HoldClick = 0 then
-						HoldClick = 1
-						Pagenum += 1
-						if PageNum > 4 then
-							PageNum = 1
-						end if
-					end if
-				end if
 			else
 				gfxstring("Handicap system: OFF",5,700,4,4,3,rgb(255,0,255))
-				if MouseY >= 695 AND MouseY < 724 AND MouseX < 512 then
-					draw_box(0,695,511,724)
+				if MouseY >= 695 AND MouseY < 724 then
+					draw_box(0,695,1023,724)
 					if ButtonCombo > 0 AND HoldClick = 0 then
 						HoldClick = 1
 						AllowHandicap = 1
 					end if
 				end if
-				
-				gfxstring("Next player",517,700,4,4,3,rgb(128,0,128))
-				for Plr as byte = 2 to 4
-					PlayerSlot(Plr).Difficulty = PlayerSlot(1).Difficulty
-				next
 			end if
 			
 		elseif AFilter = 2 then

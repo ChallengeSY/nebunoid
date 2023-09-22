@@ -27,6 +27,7 @@ bload("gfx/framesMerged.bmp",FramesetMerged)
 screenset 1,0
 PlayerSlot(Player).LevelNum = 1
 PlayerSlot(Player).Difficulty = 4
+PlayerSlot(Player).PerfectClear = 1
 
 do
 	cls
