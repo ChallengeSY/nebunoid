@@ -4,26 +4,21 @@ sub local_gameplay
 	dim as short LevelClear, PassInput, InstruAlpha, InstruBeta, InstruGamma, Phase, AboveLine, HeadingUpwards, RotationFrame, _
 		ProhibitSpawn, WepCooldown, DebugConsole, FreezeStr, ScoreTick, MinPlayHeight, ShowTopUI, RecalcGems
 	dim as integer LoadErrors, BarrierStrength, MPAlternate, ScoreFilling, GracePeriod, ModdedHiScore
-	dim as double LastPlayed, DispTime, MusicPitch, DifficultyRAM(4)
+	dim as double LastPlayed, DispTime, MusicPitch
 	dim as string ScoreRef, DiffName, GameInfo, TimeStr, DebugCode
-	NumPlayers = 1
-	Player = 1
 	GamePaused = 0
 	SpeedMod = 100
 	InstruAlpha = 4
+	
+	Player = 1
 	apply_diff_specs
 	
 	DesireX = 512
 	PaddleHealth = 6600
 	ShowTopUI = 60
 
-	BulletStart = 1
-	DQ = 0
-	destroy_ammo
-	destroy_capsules
-	destroy_balls
 	ShuffleList(1) = 1
-	PlayerSlot(1).PerfectClear = 1
+	fix_first_level
 	if QuickPlayFile = "" then
 		LoadErrors = load_settings
 	else
@@ -37,7 +32,6 @@ sub local_gameplay
 		SubsequentExtraLives = 0
 		ExplodingValue = 8
 		SecretLevels = 2
-		load_level(1)
 	end if
 	with NewPlrSlot
 		.DispScore = 0
@@ -52,15 +46,7 @@ sub local_gameplay
 		end if
 		empty_hand(0)
 	end with
-	copy_wall
-	for PID as ubyte = 1 to 4
-		DifficultyRAM(PID) = PlayerSlot(PID).Difficulty
-		PlayerSlot(PID) = NewPlrSlot
-		PlayerSlot(PID).Difficulty = DifficultyRAM(PID)
-		fresh_level(PID)
-	next PID
-	rotate_back(1)
-	reset_paddle
+	begin_local_game(0, 1)
 	
 	if LoadErrors then
 		exit sub
@@ -85,7 +71,6 @@ sub local_gameplay
 	next LsrID
 
 	NewPlrSlot.Lives = StartingLives + (ExtraBarrierPoint * CampaignBarrier)
-	FrameTime = timer
 	InPassword = "--------"
 	do
 		PlayerSlot(0).Difficulty = max(PlayerSlot(1).Difficulty,max(PlayerSlot(2).Difficulty,max(PlayerSlot(3).Difficulty,PlayerSlot(4).Difficulty)))
@@ -2526,37 +2511,11 @@ sub local_gameplay
 					dim as short TestNum = 2, Result
 					do
 						ActualPassword = check_level(TestNum)
-						if (ActualPassword = InPassword AND InPassword <> "++++++++") OR _
-							(InPassword = "++++++++" AND TestNum = PlayerSlot(Player).LevelNum) then
-							setmouse(,,0,1)
-							LevelDesc = 0
-							Player = 1
-							rotate_back
-							DQ = 0
-							Instructions = "Level "+str(TestNum)+" successfully loaded!"
-							rotate_music
-							InstructExpire = timer + 7
+						if (ActualPassword = InPassword AND InPassword <> "++++++++") then
+							begin_local_game(NumPlayers, TestNum)
 
-							destroy_balls
-							PlayerSlot(Player).PerfectClear = 1
-							load_level_file(CampaignFolder+"/L"+str(TestNum))
-							NewPlrSlot.LevelNum = TestNum
-							copy_wall
-							for PID as ubyte = 1 to NumPlayers
-								PlayerSlot(PID) = NewPlrSlot
-								PlayerSlot(PID).Difficulty = DifficultyRAM(PID)
-								fresh_level(PID)
-							next PID
-							generate_cavity
-							for Bull as ubyte = 1 to MaxBullets
-								Bullet(Bull).Y = -20
-							next Bull
-							for HID as byte = 1 to 10
-								HighScore(HID).NewEntry = 0
-							next HID
-							reset_paddle
-							render_hand
-
+							Instructions = "Password successful"
+							InstructExpire = timer + 5
 							exit do
 						end if
 
@@ -2751,36 +2710,8 @@ sub local_gameplay
 		if total_lives = 0 then
 			for PID as ubyte = 1 to 4
 				if InType = str(PID) AND InPassword = "--------" then
-					DQ = 0
-					FrameTime = timer
-					reset_paddle
-					shuffle_levels
+					begin_local_game(PID, 1)
 					
-					Player = 1
-					NumPlayers = PID
-					
-					for HID as byte = 1 to 10
-						HighScore(HID).NewEntry = 0
-					next HID
-					destroy_ammo
-					destroy_balls
-					setmouse(,,0,1)
-					
-					LevelDesc = 0
-					PlayerSlot(Player).PerfectClear = 1
-					load_level(1)
-					generate_cavity
-					reset_paddle
-					NewPlrSlot.LevelNum = 1
-					copy_wall
-					for PDID as ubyte = 1 to NumPlayers
-						PlayerSlot(PDID) = NewPlrSlot
-						PlayerSlot(PDID).Difficulty = DifficultyRAM(PID)
-						fresh_level(PDID)
-						render_hand
-					next PDID
-					rotate_music
-					rotate_back
 					Instructions = ""
 					InstructExpire = timer
 				end if
@@ -2894,7 +2825,7 @@ sub local_gameplay
 						TotalXP += int(.Score * .Difficulty * 2)
 						high_score_input(Player)
 						if FileExists(CampaignName+".flag") = 0 then
-							'Intentionally empty file; simply use it to record campaigns which have been truly won
+							'Intentionally empty victory file
 							open CampaignName+".flag" for output as #21
 							close #21
 						end if
@@ -2960,5 +2891,3 @@ sub local_gameplay
 	end if
 	setmouse(,,0,0)
 end sub
-
-

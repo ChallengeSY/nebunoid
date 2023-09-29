@@ -1,91 +1,91 @@
 ================================================================================
-LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 17
+LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 18
 ================================================================================
 *BEGIN*
 ================================================================================
 
-Level Name            := Cross Vortex
+Level Name            := Big 'n' Little Squares
 Level Description     := 
 Level Password        := ++++++++
-Level game number     := 4099
+Level game number     := 5187
 Level time limit      := 0
 Number of Brushes     := 13
-Brush 1 Color         := &hC0FFD700
+Brush 1 Color         := &h80404040
 Brush 1 Score Value   := 10*
-Brush 1 Hit Degrade   := 1
+Brush 1 Hit Degrade   := 0
 Brush 1 Increase Speed:= FALSE
-Brush 2 Color         := &hC0CD7F32
-Brush 2 Score Value   := 10*
+Brush 2 Color         := &h80808080
+Brush 2 Score Value   := 2
 Brush 2 Hit Degrade   := 1
 Brush 2 Increase Speed:= FALSE
-Brush 3 Color         := &h80FF979F
-Brush 3 Score Value   := 10*
-Brush 3 Hit Degrade   := 0
+Brush 3 Color         := &h80FFFFFF
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
 Brush 3 Increase Speed:= FALSE
-Brush 4 Color         := &h80DF388A
+Brush 4 Color         := &h80000020
 Brush 4 Score Value   := 10*
 Brush 4 Hit Degrade   := 0
 Brush 4 Increase Speed:= FALSE
-Brush 5 Color         := &h80FCFC44
+Brush 5 Color         := &h80000030
 Brush 5 Score Value   := 10*
 Brush 5 Hit Degrade   := 0
 Brush 5 Increase Speed:= FALSE
-Brush 6 Color         := &h80C3C711
+Brush 6 Color         := &h800C0040
 Brush 6 Score Value   := 10*
 Brush 6 Hit Degrade   := 0
 Brush 6 Increase Speed:= FALSE
-Brush 7 Color         := &h8067F5B8
+Brush 7 Color         := &h80160050
 Brush 7 Score Value   := 10*
 Brush 7 Hit Degrade   := 0
 Brush 7 Increase Speed:= FALSE
-Brush 8 Color         := &h802BAA16
+Brush 8 Color         := &h80240060
 Brush 8 Score Value   := 10*
 Brush 8 Hit Degrade   := 0
 Brush 8 Increase Speed:= FALSE
-Brush 9 Color         := &h8071D8E0
+Brush 9 Color         := &h80300070
 Brush 9 Score Value   := 10*
 Brush 9 Hit Degrade   := 0
 Brush 9 Increase Speed:= FALSE
-Brush 10 Color        := &h801A1D62
+Brush 10 Color        := &h803C0080
 Brush 10 Score Value  := 10*
 Brush 10 Hit Degrade  := 0
 Brush 10 Increase Speed:= FALSE
-Brush 11 Color        := &h80681ABB
+Brush 11 Color        := &h80480090
 Brush 11 Score Value  := 10*
 Brush 11 Hit Degrade  := 0
 Brush 11 Increase Speed:= FALSE
-Brush 12 Color        := &h8033392D
+Brush 12 Color        := &h805400A0
 Brush 12 Score Value  := 10*
 Brush 12 Hit Degrade  := 0
 Brush 12 Increase Speed:= FALSE
-Brush 13 Color        := &h805A6508
-Brush 13 Score Value  := 2
-Brush 13 Hit Degrade  := 12
+Brush 13 Color        := &h806000B0
+Brush 13 Score Value  := 10*
+Brush 13 Hit Degrade  := 0
 Brush 13 Increase Speed:= FALSE
 
-Level Grid  11111111112
-   12345678901234567890
------------------------
- 1|2CB 97 53 DC 46 8A2C
- 2|CCB297 53 DC 4628A22
- 3|BBB297253 DC24628AAA
- 4| 222972532DC24628888
- 5|9999972532DC2462222 
- 6|7777772532DC24666666
- 7|  22222532DC24444444
- 8|5555555532DC222222  
- 9|3333333332DCCCCCCCCC
-10|   2222222DDDDDDDDDD
-11|DDDDDDDDDD2222222   
-12|CCCCCCCCCD2333333333
-13|  222222CD2355555555
-14|44444442CD23522222  
-15|66666642CD2352777777
-16| 2222642CD2352799999
-17|88882642CD235279222 
-18|AAA82642CD 352792BBB
-19|22A8264 CD 35 792BCC
-20|C2A8 64 CD 35 79 BC2
+Level Grid  1111111111222222222233333333334
+   1234567890123456789012345678901234567890
+-------------------------------------------
+ 1|4444444433444444443344444444334444444433
+ 2|4444444433444444443344444444334444444433
+ 3|5555335555555533555555553355555555335555
+ 4|5555335555555533555555553355555555335555
+ 5|3366666666336666666633666666663366666666
+ 6|3366666666336666666633666666663366666666
+ 7|7777773377777777337777777733777777773377
+ 8|7777773377777777337777777733777777773377
+ 9|8833888888883388888888338888888833888888
+10|8833888888883388888888338888888833888888
+11|9999999933999999993399999999339999999933
+12|9999999933999999993399999999339999999933
+13|AAAA33AAAAAAAA33AAAAAAAA33AAAAAAAA33AAAA
+14|AAAA33AAAAAAAA33AAAAAAAA33AAAAAAAA33AAAA
+15|33BBBBBBBB33BBBBBBBB33BBBBBBBB33BBBBBBBB
+16|33BBBBBBBB33BBBBBBBB33BBBBBBBB33BBBBBBBB
+17|CCCCCC33CCCCCCCC33CCCCCCCC33CCCCCCCC33CC
+18|CCCCCC33CCCCCCCC33CCCCCCCC33CCCCCCCC33CC
+19|DD33DDDDDDDD33DDDDDDDD33DDDDDDDD33DDDDDD
+20|DD33DDDDDDDD33DDDDDDDD33DDDDDDDD33DDDDDD
 
 ================================================================================
 *END*

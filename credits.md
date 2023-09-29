@@ -4,6 +4,7 @@ Main engine + sound effects + foreground assets by Paul Ruediger. Licensed under
 ### Included music compositions
 * **Beatrave Tales** by Paul Ruediger. Remixed from SideWinder's **Beatwave** and **Tales from the Rave II**.
 * **Ethno Raiders** by Paul Ruediger. Remixed from Roland's **Ethno Pa** and SideWinder's **Dust Raiders**.
+* **Defeat by Entropy** by Paul Ruediger. Remixed from SideWinder's **What Life?** / **Wonderfull**.
 * **Lunarbase Construction** by Paul Ruediger. Remixed from SideWinder's **Behind the Moon Remix**, and a piece of soundtrack from the ill-fated **VGA Planets 5: StarCube**.
 
 ### Included nebulae backgrounds

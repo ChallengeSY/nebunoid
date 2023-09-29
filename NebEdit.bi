@@ -886,6 +886,20 @@ sub draw_brushes(BrushID as byte)
 			line(32+(BrushX-1)*24,96+(BrushY-1)*24)-_
 				(31+(BrushX)*24,95+(BrushY)*24),.PColoring,bf
 				
+			if retrivePrimary(.PColoring,RGBA_ALPHA) >= 224 then
+				for OffsetY as byte = 0 to 2 step 2
+					for OffsetX as byte = 0 to 2 step 2
+						printgfx(PrintChar,40+(BrushX-1)*24+OffsetX,102+(BrushY-1)*24+OffsetY,2,rgb(0,0,0))
+					next OffsetX
+				next OffsetY
+				
+				if SelectedBrush = BrushID then
+					printgfx(PrintChar,41+(BrushX-1)*24,103+(BrushY-1)*24,2,rgb(255,255,0))
+				else
+					printgfx(PrintChar,41+(BrushX-1)*24,103+(BrushY-1)*24,2,rgb(255,255,255))
+				end if
+			end if
+				
 			if SelectedBrush = BrushID then
 				line(33+(BrushX-1)*24,97+(BrushY-1)*24)-_
 					(30+(BrushX)*24,94+(BrushY)*24),rgb(255,255,255),b,&b1110011001100111
@@ -911,6 +925,20 @@ sub draw_brushes(BrushID as byte)
 			line(32+(BrushX-1)*48,96+(BrushY-1)*24)-_
 				(31+(BrushX)*48,95+(BrushY)*24),.PColoring,bf
 				
+			if retrivePrimary(.PColoring,RGBA_ALPHA) >= 224 then
+				for OffsetY as byte = 0 to 2 step 2
+					for OffsetX as byte = 0 to 2 step 2
+						printgfx(PrintChar,52+(BrushX-1)*48+OffsetX,102+(BrushY-1)*24+OffsetY,2,rgb(0,0,0))
+					next OffsetX
+				next OffsetY
+				
+				if SelectedBrush = BrushID then
+					printgfx(PrintChar,53+(BrushX-1)*48,103+(BrushY-1)*24,2,rgb(255,255,0))
+				else
+					printgfx(PrintChar,53+(BrushX-1)*48,103+(BrushY-1)*24,2,rgb(255,255,255))
+				end if
+			end if
+
 			if SelectedBrush = BrushID then
 				line(33+(BrushX-1)*48,97+(BrushY-1)*24)-_
 					(30+(BrushX)*48,94+(BrushY)*24),rgb(255,255,255),b,&b1110011001100111

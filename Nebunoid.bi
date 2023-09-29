@@ -275,7 +275,7 @@ dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, Exp
 dim shared as single JoyAxis(7)
 dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, BlockBrushes
 dim shared as double ProgressiveQuota, InstructExpire, MisnExpire, TimeRem, Reminder = -1, _
-	FrameTime, PaddlePercent
+	FrameTime, PaddlePercent, DifficultyRAM(4)
 dim shared as string InType, ScoreFile, Instructions, CampaignFolder, BackList(BackCount), DiffTxt
 
 dim shared as BackSpecs BackSlot(BackCount)
@@ -970,6 +970,32 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 										end if
 										line(32+(XID-1)*48,96+(YID-1)*24)-_
 											(31+(XID)*48,95+(YID)*24),.PColoring,bf
+									end if
+									
+									if DispSetting = 2 AND retrivePrimary(.PColoring,RGBA_ALPHA) >= 224 then
+										if PlayerSlot(Player).TileSet(XID,YID).BrickID < 10 then
+											PrintChar = str(PlayerSlot(Player).TileSet(XID,YID).BrickID)
+										else	
+											PrintChar = chr(55+PlayerSlot(Player).TileSet(XID,YID).BrickID)
+										end if
+										
+										if CondensedLevel then
+											for OffsetY as byte = 0 to 2 step 2
+												for OffsetX as byte = 0 to 2 step 2
+													printgfx(PrintChar,40+(XID-1)*24+OffsetX,102+(YID-1)*24+OffsetY,2,rgb(0,0,0))
+												next OffsetX
+											next OffsetY
+												
+											printgfx(PrintChar,41+(XID-1)*24,103+(YID-1)*24,2,rgb(255,255,255))
+										else	
+											for OffsetY as byte = 0 to 2 step 2
+												for OffsetX as byte = 0 to 2 step 2
+													printgfx(PrintChar,52+(XID-1)*48+OffsetX,102+(YID-1)*24+OffsetY,2,rgb(0,0,0))
+												next OffsetX
+											next OffsetY
+												
+											printgfx(PrintChar,53+(XID-1)*48,103+(YID-1)*24,2,rgb(255,255,255))
+										end if
 									end if
 								elseif PlayerSlot(Player).TileSet(XID,YID).BrickID <> .HitDegrade AND .CalcedInvulnerable < 2 then
 									Count += 1

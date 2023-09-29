@@ -106,6 +106,12 @@ sub ui_element(Text as string, XPos as short, YPos as short, Length as short = 0
 		gfxString(Text,XPos,YPos,5,5,3,Coloring)
 	end if
 end sub
+sub fix_first_level
+	with PlayerSlot(1)
+		.PerfectClear = 1
+		.SetCleared = 0
+	end with
+end sub
 sub reset_paddle(OnlyGoods as byte = 0)
 	apply_diff_specs
 	render_paddle(StandardSize)
@@ -213,6 +219,7 @@ sub destroy_balls
 	TotalBC = 0
 end sub
 sub destroy_ammo
+	BulletStart = 1
 	for MSID as ubyte = 1 to MaxBullets
 		with Bullet(MSID)
 			.Y = -100
@@ -1595,6 +1602,56 @@ sub transfer_control(GameEnded as ubyte = 0)
 		rotate_music
 	end if
 	render_hand
+end sub
+
+sub begin_local_game(InitPlayers as byte, InitLevel as short)
+	setmouse(,,0,1)
+	DQ = 0
+
+	Player = 1
+	NumPlayers = max(InitPlayers,1)
+	reset_paddle
+	destroy_ammo
+	destroy_balls
+	destroy_capsules
+	LevelDesc = 0
+
+	for HID as byte = 1 to 10
+		HighScore(HID).NewEntry = 0
+	next HID
+	
+	if InitPlayers > 0 then
+		if InitLevel = 1 then
+			shuffle_levels
+		
+			fix_first_level
+			load_level(1)
+		else
+			fix_first_level
+			load_level_file(CampaignFolder+"/L"+str(InitLevel))
+		end if
+		rotate_music
+	else
+		load_level(1)
+	end if
+	rotate_back
+	generate_cavity
+
+	NewPlrSlot.LevelNum = InitLevel
+	copy_wall
+	for PDID as ubyte = 1 to 4
+		DifficultyRAM(PDID) = PlayerSlot(PDID).Difficulty
+		PlayerSlot(PDID) = NewPlrSlot
+		PlayerSlot(PDID).Difficulty = DifficultyRAM(PDID)
+		fresh_level(PDID)
+		if PDID > InitPlayers then
+			PlayerSlot(PDID).Lives = 0
+		end if
+	next PDID
+	render_hand
+
+
+	FrameTime = timer
 end sub
 
 sub capsule_message(NewText as string, AlwaysShow as byte = 0)
