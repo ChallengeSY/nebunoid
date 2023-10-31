@@ -265,30 +265,35 @@ do
 		elseif InType = chr(19) AND CampaignFolder <> "" then
 			save_campaign(.LevelNum)
 		elseif InType = chr(16) AND CampaignFolder <> "" then
-			if LevelUnsaved then
-				locate 48,1
-				print space(127);
-				locate 48,1
-				print "This process will save the current level. Proceed anyway? (Y/N)";
-				screencopy
-				do
-					InType = lcase(inkey)
-					if InType = "y" then
-						save_campaign(.LevelNum)
-						exit do
-					end if
-				loop until InType = "n"
-			end if
+			if BrickCount = 0 then
+				Instructions = "No bricks detected. Sequence aborted."
+				InstructExpire = timer + 5
+			else
+				if LevelUnsaved then
+					locate 48,1
+					print space(127);
+					locate 48,1
+					print "This process will save the current level. Proceed anyway? (Y/N)";
+					screencopy
+					do
+						InType = lcase(inkey)
+						if InType = "y" then
+							save_campaign(.LevelNum)
+							exit do
+						end if
+					loop until InType = "n"
+				end if
 			
-			if LevelUnsaved = 0 then
-				locate 48,1
-				print space(127);
-				locate 48,1
-				print "Quick playtest in session. This program is suspended until session is concluded.";
-				screencopy
-				exec(MasterDir + GameProgram,"-l "+quote(CampaignFolder + "/L" + str(.LevelNum)))
-				InType = ""
-				while inkey <> "":wend
+				if LevelUnsaved = 0 then
+					locate 48,1
+					print space(127);
+					locate 48,1
+					print "Quick playtest in session. This program is suspended until session is concluded.";
+					screencopy
+					exec(MasterDir + GameProgram,"-l "+quote(CampaignFolder + "/L" + str(.LevelNum)))
+					InType = ""
+					while inkey <> "":wend
+				endif
 			end if
 		elseif InType = LeftArrow then
 			shift_field(-1,0)

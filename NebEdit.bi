@@ -119,7 +119,10 @@ sub campaign_metadata
 				input ; "Enter new campaign name: ",NewStrValue
 				screenset 1,0
 				
-				if NewStrValue = PlaytestName OR instr(NewStrValue,".") > 0 OR instr(NewStrValue,"*") > 0 OR _
+				if NewStrValue = PlaytestName OR NewStrValue = EndlessShuffle then
+					Instructions = "Name forbidden because it is reserved"
+					InstructExpire = timer + 10
+				elseif instr(NewStrValue,".") > 0 OR instr(NewStrValue,"*") > 0 OR _
 					instr(NewStrValue,"?") > 0 OR instr(NewStrValue,"/") > 0 OR instr(NewStrValue,"\") > 0 then
 					Instructions = "Name forbidden for technical reasons"
 					InstructExpire = timer + 10

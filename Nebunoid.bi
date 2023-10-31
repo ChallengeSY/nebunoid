@@ -5,6 +5,7 @@ using FB
 dim shared as string QuickPlayFile
 declare sub local_gameplay
 const PlaytestName = "Quick Playtest Level"
+const EndlessShuffle = "Endless Shuffle"
 
 'Speed range specs
 const DefaultSpeed = 8
