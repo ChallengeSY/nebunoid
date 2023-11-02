@@ -1650,7 +1650,6 @@ sub begin_local_game(InitPlayers as byte, InitLevel as short)
 	next PDID
 	render_hand
 
-
 	FrameTime = timer
 end sub
 

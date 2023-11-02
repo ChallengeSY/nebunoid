@@ -1,0 +1,52 @@
+================================================================================
+LEVEL DATA FILE - ELECTRIC RECHARGE LEVEL 10
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Cherry Bomb
+Level Description     := Explosions are the best part of science.
+Level Password        := KOXZQRCH
+Level game number     := 3
+Level time limit      := 270
+Number of Brushes     := 3
+Brush 1 Color         := &h80FF0000
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80FF8000
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := -1
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80808080
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|         333   2 2  
+ 3|        3   3322222 
+ 4|        3      222  
+ 5|       3      22222 
+ 6|       3       2 2  
+ 7|       11           
+ 8|      1111          
+ 9|    11111111        
+10|   1111111111       
+11|   1111111111       
+12|  111111111111      
+13|  111111111111      
+14|  111111111111      
+15|  111111111111      
+16|   1111111111       
+17|   1111111111       
+18|    11111111        
+19|      1111          
+20|                    
+
+================================================================================
+*END*
+================================================================================

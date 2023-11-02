@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - ELECTRIC RECHARGE LEVEL 12
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Illusionous
+Level Description     := 
+Level Password        := FKALOHPJ
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &hB0606060
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 1
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &hE00070E0
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &hE00080FF
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h00000000
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 1
+Brush 4 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2| 223332222222233322 
+ 3| 223333333333333322 
+ 4| 23              32 
+ 5| 23              32 
+ 6| 23              32 
+ 7| 23   22333322   32 
+ 8| 23   22333322   32 
+ 9| 23   32    23   32 
+10| 23   32    23   32 
+11| 23   32    23   32 
+12| 23   32    23   32 
+13| 23   32    23   32 
+14| 23   32    23   32 
+15| 23   32    23   32 
+16| 23   32    23   32 
+17| 23   32    23   32 
+18| 233333244442333332 
+19| 222223244442322222 
+20|                    
+
+================================================================================
+*END*
+================================================================================

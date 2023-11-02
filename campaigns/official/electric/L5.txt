@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - ELECTRIC RECHARGE LEVEL 5
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Ice Cleats
+Level Description     := 
+Level Password        := ZKTAXBGF
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &h8040FFFF
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h8020C0C0
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80008080
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80FFFFFF
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|              11    
+ 3|             1111   
+ 4|            11331   
+ 5|           113331   
+ 6|           133331   
+ 7|           133313   
+ 8|           133123   
+ 9|          1111223   
+10|          1222223   
+11|        111222223   
+12|      11122222223   
+13|    1112222222233   
+14|   1122222222333    
+15|   12222222333 4    
+16|   122222333 4      
+17|   1222333 4        
+18|   12333 4          
+19|    33 4            
+20|     4              
+
+================================================================================
+*END*
+================================================================================

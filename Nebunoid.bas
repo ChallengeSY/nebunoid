@@ -36,7 +36,7 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.07"
+windowtitle "Nebunoid 1.08"
 
 'Foreground assets
 SoftBrickPic = ImageCreate(48,24)

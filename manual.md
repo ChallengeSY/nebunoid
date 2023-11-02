@@ -55,7 +55,7 @@ In addition, there is a collection of 7 gem-themed capsules available outside of
 ----
 
 ### Campaigns
-There are 196 levels, split into eight (8) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
+There are 216 levels, split into nine (9) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
 
 Stars are earned by completing levels for the first time. Harder campaigns require a certain number of stars to break their locks open.
 
@@ -77,6 +77,9 @@ Fortified Letters is moderately more challenging than Regular Season. Every Engl
 
 #### Patriarch Memorial
 Patriarch Memorial is a moderate 25-level campaign, comprised mostly of artistic levels designed as a memory of the past. Save points are present in every level up to level 23. No continues are permitted beyond this level.
+
+#### Electric Recharge
+Electric Recharge is a moderate 20-level campaign; also comprised mostly of artistic levels, only they reference an computing themed universe. Save points are present in every level up to level 19, with the exception of level 13.
 
 #### Challenge Campaign
 The 30-level Challenge Campaign amps up the difficulty several notches by spamming strong blocks like it is hard to believe. Every level demonstrates one or more of the following: Invincible blocks, strong blocks (some will be bio-regenerative), and invisible blocks that may lead to any of the preceding elements

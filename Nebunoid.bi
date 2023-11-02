@@ -355,30 +355,35 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.Difficulty = "Medium to Hard"
 					.SetSize = 25
 				case 6
+					.Namee = "Electric Recharge"
+					.Folder = "official/electric"
+					.Difficulty = "Medium"
+					.SetSize = 20
+				case 7
 					.Namee = "Challenge Campaign"
 					.Folder = "official/challenge"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 30
 					.StarsToUnlock = 25
-				case 7
+				case 8
 					.Namee = "Maximum Insanity"
 					.Folder = "official/extreme"
 					.Difficulty = "Very Hard to Extreme"
 					.SetSize = 25
 					.StarsToUnlock = 75
-				case 8
+				case 9
 					.Namee = "Celestial Journey"
 					.Folder = "official/universe"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 40
 					.StarsToUnlock = 125
-				case 9
-					if TotalStars >= 188 then
+				case 10
+					if TotalStars >= 207 then
 						.Namee = "Nebunoid Boss Rush"
 						.Folder = "official/bossrush"
 						.Difficulty = "Hard to Extreme"
 						.SetSize = 4
-						.StarsToUnlock = 221 'Yes, secret levels included
+						.StarsToUnlock = 246 'Yes, secret levels included
 					end if
 				case 12
 					.Namee = "(Community campaigns)"

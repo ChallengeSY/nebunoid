@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - ELECTRIC RECHARGE LEVEL 13
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Bandit Thief
+Level Description     := Goodies have been stolen!
+Level Password        := ++++++++
+Level game number     := 2
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &h80FF0000
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80ECD040
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80804040
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80000000
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|       333333       
+ 3|      33333333      
+ 4|      33333333      
+ 5|   33333333333333   
+ 6|  3333333333333333  
+ 7|   33333333333333   
+ 8|      22222222      
+ 9|     2244224422     
+10|      22222222      
+11|      11111111      
+12|      11111111      
+13|      11111111      
+14|      11111111      
+15|      11111111      
+16|      11111111      
+17|      11111111      
+18|       111111       
+19|        1111        
+20|                    
+
+================================================================================
+*END*
+================================================================================
