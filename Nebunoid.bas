@@ -242,8 +242,12 @@ do
 						else
 							.SetLocked = -1
 							Availability = rgb(128,128,128)
-							gfxstring("("+commaSep(.StarsToUnlock)+" stars to unlock)",340,351+Item*30,4,3,3,Availability)
-						end if
+							if .StarsToUnlock > 999 then
+								gfxstring("(Unlock req unknown)",340,351+Item*30,4,3,3,Availability)
+							else
+								gfxstring("("+commaSep(.StarsToUnlock)+" stars to unlock)",340,351+Item*30,4,3,3,Availability)
+							end if
+					end if
 					else
 						if .SetSize > 0 then
 							Availability = rgb(255,255,255)

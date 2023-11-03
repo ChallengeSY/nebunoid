@@ -5,7 +5,7 @@ using FB
 dim shared as string QuickPlayFile
 declare sub local_gameplay
 const PlaytestName = "Quick Playtest Level"
-const EndlessShuffle = "Endless Shuffle"
+const EndlessFolder = "official/endless"
 
 'Speed range specs
 const DefaultSpeed = 8
@@ -55,6 +55,7 @@ const FunctionTwelve = chr(255,134)
 const FPS = 60
 const SavedHighSlots = 10
 const TotalHighSlots = SavedHighSlots + 4
+const TotalOfficialLevels = 246
 const MaxBullets = 40
 const BaseFlash = 128
 const LevelClearDelay = 640
@@ -239,6 +240,7 @@ type LevelsetSpecs
 	Folder as string
 	Difficulty as string
 	SetSize as integer
+	TrueSize as integer
 	StarsToUnlock as integer
 	SetLocked as byte
 	SetMastered as byte
@@ -328,6 +330,8 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 	
 	for OCID as ubyte = 1 to 12 'Official campaigns first
 		with OfficialCampaigns(OCID)
+			.TrueSize = 0
+			
 			select case OCID
 				case 1
 					.Namee = "Introductory Training"
@@ -339,11 +343,13 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.Folder = "official/regular"
 					.Difficulty = "Easy to Hard"
 					.SetSize = 30
+					.TrueSize = 35
 				case 3
 					.Namee = "Geometric Designs"
 					.Folder = "official/geometry"
 					.Difficulty = "Medium"
 					.SetSize = 10
+					.TrueSize = 15
 				case 4
 					.Namee = "Fortified Letters"
 					.Folder = "official/alphabet"
@@ -357,13 +363,15 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 				case 6
 					.Namee = "Electric Recharge"
 					.Folder = "official/electric"
-					.Difficulty = "Medium"
+					.Difficulty = "Medium to Hard"
 					.SetSize = 20
+					.TrueSize = 25
 				case 7
 					.Namee = "Challenge Campaign"
 					.Folder = "official/challenge"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 30
+					.TrueSize = 35
 					.StarsToUnlock = 25
 				case 8
 					.Namee = "Maximum Insanity"
@@ -376,14 +384,17 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.Folder = "official/universe"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 40
+					.TrueSize = 50
 					.StarsToUnlock = 125
 				case 10
+					.Namee = "Endless Shuffle"
+					.Folder = "official/endless"
+					.Difficulty = "Unpredictable"
+					.SetSize = 1000
 					if TotalStars >= 207 then
-						.Namee = "Nebunoid Boss Rush"
-						.Folder = "official/bossrush"
-						.Difficulty = "Hard to Extreme"
-						.SetSize = 4
-						.StarsToUnlock = 246 'Yes, secret levels included
+						.StarsToUnlock = TotalOfficialLevels 'ALL of the previous levels
+					else
+						.StarsToUnlock = 1000 'Keep the player from knowing the exact requirement at first
 					end if
 				case 12
 					.Namee = "(Community campaigns)"
@@ -394,7 +405,11 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.SetLocked = -1
 			end select
 			
-			if .Namee <> "" then
+			if .Namee <> "" AND .Folder <> EndlessFolder then
+				if .TrueSize = 0 then
+					.TrueSize = .SetSize
+				end if
+				
 				if FileExists(.Namee+".dat") then
 					open .Namee+".dat" for input as #19
 					input #19, LevelsCleared

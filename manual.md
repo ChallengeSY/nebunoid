@@ -67,7 +67,7 @@ Introductory Training is a much shorter 10-level campaign, geared to introduce p
 #### Regular Season
 Regular Season is the most balanced campaign, containing 30 levels. A wide variety of obstacles are demonstrated in this campaign, but no bio blocks are present.
 
-Save points are available for nearly every level in the campaign, being absent only from bonus levels (which usually compliment every 9 regular levels), and the last level of the campaign. Instead, players who lose their last life on the final level will not be permitted to continue, and must end their game.
+Save points are available for nearly every level in the campaign, being absent only from the last level of the campaign. Instead, players who lose their last life on the final level will not be permitted to continue, and must end their game.
 
 #### Geometric Designs
 Geometric Designs is a shorter than usual 10-level campaign. Although less accomodating than Introductory Training, this set is still modest in difficulty. Save points are present in every level, except for the final level.
@@ -90,8 +90,16 @@ Additionally, save points appear less frequently than they did in previous campa
 Maximum Insanity makes Challenge Campaign look easy by mixing the most dangerous elements into 25 levels worth of sinister combinations. Save points appear even less frequently; every five levels starting with level 1, up to level 21.
 
 #### Celestial Journey
-Celestial Journey is the longest official campaign, at 40 levels. It makes plenty of cross-universe references, and is still on par with that of the **Challenge Campaign**.
+Celestial Journey is the longest finite official campaign, at 40 levels. It makes plenty of cross-universe references, and is still on par with that of the **Challenge Campaign**.
 
 Like Maximum Insanity, save points appear every five levels starting with level 1. Unlike previous campaigns, every ten levels starting at level 10 is a boss battle, and continues are disallowed on these levels.
+
+#### Endless Shuffle
+Endless Shuffle is a unique official campaign, technically comprised of unlimited length. Specifically, this campaign will shuffle *all* of the previous levels into a single gigantic experience. Because of its unique shuffling mechanism, its difficulty is naturally unpredictable. This campaign is also the hardest / takes the longest to unlock, requiring a true 100% completion to even unlock.
+
+In addition to its shuffle, it brings forth several other unique mechanics not available in other campaigns:
+* Extra lives become available at 16K points, but the threshold *doubles* with each milestone achieved. This is also the *only* way to obtain more lives.
+* The minimum difficulty rises as more levels are cleared. If the starting difficulty becomes less than this threshold, then it will increase accordingly. A maximum difficulty of 6.5 (Hard) can be reached this way.
+* Since the objective is to simply score as high as possible, no continues are allowed throughout the campaign. If the available lives are exhausted, then the game simply ends on the spot.
 
 *Nebunoid (C) 2023 Paul Ruediger. Nebulae artwork courtesy of NASA, ESA, and/or other astrophysical observatories and stations. Please check the [credits](credits.md) for more details.*
