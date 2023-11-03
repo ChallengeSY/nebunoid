@@ -8,8 +8,10 @@ dim shared as integer BaseCapsuleValue, PowerTick, PaddleHealth, InitialExtraLif
 dim shared as short SpeedMod, BackIter
 dim shared as ubyte CapID, ExtraBarrierPoint, GameHints(NumHints), LevelDesc, ContinuousSplit
 dim shared as byte ConstIncrease, PaddleAdjust
-dim shared as double BoostIncrease, AttackTick, BaseMaxSpeed
+dim shared as double ActiveDifficulty, BoostIncrease, AttackTick, BaseMaxSpeed
+
 redim shared as integer ShuffleList(1)
+dim shared as integer EndlessShuffList(TotalOfficialLevels)
 
 BackIter = irandom(0,BacksLoaded-1)
 
@@ -18,8 +20,13 @@ sub apply_diff_specs
     ' General rule of thumb; the higher the difficulty,
     ' the faster the gameplay, and the smaller the paddle/balls
 	 '/
+	ActiveDifficulty = PlayerSlot(Player).Difficulty
+	if CampaignFolder = EndlessFolder AND ActiveDifficulty < 6.5 then
+		ActiveDifficulty = min(max(PlayerSlot(Player).LevelNum^(1/2),ActiveDifficulty),6.5)
+	end if
+	
 	BaseMaxSpeed = 20.5
-	select case int(PlayerSlot(Player).Difficulty+0.5)
+	select case int(ActiveDifficulty+0.5)
 		case DIFF_KIDS
 			BaseMaxSpeed = 16.5
 			MinSize = PAD_LG
@@ -118,7 +125,7 @@ sub reset_paddle(OnlyGoods as byte = 0)
 	ConstIncrease = 0
 	BoostIncrease = 0
 	PaddleAdjust = 0
-	if PlayerSlot(Player).Difficulty < 1.45 then
+	if ActiveDifficulty < 1.45 then
 		PlayerSlot(Player).BulletAmmo = 32
 	else
 		PlayerSlot(Player).BulletAmmo = 0
@@ -504,7 +511,7 @@ function load_level_file(LoadLevel as string) as integer
 				.HitDegrade = valint(right(LoadData,len(LoadData)-25))
 				.CanRegen = abs(sgn(right(LoadData,1) = "*"))
 				input #1, LoadData
-				.IncreaseSpeed = abs(sgn(ucase(right(LoadData,4)) = "TRUE" AND PlayerSlot(Player).Difficulty >= 1.49))
+				.IncreaseSpeed = abs(sgn(ucase(right(LoadData,4)) = "TRUE" AND ActiveDifficulty >= 1.49))
 			end with
 		else
 			line input #1, NullString
@@ -591,7 +598,24 @@ function load_level(LevNum as short) as integer
 	if QuickPlayFile <> "" then
 		return load_level_file(QuickPlayFile)
 	end if
-	if ShuffleLevels then
+	if CampaignFolder = EndlessFolder then
+		dim as string LevelFile
+		dim as integer TrueNum = (LevNum - 1) mod TotalOfficialLevels + 1
+		dim as integer LevelsLeftover = EndlessShuffList(TrueNum)
+		
+		if LevelsLeftover > 0 then
+			apply_diff_specs
+			for OCID as ubyte = 1 to 9
+				with OfficialCampaigns(OCID)
+					if LevelsLeftover > .TrueSize then
+						LevelsLeftover -= .TrueSize
+					else
+						return load_level_file(.Folder+"/L"+str(LevelsLeftover))
+					end if
+				end with
+			next OCID
+		end if
+	elseif ShuffleLevels then
 		return load_level_file(CampaignFolder+"/L"+str(ShuffleList(LevNum)))
 	end if
 	
@@ -633,6 +657,10 @@ function load_settings as integer
 	return load_level(1)
 end function
 function check_level(LoadLevel as short) as string
+	if CampaignFolder = EndlessFolder then
+		return "INFINITE"
+	end if
+	
 	'Reads a password from the level to check
 	dim as string FindBegin, LoadFile, LoadData, TestPassword
 	LoadFile = MasterDir+"/campaigns/"+CampaignFolder+"/L"+str(LoadLevel)+".txt"
@@ -656,48 +684,6 @@ function check_level(LoadLevel as short) as string
 		return ""
 	end if
 end function
-
-sub shuffle_levels
-	dim as short NumLevels, LID, LevelUsed
-	if ShuffleLevels = 0 then
-		exit sub
-	end if
-	
-	'Determine the campaign size
-	for LID = 1 to 999
-		if FileExists(MasterDir+"/campaigns/"+CampaignFolder+"/L"+str(LID)+".txt") = 0 then
-			NumLevels = LID - 1
-			exit for
-		end if 
-	next LID
-	
-	redim ShuffleList(NumLevels)
-	
-	/'
-	 ' Randomize most levels
-	 ' - "Fatal level"s are intentionally excluded
-	 ' - Secret levels are also excluded, if they have not already been known
-	 '/
-	for LID = 1 to NumLevels
-		if check_level(LID) = "--------" OR (LID >= SecretLevels AND HighLevel < SecretLevels) then
-			ShuffleList(LID) = LID
-		else
-			do
-				ShuffleList(LID) = irandom(1,NumLevels)
-				LevelUsed = sgn(abs(check_level(ShuffleList(LID)) = "--------" OR _
-					(ShuffleList(LID) >= SecretLevels AND HighLevel < SecretLevels)))
-				if LevelUsed = 0 then
-					for JID as short = 1 to LID - 1
-						if ShuffleList(LID) = ShuffleList(JID) then
-							LevelUsed = 1
-							exit for
-						end if
-					next JID
-				end if
-			loop until LevelUsed = 0
-		end if
-	next LID
-end sub
 
 function level_list as string
 	dim as short SelectLevel = 1, LevelsRegistered, AdjustPagination, LegalLevel, LegalChoice
@@ -815,10 +801,10 @@ sub brick_collisions(BallID as short)
 							if .Speed < 12 then
 								.Speed = 12
 							else
-								adjust_speed(BallID,PlayerSlot(Player).Difficulty / 50)
+								adjust_speed(BallID,ActiveDifficulty / 50)
 							end if
 						else
-							adjust_speed(BallID,PlayerSlot(Player).Difficulty / 100)
+							adjust_speed(BallID,ActiveDifficulty / 100)
 						end if
 
 						play_clip(SFX_INVINCIBLE,.X,convert_speed(.Speed))
@@ -835,10 +821,10 @@ sub brick_collisions(BallID as short)
 								if .Speed < 12 then
 									.Speed = 12
 								else
-									adjust_speed(BallID,PlayerSlot(Player).Difficulty / 50)
+									adjust_speed(BallID,ActiveDifficulty / 50)
 								end if
 							else
-								adjust_speed(BallID,PlayerSlot(Player).Difficulty / 100)
+								adjust_speed(BallID,ActiveDifficulty / 100)
 							end if
 							.Trapped += 1
 							if .Trapped >= TrapThreshold then
@@ -961,13 +947,13 @@ sub brick_collisions(BallID as short)
 								if .Speed < 12 then
 									.Speed = 12
 								else
-									adjust_speed(BallID,PlayerSlot(Player).Difficulty / 50)
+									adjust_speed(BallID,ActiveDifficulty / 50)
 								end if
 								if ProgressiveQuota > 4 then
 									ProgressiveQuota = 4
 								end if 
 							else
-								adjust_speed(BallID,PlayerSlot(Player).Difficulty / 100)
+								adjust_speed(BallID,ActiveDifficulty / 100)
 							end if
 							
 							generate_capsule(XID,YID)
@@ -1016,7 +1002,7 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 	
 	for CapID as byte = 1 to CAP_MAX - 1
 		if CapID >= CAP_GEM_R then
-			if PlayerSlot(Player).Difficulty >= 1.5 then
+			if ActiveDifficulty >= 1.5 then
 				CapWeight(CapID) = 4
 			else
 				CapWeight(CapID) = 0
@@ -1051,12 +1037,12 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 	end if
 	
 	with PlayerSlot(Player)
-		if .Lives <= 1 then
-			CapWeight(CAP_LIFE) = 2
-		elseif .Lives < 9 + sgn(CampaignBarrier) then
-			CapWeight(CAP_LIFE) = 1
-		else
+		if .Lives >= 9 + sgn(CampaignBarrier) OR CampaignFolder = EndlessFolder then
 			CapWeight(CAP_LIFE) = 0
+		elseif .Lives <= 1 then
+			CapWeight(CAP_LIFE) = 2
+		else
+			CapWeight(CAP_LIFE) = 1
 		end if
 	end with
 	CapWeight(CAP_WARP) = 1
@@ -1079,7 +1065,7 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 	end if
 
 	with PlayerSlot(Player)
-		if .Difficulty < 1.5 OR .Difficulty >= 10.5 then
+		if ActiveDifficulty < 1.5 OR ActiveDifficulty >= 10.5 then
 			CapWeight(CAP_FAST) = 0
 			CapWeight(CAP_WEAK) = 0
 			CapWeight(CAP_MAXIMIZE) = 0
@@ -1087,7 +1073,7 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 			CapWeight(CAP_SLOW_PAD) = 0
 			CapWeight(CAP_GRAVITY) = 0
 			CapWeight(CAP_NEGATER) = 0
-		elseif .Difficulty < 2.5 then
+		elseif ActiveDifficulty < 2.5 then
 			CapWeight(CAP_FAST) = 4
 			CapWeight(CAP_WEAK) = 4
 			CapWeight(CAP_MAXIMIZE) = 0
@@ -1113,13 +1099,13 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 		end if
 
 		'Base capsule spawn rate (in percentage)
-		if .Difficulty >= 9.5 then
+		if ActiveDifficulty >= 9.5 then
 			CapsuleChance = 5
-		elseif .Difficulty >= 7.5 then
+		elseif ActiveDifficulty >= 7.5 then
 			CapsuleChance = 7
-		elseif .Difficulty >= 5.5 then
+		elseif ActiveDifficulty >= 5.5 then
 			CapsuleChance = 8
-		elseif .Difficulty >= 3.5 then
+		elseif ActiveDifficulty >= 3.5 then
 			CapsuleChance = 10
 		else
 			CapsuleChance = 12
@@ -1433,7 +1419,7 @@ sub fresh_level(PlrID as byte)
 			.BossHealth = .BossMaxHealth
 		end if
 		.LevelTimer = LevelTimeLimit * 60
-		if .Difficulty < 3.5 then
+		if ActiveDifficulty < 3.5 then
 			.LevelTimer *= 2
 		end if
 		.WarpTimer = 3600
@@ -1478,7 +1464,7 @@ sub game_over
 		line(302,349)-(721,449),rgb(0,0,0),bf
 		line(302,349)-(721,449),rgb(255,255,255),b
 
-		if CampaignPassword = "--------" then
+		if CampaignPassword = "--------" OR CampaignFolder = EndlessFolder then
 			ValidChoice(0) = 0
 			ValidChoice(1) = 0
 			UseChoice = 2
@@ -1604,6 +1590,74 @@ sub transfer_control(GameEnded as ubyte = 0)
 	render_hand
 end sub
 
+sub capsule_message(NewText as string, AlwaysShow as byte = 0)
+	if DisableHints = 0 OR AlwaysShow then
+		Instructions = NewText
+		InstructExpire = timer + max(5,2+len(NewText)/4)
+	end if
+end sub
+
+sub shuffle_levels
+	dim as short NumLevels, LID, LevelUsed
+	if CampaignFolder = EndlessFolder then
+		'Endless Shuffle randomizes ALL official campaigns levels!
+		erase EndlessShuffList
+		
+		for LID = lbound(EndlessShuffList) to ubound(EndlessShuffList)
+			do
+				EndlessShuffList(LID) = irandom(1,TotalOfficialLevels)
+				LevelUsed = 0
+				
+				for JID as short = 1 to LID - 1
+					if EndlessShuffList(LID) = EndlessShuffList(JID) then
+						LevelUsed = 1
+						exit for
+					end if
+				next JID
+			loop until LevelUsed = 0
+		next LID
+	else
+		if ShuffleLevels = 0 then
+			exit sub
+		end if
+		
+		'Determine the campaign size
+		for LID = 1 to 999
+			if FileExists(MasterDir+"/campaigns/"+CampaignFolder+"/L"+str(LID)+".txt") = 0 then
+				NumLevels = LID - 1
+				exit for
+			end if 
+		next LID
+		
+		redim ShuffleList(NumLevels)
+		
+		/'
+		 ' Randomize most levels
+		 ' - "Fatal level"s are intentionally excluded
+		 ' - Secret levels are also excluded, if they have not already been known
+		 '/
+		for LID = 1 to NumLevels
+			if check_level(LID) = "--------" OR (LID >= SecretLevels AND HighLevel < SecretLevels) then
+				ShuffleList(LID) = LID
+			else
+				do
+					ShuffleList(LID) = irandom(1,NumLevels)
+					LevelUsed = sgn(abs(check_level(ShuffleList(LID)) = "--------" OR _
+						(ShuffleList(LID) >= SecretLevels AND HighLevel < SecretLevels)))
+					if LevelUsed = 0 then
+						for JID as short = 1 to LID - 1
+							if ShuffleList(LID) = ShuffleList(JID) then
+								LevelUsed = 1
+								exit for
+							end if
+						next JID
+					end if
+				loop until LevelUsed = 0
+			end if
+		next LID
+	end if
+end sub
+
 sub begin_local_game(InitPlayers as byte, InitLevel as short)
 	setmouse(,,0,1)
 	DQ = 0
@@ -1652,11 +1706,3 @@ sub begin_local_game(InitPlayers as byte, InitLevel as short)
 
 	FrameTime = timer
 end sub
-
-sub capsule_message(NewText as string, AlwaysShow as byte = 0)
-	if DisableHints = 0 OR AlwaysShow then
-		Instructions = NewText
-		InstructExpire = timer + max(5,2+len(NewText)/4)
-	end if
-end sub
-

@@ -1,5 +1,5 @@
 ================================================================================
-LEVEL DATA FILE - PATRIARCH MEMORIAL LEVEL 12
+LEVEL DATA FILE - PATRIARCH MEMORIAL LEVEL 16
 ================================================================================
 *BEGIN*
 ================================================================================
@@ -39,7 +39,7 @@ Brush 7 Color         := &h80FF00FF
 Brush 7 Score Value   := 10*
 Brush 7 Hit Degrade   := 0
 Brush 7 Increase Spd  := FALSE
-Brush 8 Color         := &hC0101010
+Brush 8 Color         := &hB0101010
 Brush 8 Score Value   := 10*
 Brush 8 Hit Degrade   := 8
 Brush 8 Increase Spd  := FALSE

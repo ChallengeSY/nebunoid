@@ -255,7 +255,7 @@ do
 					gfxstring(.Namee,40,351+Item*30,4,3,3,Availability)
 					if .SetMastered then
 						gfxstring("Size "+str(.SetSize),820,351+Item*30,4,3,3,rgb(255,215,0))
-					else
+					elseif .SetSize <= 999 then
 						gfxstring("Size "+str(.SetSize),820,351+Item*30,4,3,3,Availability)
 					end if
 				end if
@@ -263,7 +263,7 @@ do
 		next Item
 	else
 		dim as uinteger Availability
-		gfxstring("Community Campaign Selection",40,350,5,4,3,rgb(255,192,64))
+		gfxstring("Community Campaign Selection",40,0350,5,4,3,rgb(255,192,64))
 		for Item as byte = 1*(MenuMode-2)*CampaignsPerPage to min((MenuMode-1)*CampaignsPerPage,OfficialCampaigns(12).SetSize)
 			with CommunityCampaigns(Item)
 				if .Namee <> "" then

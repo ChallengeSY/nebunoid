@@ -170,7 +170,7 @@ sub local_gameplay
 							
 							if .LastBall > 0 then
 								ComputeDamage = Ball(.LastBall).Speed
-								ComputeDamage *= max(int(5.45 - PlayerSlot(Player).Difficulty),1) 
+								ComputeDamage *= max(int(5.45 - ActiveDifficulty),1) 
 							else
 								ComputeDamage = 10
 							end if
@@ -189,7 +189,7 @@ sub local_gameplay
 			next YID
 	
 			if TotalBC > 0 AND AttackBricks > 0 AND PaddleSize > 0 AND GamePaused = 0 then
-				AttackTick += PlayerSlot(Player).BossMaxHealth / 5000 * PlayerSlot(Player).Difficulty * SpeedMod / 100
+				AttackTick += PlayerSlot(Player).BossMaxHealth / 5000 * ActiveDifficulty * SpeedMod / 100
 	
 				if AttackTick >= 50 + PlayerSlot(Player).BossHealth/PlayerSlot(Player).BossMaxHealth * 50 then
 					dim as ubyte NewBeam, NewX, NewY
@@ -444,27 +444,11 @@ sub local_gameplay
 				else
 					ui_element("----",671,6,4,rgb(128,128,128))
 				end if
-				
-				'Difficulty background
-				/'
-				if .Difficulty <= 10 then
-					if DynamicDiff then
-						line(473,4)-(473+.Difficulty/10*87,20),rgb(128,128,0),bf
-					else
-						line(473,4)-(473+.Difficulty/10*87,20),rgb(0,0,128),bf
-					end if
-				else
-					if DynamicDiff then
-						line(473,4)-(560,20),rgb(128,128,0),bf
-					else
-						line(473,4)-(560,20),rgb(0,0,128),bf
-					end if
-					line(473,4)-(473+(.Difficulty-10)/2*87,20),rgb(128,0,0),bf
-				end if
-				'/
 		
 				'Password display
-				if CampaignPassword = "--------" then
+				if CampaignFolder = EndlessFolder then
+					'Intentionally blank
+				elseif CampaignPassword = "--------" then
 					ui_element("Fatal!",764,6,7,rgb(255,128,128))
 				elseif CampaignPassword <> "++++++++" AND .LevelNum <= HighLevel AND ShuffleLevels = 0 then
 					if .Difficulty >= 6.5 then
@@ -547,7 +531,7 @@ sub local_gameplay
 		
 		if PaddleHealth > 0 AND PaddleHealth < 110 * 60 then
 			dim as uinteger HealthColor
-			dim as short DmgMulti = int(sqr(PlayerSlot(Player).Difficulty) + 0.5)
+			dim as short DmgMulti = int(sqr(ActiveDifficulty + 0.5))
 			
 			if PaddleHealth < 15 * DmgMulti * 60 then
 				HealthColor = rgb(192,0,0)
@@ -590,7 +574,7 @@ sub local_gameplay
 										PaddleHealth = 100 * 60
 									end if
 									
-									PaddleHealth -= int(sqr(PlayerSlot(Player).Difficulty) + 0.5) * 60
+									PaddleHealth -= int(sqr(ActiveDifficulty) + 0.5) * 60
 									
 									if PaddleHealth <= 0 then
 										render_paddle(0)
@@ -1104,7 +1088,7 @@ sub local_gameplay
 								if PowerTick >= 100 then
 									.Duration -= 1
 								end if
-							elseif PlayerSlot(Player).Difficulty < 2.5 then
+							elseif ActiveDifficulty < 2.5 then
 								.Power = 1
 							elseif .Power > 0 then
 								.Power = 0
@@ -1200,7 +1184,7 @@ sub local_gameplay
 
 								play_clip(SFX_WALL,.X,convert_speed(.Speed))
 								.Trapped += 1
-								adjust_speed(BID,PlayerSlot(Player).Difficulty / 100)
+								adjust_speed(BID,ActiveDifficulty / 100)
 								if .Power = -2 then
 									.Power = 0
 									TotalBC += 1
@@ -1241,7 +1225,7 @@ sub local_gameplay
 
 								play_clip(SFX_WALL,.X,convert_speed(.Speed))
 								.Trapped += 1
-								adjust_speed(BID,PlayerSlot(Player).Difficulty / 100)
+								adjust_speed(BID,ActiveDifficulty / 100)
 								if .Power = -2 then
 									.Power = 0
 									TotalBC += 1
@@ -1339,7 +1323,7 @@ sub local_gameplay
 									.Spawned = 0
 									dynamic_speed_clip(.Speed,.X)
 									if .Speed < 20 then
-										adjust_speed(BID,PlayerSlot(Player).Difficulty / 100)
+										adjust_speed(BID,ActiveDifficulty / 100)
 									end if
 									.Angle = int(165 - PaddlePercent/100*150 + .5)
 	
@@ -1348,7 +1332,7 @@ sub local_gameplay
 										for BID as ubyte = 2 to NumBalls
 											with Ball(BID)
 												if .Speed <= 0 then
-													if PlayerSlot(Player).Difficulty >= 3.5 then
+													if ActiveDifficulty >= 3.5 then
 														.Speed = DefaultSpeed - irandom(0,30) / 100
 													else
 														.Speed = MinSpeed
@@ -1405,7 +1389,7 @@ sub local_gameplay
 								end if
 
 								play_clip(SFX_WALL,.X,convert_speed(.Speed))
-								adjust_speed(BID,PlayerSlot(Player).Difficulty / 100)
+								adjust_speed(BID,ActiveDifficulty / 100)
 								if (GameStyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
 									with PlayerSlot(Player)
 										if .BossHealth > 0 then
@@ -1473,7 +1457,7 @@ sub local_gameplay
 								line(.X-BallSize,.Y-BallSize)-(.X+BallSize,.Y+BallSize),rgb(0,255,255),bf
 							end if
 						else
-							if PlayerSlot(Player).Difficulty < 2.5 then
+							if ActiveDifficulty < 2.5 then
 								line(.X-BallSize,.Y-BallSize)-(.X+BallSize,.Y+BallSize),rgb(128,128,255),bf
 							else
 								line(.X-BallSize,.Y-BallSize)-(.X+BallSize,.Y+BallSize),rgb(255,255,255),bf
@@ -1521,8 +1505,8 @@ sub local_gameplay
 				
 				NextLevel = .LevelNum + 1
 				
-				if (NextLevel >= SecretLevels AND HighLevel < SecretLevels AND SecretLevels > 0) OR _
-					check_level(NextLevel) = "" then
+				if ((NextLevel >= SecretLevels AND HighLevel < SecretLevels AND SecretLevels > 0) OR _
+					check_level(NextLevel) = "") AND CampaignFolder <> EndlessFolder then
 					Bonuses(4) = .Lives * BaseCapsuleValue * 2
 
 					if RecalcGems AND LevelClear > 25 then
@@ -1578,7 +1562,7 @@ sub local_gameplay
 								line(.X-BallSize,.Y-BallSize)-(.X+BallSize,.Y+BallSize),rgb(0,255,255),bf
 							end if
 						else
-							if PlayerSlot(Player).Difficulty < 2.5 then
+							if ActiveDifficulty < 2.5 then
 								line(.X-BallSize,.Y-BallSize)-(.X+BallSize,.Y+BallSize),rgb(128,128,255),bf
 							else
 								line(.X-BallSize,.Y-BallSize)-(.X+BallSize,.Y+BallSize),rgb(255,255,255),bf
@@ -1662,7 +1646,7 @@ sub local_gameplay
 								line(.X-BallSize,.Y-BallSize)-(.X+BallSize,.Y+BallSize),rgb(0,255,255),bf
 							end if
 						else
-							if PlayerSlot(Player).Difficulty < 2.5 then
+							if ActiveDifficulty < 2.5 then
 								line(.X-BallSize,.Y-BallSize)-(.X+BallSize,.Y+BallSize),rgb(128,128,255),bf
 							else
 								line(.X-BallSize,.Y-BallSize)-(.X+BallSize,.Y+BallSize),rgb(255,255,255),bf
@@ -1918,7 +1902,7 @@ sub local_gameplay
 										for BID as ubyte = 1 to NumBalls
 											with Ball(BID)
 												if .Speed > 0 AND .Power <> -2 then
-													adjust_speed(BID,min(4,int(PlayerSlot(Player).Difficulty+0.5)))
+													adjust_speed(BID,min(4,int(ActiveDifficulty+0.5)))
 												end if
 											end with
 										next BID
@@ -2086,7 +2070,7 @@ sub local_gameplay
 											force_release_balls
 											capsule_message("MYSTERY CAPSULE: Super Expand! Size +100 = "+str(PaddleSize)+" pixels",1)
 											play_clip(SFX_POWER_UP,.X)
-										elseif Effects < .7 then
+										elseif Effects < .675 AND CampaignFolder <> EndlessFolder then
 											capsule_message("MYSTERY CAPSULE: Bonus life!",1)
 											PlayerSlot(Player).Lives += 1
 											play_clip(SFX_LIFE,.X)
@@ -2436,8 +2420,8 @@ sub local_gameplay
 							elseif PaddleID = 1 then
 								.Y += .Speed * (SpeedMod / 100) 
 								.Speed += 3 / 32
-								if .Speed > PlayerSlot(Player).Difficulty * 1.5 then
-									.Speed = PlayerSlot(Player).Difficulty * 1.5
+								if .Speed > ActiveDifficulty * 1.5 then
+									.Speed = ActiveDifficulty * 1.5
 								end if
 							end if
 						next PaddleID
@@ -2449,7 +2433,12 @@ sub local_gameplay
 		with PlayerSlot(Player)
 			if .Score >= .Threshold AND .Threshold > 0 AND .Lives > 0 AND LevelClear = 0 then
 				if SubsequentExtraLives > 0 then
-					.Threshold += SubsequentExtraLives
+					if CampaignFolder = EndlessFolder then
+						.Threshold *= 2
+					else
+						.Threshold += SubsequentExtraLives
+					end if
+					
 					Instructions = "Extra life earned - Next life at "+str(.Threshold)+" points"
 				else
 					.Threshold = 0
@@ -2488,7 +2477,7 @@ sub local_gameplay
 				InPassword = right(InPassword,7) + ucase(InType)
 			end if
 			
-			if InType = FunctionFour AND PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignName <> PlaytestName then
+			if InType = FunctionFour AND PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignFolder <> EndlessFolder AND CampaignName <> PlaytestName then
 				InPassword = level_list
 				FrameTime = timer
 			end if
@@ -2537,7 +2526,7 @@ sub local_gameplay
 					end if
 				end if
 				
-				if PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignName <> PlaytestName AND Phase <> 0 then
+				if PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignFolder <> EndlessFolder AND CampaignName <> PlaytestName AND Phase <> 0 then
 					Instructions = "Push F4 to open the level screen"
 				else
 					Instructions = "Push 1-4 to start a new campaign with that many players"
@@ -2719,7 +2708,7 @@ sub local_gameplay
 			
 		elseif actionButton AND ProhibitSpawn = 0 then
 			with Ball(1)
-				if PlayerSlot(Player).Difficulty >= 3.5 then
+				if ActiveDifficulty >= 3.5 then
 					.Speed = DefaultSpeed - irandom(0,30) / 100 
 				else
 					.Speed = MinSpeed
@@ -2775,7 +2764,7 @@ sub local_gameplay
 			destroy_capsules
 			
 			with PlayerSlot(Player)
-				if .Lives < StartingLives AND .Difficulty < 3.5 then
+				if .Lives < StartingLives AND .Difficulty < 3.5 AND CampaignFolder <> EndlessFolder then
 					.Lives += 1
 				end if
 				.LevelNum += 1
@@ -2810,15 +2799,8 @@ sub local_gameplay
 					rotate_back
 					load_level(.LevelNum)
 					fresh_level(Player)
-					if (GameStyle AND (1 SHL STYLE_BOSS)) then
-						.BossHealth = .BossMaxHealth
-					end if
 					Paddle(1).Sluggish = 0
 					Paddle(1).Spawned = 0
-					.LevelTimer = LevelTimeLimit * 60
-					if .Difficulty < 3.5 then
-						.LevelTimer *= 2
-					end if
 				else
 					play_clip(SFX_LIFE)
 					if DQ = 0 then
@@ -2889,5 +2871,6 @@ sub local_gameplay
 		clean_up
 		end 0
 	end if
+	erase EndlessShuffList
 	setmouse(,,0,0)
 end sub

@@ -119,7 +119,7 @@ sub campaign_metadata
 				input ; "Enter new campaign name: ",NewStrValue
 				screenset 1,0
 				
-				if NewStrValue = PlaytestName OR NewStrValue = EndlessShuffle then
+				if NewStrValue = PlaytestName then
 					Instructions = "Name forbidden because it is reserved"
 					InstructExpire = timer + 10
 				elseif instr(NewStrValue,".") > 0 OR instr(NewStrValue,"*") > 0 OR _
@@ -276,7 +276,7 @@ end sub
 sub edit_level_variations
 	dim as ubyte StyleID
 	dim as string StyleNames(15) => {"Powerups", "Extra Height", "Dual Paddles", "Double Juggling", "Cavity", "Progressive", "Steerable Balls", "Invisible", _
-		"Hyper Speed", "Boss Battle", "Horizontal Rotation", "", "Shrink Ceiling", "Breakable Ceiling", "Fatal Timer", "Bonus Level"}
+		"Hyper Speed", "Boss Battle", "Horizontal Rotation", "", "Shrink Ceiling", "Breakable Ceiling", "Fatal Timer", ""}
 	do
 		locate 48,1
 		print space(127);
@@ -301,7 +301,7 @@ sub edit_level_variations
 					loop until StyleNames(StyleID) <> ""
 				end if
 			case RightArrow
-				if StyleID < 15 then
+				if StyleID < 14 then
 					do
 						StyleID += 1
 					loop until StyleNames(StyleID) <> ""
@@ -1260,7 +1260,7 @@ sub save_level(SaveLvNum as short)
 	print #2, "Level Name            := "+CampaignLevelName
 	print #2, "Level Description     := "+LevelDescription
 	print #2, "Level Password        := "+CampaignPassword
-	print #2, "Level game number     := "+str(Gamestyle)
+	print #2, "Level game number     := "+str(Gamestyle mod 32768)
 	print #2, "Level time limit      := "+str(LevelTimeLimit)
 	if (Gamestyle AND (1 SHL STYLE_BOSS)) XOR (Gamestyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
 		print #2, "Level boss health     := "+str(PlayerSlot(Player).BossMaxHealth)

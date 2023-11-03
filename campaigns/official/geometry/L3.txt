@@ -1,51 +1,51 @@
 ================================================================================
-GEOMETRY LEVEL DATA FILE - LEVEL 3
+LEVEL DATA FILE - GEOMETRIC DESIGNS LEVEL 3
 ================================================================================
 *BEGIN*
 ================================================================================
 
 Level Name            := Lines, Rays, and Segments
-Level Description     :=
+Level Description     := 
 Level Password        := WQZHPFLB
-Level game number     := &b0000000000000011
+Level game number     := 3
 Level time limit      := 0
-Number of Block Sets  := 3
-Set 1 Color           := &h80FFFF00
-Set 1 Score Value     := 10*
-Set 1 Hit Degrade     := 0
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &h80FFD700
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 2
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := &h80CD7F32
-Set 3 Score Value     := 2
-Set 3 Hit Degrade     := 2
-Set 3 Increase Speed  := FALSE
+Number of Brushes     := 3
+Brush 1 Color         := &h80FFFF00
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &hB0FFD700
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 2
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &hB0CD7F32
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|
- 2|   1            1
- 3|  31            13
- 4| 321111111111111123
- 5|  31   1        13
- 6|   1    1       1
- 7|         1
- 8|          1
- 9|           1
-10| 111111111111
-11|      1      1
-12|      1       1
-13|   1  1        1
-14|  31  1         1 1
-15| 321111          13
-16|  31            133
-17|   1
-18|
-19|
-20|
+ 1|                    
+ 2|   1            1   
+ 3|  31            13  
+ 4| 321111111111111123 
+ 5|  31   1        13  
+ 6|   1    1       1   
+ 7|         1          
+ 8|          1         
+ 9|           1        
+10| 111111111111       
+11|      1      1      
+12|      1       1     
+13|   1  1        1    
+14|  31  1         1 1 
+15| 321111          13 
+16|  31            133 
+17|   1                
+18|                    
+19|                    
+20|                    
 
 ================================================================================
 *END*
