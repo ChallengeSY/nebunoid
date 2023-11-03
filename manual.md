@@ -99,7 +99,7 @@ Endless Shuffle is a unique official campaign, technically comprised of unlimite
 
 In addition to its shuffle, it brings forth several other unique mechanics not available in other campaigns:
 * Extra lives become available at 16K points, but the threshold *doubles* with each milestone achieved. This is also the *only* way to obtain more lives.
-* The minimum difficulty rises as more levels are cleared. If the starting difficulty becomes less than this threshold, then it will increase accordingly. A maximum difficulty of 6.5 (Hard) can be reached this way.
+* The minimum difficulty rises as more levels are cleared. If the starting difficulty becomes less than this threshold, then it will increase accordingly. A maximum difficulty of 6.5 (Hard) can be reached this way, achieved by reaching level 43. (If the starting difficulty is already at least this high, then this mechanic is ineffective.)
 * Since the objective is to simply score as high as possible, no continues are allowed throughout the campaign. If the available lives are exhausted, then the game simply ends on the spot.
 
 *Nebunoid (C) 2023 Paul Ruediger. Nebulae artwork courtesy of NASA, ESA, and/or other astrophysical observatories and stations. Please check the [credits](credits.md) for more details.*
