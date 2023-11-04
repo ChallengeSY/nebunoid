@@ -1,55 +1,55 @@
 ================================================================================
-GEOMETRY LEVEL DATA FILE - LEVEL 6
+LEVEL DATA FILE - GEOMETRIC DESIGNS LEVEL 6
 ================================================================================
 *BEGIN*
 ================================================================================
 
 Level Name            := Rhombus
-Level Description     :=
+Level Description     := 
 Level Password        := AQGDMQKF
-Level game number     := &b0000000000001011
+Level game number     := 11
 Level time limit      := 0
-Number of Block Sets  := 4
-Set 1 Color           := &h800000FF
-Set 1 Score Value     := 10*
-Set 1 Hit Degrade     := 0
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &h80404040
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 0
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := &h80808080
-Set 3 Score Value     := 2
-Set 3 Hit Degrade     := 2
-Set 3 Increase Speed  := FALSE
-Set 4 Color           := &h80FFFFFF
-Set 4 Score Value     := 2
-Set 4 Hit Degrade     := 3
-Set 4 Increase Speed  := FALSE
+Number of Brushes     := 4
+Brush 1 Color         := &h800000FF
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80404040
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80808080
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80FFFFFF
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|
- 2|
- 3|
- 4|
- 5|     4   11   4
- 6|      41111114
- 7|     1141111411
- 8|   11111411411111
- 9| 111111111111111111
-10|   11111411411111
-11|     1141111411
-12|      41111114
-13|     4   11   4
-14|
-15|
-16|
-17|
-18|
-19|
-20|
+ 1|                    
+ 2|                    
+ 3|                    
+ 4|                    
+ 5|     4   11   4     
+ 6|      41111114      
+ 7|     1141111411     
+ 8|   11111411411111   
+ 9| 111111111111111111 
+10|   11111411411111   
+11|     1141111411     
+12|      41111114      
+13|     4   11   4     
+14|                    
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
 
 ================================================================================
 *END*

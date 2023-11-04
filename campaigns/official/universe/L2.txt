@@ -1,47 +1,47 @@
 ================================================================================
-LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 2
+LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 2
 ================================================================================
 *BEGIN*
 ================================================================================
 
 Level Name            := Patterned Nebulae
-Level Description     :=
+Level Description     := 
 Level Password        := ++++++++
-Level game number     := &b0000010000000011
+Level game number     := 1027
 Level time limit      := 0
-Number of Block Sets  := 2
-Set 1 Color           := 0
-Set 1 Point Value     := 2
-Set 1 Hit Degrade     := 2
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &h80FF00FF
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 0
-Set 2 Increase Speed  := FALSE
+Number of Brushes     := 2
+Brush 1 Color         := &h00000000
+Brush 1 Score Value   := 2
+Brush 1 Hit Degrade   := 2
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80FF00FF
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
 
 Level Grid  1111111111222222222233333333334
    1234567890123456789012345678901234567890
 -------------------------------------------
  1|1   1   1   1   1   1   1   1   1   1   
  2|   1   1   1   1   1   1   1   1   1   1
- 3|  1   1   1   1   1   1   1   1   1   1
- 4| 1   1   1   1   1   1   1   1   1   1
- 5|1   1   1   1   1   1   1   1   1   1
+ 3|  1   1   1   1   1   1   1   1   1   1 
+ 4| 1   1   1   1   1   1   1   1   1   1  
+ 5|1   1   1   1   1   1   1   1   1   1   
  6|   1   1   1   1   1   1   1   1   1   1
- 7|  1   1   1   1   1   1   1   1   1   1
- 8| 1   1   1   1   1   1   1   1   1   1
- 9|1   1   1   1   1   1   1   1   1   1
+ 7|  1   1   1   1   1   1   1   1   1   1 
+ 8| 1   1   1   1   1   1   1   1   1   1  
+ 9|1   1   1   1   1   1   1   1   1   1   
 10|   1   1   1   1   1   1   1   1   1   1
-11|  1   1   1   1   1   1   1   1   1   1
-12| 1   1   1   1   1   1   1   1   1   1
-13|1   1   1   1   1   1   1   1   1   1
+11|  1   1   1   1   1   1   1   1   1   1 
+12| 1   1   1   1   1   1   1   1   1   1  
+13|1   1   1   1   1   1   1   1   1   1   
 14|   1   1   1   1   1   1   1   1   1   1
-15|  1   1   1   1   1   1   1   1   1   1
-16| 1   1   1   1   1   1   1   1   1   1
-17|1   1   1   1   1   1   1   1   1   1
+15|  1   1   1   1   1   1   1   1   1   1 
+16| 1   1   1   1   1   1   1   1   1   1  
+17|1   1   1   1   1   1   1   1   1   1   
 18|   1   1   1   1   1   1   1   1   1   1
-19|  1   1   1   1   1   1   1   1   1   1
-20| 1   1   1   1   1   1   1   1   1   1
+19|  1   1   1   1   1   1   1   1   1   1 
+20| 1   1   1   1   1   1   1   1   1   1  
 
 ================================================================================
 *END*

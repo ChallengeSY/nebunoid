@@ -1,51 +1,51 @@
 ================================================================================
-LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 3
+LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 3
 ================================================================================
 *BEGIN*
 ================================================================================
 
 Level Name            := Twin Galaxies
-Level Description     :=
+Level Description     := 
 Level Password        := ++++++++
-Level game number     := &b0000000000001011
+Level game number     := 11
 Level time limit      := 0
-Number of Block Sets  := 3
-Set 1 Color           := 0
-Set 1 Point Value     := 2
-Set 1 Hit Degrade     := 2
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &hB0FFD700
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 2
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := &h808080FF
-Set 3 Score Value     := 10*
-Set 3 Hit Degrade     := 0
-Set 3 Increase Speed  := FALSE
+Number of Brushes     := 3
+Brush 1 Color         := &h00000000
+Brush 1 Score Value   := 2
+Brush 1 Hit Degrade   := 2
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &hB0FFD700
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 2
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h808080FF
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|
- 2|        3         3
- 3|3      3  3      3
- 4| 3    3    3    3
- 5|  3  3      3  3
- 6|   311       311
- 7|    113       113
- 8|    3  3      3  3
- 9|   3    3    3    3
+ 1|                    
+ 2|        3         3 
+ 3|3      3  3      3  
+ 4| 3    3    3    3   
+ 5|  3  3      3  3    
+ 6|   311       311    
+ 7|    113       113   
+ 8|    3  3      3  3  
+ 9|   3    3    3    3 
 10|  3      3  3      3
-11| 3         3
-12|
-13|
-14|
-15|
-16|
-17|
-18|
-19|
-20|
+11| 3         3        
+12|                    
+13|                    
+14|                    
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
 
 ================================================================================
 *END*

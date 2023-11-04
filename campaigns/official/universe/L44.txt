@@ -1,5 +1,5 @@
 ================================================================================
-LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 44
+LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 44
 ================================================================================
 *BEGIN*
 ================================================================================
@@ -7,45 +7,45 @@ LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 44
 Level Name            := Klondike
 Level Description     := 
 Level Password        := ++++++++
-Level game number     := &b0000000000000011
+Level game number     := 3
 Level time limit      := 0
-Number of Block Sets  := 6
-Set 1 Color           := &h80DDDDFF
-Set 1 Score Value     := 10*
-Set 1 Hit Degrade     := 0
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &h80202020
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 0
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := &h80FF0000
-Set 3 Score Value     := 10*
-Set 3 Hit Degrade     := 0
-Set 3 Increase Speed  := FALSE
-Set 4 Color           := &h80000040
-Set 4 Score Value     := 10*
-Set 4 Hit Degrade     := 0
-Set 4 Increase Speed  := FALSE
-Set 5 Color           := &h80000080
-Set 5 Score Value     := 2
-Set 5 Hit Degrade     := 4
-Set 5 Increase Speed  := FALSE
-Set 6 Color           := &h800000FF
-Set 6 Score Value     := 2
-Set 6 Hit Degrade     := 5
-Set 6 Increase Speed  := FALSE
+Number of Brushes     := 6
+Brush 1 Color         := &h80DDDDFF
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80202020
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80FF0000
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80000040
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Spd  := FALSE
+Brush 5 Color         := &h80000080
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Spd  := FALSE
+Brush 6 Color         := &h800000FF
+Brush 6 Score Value   := 2
+Brush 6 Hit Degrade   := 5
+Brush 6 Increase Spd  := FALSE
 
 Level Grid  1111111111222222222233333333334
    1234567890123456789012345678901234567890
 -------------------------------------------
  1|2222    2222      3333  3333  3333  3333
  2|26622   2112      3  3  3  3  3  3  3  3
- 3|265522  2112      3  3  3  3  3  3  3  3 
+ 3|265522  2112      3  3  3  3  3  3  3  3
  4|225442  2222      3333  3333  3333  3333
- 5| 22442
- 6|  2222
- 7|
- 8|
+ 5| 22442                                  
+ 6|  2222                                  
+ 7|                                        
+ 8|                                        
  9|2222  4444  5555  6666  6666  6666  6666
 10|2112  2222  4444  5555  6666  6666  6666
 11|2112  2112  2222  4444  5555  6666  6666
@@ -56,8 +56,8 @@ Level Grid  1111111111222222222233333333334
 16|                        2222  2112  2112
 17|                              2222  2112
 18|                                    2222
-19|
-20|
+19|                                        
+20|                                        
 
 ================================================================================
 *END*

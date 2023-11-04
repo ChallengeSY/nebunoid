@@ -1,5 +1,5 @@
 ================================================================================
-LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 28
+LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 28
 ================================================================================
 *BEGIN*
 ================================================================================
@@ -7,41 +7,41 @@ LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 28
 Level Name            := Champion of Invincibles
 Level Description     := 
 Level Password        := ++++++++
-Level game number     := &b0000000000000011
+Level game number     := 3
 Level time limit      := 0
-Number of Block Sets  := 2
-Set 1 Color           := &hB0CD7F32
-Set 1 Score Value     := 2
-Set 1 Hit Degrade     := 2
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &hB0FFD700
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 2
-Set 2 Increase Speed  := TRUE
+Number of Brushes     := 2
+Brush 1 Color         := &hB0CD7F32
+Brush 1 Score Value   := 2
+Brush 1 Hit Degrade   := 2
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &hB0FFD700
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 2
+Brush 2 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
  1|1   1   1   1   1   
- 2|
+ 2|                    
  3|  1   1   1   1   1 
- 4|
+ 4|                    
  5|1   1   1   1   1   
- 6|
+ 6|                    
  7|  1   1   1   1   1 
- 8|
+ 8|                    
  9|1   1   1   1   1   
-10|
+10|                    
 11|  1   1   1   1   1 
-12|
+12|                    
 13|1   1   1   1   1   
-14|
+14|                    
 15|  1   1   1   1   1 
-16|
+16|                    
 17|1   1   1   1   1   
-18|
+18|                    
 19|  1   1   1   1   1 
-20|
+20|                    
 
 ================================================================================
 *END*

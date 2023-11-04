@@ -1,23 +1,23 @@
 ================================================================================
-LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 9
+LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 9
 ================================================================================
 *BEGIN*
 ================================================================================
 
 Level Name            := Endless Night
-Level Description     :=
+Level Description     := 
 Level Password        := ++++++++
-Level game number     := &b0000000010000011
+Level game number     := 131
 Level time limit      := 0
-Number of Block Sets  := 2
-Set 1 Color           := &h80004040
-Set 1 Score Value     := 10*
-Set 1 Hit Degrade     := 0
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &h80004000
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 0
-Set 2 Increase Speed  := FALSE
+Number of Brushes     := 2
+Brush 1 Color         := &h80004040
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80004000
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890

@@ -1,64 +1,64 @@
 ================================================================================
-LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 40
+LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 40
 ================================================================================
 *BEGIN*
 ================================================================================
 
 Level Name            := Aggressive Starbase
-Level Description     :=
+Level Description     := 
 Level Password        := --------
-Level game number     := &b0000001000000011
+Level game number     := 515
 Level time limit      := 0
 Level boss health     := 1500
-Number of Block Sets  := 6
-Set 1 Color           := &h8080FF80
-Set 1 Score Value     := 10*
-Set 1 Hit Degrade     := 1
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &h80808080
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 0*
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := &h80FFFFFF
-Set 3 Score Value     := 10*
-Set 3 Hit Degrade     := 2
-Set 3 Increase Speed  := FALSE
-Set 4 Color           := 0
-Set 4 Score Value     := 2
-Set 4 Hit Degrade     := 5
-Set 4 Increase Speed  := FALSE
-Set 5 Color           := &h800000FF
-Set 5 Score Value     := 10*
-Set 5 Hit Degrade     := 0
-Set 5 Increase Speed  := FALSE
-Set 6 Color           := &h80FF8000
-Set 6 Score Value     := 10*
-Set 6 Hit Degrade     := -1
-Set 6 Increase Speed  := FALSE
+Number of Brushes     := 6
+Brush 1 Color         := &h8080FF80
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 1
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80808080
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0*
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80FFFFFF
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h00000000
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 5
+Brush 4 Increase Spd  := FALSE
+Brush 5 Color         := &h800000FF
+Brush 5 Score Value   := 10*
+Brush 5 Hit Degrade   := 0
+Brush 5 Increase Spd  := FALSE
+Brush 6 Color         := &h80FF8000
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := -1
+Brush 6 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|        4444
- 2|      44466444
- 3|   44443366334444
+ 1|        4444        
+ 2|      44466444      
+ 3|   44443366334444   
  4|44441333366333314444
  5|46666633366333666664
  6|44413333366333331444
- 7|  4443333333333444
- 8|    444333333444
- 9|   44433333333444
-10|   41333333333314
-11|   44333333333344
-12|    444333333444
-13|      41333314
-14|      44333344
-15|       416614
-16|       446644
-17|        4664
-18|        4114
-19|        4444
-20|
+ 7|  4443333333333444  
+ 8|    444333333444    
+ 9|   44433333333444   
+10|   41333333333314   
+11|   44333333333344   
+12|    444333333444    
+13|      41333314      
+14|      44333344      
+15|       416614       
+16|       446644       
+17|        4664        
+18|        4114        
+19|        4444        
+20|                    
 
 ================================================================================
 *END*

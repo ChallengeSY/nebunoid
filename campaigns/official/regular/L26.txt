@@ -1,5 +1,5 @@
 ================================================================================
-LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 26
+LEVEL DATA FILE - REGULAR SEASON LEVEL 26
 ================================================================================
 *BEGIN*
 ================================================================================
@@ -7,53 +7,53 @@ LEVEL DATA FILE - REGULAR CAMPAIGN LEVEL 26
 Level Name            := Free the Love
 Level Description     := Free your friends, and they will join your side
 Level Password        := EZSIWNTC
-Level game number     := &b0000000000010011
+Level game number     := 19
 Level time limit      := 0
-Number of Block Sets  := 5
-Set 1 Color           := &h80FF0000
-Set 1 Score Value     := 10*
-Set 1 Hit Degrade     := 0
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &h80FF8080
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 0
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := &h80800000
-Set 3 Score Value     := 10*
-Set 3 Hit Degrade     := 0
-Set 3 Increase Speed  := FALSE
-Set 4 Color           := &h80FF00FF
-Set 4 Score Value     := 10*
-Set 4 Hit Degrade     := 0
-Set 4 Increase Speed  := FALSE
-Set 5 Color           := 0
-Set 5 Score Value     := 2
-Set 5 Hit Degrade     := 4
-Set 5 Increase Speed  := FALSE
+Number of Brushes     := 5
+Brush 1 Color         := &h80FF0000
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80FF8080
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80800000
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80FF00FF
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Spd  := FALSE
+Brush 5 Color         := &h00000000
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|    222      222
- 2|   21113    21113
- 3|  2111113  2111113
- 4| 211111113211111113
- 5| 211111111111111113
+ 1|    222      222    
+ 2|   21113    21113   
+ 3|  2111113  2111113  
+ 4| 211111113211111113 
+ 5| 211111111111111113 
  6|21111  111111  11113
  7|21111  111111  11113
  8|21111111111111111113
  9|21111111111111111113
 10|21111111111111111113
 11|21111511111111511113
-12| 2111   1  1   1113
-13|  2111111111111113
-14|   21111111111113
-15|    211111111113
-16|     2111111113
-17|      21111113
-18|       211113
-19|        2113
-20|         33
+12| 2111   1  1   1113 
+13|  2111111111111113  
+14|   21111111111113   
+15|    211111111113    
+16|     2111111113     
+17|      21111113      
+18|       211113       
+19|        2113        
+20|         33         
 
 ================================================================================
 *END*

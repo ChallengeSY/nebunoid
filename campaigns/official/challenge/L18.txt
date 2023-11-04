@@ -13,19 +13,19 @@ Number of Brushes     := 4
 Brush 1 Color         := &hB0FFD700
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 1
-Brush 1 Increase Speed:= TRUE
+Brush 1 Increase Spd  := FALSE
 Brush 2 Color         := &hB0CD7F32
 Brush 2 Score Value   := 2
 Brush 2 Hit Degrade   := 1
-Brush 2 Increase Speed:= FALSE
+Brush 2 Increase Spd  := FALSE
 Brush 3 Color         := &h80FFFFFF
 Brush 3 Score Value   := 10*
 Brush 3 Hit Degrade   := 0
-Brush 3 Increase Speed:= FALSE
+Brush 3 Increase Spd  := FALSE
 Brush 4 Color         := &h80FF0000
 Brush 4 Score Value   := 10*
 Brush 4 Hit Degrade   := 0
-Brush 4 Increase Speed:= FALSE
+Brush 4 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890

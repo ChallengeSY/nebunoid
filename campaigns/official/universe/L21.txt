@@ -1,5 +1,5 @@
 ================================================================================
-LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 21
+LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 21
 ================================================================================
 *BEGIN*
 ================================================================================
@@ -7,69 +7,69 @@ LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 21
 Level Name            := Stellar 2600
 Level Description     := More good old days incoming
 Level Password        := VCSTELLA
-Level game number     := &b0001000100000011
+Level game number     := 4355
 Level time limit      := 0
-Number of Block Sets  := 9
-Set 1 Color           := &h80400000
-Set 1 Score Value     := 10*
-Set 1 Hit Degrade     := 0
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &h80800000
-Set 2 Score Value     := 2
-Set 2 Hit Degrade     := 1
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := &h80FF0000
-Set 3 Score Value     := 2
-Set 3 Hit Degrade     := 2
-Set 3 Increase Speed  := FALSE
-Set 4 Color           := &h80004000
-Set 4 Score Value     := 10*
-Set 4 Hit Degrade     := 0
-Set 4 Increase Speed  := FALSE
-Set 5 Color           := &h80008000
-Set 5 Score Value     := 2
-Set 5 Hit Degrade     := 4
-Set 5 Increase Speed  := FALSE
-Set 6 Color           := &h8000FF00
-Set 6 Score Value     := 2
-Set 6 Hit Degrade     := 5
-Set 6 Increase Speed  := FALSE
-Set 7 Color           := &h80000040
-Set 7 Score Value     := 10*
-Set 7 Hit Degrade     := 0
-Set 7 Increase Speed  := FALSE
-Set 8 Color           := &h80000080
-Set 8 Score Value     := 2
-Set 8 Hit Degrade     := 7
-Set 8 Increase Speed  := FALSE
-Set 9 Color           := &h800000FF
-Set 9 Score Value     := 2
-Set 9 Hit Degrade     := 8
-Set 9 Increase Speed  := FALSE
+Number of Brushes     := 9
+Brush 1 Color         := &h80400000
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80800000
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80FF0000
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80004000
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Spd  := FALSE
+Brush 5 Color         := &h80008000
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Spd  := FALSE
+Brush 6 Color         := &h8000FF00
+Brush 6 Score Value   := 2
+Brush 6 Hit Degrade   := 5
+Brush 6 Increase Spd  := FALSE
+Brush 7 Color         := &h80000040
+Brush 7 Score Value   := 10*
+Brush 7 Hit Degrade   := 0
+Brush 7 Increase Spd  := FALSE
+Brush 8 Color         := &h80000080
+Brush 8 Score Value   := 2
+Brush 8 Hit Degrade   := 7
+Brush 8 Increase Spd  := FALSE
+Brush 9 Color         := &h800000FF
+Brush 9 Score Value   := 2
+Brush 9 Hit Degrade   := 8
+Brush 9 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|
- 2|
- 3|
- 4|
- 5|  333 666  999 369
- 6|    3 6    9 9 9 3
- 7|  333 666  9 9 6 6
- 8|  3   6 6  9 9 3 9
- 9|  333 666  999 963
-10|
-11|
-12|
-13|
-14|
-15|
-16|
-17|
-18|
-19|
-20|
+ 1|                    
+ 2|                    
+ 3|                    
+ 4|                    
+ 5|  333 666  999 369  
+ 6|    3 6    9 9 9 3  
+ 7|  333 666  9 9 6 6  
+ 8|  3   6 6  9 9 3 9  
+ 9|  333 666  999 963  
+10|                    
+11|                    
+12|                    
+13|                    
+14|                    
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
 
 ================================================================================
 *END*

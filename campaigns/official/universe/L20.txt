@@ -1,56 +1,56 @@
 ================================================================================
-LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 20
+LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 20
 ================================================================================
 *BEGIN*
 ================================================================================
 
 Level Name            := Neuromite
-Level Description     :=
+Level Description     := 
 Level Password        := --------
-Level game number     := &b0000001000000010
+Level game number     := 514
 Level time limit      := 0
 Level boss health     := 400
-Number of Block Sets  := 4
-Set 1 Color           := &h808080FF
-Set 1 Point Value     := 0
-Set 1 Hit Degrade     := 1
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &h80404040
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 0*
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := &h80808080
-Set 3 Score Value     := 10*
-Set 3 Hit Degrade     := 2*
-Set 3 Increase Speed  := FALSE
-Set 4 Color           := &h80FFFFFF
-Set 4 Score Value     := 10*
-Set 4 Hit Degrade     := 3
-Set 4 Increase Speed  := FALSE
+Number of Brushes     := 4
+Brush 1 Color         := &h808080FF
+Brush 1 Score Value   := 0
+Brush 1 Hit Degrade   := 1
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80404040
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0*
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80808080
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 2*
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80FFFFFF
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|
- 2|
- 3|
- 4|
- 5|
- 6|
- 7|         44  
- 8|        4114
- 9|       444444
-10|       44  44
-11|       44  44
-12|       4    4
-13|       
-14|
-15|
-16|
-17|
-18|
-19|
-20|
+ 1|                    
+ 2|                    
+ 3|                    
+ 4|                    
+ 5|                    
+ 6|                    
+ 7|         44         
+ 8|        4114        
+ 9|       444444       
+10|       44  44       
+11|       44  44       
+12|       4    4       
+13|                    
+14|                    
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
 
 ================================================================================
 *END*

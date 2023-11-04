@@ -1,5 +1,5 @@
 ================================================================================
-LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 23
+LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 24
 ================================================================================
 *BEGIN*
 ================================================================================
@@ -14,19 +14,19 @@ Number of Brushes     := 4
 Brush 1 Color         := &h808080FF
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 1
-Brush 1 Increase Speed:= FALSE
+Brush 1 Increase Spd  := FALSE
 Brush 2 Color         := &h80802020
 Brush 2 Score Value   := 10*
 Brush 2 Hit Degrade   := 0*
-Brush 2 Increase Speed:= FALSE
+Brush 2 Increase Spd  := FALSE
 Brush 3 Color         := &h80FF4040
 Brush 3 Score Value   := 10*
 Brush 3 Hit Degrade   := 2
-Brush 3 Increase Speed:= FALSE
+Brush 3 Increase Spd  := FALSE
 Brush 4 Color         := &hB0FFD700
 Brush 4 Score Value   := 10*
 Brush 4 Hit Degrade   := 4
-Brush 4 Increase Speed:= FALSE
+Brush 4 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890

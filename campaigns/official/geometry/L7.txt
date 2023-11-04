@@ -1,51 +1,51 @@
 ================================================================================
-GEOMETRY LEVEL DATA FILE - LEVEL 7
+LEVEL DATA FILE - GEOMETRIC DESIGNS LEVEL 7
 ================================================================================
 *BEGIN*
 ================================================================================
 
 Level Name            := Trapezoid
-Level Description     :=
+Level Description     := 
 Level Password        := NTUYFICU
-Level game number     := &b0000000000000111
+Level game number     := 7
 Level time limit      := 0
-Number of Block Sets  := 3
-Set 1 Color           := &h80400080
-Set 1 Score Value     := 10*
-Set 1 Hit Degrade     := 0
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &h808000FF
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 0
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := 0
-Set 3 Score Value     := 2
-Set 3 Hit Degrade     := 2
-Set 3 Increase Speed  := FALSE
+Number of Brushes     := 3
+Brush 1 Color         := &h80400080
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h808000FF
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h00000000
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|
- 2|
- 3|
- 4|         1
- 5|         11
+ 1|                    
+ 2|                    
+ 3|                    
+ 4|         1          
+ 5|         11         
  6|11111111111111111111
- 7|1        11        1 
- 8| 1       13       1
- 9| 1       3        1
-10|  1 2          2 1
-11|  12            21
-12|  21     3      12
-13| 2 1     13     1 2
-14|    1    11    1
-15|    111111111111
-16|         11
-17|         1
-18|
-19|
-20|
+ 7|1        11        1
+ 8| 1       13       1 
+ 9| 1       3        1 
+10|  1 2          2 1  
+11|  12            21  
+12|  21     3      12  
+13| 2 1     13     1 2 
+14|    1    11    1    
+15|    111111111111    
+16|         11         
+17|         1          
+18|                    
+19|                    
+20|                    
 
 ================================================================================
 *END*

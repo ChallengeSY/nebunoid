@@ -1,28 +1,5 @@
 ================================================================================
-LEVEL DATA FILE - INTRODUCTION SETTINGS
-================================================================================
-
-Campaign Name: The name of the campaign that is disclosed to the player.
-Starting lives: The number of starting lives the player is granted to complete
-	the campaign. Can be between 1 and 9. An asterisk can be appended to make the
-	barrier strength equal to the lives, otherwise it will be one less.
-Base capsule value: The amount of points each capsule grants. Bonus points
-	capsules generate five times the normal bonus points.
-Initial life bonus: The amount of points required to earn the first extra life.
-	Set to 0 to disable.
-Life bonus every: The amount of points required to earn each extra life. May be
-	combined with Initial life bonus to determine the number of points required
-	to earn each extra life after the first extra life. Set to 0 to disable.
-Exploding value: Value of blocks that are destroyed as a result of an explosion.
-	May be caused by exploding blocks, or fire/lightning balls.
-Secrets start at: The number in which secret levels start at. These levels can
-	only be initially reached via password. Once any of them has been reached
-	via password, then they can be played as if they were regular levels. Set to
-	0 to disable.
-	
-For example, most official campaigns are configured to give the first extra life
-	at 25000 points, then every 35000 after that.
-
+LEVEL DATA FILE - INTRODUCTORY TRAINING SETTINGS
 ================================================================================
 *BEGIN*
 ================================================================================

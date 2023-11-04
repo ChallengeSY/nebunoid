@@ -1,5 +1,5 @@
 ================================================================================
-LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 35
+LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 35
 ================================================================================
 *BEGIN*
 ================================================================================
@@ -7,41 +7,41 @@ LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 35
 Level Name            := Al-cake-my
 Level Description     := 
 Level Password        := ++++++++
-Level game number     := &b0000000000000011
+Level game number     := 3
 Level time limit      := 0
-Number of Block Sets  := 2
-Set 2 Color           := &hB0C0C0C0
-Set 2 Score Value     := 2
-Set 2 Hit Degrade     := 2
-Set 2 Increase Speed  := FALSE
-Set 2 Color           := &hB0FFD700
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 2
-Set 2 Increase Speed  := FALSE
+Number of Brushes     := 2
+Brush 1 Color         := &hB0C0C0C0
+Brush 1 Score Value   := 2
+Brush 1 Hit Degrade   := 2
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &hB0FFD700
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 2
+Brush 2 Increase Spd  := FALSE
 
-Level Grid  1111111111222222222211111111114
+Level Grid  1111111111222222222233333333334
    1234567890123456789012345678901234567890
 -------------------------------------------
- 1|
- 2|
- 3|
- 4|                   111
- 5|                   1 1
+ 1|                                        
+ 2|                                        
+ 3|                                        
+ 4|                   111                  
+ 5|                   1 1                  
  6| 1       1         1 1         1       1
  7| 1       1         1 1         1       1
  8| 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
- 9|
+ 9|                                        
 10| 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1
-11|                 1     1
+11|                 1     1                
 12|111111111111111111     11111111111111111
-13|
+13|                                        
 14| 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-15|         1                     1
+15|         1                     1        
 16| 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-17|
-18|
-19|
-20|
+17|                                        
+18|                                        
+19|                                        
+20|                                        
 
 ================================================================================
 *END*

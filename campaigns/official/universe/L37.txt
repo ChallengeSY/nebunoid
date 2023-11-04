@@ -1,55 +1,55 @@
 ================================================================================
-LEVEL DATA FILE - UNIVERSE CAMPAIGN LEVEL 37
+LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 37
 ================================================================================
 *BEGIN*
 ================================================================================
 
 Level Name            := Breaking Diamonds
-Level Description     :=
+Level Description     := 
 Level Password        := ++++++++
-Level game number     := &b0000000000000010
+Level game number     := 2
 Level time limit      := 0
-Number of Block Sets  := 4
-Set 1 Color           := &h80FF8000
-Set 1 Score Value     := 10*
-Set 1 Hit Degrade     := -1
-Set 1 Increase Speed  := FALSE
-Set 2 Color           := &h80FFFF00
-Set 2 Score Value     := 10*
-Set 2 Hit Degrade     := 2
-Set 2 Increase Speed  := FALSE
-Set 3 Color           := &h80FF00FF
-Set 3 Score Value     := 10*
-Set 3 Hit Degrade     := 0
-Set 3 Increase Speed  := FALSE
-Set 4 Color           := 0
-Set 4 Score Value     := 2
-Set 4 Hit Degrade     := 3
-Set 4 Increase Speed  := FALSE
+Number of Brushes     := 4
+Brush 1 Color         := &h80FF8000
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := -1
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80FFFF00
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 2
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80FF00FF
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h00000000
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|         22
- 2|        2222
- 3|       212212
- 4|      21222212
- 5|     2122112212
- 6|    212221122212
- 7|   21222122122212
- 8|  2122212222122212
- 9| 212221221122122212
+ 1|         22         
+ 2|        2222        
+ 3|       212212       
+ 4|      21222212      
+ 5|     2122112212     
+ 6|    212221122212    
+ 7|   21222122122212   
+ 8|  2122212222122212  
+ 9| 212221221122122212 
 10|41222222122122222214
 11|41222222122122222214
-12| 212221221122122212
-13|  2122212222122212
-14|   21222122122212
-15|    212221122212
-16|     2122112212
-17|      21222212
-18|       212212
-19|        2222
-20|         22 
+12| 212221221122122212 
+13|  2122212222122212  
+14|   21222122122212   
+15|    212221122212    
+16|     2122112212     
+17|      21222212      
+18|       212212       
+19|        2222        
+20|         22         
 
 ================================================================================
 *END*
