@@ -266,7 +266,7 @@ do
 			save_campaign(.LevelNum)
 		elseif InType = chr(16) AND CampaignFolder <> "" then
 			if BrickCount = 0 then
-				Instructions = "No bricks detected. Sequence aborted."
+				Instructions = "No blocks detected. Sequence aborted."
 				InstructExpire = timer + 5
 			else
 				if LevelUnsaved then
