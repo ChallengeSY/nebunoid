@@ -6,7 +6,7 @@ LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 24
 
 Level Name            := Galaxy Reactor
 Level Description     := Destroy the reactor core to annihilate the alien empire!
-Level Password        := ++++++++
+Level Password        := --------
 Level game number     := 513
 Level time limit      := 0
 Level boss health     := 1500

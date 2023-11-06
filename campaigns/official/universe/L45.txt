@@ -9,7 +9,7 @@ Level Description     :=
 Level Password        := ++++++++
 Level game number     := 25
 Level time limit      := 0
-Number of Brushes     := 7
+Number of Brushes     := 8
 Brush 1 Color         := &h80404040
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 0
@@ -38,14 +38,18 @@ Brush 7 Color         := &h80FFFF00
 Brush 7 Score Value   := 10*
 Brush 7 Hit Degrade   := 7
 Brush 7 Increase Spd  := FALSE
+Brush 8 Color         := &h00000000
+Brush 8 Score Value   := 10*
+Brush 8 Hit Degrade   := 8
+Brush 8 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1| 6666666   66666666 
- 2|64321  66  666    66
- 3|64321   6  6611    6
- 4| 66666  666661166116
+ 1|66666668     866668 
+ 2|64321  68   86    68
+ 3|64321   6   611    6
+ 4|666666  666661166116
  5| 66666  6   64466  6
  6|66      6   66666  6
  7|6      666666  66116
@@ -54,12 +58,12 @@ Level Grid  11111111112
 10|64466      66  66116
 11|62266  662266  66116
 12|611    66  66  66  6
-13|66    666  66  66  6
+13|86    666  66  66  6
 14| 661166662266  66116
 15| 66226666      66  6
 16| 664467766    666  6
 17| 6666666666666666116
-18|66       1         6
+18|86       1         6
 19|6        1        66
 20|6556666666666666666 
 

@@ -41,7 +41,7 @@ Brush 7 Increase Spd  := FALSE
 Brush 8 Color         := &h80FFFF00
 Brush 8 Score Value   := 10*
 Brush 8 Hit Degrade   := 8
-Brush 8 Increase Spd  := FALSE
+Brush 8 Increase Spd  := TRUE
 
 Level Grid  11111111112
    12345678901234567890
