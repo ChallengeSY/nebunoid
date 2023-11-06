@@ -2035,6 +2035,10 @@ sub local_gameplay
 												end with
 											next XID
 										next YID
+										
+										if (Gamestyle AND (1 SHL STYLE_INVIS)) then
+											Gamestyle -= 2^STYLE_INVIS
+										end if
 										play_clip(SFX_POWER_UP,.X)
 									case CAP_MYSTERY
 										dim as single Effects = rnd
@@ -2341,12 +2345,6 @@ sub local_gameplay
 										capsule_message("WARP LEVEL")
 										if LevelClear < 1 then
 											LevelClear = 1
-										end if
-										play_clip(SFX_POWER_UP,.X)
-									case CAP_FLASH
-										capsule_message("FLASHLIGHT: Level no longer invisible")
-										if (Gamestyle AND (1 SHL STYLE_INVIS)) then
-											Gamestyle -= 2^STYLE_INVIS
 										end if
 										play_clip(SFX_POWER_UP,.X)
 									case CAP_GEM_R, CAP_GEM_G, CAP_GEM_B, CAP_GEM_Y, CAP_GEM_P, CAP_GEM_C, CAP_GEM_W
@@ -2874,3 +2872,4 @@ sub local_gameplay
 	erase EndlessShuffList
 	setmouse(,,0,0)
 end sub
+

@@ -1026,7 +1026,7 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 		CapWeight(CAP_WEP_MISSILE) = 0
 	else
 		CapWeight(CAP_THRU) = 2
-		if ZappableCount > 0 then
+		if ZappableCount > 0 OR (Gamestyle AND (1 SHL STYLE_INVIS)) then
 			CapWeight(CAP_ZAP) = 4
 		else
 			CapWeight(CAP_ZAP) = 0
@@ -1046,10 +1046,6 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 		end if
 	end with
 	CapWeight(CAP_WARP) = 1
-	
-	if (Gamestyle AND (1 SHL STYLE_INVIS)) = 0 then
-		CapWeight(CAP_FLASH) = 0
-	end if
 	
 	if TotalBC * 2 > NumBalls then
 		CapWeight(CAP_SPLIT_BALL) = 0
@@ -1189,8 +1185,6 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 					CapPic = "detonate"
 				case CAP_WARP
 					CapPic = "warp"
-				case CAP_FLASH
-					CapPic = "flashlight"
 				case CAP_GRAVITY
 					CapPic = "gravity"
 				case CAP_GEM_R
