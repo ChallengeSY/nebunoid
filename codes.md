@@ -7,6 +7,7 @@ Nebunoid comes with a collection of cheat codes, accessed via F11 while the game
 * PumpkinEater: Expresses acknowledgement that the player(s) are cheating. Required to activate any cheat code underneath.
 * Immortal: Adds 3 lives to the active player's stock.
 * BiggiePaddle: Extends paddle size by 70 pixels.
+* PewPew: Adds 100 bullets to the ammo stock. (Will replace missiles.)
 * CapShower: Attempts to generate a barrage of capsules. (Subject to current level specs, difficulty settings, and Diminishing Returns.)
 * WarpAway: Exits the current level.
 * BackInTime: Restarts the current level.
