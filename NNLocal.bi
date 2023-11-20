@@ -472,13 +472,15 @@ function load_level_file(LoadLevel as string) as integer
 	input #1, LoadData
 	Gamestyle = valint(right(LoadData,len(LoadData)-25))
 	
-	'Overrides Cavity if a conflicting variation is found
-	if (GameStyle AND (1 SHL STYLE_CAVITY)) AND ((GameStyle AND (1 SHL STYLE_PROGRESSIVE)) OR (GameStyle AND (1 SHL STYLE_ROTATION))) then
-		GameStyle -= 2^STYLE_CAVITY
-	end if
-	'Bonus levels override a Fatal Timer
-	if (GameStyle AND (1 SHL STYLE_FATAL_TIMER)) AND (GameStyle AND (1 SHL STYLE_BONUS)) then
-		GameStyle -= 2^STYLE_FATAL_TIMER
+	'Overrides Cavity and/or Fusion Brushes if a conflicting variation is found
+	if (GameStyle AND (1 SHL STYLE_PROGRESSIVE)) OR (GameStyle AND (1 SHL STYLE_ROTATION)) then
+		if (GameStyle AND (1 SHL STYLE_CAVITY)) then
+			GameStyle -= 2^STYLE_CAVITY
+		end if
+
+		if (GameStyle AND (1 SHL STYLE_FUSION)) then
+			GameStyle -= 2^STYLE_FUSION
+		end if
 	end if
 	'Boss Battle and Breakable Ceiling use many of the same mechanics, so they negate each other instead
 	if (GameStyle AND (1 SHL STYLE_BOSS)) AND (GameStyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
@@ -605,7 +607,7 @@ function load_level(LevNum as short) as integer
 		
 		if LevelsLeftover > 0 then
 			apply_diff_specs
-			for OCID as ubyte = 1 to 9
+			for OCID as ubyte = 1 to 10
 				with OfficialCampaigns(OCID)
 					if LevelsLeftover > .TrueSize then
 						LevelsLeftover -= .TrueSize
@@ -754,10 +756,70 @@ function level_list as string
 	return OutPass
 end function
 
+function brick_adjacent(ChainX as short, ChainY as short, BasePallete as short) as integer
+	for YID as byte = ChainY - 1 to ChainY + 1
+		for XID as byte = ChainX - 1 to ChainX + 1
+			if XID > 0 AND YID > 0 AND XID <= 40 AND YID <= 20 AND abs(ChainX-XID) + abs(ChainY-YID) = 1 then
+				with PlayerSlot(Player).TileSet(ChainX,ChainY)
+					if .BaseBrickID = BasePallete AND PlayerSlot(Player).TileSet(XID,YID).Flash >= BaseFlash AND _
+						PlayerSlot(Player).TileSet(XID,YID).BaseBrickID = .BaseBrickID AND _
+						(PlayerSlot(Player).TileSet(XID,YID).Flash <> .Flash OR _
+						PlayerSlot(Player).TileSet(XID,YID).LastBall <> .LastBall) then
+						return -1
+					end if
+				end with
+			end if 
+		next XID
+	next YID
+	
+	return 0
+end function
+
+sub damage_brick(BaseX as short, BaseY as short, NewPalette as short, NewID as short = 0, OnlySelf as byte = 0)
+	dim as byte NewPaints
+	
+	with PlayerSlot(Player).TileSet(BaseX,BaseY)
+		.Flash = BaseFlash
+		.HitTime = 0
+		.BrickID = NewPalette
+		.LastBall = NewID
+		
+		if (Gamestyle AND (1 SHL STYLE_FUSION)) AND .BaseBrickID <> 0 AND OnlySelf = 0 then
+			'Do chained damage
+			do
+				NewPaints = 0
+				
+				for YID as byte = 1 to 20			
+					for XID as byte = 1 to 40
+						if brick_adjacent(XID, YID, .BaseBrickID) then
+							PlayerSlot(Player).TileSet(XID,YID).Flash = BaseFlash
+							PlayerSlot(Player).TileSet(XID,YID).HitTime = 0
+							PlayerSlot(Player).TileSet(XID,YID).BrickID = NewPalette
+							PlayerSlot(Player).TileSet(XID,YID).LastBall = NewID
+							NewPaints = 1
+						end if
+					next XID
+				next YID
+			loop until NewPaints = 0
+
+			'Allow multiple hits on the very same frame
+			for BID as byte = 1 to 20
+				for AID as byte = 1 to 40
+					with PlayerSlot(Player).TileSet(AID,BID)
+						if .Flash >= BaseFlash then
+							.Flash = BaseFlash - 1
+						end if
+					end with
+				next AID
+			next BID
+		end if
+	end with
+end sub
+
 sub brick_collisions(BallID as short)
 	dim as ubyte HitFailed, PointsScored, ChooseParticle
 	dim as uinteger ColorDestroyed
-	dim as short ScoreMultiplier, BonusMultiplier, ActualGain, MinX, MaxX, MinY, MaxY
+	dim as short ScoreMultiplier, BonusMultiplier, ActualGain, MinX, MaxX, MinY, MaxY, NewPalette
 	
 	if CondensedLevel then
 		MinX = (Ball(BallID).X-44)/24
@@ -776,6 +838,7 @@ sub brick_collisions(BallID as short)
 					.X >= 32-BallSize+(XID-1)*48/(CondensedLevel + 1) AND _
 					.X <= 32+BallSize+(XID)*48/(CondensedLevel + 1) AND _
 					.Y >= 96-BallSize+(YID-1)*24 AND .Y <= 96+BallSize+(YID)*24 then
+					
 					if .Power <= 1 then
 						.LHX = XID
 						.LHY = YID
@@ -784,12 +847,6 @@ sub brick_collisions(BallID as short)
 					if .Power < 0 AND .Duration > 0 AND rnd < .4 AND _
 						Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade >= 0 then
 						HitFailed = 1
-					end if
-					
-					if .Spawned = 0 AND .Power > -2 then
-						PlayerSlot(Player).TileSet(XID,YID).Flash = BaseFlash
-						PlayerSlot(Player).TileSet(XID,YID).HitTime = 0
-						PlayerSlot(Player).TileSet(XID,YID).LastBall = BallID
 					end if
 					
 					if .Power = -2 then
@@ -807,6 +864,7 @@ sub brick_collisions(BallID as short)
 							adjust_speed(BallID,ActiveDifficulty / 100)
 						end if
 
+							NewPalette = PlayerSlot(Player).TileSet(XID,YID).BrickID
 						play_clip(SFX_INVINCIBLE,.X,convert_speed(.Speed))
 						Invis = 12
 					elseif .Invul = 0 AND .Spawned = 0 then
@@ -816,6 +874,7 @@ sub brick_collisions(BallID as short)
 						end if
 
 						if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade = PlayerSlot(Player).TileSet(XID,YID).BrickID AND .Power <= 0 then
+							NewPalette = PlayerSlot(Player).TileSet(XID,YID).BrickID
 							play_clip(SFX_INVINCIBLE,.X,convert_speed(.Speed))
 							if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).IncreaseSpeed then
 								if .Speed < 12 then
@@ -962,19 +1021,19 @@ sub brick_collisions(BallID as short)
 									PlayerSlot(Player).Score += 2 * ball_ct_bonus
 									PointsScored += 2 * ball_ct_bonus
 								end if
-								PlayerSlot(Player).TileSet(XID,YID).BrickID = ExplodeDelay
+								NewPalette = ExplodeDelay
 							elseif .Power = 3 AND Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).CalcedInvulnerable >= 2 then
-								PlayerSlot(Player).TileSet(XID,YID).BrickID = 0
+								NewPalette = 0
 								play_clip(SFX_BRICK,.X)
 							elseif .Power = 1 then
 								if .Duration > 0 then
 									PlayerSlot(Player).Score += 2 * ball_ct_bonus
 									PointsScored += 2 * ball_ct_bonus
 								end if
-								PlayerSlot(Player).TileSet(XID,YID).BrickID = 0
+								NewPalette = 0
 								play_clip(SFX_BRICK,.X)
 							elseif Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade = PlayerSlot(Player).TileSet(XID,YID).BrickID then
-								PlayerSlot(Player).TileSet(XID,YID).BrickID = 0
+								NewPalette = 0
 								play_clip(SFX_BRICK,.X)
 							else
 								if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade = 0 then
@@ -982,12 +1041,15 @@ sub brick_collisions(BallID as short)
 								else
 									play_clip(SFX_HARDEN,.X,convert_speed(.Speed))
 								end if
-								PlayerSlot(Player).TileSet(XID,YID).BrickID = Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade
+								NewPalette = Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade
 							end if
 						end if
 						Invis = 12
 					end if
 
+					if .Spawned = 0 AND .Power > -2 then
+						damage_brick(XID,YID,NewPalette,BallID)
+					end if
 					generate_particles(PointsScored,XID,YID,ColorDestroyed)
 					exit sub
 				end if

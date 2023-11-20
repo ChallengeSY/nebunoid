@@ -34,7 +34,7 @@ dim as string LoadingTips(8) => {_
 	"While the Extra Life capsule is normally Very Rare (gold background), it has a slightly higher appearance rate (equivalent to purple Rare) if the player is on their last life, and will not appear at all if the player already has maximum lives.", _
 	"The Level Select system (F4) makes it easy to start a new game at any previously reached level, virtually eliminating the need to remember passwords. This system is not available on higher difficulties, mainly to prevent brute forcing.\n\nThe password system still has a devious use though. Secret levels are not available, until their secret has been uncovered (only initially available via password).", _
 	"The Shuffle Levels option shuffles most levels in a campaign, at the expense of being unable to start a level from a password. The system neither shuffles fatal levels, nor will it touch locked secret levels. The highest level reached in each campaign is still saved (and complimented with stars and passwords), for when this option is switched off.", _
-	"A Grabbing Paddle will automatically release each held ball after 5 seconds. Several capsules cause balls to be released early."}
+	"A Grabbing Paddle will automatically release each held ball after 5 seconds, mitigating the ability to score lots of points simply because there are a lot of balls in play. Several capsules cause balls to be released early."}
 
 #include "fbsound_dynamic.bi"
 dim as boolean loadOk

@@ -1,0 +1,76 @@
+================================================================================
+LEVEL DATA FILE - FUSION DESIGNS LEVEL 3
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Wall busting puzzle
+Level Description     := 
+Level Password        := HSTAKKJE
+Level game number     := 2051
+Level time limit      := 0
+Number of Brushes     := 9
+Brush 1 Color         := &h80404040
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80808080
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80FFFFFF
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80FFFFFF
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 2
+Brush 4 Increase Spd  := FALSE
+Brush 5 Color         := &h80FFFFFF
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 2
+Brush 5 Increase Spd  := FALSE
+Brush 6 Color         := &hB0FFD700
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := 6
+Brush 6 Increase Spd  := FALSE
+Brush 7 Color         := &hB0CD7F32
+Brush 7 Score Value   := 2
+Brush 7 Hit Degrade   := 6
+Brush 7 Increase Spd  := FALSE
+Brush 8 Color         := &hB0CD7F32
+Brush 8 Score Value   := 2
+Brush 8 Hit Degrade   := 6
+Brush 8 Increase Spd  := FALSE
+Brush 9 Color         := &h80FF8000
+Brush 9 Score Value   := 10*
+Brush 9 Hit Degrade   := -1
+Brush 9 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2| 777888777888777888 
+ 3|  8337558447558337  
+ 4|  8447448337448447  
+ 5| 965563365563365569 
+ 6|  6446446336446446  
+ 7|  6336556446556336  
+ 8| 888777888777888777 
+ 9|  6  6  9  9  6  6  
+10| 96  6  6  6  6  69 
+11|  6 96  6  6  69 6  
+12|  6  6  9  9  6  6  
+13| 888777888777888777 
+14|  6336556446556336  
+15|  6446446336446446  
+16| 965563365563365569 
+17|  8447448337448447  
+18|  8337558447558337  
+19| 777888777888777888 
+20|                    
+
+================================================================================
+*END*
+================================================================================

@@ -276,7 +276,7 @@ end sub
 sub edit_level_variations
 	dim as ubyte StyleID
 	dim as string StyleNames(15) => {"Powerups", "Extra Height", "Dual Paddles", "Double Juggling", "Cavity", "Progressive", "Steerable Balls", "Invisible", _
-		"Hyper Speed", "Boss Battle", "Horizontal Rotation", "", "Shrink Ceiling", "Breakable Ceiling", "Fatal Timer", ""}
+		"Hyper Speed", "Boss Battle", "Horizontal Rotation", "Fusion Brushes", "Shrink Ceiling", "Breakable Ceiling", "Fatal Timer", ""}
 	do
 		locate 48,1
 		print space(127);
@@ -882,7 +882,7 @@ sub draw_brushes(BrushID as byte)
 				put(32+(BrushX-1)*24,96+(BrushY-1)*24),ExplodePic,trans
 				XplodeCount += 1
 			elseif .HitDegrade > 0 OR .CanRegen > 0 then
-				put(32+(BrushX-1)*24,96+(BrushY-1)*24),MultihitPicMini,pset
+				put(32+(BrushX-1)*24,96+(BrushY-1)*24),MultihitMini,pset
 			else 
 				put(32+(BrushX-1)*24,96+(BrushY-1)*24),SoftBrickPicMini,pset
 			end if

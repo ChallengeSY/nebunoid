@@ -1046,12 +1046,7 @@ sub local_gameplay
 								end if
 								
 								Invis = 12
-								with PlayerSlot(Player).TileSet(XRef,YRef)
-									.BrickID = Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade 
-									.Flash = BaseFlash
-									.HitTime = 0
-									.LastBall = 0
-								end with
+								damage_brick(XRef,YRef,Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade,0)
 								.Y = -25
 							end if
 						else
@@ -1066,12 +1061,7 @@ sub local_gameplay
 								end with
 								
 								Invis = 12
-								with PlayerSlot(Player).TileSet(XRef,YRef)
-									.BrickID = ExplodeDelay 
-									.Flash = BaseFlash
-									.HitTime = 0
-									.LastBall = 0
-								end with
+								damage_brick(XRef,YRef,ExplodeDelay,0)
 								.Y = -25
 							end if
 						end if
@@ -1283,6 +1273,9 @@ sub local_gameplay
 									if ProgressiveBounces >= ProgressiveQuota AND (GameStyle AND (1 SHL STYLE_PROGRESSIVE)) then
 										ProgressiveBounces = 0
 										if ProgressiveQuota > 4 then
+											ProgressiveQuota -= .5
+										end if
+										if ProgressiveQuota > 2 then
 											ProgressiveQuota -= .25
 										end if
 										if ProgressiveQuota > 1 then
@@ -1746,6 +1739,10 @@ sub local_gameplay
 							elseif DebugCode = "BIGGIEPADDLE" then
 								Instructions = "Paddle size increased"
 								render_paddle(PaddleSize + 70)
+							elseif DebugCode = "PEWPEW" then
+								.BulletAmmo += 100
+								.MissileAmmo = 0
+								Instructions = "Bullet stock granted"
 							elseif DebugCode = "CAPSHOWER" then
 								for GenID as byte = 1 to 120
 									generate_capsule(irandom(1,20*(CondensedLevel+1)),irandom(1,20))
@@ -2320,6 +2317,9 @@ sub local_gameplay
 																	PlayerSlot(Player).TileSet(XDID,YDID).BrickID <> PlayerSlot(Player).TileSet(XID,YID).BrickID then
 																	AlreadySpread(XDID,YDID) = 1
 																	PlayerSlot(Player).TileSet(XDID,YDID).BrickID = PlayerSlot(Player).TileSet(XID,YID).BrickID
+																	if (Gamestyle AND (1 SHL STYLE_BREAKABLE_CEILING)) = 0 then
+																		PlayerSlot(Player).TileSet(XDID,YDID).BaseBrickID = PlayerSlot(Player).TileSet(XID,YID).BaseBrickID
+																	end if
 																end if
 															next XDID
 														next YDID

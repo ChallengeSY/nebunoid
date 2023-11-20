@@ -1,0 +1,68 @@
+================================================================================
+LEVEL DATA FILE - FUSION DESIGNS LEVEL 6
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Fuseboxes
+Level Description     := 
+Level Password        := LZMTDTPE
+Level game number     := 2051
+Level time limit      := 0
+Number of Brushes     := 7
+Brush 1 Color         := &h80404040
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80808080
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80FFFFFF
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80FFFFFF
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 2
+Brush 4 Increase Spd  := FALSE
+Brush 5 Color         := &h80FFFFFF
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 2
+Brush 5 Increase Spd  := FALSE
+Brush 6 Color         := &hB0FFD700
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := 6
+Brush 6 Increase Spd  := FALSE
+Brush 7 Color         := &hB0CD7F32
+Brush 7 Score Value   := 10*
+Brush 7 Hit Degrade   := 6
+Brush 7 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|33443344334433443366
+ 2|3774377435543  43776
+ 3|47 34 7345534  36773
+ 4|44334433443344336633
+ 5|33443344334433443344
+ 6|37 43 743  435543  4
+ 7|477347734  365534  3
+ 8|44334433443366334433
+ 9|33443344336633443344
+10|35543  435563  43554
+11|45534  365534  34553
+12|44334433663344334433
+13|33443366334433443344
+14|3  435563  437743774
+15|4  345534  347 34 73
+16|44334433443344334433
+17|33663344334433443344
+18|37763  4355437 43 74
+19|67734  3455347734773
+20|66334433443344334433
+
+================================================================================
+*END*
+================================================================================

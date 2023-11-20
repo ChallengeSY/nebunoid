@@ -55,7 +55,7 @@ const FunctionTwelve = chr(255,134)
 const FPS = 60
 const SavedHighSlots = 10
 const TotalHighSlots = SavedHighSlots + 4
-const TotalOfficialLevels = 246
+const TotalOfficialLevels = 260
 const MaxBullets = 40
 const BaseFlash = 128
 const LevelClearDelay = 640
@@ -85,7 +85,7 @@ enum DifferentGames
 	STYLE_HYPER
 	STYLE_BOSS
 	STYLE_ROTATION
-	STYLE_SHORT'
+	STYLE_FUSION
 	STYLE_SHRINK_CEILING
 	STYLE_BREAKABLE_CEILING
 	STYLE_FATAL_TIMER
@@ -287,9 +287,13 @@ dim shared as ParticleSpecs Particles(Particount)
 dim shared as ubyte DQ, Player, NumPlayers, DispLives, Invis, GfxStyle, ExploTick, _
 	BallSize,  MenuMode, HoldClick, HoldAction
 dim shared as byte EnhancedGFX, GamePaused, TourneyValid, TotalMessages, TotalUnread
-dim shared as any ptr BulletPic, MissilePic, SoftBrickPic, MultihitPic, InvinciblePic, ExplodePic, BaseExplode, _
-	SoftBrickPicMini, MultihitPicMini, InvincibleMini, CapsulePic(26), CapsuleBar(5), CapsuleBarFrame, _
-	PokerBar(5), Background, FramesetMerged, Sideframes, Topframe, DiffStick, DiffSelector, PaddlePic, BasePaddle, PaddleBar
+dim shared as any ptr BulletPic, MissilePic, CapsulePic(26), CapsuleBar(5), CapsuleBarFrame, PokerBar(5), Background, PaddlePic, _
+	SoftBrickPic, MultihitPic, InvinciblePic, ExplodePic, BaseExplode, SoftBrickConnL, SoftBrickConnR, SoftBrickConnT, SoftBrickConnB, _
+	MultihitConnL, MultihitConnR, MultihitConnT, MultihitConnB, InvincibleConnL, InvincibleConnR, InvincibleConnT, InvincibleConnB, _
+	SoftBrickPicMini, MultihitMini, InvincibleMini, SoftBrickConnMiniL, SoftBrickConnMiniR, SoftBrickConnMiniT, SoftBrickConnMiniB, _
+	MultihitConnMiniL, MultihitConnMiniR, MultihitConnMiniT, MultihitConnMiniB, _
+	InvincibleConnMiniL, InvincibleConnMiniR, InvincibleConnMiniT, InvincibleConnMiniB, _
+	FramesetMerged, Sideframes, Topframe, DiffStick, DiffSelector, BasePaddle, PaddleBar
 
 const Interpolation = 120 'Ball updates per frame
 const CampaignsPerPage = 11 
@@ -338,59 +342,64 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.Difficulty = "Easy"
 					.SetSize = 10
 				case 2
+					.Namee = "Geometric Designs"
+					.Folder = "official/geometry"
+					.Difficulty = "Easy to Medium"
+					.SetSize = 10
+					.TrueSize = 15
+				case 3
 					.Namee = "Regular Season"
 					.Folder = "official/regular"
 					.Difficulty = "Easy to Hard"
 					.SetSize = 30
 					.TrueSize = 35
-				case 3
-					.Namee = "Geometric Designs"
-					.Folder = "official/geometry"
-					.Difficulty = "Medium"
-					.SetSize = 10
-					.TrueSize = 15
 				case 4
 					.Namee = "Fortified Letters"
 					.Folder = "official/alphabet"
-					.Difficulty = "Medium to Hard"
+					.Difficulty = "Easy to Hard"
 					.SetSize = 26
 				case 5
+					.Namee = "Electric Recharge"
+					.Folder = "official/electric"
+					.Difficulty = "Easy to Hard"
+					.SetSize = 20
+					.TrueSize = 25
+				case 6
 					.Namee = "Patriarch Memorial"
 					.Folder = "official/memorial"
 					.Difficulty = "Medium to Hard"
 					.SetSize = 25
-				case 6
-					.Namee = "Electric Recharge"
-					.Folder = "official/electric"
-					.Difficulty = "Medium to Hard"
-					.SetSize = 20
-					.TrueSize = 25
 				case 7
+					.Namee = "Fusion Designs"
+					.Folder = "official/fusion"
+					.Difficulty = "Medium to Hard"
+					.SetSize = 14
+				case 8
 					.Namee = "Challenge Campaign"
 					.Folder = "official/challenge"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 30
 					.TrueSize = 35
 					.StarsToUnlock = 25
-				case 8
+				case 9
 					.Namee = "Maximum Insanity"
 					.Folder = "official/extreme"
 					.Difficulty = "Very Hard to Extreme"
 					.SetSize = 25
 					.StarsToUnlock = 75
-				case 9
+				case 10
 					.Namee = "Celestial Journey"
 					.Folder = "official/universe"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 40
 					.TrueSize = 50
 					.StarsToUnlock = 125
-				case 10
+				case 11
 					.Namee = "Endless Shuffle"
 					.Folder = "official/endless"
 					.Difficulty = "Unpredictable"
 					.SetSize = 1000
-					if TotalStars >= 207 then
+					if TotalStars >= 220 then
 						.StarsToUnlock = TotalOfficialLevels 'ALL of the previous levels
 					else
 						.StarsToUnlock = 1000 'Keep the player from knowing the exact requirement at first
@@ -785,7 +794,7 @@ sub respawn_blocks(BrushID as short)
 				if .BrickID = 0 AND .BaseBrickID = BrushID then
 					BlocksRespawned += 1
 					.BrickID = .BaseBrickID
-					.Flash = BaseFlash
+					.Flash = BaseFlash - 1
 				end if
 			end with
 		next XID
@@ -806,6 +815,8 @@ sub respawn_blocks(BrushID as short)
 		play_clip(SFX_BRICKS_RESPAWN)
 	end if
 end sub
+
+declare sub damage_brick(BaseX as short, BaseY as short, NewPalette as short, NewID as short = 0, OnlySelf as byte = 0)
 
 function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 	dim as ubyte AlphaV
@@ -846,24 +857,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 		for XID as ubyte = 1 to 20*(CondensedLevel+1)
 			with PlayerSlot(Player).Tileset(XID,YID)
 				if YID <= MaxY then
-					if .BrickID < -1 then
-						'Exploding in progress
-						if CondensedLevel then
-							put(32+(XID-1)*24,96+(YID-1)*24),ExplodePic,trans
-							line(32+(XID-1)*24,96+(YID-1)*24)-_
-								(31+(XID)*24,95+(YID)*24),rgba(255,128,0,128),bf
-						else
-							put(32+(XID-1)*48,96+(YID-1)*24),ExplodePic,trans
-							line(32+(XID-1)*48,96+(YID-1)*24)-_
-								(31+(XID)*48,95+(YID)*24),rgba(255,128,0,128),bf
-						end if
-						if GamePaused = 0 then
-							.BrickID += 1
-						end if
-						Count += 1
-						Invis = 12
-					elseif .BrickID = -1 then
-						'Finish exploding
+					if .BrickID <= -1 then
 						if CondensedLevel then
 							XPanning = 48+(XID-1)*24
 							put(32+(XID-1)*24,96+(YID-1)*24),ExplodePic,trans
@@ -875,49 +869,54 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 							line(32+(XID-1)*48,96+(YID-1)*24)-_
 								(31+(XID)*48,95+(YID)*24),rgba(255,128,0,128),bf
 						end if
-						
-						for YDID as byte = YID - 1 to YID + 1
-							for XDID as byte = XID - 1 to XID + 1
-								if XDID > 0 AND XDID <= 20*(CondensedLevel+1) AND YDID > 0 AND YDID <= 20 then
-									RefPallete = PlayerSlot(Player).TileSet(XDID,YDID).BrickID
-									
-									if RefPallete > 0 OR (XDID = XID AND YDID = YID) then
-										if (RefPallete > 0 AND Pallete(RefPallete).HitDegrade >= 0) OR _
-											(XDID = XID AND YDID = YID) then
+						if GamePaused = 0 then
+							if .BrickID < -1 then
+								'Exploding in progress
+								.BrickID += 1
+								Invis = 12
+							else
+								'Finish exploding
+								for YDID as byte = YID - 1 to YID + 1
+									for XDID as byte = XID - 1 to XID + 1
+										if XDID > 0 AND XDID <= 20*(CondensedLevel+1) AND YDID > 0 AND YDID <= 20 then
+											RefPallete = PlayerSlot(Player).TileSet(XDID,YDID).BrickID
 											
-											if TotalBC > 0 then
-												ScoreBonus = ball_ct_bonus * ExplodingValue
-											elseif total_lives > 0 then
-												ScoreBonus = ExplodingValue
+											if RefPallete > 0 OR (XDID = XID AND YDID = YID) then
+												if (RefPallete > 0 AND Pallete(RefPallete).HitDegrade >= 0) OR _
+													(XDID = XID AND YDID = YID) then
+													
+													if TotalBC > 0 then
+														ScoreBonus = ball_ct_bonus * ExplodingValue
+													elseif total_lives > 0 then
+														ScoreBonus = ExplodingValue
+													end if
+													
+													PlayerSlot(Player).Score += ScoreBonus
+													damage_brick(XDID,YDID,0,0,(XDID = XID AND YDID = YID))
+													Invis = 12
+													generate_capsule(XDID,YDID,1)
+													generate_particles(ScoreBonus,XDID,YDID,rgb(255,192,160))
+													
+												else
+													damage_brick(XDID,YDID,-1,0)
+													
+													if (XDID > XID AND YID = YDID) OR YDID > YID then
+														PlayerSlot(Player).TileSet(XDID,YDID).BrickID -= 1 
+													end if
+													
+													generate_capsule(XDID,YDID,1)
+													Invis = 12
+												end if
+												
 											end if
-											
-											PlayerSlot(Player).Score += ScoreBonus
-											PlayerSlot(Player).TileSet(XDID,YDID).BrickID = 0
-											PlayerSlot(Player).TileSet(XDID,YDID).Flash = BaseFlash
-											Invis = 12
-											generate_capsule(XDID,YDID,1)
-											generate_particles(ScoreBonus,XDID,YDID,rgb(255,192,160))
-											
-										else
-											PlayerSlot(Player).TileSet(XDID,YDID).BrickID = ExplodeDelay
-											
-											if (XDID > XID AND YID = YDID) OR YDID > YID then
-												PlayerSlot(Player).TileSet(XDID,YDID).BrickID -= 1 
-												PlayerSlot(Player).TileSet(XDID,YDID).HitTime = 0 
-												PlayerSlot(Player).TileSet(XDID,YDID).LastBall = 0 
-											end if
-											
-											PlayerSlot(Player).TileSet(XDID,YDID).Flash = BaseFlash
-											generate_capsule(XDID,YDID,1)
-											Invis = 12
 										end if
-										
-									end if
-								end if
-							next XDID
-						next YDID
-	
-						play_clip(SFX_EXPLODE,XPanning)
+									next XDID
+								next YDID
+								
+								play_clip(SFX_EXPLODE,XPanning)
+							end if
+						end if
+						
 						Count += 1
 						
 					elseif .BrickID > 0 then
@@ -952,42 +951,121 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 										Count += 1
 									end if
 								elseif (Invis > 0 OR (GameStyle AND (1 SHL STYLE_INVIS)) = 0 OR total_lives = 0) then
+									dim as any ptr UseBrick, UseConnL, UseConnR, UseConnT, UseConnB
+									
 									if CondensedLevel then
-										if PlayerSlot(Player).TileSet(XID,YID).BrickID = .HitDegrade OR .CalcedInvulnerable >= 2 then
-											put(32+(XID-1)*24,96+(YID-1)*24),InvincibleMini,pset
-										elseif .CalcedInvulnerable > 0 then
-											put(32+(XID-1)*24,96+(YID-1)*24),InvincibleMini,pset
-											Count += 1
+										if .CalcedInvulnerable > 0 then
+											UseBrick = InvincibleMini
+											UseConnL = InvincibleConnMiniL
+											UseConnR = InvincibleConnMiniR
+											UseConnT = InvincibleConnMiniT
+											UseConnB = InvincibleConnMiniB
+											
+											if PlayerSlot(Player).TileSet(XID,YID).BrickID <> .HitDegrade AND .CalcedInvulnerable < 2 then
+												Count += 1
+											end if
 										elseif .HitDegrade < 0 then
-											put(32+(XID-1)*24,96+(YID-1)*24),ExplodePic,trans
+											UseBrick = ExplodePic
+											UseConnL = NULL
+											UseConnR = NULL
+											UseConnT = NULL
+											UseConnB = NULL
+											
 											XplodeCount += 1
 											Count += 1
 										elseif .HitDegrade > 0 OR .CanRegen > 0 then
-											put(32+(XID-1)*24,96+(YID-1)*24),MultihitPicMini,pset
+											UseBrick = MultihitMini
+											UseConnL = MultihitConnMiniL
+											UseConnR = MultihitConnMiniR
+											UseConnT = MultihitConnMiniT
+											UseConnB = MultihitConnMiniB
+											
 											Count += 1
 										else 
-											put(32+(XID-1)*24,96+(YID-1)*24),SoftBrickPicMini,pset
+											UseBrick = SoftBrickPicMini
+											UseConnL = SoftBrickConnMiniL
+											UseConnR = SoftBrickConnMiniR
+											UseConnT = SoftBrickConnMiniT
+											UseConnB = SoftBrickConnMiniB
+											
 											Count += 1
 										end if
+										put(32+(XID-1)*24,96+(YID-1)*24),UseBrick,trans
+										with PlayerSlot(Player).TileSet(XID,YID)
+											if (Gamestyle AND (1 SHL STYLE_FUSION)) AND .BaseBrickID > 0 then
+												if XID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(int(XID-1),YID).BaseBrickID then
+													put(32+(XID-1)*24,96+(YID-1)*24),UseConnL,trans
+												end if
+												if XID < 40 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID+1,YID).BaseBrickID then
+													put(32+(XID-1)*24,96+(YID-1)*24),UseConnR,trans
+												end if
+												if YID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,int(YID-1)).BaseBrickID then
+													put(32+(XID-1)*24,96+(YID-1)*24),UseConnT,trans
+												end if
+												if YID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,YID+1).BaseBrickID then
+													put(32+(XID-1)*24,96+(YID-1)*24),UseConnB,trans
+												end if
+											end if
+										end with
+										
 										line(32+(XID-1)*24,96+(YID-1)*24)-_
 											(31+(XID)*24,95+(YID)*24),.PColoring,bf
 									else
-										if PlayerSlot(Player).TileSet(XID,YID).BrickID = .HitDegrade OR .CalcedInvulnerable >= 2 then
-											put(32+(XID-1)*48,96+(YID-1)*24),InvinciblePic,pset
-										elseif .CalcedInvulnerable > 0 then
-											put(32+(XID-1)*48,96+(YID-1)*24),InvinciblePic,pset
-											Count += 1
+										if .CalcedInvulnerable > 0 then
+											UseBrick = InvinciblePic
+											UseConnL = InvincibleConnL
+											UseConnR = InvincibleConnR
+											UseConnT = InvincibleConnT
+											UseConnB = InvincibleConnB
+											
+											if PlayerSlot(Player).TileSet(XID,YID).BrickID <> .HitDegrade AND .CalcedInvulnerable < 2 then
+												Count += 1
+											end if
 										elseif .HitDegrade < 0 then
-											put(32+(XID-1)*48,96+(YID-1)*24),ExplodePic,trans
+											UseBrick = ExplodePic
+											UseConnL = NULL
+											UseConnR = NULL
+											UseConnT = NULL
+											UseConnB = NULL
+											
 											XplodeCount += 1
 											Count += 1
 										elseif .HitDegrade > 0 OR .CanRegen > 0 then
-											put(32+(XID-1)*48,96+(YID-1)*24),MultihitPic,pset
+											UseBrick = MultihitPic
+											UseConnL = MultihitConnL
+											UseConnR = MultihitConnR
+											UseConnT = MultihitConnT
+											UseConnB = MultihitConnB
+											
 											Count += 1
 										else 
-											put(32+(XID-1)*48,96+(YID-1)*24),SoftBrickPic,pset
+											UseBrick = SoftBrickPic
+											UseConnL = SoftBrickConnL
+											UseConnR = SoftBrickConnR
+											UseConnT = SoftBrickConnT
+											UseConnB = SoftBrickConnB
+											
 											Count += 1
 										end if
+
+										put(32+(XID-1)*48,96+(YID-1)*24),UseBrick,trans
+										with PlayerSlot(Player).TileSet(XID,YID)
+											if (Gamestyle AND (1 SHL STYLE_FUSION)) AND .BaseBrickID > 0 then
+												if XID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(int(XID-1),YID).BaseBrickID then
+													put(32+(XID-1)*48,96+(YID-1)*24),UseConnL,trans
+												end if
+												if XID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID+1,YID).BaseBrickID then
+													put(32+(XID-1)*48,96+(YID-1)*24),UseConnR,trans
+												end if
+												if YID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,int(YID-1)).BaseBrickID then
+													put(32+(XID-1)*48,96+(YID-1)*24),UseConnT,trans
+												end if
+												if YID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,YID+1).BaseBrickID then
+													put(32+(XID-1)*48,96+(YID-1)*24),UseConnB,trans
+												end if
+											end if
+										end with
+										
 										line(32+(XID-1)*48,96+(YID-1)*24)-_
 											(31+(XID)*48,95+(YID)*24),.PColoring,bf
 									end if
@@ -1054,6 +1132,9 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 						BlocksInPallete(UseID) = 1
 					end if
 				end if
+				if DispSetting >= 2 AND ButtonCombo = 0 then
+					.BaseBrickID = .BrickID
+				end if
 			end with
 		next XID
 	next YID
@@ -1099,14 +1180,119 @@ sub shuffle_backs
 	erase SlotUsed
 end sub
 
+sub load_brick_gfx(BasePath as string)
+	'Rectangular bricks
+	SoftBrickPic = ImageCreate(48,24)
+	bload(BasePath+"soft.bmp",SoftBrickPic)
+	MultihitPic = ImageCreate(48,24)
+	bload(BasePath+"multi.bmp",MultihitPic)
+	InvinciblePic = ImageCreate(48,24)
+	bload(BasePath+"invincible.bmp",InvinciblePic)
+
+	'Rectangular brick connectors
+	SoftBrickConnL = ImageCreate(48,24)
+	bload(BasePath+"softConnL.bmp",SoftBrickConnL)
+	SoftBrickConnR = ImageCreate(48,24)
+	bload(BasePath+"softConnR.bmp",SoftBrickConnR)
+	SoftBrickConnT = ImageCreate(48,24)
+	bload(BasePath+"softConnT.bmp",SoftBrickConnT)
+	SoftBrickConnB = ImageCreate(48,24)
+	bload(BasePath+"softConnB.bmp",SoftBrickConnB)
+
+	MultihitConnL = ImageCreate(48,24)
+	bload(BasePath+"multiConnL.bmp",MultihitConnL)
+	MultihitConnR = ImageCreate(48,24)
+	bload(BasePath+"multiConnR.bmp",MultihitConnR)
+	MultihitConnT = ImageCreate(48,24)
+	bload(BasePath+"multiConnT.bmp",MultihitConnT)
+	MultihitConnB = ImageCreate(48,24)
+	bload(BasePath+"multiConnB.bmp",MultihitConnB)
+
+	InvincibleConnL = ImageCreate(48,24)
+	bload(BasePath+"invinConnL.bmp",InvincibleConnL)
+	InvincibleConnR = ImageCreate(48,24)
+	bload(BasePath+"invinConnR.bmp",InvincibleConnR)
+	InvincibleConnT = ImageCreate(48,24)
+	bload(BasePath+"invinConnT.bmp",InvincibleConnT)
+	InvincibleConnB = ImageCreate(48,24)
+	bload(BasePath+"invinConnB.bmp",InvincibleConnB)
+	
+	'Square bricks
+	SoftBrickPicMini = ImageCreate(24,24)
+	bload(BasePath+"softSm.bmp",SoftBrickPicMini)
+	MultihitMini = ImageCreate(24,24)
+	bload(BasePath+"multiSm.bmp",MultihitMini)
+	InvincibleMini = ImageCreate(24,24)
+	bload(BasePath+"invincibleSm.bmp",InvincibleMini)
+	
+	'Square brick connectors
+	SoftBrickConnMiniL = ImageCreate(24,24)
+	bload(BasePath+"softSmConnL.bmp",SoftBrickConnMiniL)
+	SoftBrickConnMiniR = ImageCreate(24,24)
+	bload(BasePath+"softSmConnR.bmp",SoftBrickConnMiniR)
+	SoftBrickConnMiniT = ImageCreate(24,24)
+	bload(BasePath+"softSmConnT.bmp",SoftBrickConnMiniT)
+	SoftBrickConnMiniB = ImageCreate(24,24)
+	bload(BasePath+"softSmConnB.bmp",SoftBrickConnMiniB)
+
+	MultihitConnMiniL = ImageCreate(24,24)
+	bload(BasePath+"multiSmConnL.bmp",MultihitConnMiniL)
+	MultihitConnMiniR = ImageCreate(24,24)
+	bload(BasePath+"multiSmConnR.bmp",MultihitConnMiniR)
+	MultihitConnMiniT = ImageCreate(24,24)
+	bload(BasePath+"multiSmConnT.bmp",MultihitConnMiniT)
+	MultihitConnMiniB = ImageCreate(24,24)
+	bload(BasePath+"multiSmConnB.bmp",MultihitConnMiniB)
+
+	InvincibleConnMiniL = ImageCreate(24,24)
+	bload(BasePath+"invinSmConnL.bmp",InvincibleConnMiniL)
+	InvincibleConnMiniR = ImageCreate(24,24)
+	bload(BasePath+"invinSmConnR.bmp",InvincibleConnMiniR)
+	InvincibleConnMiniT = ImageCreate(24,24)
+	bload(BasePath+"invinSmConnT.bmp",InvincibleConnMiniT)
+	InvincibleConnMiniB = ImageCreate(24,24)
+	bload(BasePath+"invinSmConnB.bmp",InvincibleConnMiniB)
+
+	'Special exploding picture
+	BaseExplode = ImageCreate(176,24)
+	ExplodePic = ImageCreate(48,24)
+	bload(BasePath+"explode.bmp",BaseExplode)
+end sub
+
 sub clean_up destructor
 	if Command(1) <> "/c" then
 		ImageDestroy(SoftBrickPic)
+		ImageDestroy(SoftBrickConnL)
+		ImageDestroy(SoftBrickConnR)
+		ImageDestroy(SoftBrickConnT)
+		ImageDestroy(SoftBrickConnB)
 		ImageDestroy(MultihitPic)
+		ImageDestroy(MultihitConnL)
+		ImageDestroy(MultihitConnR)
+		ImageDestroy(MultihitConnT)
+		ImageDestroy(MultihitConnB)
 		ImageDestroy(InvinciblePic)
+		ImageDestroy(InvincibleConnL)
+		ImageDestroy(InvincibleConnR)
+		ImageDestroy(InvincibleConnT)
+		ImageDestroy(InvincibleConnB)
+
 		ImageDestroy(SoftBrickPicMini)
-		ImageDestroy(MultihitPicMini)
+		ImageDestroy(SoftBrickConnMiniL)
+		ImageDestroy(SoftBrickConnMiniR)
+		ImageDestroy(SoftBrickConnMiniT)
+		ImageDestroy(SoftBrickConnMiniB)
+		ImageDestroy(MultihitMini)
+		ImageDestroy(MultihitConnMiniL)
+		ImageDestroy(MultihitConnMiniR)
+		ImageDestroy(MultihitConnMiniT)
+		ImageDestroy(MultihitConnMiniB)
 		ImageDestroy(InvincibleMini)
+		ImageDestroy(InvincibleConnMiniL)
+		ImageDestroy(InvincibleConnMiniR)
+		ImageDestroy(InvincibleConnMiniT)
+		ImageDestroy(InvincibleConnMiniB)
+		
 		ImageDestroy(Background)
 		ImageDestroy(FramesetMerged)
 		ImageDestroy(Topframe)

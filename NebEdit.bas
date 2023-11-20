@@ -3,23 +3,7 @@ windowtitle "Nebunoid Level Editor"
 screen 20,24,2,GFX_ALPHA_PRIMITIVES OR GFX_NO_SWITCH
 
 'Foreground assets
-SoftBrickPic = ImageCreate(48,24)
-bload("gfx/soft.bmp",SoftBrickPic)
-MultihitPic = ImageCreate(48,24)
-bload("gfx/multi.bmp",MultihitPic)
-InvinciblePic = ImageCreate(48,24)
-bload("gfx/invincible.bmp",InvinciblePic)
-
-SoftBrickPicMini = ImageCreate(24,24)
-bload("gfx/softSm.bmp",SoftBrickPicMini)
-MultihitPicMini = ImageCreate(24,24)
-bload("gfx/multiSm.bmp",MultihitPicMini)
-InvincibleMini = ImageCreate(24,24)
-bload("gfx/invincibleSm.bmp",InvincibleMini)
-
-BaseExplode = ImageCreate(176,24)
-ExplodePic = ImageCreate(48,24)
-bload("gfx/explode.bmp",BaseExplode)
+load_brick_gfx("gfx/blocks/")
 
 FramesetMerged = ImageCreate(1024,768)
 bload("gfx/framesMerged.bmp",FramesetMerged)

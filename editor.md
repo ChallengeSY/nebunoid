@@ -12,12 +12,13 @@ Levels may be designed with a wide variety of variations in mind that alter the 
 * Dual Paddles (4): The player controls two paddles, separated by some vertical space
 * Double Juggling (8): Each life starts with two balls
 * Cavity (16): Some balls are caged, and must be freed to aid the player
-* Progressive (32): Rows will shift down at a progressively faster rate, resetting only when a life is lost. Overrides Cavity
+* Progressive (32): Rows will shift down at a progressively faster rate, resetting only when a life is lost. Overrides Cavity and Fusion Brushes
 * Steerable Balls (64): Paddle movement will manipulate any balls heading towards the ceiling
 * Invisible (128): The level is invisible, flashing only when a block is hit
 * Hyper Speed (256): Balls move 50% faster
 * Boss Battle (512): Duke it out against a boss whose attacks can damage and destroy your paddle. Negates Breakable Ceiling
-* Horitonzal Rotation (1024): Non-invincible blocks rotate horizontally across the board, wrapping as necessary. Overrides Cavity
+* Horitonzal Rotation (1024): Non-invincible blocks rotate horizontally across the board, wrapping as necessary. Overrides Cavity and Fusion Brushes
+* Fusion Brushes (2048): Blocks of the same "brush" fuse together to form bigger blocks
 * Shrink Ceiling (4096): Paddle shrinks the first time a ball hits the ceiling on each life
 * Breakable Ceiling (8192): Blocks respawn by brush indefinitely. Break and bypass the ceiling to clear the level instead. Negates Boss Battle
 * Fatal Timer (16384): If time limit runs out, the game immediately ends no matter how many lives.  

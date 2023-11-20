@@ -36,22 +36,10 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.09"
+windowtitle "Nebunoid 1.09b"
 
 'Foreground assets
-SoftBrickPic = ImageCreate(48,24)
-bload(MasterDir + "/gfx/soft.bmp",SoftBrickPic)
-MultihitPic = ImageCreate(48,24)
-bload(MasterDir + "/gfx/multi.bmp",MultihitPic)
-InvinciblePic = ImageCreate(48,24)
-bload(MasterDir + "/gfx/invincible.bmp",InvinciblePic)
-
-SoftBrickPicMini = ImageCreate(24,24)
-bload(MasterDir + "/gfx/softSm.bmp",SoftBrickPicMini)
-MultihitPicMini = ImageCreate(24,24)
-bload(MasterDir + "/gfx/multiSm.bmp",MultihitPicMini)
-InvincibleMini = ImageCreate(24,24)
-bload(MasterDir + "/gfx/invincibleSm.bmp",InvincibleMini)
+load_brick_gfx(MasterDir+"/gfx/blocks/")
 
 for CapID as ubyte = 1 to 5
 	CapsuleBar(CapID) = ImageCreate(38,19)
@@ -69,9 +57,6 @@ line CapsuleBarFrame,(0,0)-(62,14),rgb(255,255,255),b
 line CapsuleBarFrame,(0,0)-(62,0),rgb(128,128,128)
 line CapsuleBarFrame,(0,0)-(0,14),rgb(128,128,128)
 
-BaseExplode = ImageCreate(176,24)
-ExplodePic = ImageCreate(48,24)
-bload(MasterDir + "/gfx/explode.bmp",BaseExplode)
 BulletPic = ImageCreate(5,10)
 bload(MasterDir + "/gfx/bullet.bmp",BulletPic)
 MissilePic = ImageCreate(10,20)
@@ -243,7 +228,7 @@ do
 							.SetLocked = -1
 							Availability = rgb(128,128,128)
 							if .StarsToUnlock > 999 then
-								gfxstring("(Unlock req unknown)",340,351+Item*30,4,3,3,Availability)
+								gfxstring("(100% stars to unlock)",340,351+Item*30,4,3,3,Availability)
 							else
 								gfxstring("("+commaSep(.StarsToUnlock)+" stars to unlock)",340,351+Item*30,4,3,3,Availability)
 							end if
