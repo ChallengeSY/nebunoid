@@ -2317,9 +2317,7 @@ sub local_gameplay
 																	PlayerSlot(Player).TileSet(XDID,YDID).BrickID <> PlayerSlot(Player).TileSet(XID,YID).BrickID then
 																	AlreadySpread(XDID,YDID) = 1
 																	PlayerSlot(Player).TileSet(XDID,YDID).BrickID = PlayerSlot(Player).TileSet(XID,YID).BrickID
-																	if (Gamestyle AND (1 SHL STYLE_BREAKABLE_CEILING)) = 0 then
-																		PlayerSlot(Player).TileSet(XDID,YDID).BaseBrickID = PlayerSlot(Player).TileSet(XID,YID).BaseBrickID
-																	end if
+																	PlayerSlot(Player).TileSet(XDID,YDID).BaseBrickID = PlayerSlot(Player).TileSet(XID,YID).BaseBrickID
 																end if
 															next XDID
 														next YDID

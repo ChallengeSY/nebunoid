@@ -1121,6 +1121,8 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 	if XplodeCount = 0 then
 		CapWeight(CAP_SPREAD) = 0
 		CapWeight(CAP_DETONATE) = 0
+	elseif (Gamestyle AND (1 SHL STYLE_FUSION)) AND (Gamestyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
+		CapWeight(CAP_SPREAD) = 0
 	end if
 
 	with PlayerSlot(Player)
