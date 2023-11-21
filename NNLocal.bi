@@ -401,6 +401,7 @@ sub apply_block_properties
 			else
 				.ZapDegrade = BID
 			end if
+			.CalcedInvulnerable = 0
 			TestGrade = BID
 			while TestGrade > 0
 				if TestGrade = Pallete(TestGrade).HitDegrade then
