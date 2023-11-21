@@ -377,7 +377,7 @@ sub save_scores
 	end if
 end sub
 sub set_zapped_pallete(NewColoring as uinteger)
-	with Pallete(InvinZapped)
+	with Pallete(ZapBrush)
 		if .PColoring = rgba(0,0,0,128) then
 			.PColoring = rgba(retrivePrimary(NewColoring,RGBA_RED) / 4,_
 				retrivePrimary(NewColoring,RGBA_GREEN) / 4,_
@@ -397,7 +397,7 @@ sub apply_block_properties
 			next PID
 			
 			if .PColoring = 0 then
-				.ZapDegrade = InvinZapped
+				.ZapDegrade = ZapBrush
 			else
 				.ZapDegrade = BID
 			end if
@@ -408,7 +408,7 @@ sub apply_block_properties
 					if BID = TestGrade then
 						set_zapped_pallete(.PColoring)
 					end if
-					.ZapDegrade = InvinZapped
+					.ZapDegrade = ZapBrush
 					exit while
 				else
 					if PalleteUsed(TestGrade) < 3 then
@@ -426,7 +426,7 @@ sub apply_block_properties
 						if .CalcedInvulnerable = 1 then
 							set_zapped_pallete(.PColoring)
 						end if
-						.ZapDegrade = InvinZapped
+						.ZapDegrade = ZapBrush
 						exit while
 					end if
 				end if
@@ -522,11 +522,11 @@ function load_level_file(LoadLevel as string) as integer
 			line input #1, NullString
 		end if
 	next BID
-	with Pallete(InvinZapped)
+	with Pallete(ZapBrush)
 		.PColoring = rgba(0,0,0,128)
 		.ScoreValue = int(BaseCapsuleValue / 10)
 		.DynamicValue = 1
-		.ZapDegrade = InvinZapped
+		.ZapDegrade = ZapBrush
 		.UsedInlevel = 0
 	end with
 

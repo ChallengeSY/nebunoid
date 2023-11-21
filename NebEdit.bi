@@ -620,7 +620,9 @@ sub level_options
 end sub
 
 sub delete_brush(DelID as integer)
-	for DID as ubyte = DelID to 34
+	dim as short FinalBrush = ZapBrush - 1
+	
+	for DID as ubyte = DelID to FinalBrush-1
 		Pallete(DID) = Pallete(DID+1)
 		
 		with Pallete(DID)
@@ -634,7 +636,7 @@ sub delete_brush(DelID as integer)
 		end with
 	next DID
 	
-	Pallete(35).PColoring = 0
+	Pallete(FinalBrush).PColoring = 0
 	
 	for YID as ubyte = 1 to 24
 		for XID as ubyte = 1 to 40
@@ -651,6 +653,40 @@ sub delete_brush(DelID as integer)
 	
 	BlockBrushes -= 1
 	SelectedBrush = 0 
+end sub
+
+sub swap_brushes(BrushA as short, BrushB as short)
+	Pallete(SwapBrush) = Pallete(BrushA)
+	Pallete(BrushA) = Pallete(BrushB)
+	Pallete(BrushB) = Pallete(SwapBrush)
+	
+	for AID as ubyte = 1 to ZapBrush - 1
+		with Pallete(AID)
+			if .HitDegrade = BrushA then
+				.HitDegrade = BrushB
+			elseif .HitDegrade = BrushB then
+				.HitDegrade = BrushA
+			end if
+
+			if .CanRegen = BrushA then
+				.CanRegen = BrushB
+			elseif .CanRegen = BrushB then
+				.CanRegen = BrushA
+			end if
+		end with
+	next AID
+
+	for YID as ubyte = 1 to 24
+		for XID as ubyte = 1 to 40
+			with PlayerSlot(Player).TileSet(XID,YID)
+				if .BrickID = BrushA then
+					.BrickID = BrushB
+				elseif .BrickID = BrushB then
+					.BrickID = BrushA
+				end if
+			end with
+		next XID
+	next YID
 end sub
 
 sub brush_editor_submenu
@@ -689,7 +725,11 @@ sub brush_editor_submenu
 			color rgb(0,255,0)
 			print "D";
 			color rgb(255,255,255)
-			print "elete";
+			print "elete / S";
+			color rgb(0,255,0)
+			print "w";
+			color rgb(255,255,255)
+			print "ap";
 			screencopy
 			sleep 20
 			InType = lcase(inkey)
@@ -824,6 +864,20 @@ sub brush_editor_submenu
 					
 				case "d"
 					delete_brush(BrushEditor)
+					LevelUnsaved = 1
+					exit do
+					
+				case "w"
+					screenset 0,0
+					locate 48,1
+					print space(127);
+					locate 48,1
+					input ; "Swap this brush with which ID";NewRed
+					screenset 1,0
+					
+					if NewRed > 0 AND NewRed <= BlockBrushes then
+						swap_brushes(BrushEditor,NewRed)
+					end if
 					LevelUnsaved = 1
 					exit do
 					

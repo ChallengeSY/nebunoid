@@ -40,7 +40,7 @@ When a ball causes damage to a boss, the damage the boss receives is controlled 
 ### Level editing controls
 In addition to highlighting controls mentioned above, mirror options can be adjusted by clicking on the brick count display.
 
-Brick "brushes" are managed on a per-level basis. A new brush can be easily made by clicking on the empty + sign. Existing brushes can be edited by right clicking on an existing brush.
+Brick "brushes" are managed on a per-level basis. A new brush can be easily made by clicking on the empty + sign. Existing brushes can be edited by right clicking as such.
 
 #### Keyboard controls
 * 1-4: Quickly toggles a supported mirror control

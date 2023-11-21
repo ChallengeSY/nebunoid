@@ -253,9 +253,10 @@ type HighSlot
 	NewEntry as byte
 end type
 
-const InvinZapped = 36
+const ZapBrush = 36
+const SwapBrush = ZapBrush + 1
 dim shared as PlayerSpecs PlayerSlot(4), NewPlrSlot
-dim shared as PalleteSpecs Pallete(InvinZapped)
+dim shared as PalleteSpecs Pallete(SwapBrush)
 dim shared as FB.event e
 const MISC = 3
 const ExplodeAniRate = 1
@@ -898,7 +899,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 													generate_particles(ScoreBonus,XDID,YDID,rgb(255,192,160))
 													
 												else
-													damage_brick(XDID,YDID,-1,0)
+													damage_brick(XDID,YDID,ExplodeDelay,0)
 													
 													if (XDID > XID AND YID = YDID) OR YDID > YID then
 														PlayerSlot(Player).TileSet(XDID,YDID).BrickID -= 1 
