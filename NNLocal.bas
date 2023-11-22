@@ -2071,10 +2071,44 @@ sub local_gameplay
 											force_release_balls
 											capsule_message("MYSTERY CAPSULE: Super Expand! Size +100 = "+str(PaddleSize)+" pixels",1)
 											play_clip(SFX_POWER_UP,.X)
-										elseif Effects < .675 AND CampaignFolder <> EndlessFolder then
-											capsule_message("MYSTERY CAPSULE: Bonus life!",1)
-											PlayerSlot(Player).Lives += 1
-											play_clip(SFX_LIFE,.X)
+										elseif Effects < .675 then
+											if CampaignFolder = EndlessFolder then
+												dim as ubyte TotalNew = 0, Splitted(NumBalls)
+												capsule_message("MYSTERY CAPSULE: Quad Split",1)
+												force_release_balls
+												for BID as ubyte = 1 to NumBalls
+													with Ball(BID)
+														if .Speed > 0 AND Splitted(BID) = 0 AND .Power <> -2 then
+															TotalNew = 0
+															for NewBall as short = 1 to 100
+																with Ball(NewBall)
+																	if .Speed <= 0 then
+																		TotalNew += 1
+																		Splitted(NewBall) = 1
+																		.Speed = int(Ball(BID).Speed)
+																		.X = Ball(BID).X
+																		.Y = Ball(BID).Y
+																		.Spawned = 0
+																		.Power = Ball(BID).Power
+																		.Duration = Ball(BID).Duration
+																		.Angle = Ball(BID).Angle + 90 * TotalNew
+																		TotalBC += 1
+																		if TotalNew >= 3 then
+																			exit for
+																		end if
+																	end if
+																end with
+															next
+														end if
+													end with
+												next BID
+												erase Splitted
+												play_clip(SFX_POWER_UP,.X)
+											else
+												capsule_message("MYSTERY CAPSULE: Bonus life!",1)
+												PlayerSlot(Player).Lives += 1
+												play_clip(SFX_LIFE,.X)
+											end if
 										elseif Effects < .775 then
 											capsule_message("MYSTERY CAPSULE: Flowing points",1)
 											ConstIncrease = 1
