@@ -569,7 +569,8 @@ function load_level_file(LoadLevel as string) as integer
 						end if
 					end if
 					.BaseBrickID = .BrickID
-					if .BaseBrickID > 0 AND .BaseBrickID <= 35 AND Pallete(.BaseBrickID).CalcedInvulnerable = 0 then
+					if .BaseBrickID > 0 AND .BaseBrickID <= 35 AND Pallete(.BaseBrickID).HitDegrade >= 0 AND _
+						Pallete(.BaseBrickID).CalcedInvulnerable = 0 then
 						Pallete(.BaseBrickID).UsedInlevel = 1
 					end if
 				end with
