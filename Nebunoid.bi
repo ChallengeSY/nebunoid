@@ -195,7 +195,7 @@ type PalleteSpecs
 	HitDegrade as byte
 	ZapDegrade as short
 	IncreaseSpeed as ubyte
-	CalcedInvulnerable as ubyte
+	CalcedInvulnerable as byte
 	UsedInlevel as ubyte
 	TimesRespawned as ushort
 end type
@@ -883,7 +883,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 											RefPallete = PlayerSlot(Player).TileSet(XDID,YDID).BrickID
 											
 											if RefPallete > 0 OR (XDID = XID AND YDID = YID) then
-												if (RefPallete > 0 AND Pallete(RefPallete).HitDegrade >= 0) OR _
+												if (RefPallete > 0 AND Pallete(RefPallete).CalcedInvulnerable >= 0) OR _
 													(XDID = XID AND YDID = YID) then
 													
 													if TotalBC > 0 then

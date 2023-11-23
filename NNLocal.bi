@@ -432,6 +432,9 @@ sub apply_block_properties
 					end if
 				end if
 			wend
+			if TestGrade < 0 then
+				.CalcedInvulnerable = -1
+			end if
 
 			if .CanRegen > 0 then
 				for CID as ubyte = 1 to BlockBrushes
