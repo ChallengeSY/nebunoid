@@ -221,9 +221,9 @@ type PlayerSpecs
 	MissileAmmo as short
 
 	WarpTimer as short
-	BossHealth as short
-	BossMaxHealth as short
-	BossLastHealth as short
+	BossHealth as integer
+	BossMaxHealth as integer
+	BossLastHealth as integer
 	BossLastHit as short
 	LevelTimer as integer
 	InitialLevel as short
@@ -1052,17 +1052,71 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 										put(32+(XID-1)*48,96+(YID-1)*24),UseBrick,trans
 										with PlayerSlot(Player).TileSet(XID,YID)
 											if (Gamestyle AND (1 SHL STYLE_FUSION)) AND .BaseBrickID > 0 then
-												if XID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(int(XID-1),YID).BaseBrickID then
-													put(32+(XID-1)*48,96+(YID-1)*24),UseConnL,trans
-												end if
-												if XID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID+1,YID).BaseBrickID then
-													put(32+(XID-1)*48,96+(YID-1)*24),UseConnR,trans
-												end if
-												if YID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,int(YID-1)).BaseBrickID then
-													put(32+(XID-1)*48,96+(YID-1)*24),UseConnT,trans
-												end if
-												if YID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,YID+1).BaseBrickID then
-													put(32+(XID-1)*48,96+(YID-1)*24),UseConnB,trans
+												if Pallete(.BrickID).HitDegrade >= 0 then
+													if XID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(int(XID-1),YID).BaseBrickID then
+														put(32+(XID-1)*48,96+(YID-1)*24),UseConnL,trans
+													end if
+													if XID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID+1,YID).BaseBrickID then
+														put(32+(XID-1)*48,96+(YID-1)*24),UseConnR,trans
+													end if
+													if YID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,int(YID-1)).BaseBrickID then
+														put(32+(XID-1)*48,96+(YID-1)*24),UseConnT,trans
+													end if
+													if YID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,YID+1).BaseBrickID then
+														put(32+(XID-1)*48,96+(YID-1)*24),UseConnB,trans
+													end if
+												else
+													'Complicated exploding edge cases
+													
+													'Left connectors
+													if XID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(int(XID-1),YID).BaseBrickID then
+														pset(32+(XID-1)*48,96+(YID-1)*24),rgb(255,255,255)
+														line(32+(XID-1)*48,97+(YID-1)*24)-(33+(XID-1)*48,97+(YID-1)*24),rgba(255,255,255,128)
+														
+														line(32+(XID-1)*48,94+(YID)*24)-(33+(XID-1)*48,94+(YID)*24),rgba(0,0,0,128)
+														pset(32+(XID-1)*48,95+(YID)*24),rgb(0,0,0)
+													else
+														line(32+(XID-1)*48,96+(YID-1)*24)-(32+(XID-1)*48,95+(YID)*24),rgb(255,255,255)
+														line(33+(XID-1)*48,97+(YID-1)*24)-(33+(XID-1)*48,94+(YID)*24),rgba(255,255,255,128)
+													end if
+													
+													'Right connectors
+													if XID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID+1,YID).BaseBrickID then
+														pset(31+(XID)*48,96+(YID-1)*24),rgb(255,255,255)
+														line(30+(XID)*48,97+(YID-1)*24)-(31+(XID)*48,97+(YID-1)*24),rgba(255,255,255,128)
+														
+														line(30+(XID)*48,94+(YID)*24)-(31+(XID)*48,94+(YID)*24),rgba(0,0,0,128)
+														pset(31+(XID)*48,95+(YID)*24),rgb(0,0,0)
+													else
+														if YID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,int(YID-1)).BaseBrickID then
+															pset(31+(XID)*48,96+(YID-1)*24),rgb(0,0,0)
+															pset(30+(XID)*48,97+(YID-1)*24),rgba(0,0,0,128)
+														else
+															pset(31+(XID)*48,96+(YID-1)*24),rgb(255,255,255)
+															pset(30+(XID)*48,97+(YID-1)*24),rgba(255,255,255,128)
+														end if
+														
+														line(31+(XID)*48,97+(YID-1)*24)-(31+(XID)*48,95+(YID)*24),rgb(0,0,0)
+														line(30+(XID)*48,98+(YID-1)*24)-(30+(XID)*48,94+(YID)*24),rgba(0,0,0,128)
+													end if
+													
+													'Top connectors
+													if YID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,int(YID-1)).BaseBrickID then
+														pset(33+(XID-1)*48,96+(YID-1)*24),rgba(255,255,255,128)
+														pset(30+(XID)*48,96+(YID-1)*24),rgba(0,0,0,128)
+													else
+														line(33+(XID-1)*48,96+(YID-1)*24)-(30+(XID)*48,96+(YID-1)*24),rgb(255,255,255)
+														line(34+(XID-1)*48,97+(YID-1)*24)-(29+(XID)*48,97+(YID-1)*24),rgba(255,255,255,128)
+													end if
+													
+													'Bottom connectors
+													if YID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,YID+1).BaseBrickID then
+														pset(33+(XID-1)*48,95+(YID)*24),rgba(255,255,255,128)
+														pset(30+(XID)*48,95+(YID)*24),rgba(0,0,0,128)
+													else
+														line(33+(XID-1)*48,95+(YID)*24)-(30+(XID)*48,95+(YID)*24),rgb(0,0,0)
+														line(34+(XID-1)*48,94+(YID)*24)-(29+(XID)*48,94+(YID)*24),rgba(0,0,0,128)
+													end if
 												end if
 											end if
 										end with
@@ -1278,6 +1332,9 @@ sub clean_up destructor
 		ImageDestroy(InvincibleConnT)
 		ImageDestroy(InvincibleConnB)
 
+		ImageDestroy(BaseExplode)
+		ImageDestroy(ExplodePic)
+		
 		ImageDestroy(SoftBrickPicMini)
 		ImageDestroy(SoftBrickConnMiniL)
 		ImageDestroy(SoftBrickConnMiniR)

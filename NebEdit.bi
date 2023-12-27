@@ -8,7 +8,7 @@ const GameProgram = "/Nebunoid"
 #ENDIF
 
 
-dim as string TimeStr, GameInfo
+dim as string TimeStr, GameInfo, BossHP
 dim as short InstruAlpha, InstruBeta, InstruGamma
 dim shared as byte CampaignUnsaved, LevelUnsaved, SelectedBrush, BrushEditor, HighlightX, HighlightY, MirrorEditing
 dim shared as short MaxLevels
@@ -400,6 +400,135 @@ sub duplicate_level(LevID as short, DestCampaign as string = CampaignFolder)
 	next LID
 end sub
 
+sub flip_level(Vertically as byte = 0)
+	dim as byte MaxCols = 20*(CondensedLevel+1)
+	dim as byte MaxRows = 20
+	if (Gamestyle AND (1 SHL STYLE_PROGRESSIVE)) then
+		MaxRows = 24
+	end if
+
+	PlayerSlot(2) = PlayerSlot(1)
+	with PlayerSlot(2)
+		for YID as byte = 1 to MaxRows
+			for XID as byte = 1 to MaxCols
+				if Vertically then
+					.Tileset(XID,YID) = PlayerSlot(1).Tileset(XID,int(MaxRows+1-YID))
+				else
+					.Tileset(XID,YID) = PlayerSlot(1).Tileset(int(MaxCols+1-XID),YID)
+				end if
+			next XID
+		next YID
+	end with
+	
+	PlayerSlot(1) = PlayerSlot(2)
+	LevelUnsaved = 1
+end sub
+
+sub rotate_level(CCW as byte = 0)
+	dim as byte MaxCols = 20*(CondensedLevel+1)
+	dim as byte MaxRows = 20
+	dim as single TempX, TempY, NewX, NewY
+	if (Gamestyle AND (1 SHL STYLE_PROGRESSIVE)) then
+		MaxRows = 24
+	end if
+	
+	if MaxCols <> MaxRows then
+		Instructions = "Rotation attempt failed: Dimensions unsupported"
+		InstructExpire = timer + 10
+		exit sub
+	end if
+
+	PlayerSlot(2) = PlayerSlot(1)
+	with PlayerSlot(2)
+		for YID as byte = 1 to MaxRows
+			for XID as byte = 1 to MaxCols
+				if CCW then
+					TempX = XID - (MaxCols+1)/2
+					TempY = YID - (MaxCols+1)/2
+					
+					NewY = -TempX
+					NewX = TempY
+		
+					NewY += (MaxCols+1)/2
+					NewX += (MaxCols+1)/2
+					
+					.Tileset(NewX,NewY) = PlayerSlot(1).Tileset(XID,YID)
+				else
+					TempX = XID - (MaxCols+1)/2
+					TempY = YID - (MaxCols+1)/2
+					
+					NewY = TempX
+					NewX = -TempY
+		
+					NewY += (MaxCols+1)/2
+					NewX += (MaxCols+1)/2
+					
+					.Tileset(NewX,NewY) = PlayerSlot(1).Tileset(XID,YID)
+				end if
+			next XID
+		next YID
+	end with
+	
+	PlayerSlot(1) = PlayerSlot(2)
+	LevelUnsaved = 1
+end sub
+
+sub transform_options
+	do
+		locate 48,1
+		print space(127);
+		locate 48,1
+		print "Transform options: Toggle half-c";
+		color rgb(0,255,0)
+		print "o";
+		color rgb(255,255,255)
+		print "lumn mode / Flip ";
+		color rgb(0,255,0)
+		print "h";
+		color rgb(255,255,255)
+		print "orizontally or ";
+		color rgb(0,255,0)
+		print "v";
+		color rgb(255,255,255)
+		print "ertically / Rotate clock";
+		color rgb(0,255,0)
+		print "w";
+		color rgb(255,255,255)
+		print "ise or ";
+		color rgb(0,255,0)
+		print "c";
+		color rgb(255,255,255)
+		print "ounterclockwise";
+		screencopy
+		sleep 20
+		InType = lcase(inkey)
+		
+		select case InType
+			case "o"
+				CondensedLevel = 1 - CondensedLevel
+				LevelUnsaved = 1
+				exit do
+				
+			case "h"
+				flip_level(0)
+				exit do
+				
+			case "v"
+				flip_level(1)
+				exit do
+				
+			case "w"
+				rotate_level(0)
+				exit do
+				
+			case "c"
+				rotate_level(1)
+				exit do
+				
+		end select
+	loop until InType = EscapeKey
+end sub
+
 sub level_options
 	dim as ubyte OptionsPage = 0
 	dim as short SwapTarget
@@ -429,11 +558,11 @@ sub level_options
 			color rgb(0,255,0)
 			print "T";
 			color rgb(255,255,255)
-			print "ime limit / Toggle ";
+			print "ime limit / Trans";
 			color rgb(0,255,0)
-			print "c";
+			print "f";
 			color rgb(255,255,255)
-			print "ondensation / ";
+			print "orm level / ";
 			color rgb(0,255,0)
 			print "B";
 			color rgb(255,255,255)
@@ -503,9 +632,8 @@ sub level_options
 				edit_boss_health
 				exit do
 				
-			case "c"
-				CondensedLevel = 1 - CondensedLevel
-				LevelUnsaved = 1
+			case "f"
+				transform_options
 				exit do
 				
 			case "m"
@@ -934,6 +1062,11 @@ sub draw_brushes(BrushID as byte)
 				put(32+(BrushX-1)*24,96+(BrushY-1)*24),InvincibleMini,pset
 			elseif .HitDegrade < 0 then
 				put(32+(BrushX-1)*24,96+(BrushY-1)*24),ExplodePic,trans
+				if (GameStyle AND (1 SHL STYLE_FUSION)) then
+					for BID as ubyte = 0 to 1
+						draw_border(0,32+(BrushX-1)*24+BID,96+(BrushY-1)*24+BID,31+(BrushX)*24-BID,95+(BrushY)*24-BID,255-BID*127)
+					next BID
+				end if
 				XplodeCount += 1
 			elseif .HitDegrade > 0 OR .CanRegen > 0 then
 				put(32+(BrushX-1)*24,96+(BrushY-1)*24),MultihitMini,pset
@@ -973,6 +1106,11 @@ sub draw_brushes(BrushID as byte)
 				put(32+(BrushX-1)*48,96+(BrushY-1)*24),InvinciblePic,pset
 			elseif .HitDegrade < 0 then
 				put(32+(BrushX-1)*48,96+(BrushY-1)*24),ExplodePic,trans
+				if (GameStyle AND (1 SHL STYLE_FUSION)) then
+					for BID as ubyte = 0 to 1
+						draw_border(0,32+(BrushX-1)*48+BID,96+(BrushY-1)*24+BID,31+(BrushX)*48-BID,95+(BrushY)*24-BID,255-BID*127)
+					next BID
+				end if
 				XplodeCount += 1
 			elseif .HitDegrade > 0 OR .CanRegen > 0 then
 				put(32+(BrushX-1)*48,96+(BrushY-1)*24),MultihitPic,pset
@@ -1298,146 +1436,160 @@ sub shift_field(ShiftX as byte, ShiftY as byte)
 	LevelUnsaved = 1
 end sub
 
-sub save_level(SaveLvNum as short)
+function save_level(SaveLvNum as short) as integer
 	dim as string SaveFile, PrintBlockChar, SpeedIncrease
 	dim as short SaveRows = 20
+	dim as integer FileError
 	
 	SaveFile = MasterDir+"/campaigns/" + CampaignFolder + "/L"+str(SaveLvNum)+".txt"
-	open SaveFile for output as #2
-	print #2, string(80,"=")
-	print #2, "LEVEL DATA FILE - "+ucase(CampaignName)+" LEVEL "+str(SaveLvNum)
-	print #2, string(80,"=")
-	print #2, "*BEGIN*"
-	print #2, string(80,"=")
-	print #2,
+	FileError = open(SaveFile for output as #2)
+	if FileError = 0 then
+		print #2, string(80,"=")
+		print #2, "LEVEL DATA FILE - "+ucase(CampaignName)+" LEVEL "+str(SaveLvNum)
+		print #2, string(80,"=")
+		print #2, "*BEGIN*"
+		print #2, string(80,"=")
+		print #2,
+		
+		print #2, "Level Name            := "+CampaignLevelName
+		print #2, "Level Description     := "+LevelDescription
+		print #2, "Level Password        := "+CampaignPassword
+		print #2, "Level game number     := "+str(Gamestyle mod 32768)
+		print #2, "Level time limit      := "+str(LevelTimeLimit)
+		if (Gamestyle AND (1 SHL STYLE_BOSS)) XOR (Gamestyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
+			print #2, "Level boss health     := "+str(PlayerSlot(Player).BossMaxHealth)
+		end if
+		print #2, "Number of Brushes     := "+str(BlockBrushes)
+		
+		if (Gamestyle AND (1 SHL STYLE_PROGRESSIVE)) then
+			SaveRows = 24
+		end if
+		
+		for BID as ubyte = 1 to BlockBrushes
+			with Pallete(BID)
+				if .IncreaseSpeed then
+					SpeedIncrease = "TRUE"
+				else
+					SpeedIncrease = "FALSE"
+				end if
+				print #2, "Brush "+str(BID)+" Color"+space(10-len(str(BID)))+":= &h"+hex(.PColoring,8)
+				print #2, "Brush "+str(BID)+" Score Value"+space(4-len(str(BID)))+":= "+str(.ScoreValue);
+				if .DynamicValue then
+					print #2, "*"
+				else
+					print #2,
+				end if
+				print #2, "Brush "+str(BID)+" Hit Degrade"+space(4-len(str(BID)))+":= "+str(.HitDegrade);
+				if .CanRegen then
+					print #2, "*"
+				else
+					print #2,
+				end if
+				print #2, "Brush "+str(BID)+" Increase Spd"+space(3-len(str(BID)))+":= "+SpeedIncrease
+			end with
+		next BID
+		print #2,
 	
-	print #2, "Level Name            := "+CampaignLevelName
-	print #2, "Level Description     := "+LevelDescription
-	print #2, "Level Password        := "+CampaignPassword
-	print #2, "Level game number     := "+str(Gamestyle mod 32768)
-	print #2, "Level time limit      := "+str(LevelTimeLimit)
-	if (Gamestyle AND (1 SHL STYLE_BOSS)) XOR (Gamestyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
-		print #2, "Level boss health     := "+str(PlayerSlot(Player).BossMaxHealth)
-	end if
-	print #2, "Number of Brushes     := "+str(BlockBrushes)
-	
-	if (Gamestyle AND (1 SHL STYLE_PROGRESSIVE)) then
-		SaveRows = 24
-	end if
-	
-	for BID as ubyte = 1 to BlockBrushes
-		with Pallete(BID)
-			if .IncreaseSpeed then
-				SpeedIncrease = "TRUE"
-			else
-				SpeedIncrease = "FALSE"
-			end if
-			print #2, "Brush "+str(BID)+" Color"+space(10-len(str(BID)))+":= &h"+hex(.PColoring,8)
-			print #2, "Brush "+str(BID)+" Score Value"+space(4-len(str(BID)))+":= "+str(.ScoreValue);
-			if .DynamicValue then
-				print #2, "*"
-			else
+		if CondensedLevel then
+			print #2, "Level Grid  1111111111222222222233333333334"
+			print #2, "   1234567890123456789012345678901234567890"
+			print #2, string(43,"-")
+			for YID as ubyte = 1 to SaveRows
+				print #2, space(2-len(str(YID)))+str(YID)+"|";
+				for XID as ubyte = 1 to 40
+					with PlayerSlot(Player).TileSet(XID,YID)
+						if .BrickID = 0 then
+							PrintBlockChar = " "
+						elseif .BrickID < 10 then
+							PrintBlockChar = str(.BrickID)
+						else
+							PrintBlockChar = chr(55+.BrickID)
+						end if
+					end with
+					print #2, PrintBlockChar;
+				next XID
 				print #2,
-			end if
-			print #2, "Brush "+str(BID)+" Hit Degrade"+space(4-len(str(BID)))+":= "+str(.HitDegrade);
-			if .CanRegen then
-				print #2, "*"
-			else
+			next YID
+		else
+			print #2, "Level Grid  11111111112"
+			print #2, "   12345678901234567890"
+			print #2, string(23,"-")
+			for YID as ubyte = 1 to SaveRows
+				print #2, space(2-len(str(YID)))+str(YID)+"|";
+				for XID as ubyte = 1 to 20
+					with PlayerSlot(Player).TileSet(XID,YID)
+						if .BrickID = 0 then
+							PrintBlockChar = " "
+						elseif .BrickID < 10 then
+							PrintBlockChar = str(.BrickID)
+						else
+							PrintBlockChar = chr(55+.BrickID)
+						end if
+					end with
+					print #2, PrintBlockChar;
+				next XID
 				print #2,
-			end if
-			print #2, "Brush "+str(BID)+" Increase Spd"+space(3-len(str(BID)))+":= "+SpeedIncrease
-		end with
-	next BID
-	print #2,
-
-	if CondensedLevel then
-		print #2, "Level Grid  1111111111222222222233333333334"
-		print #2, "   1234567890123456789012345678901234567890"
-		print #2, string(43,"-")
-		for YID as ubyte = 1 to SaveRows
-			print #2, space(2-len(str(YID)))+str(YID)+"|";
-			for XID as ubyte = 1 to 40
-				with PlayerSlot(Player).TileSet(XID,YID)
-					if .BrickID = 0 then
-						PrintBlockChar = " "
-					elseif .BrickID < 10 then
-						PrintBlockChar = str(.BrickID)
-					else
-						PrintBlockChar = chr(55+.BrickID)
-					end if
-				end with
-				print #2, PrintBlockChar;
-			next XID
-			print #2,
-		next YID
-	else
-		print #2, "Level Grid  11111111112"
-		print #2, "   12345678901234567890"
-		print #2, string(23,"-")
-		for YID as ubyte = 1 to SaveRows
-			print #2, space(2-len(str(YID)))+str(YID)+"|";
-			for XID as ubyte = 1 to 20
-				with PlayerSlot(Player).TileSet(XID,YID)
-					if .BrickID = 0 then
-						PrintBlockChar = " "
-					elseif .BrickID < 10 then
-						PrintBlockChar = str(.BrickID)
-					else
-						PrintBlockChar = chr(55+.BrickID)
-					end if
-				end with
-				print #2, PrintBlockChar;
-			next XID
-			print #2,
-		next YID
+			next YID
+		end if
+		
+		print #2,
+		print #2, string(80,"=")
+		print #2, "*END*"
+		print #2, string(80,"=")
+		close #2
+		
+		LevelUnsaved = 0
 	end if
-	
-	print #2,
-	print #2, string(80,"=")
-	print #2, "*END*"
-	print #2, string(80,"=")
-	close #2
-	
-	LevelUnsaved = 0
-end sub
+	return FileError
+end function
 
-sub save_campaign(SaveLvNum as short)
+function save_campaign(SaveLvNum as short) as integer
 	dim as string SaveFile
+	dim as integer FileError
 	mkdir(MasterDir+"/campaigns/community")
 	mkdir(MasterDir+"/campaigns/" + CampaignFolder)
+	
 	SaveFile = MasterDir+"/campaigns/" + CampaignFolder + "/Settings.txt"
-	open SaveFile for output as #3
-	print #3, string(80,"=")
-	print #3, "LEVEL DATA FILE - "+ucase(CampaignName)+" SETTINGS"
-	print #3, string(80,"=")
-	print #3, "*BEGIN*"
-	print #3, string(80,"=")
-	print #3,
-
-	print #3, "Camapign Name         := "+CampaignName
-	print #3, "Starting Lives        := "+str(StartingLives);
-	if ExtraBarrierPoint then
-		print #3, "*"
-	else
+	FileError = open(SaveFile for output as #3)
+	if FileError = 0 then
+		print #3, string(80,"=")
+		print #3, "LEVEL DATA FILE - "+ucase(CampaignName)+" SETTINGS"
+		print #3, string(80,"=")
+		print #3, "*BEGIN*"
+		print #3, string(80,"=")
 		print #3,
+	
+		print #3, "Camapign Name         := "+CampaignName
+		print #3, "Starting Lives        := "+str(StartingLives);
+		if ExtraBarrierPoint then
+			print #3, "*"
+		else
+			print #3,
+		end if
+		print #3, "Base capsule value    := "+str(BaseCapsuleValue)
+		print #3, "Initial life bonus    := "+str(InitialExtraLife)
+		print #3, "Life bonus every      := "+str(SubsequentExtraLives)
+		print #3, "Exploding value       := "+str(ExplodingValue)
+		print #3, "Secrets start at      := "+str(SecretLevels)
+		print #3,
+	
+		print #3, string(80,"=")
+		print #3, "*END*"
+		print #3, string(80,"=")
+		close #3
+	
+		FileError = FileError OR save_level(SaveLvNum)
+		CampaignUnsaved = 0
 	end if
-	print #3, "Base capsule value    := "+str(BaseCapsuleValue)
-	print #3, "Initial life bonus    := "+str(InitialExtraLife)
-	print #3, "Life bonus every      := "+str(SubsequentExtraLives)
-	print #3, "Exploding value       := "+str(ExplodingValue)
-	print #3, "Secrets start at      := "+str(SecretLevels)
-	print #3,
-
-	print #3, string(80,"=")
-	print #3, "*END*"
-	print #3, string(80,"=")
-	close #3
-
-	save_level(SaveLvNum)
-	CampaignUnsaved = 0
-	Instructions = "Save successful"
+	if FileError = 0 then
+		Instructions = "Save successful"
+	else
+		Instructions = "Save failed!"
+	end if
 	InstructExpire = timer + 5
-end sub
+	
+	return FileError
+end function
 
 sub reset_editor_specs
 	MirrorEditing = 0
@@ -1448,4 +1600,5 @@ sub reset_editor_specs
 		Instructions = LevelDescription
 	end if
 end sub
+
 

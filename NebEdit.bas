@@ -82,15 +82,25 @@ do
 		else
 			ui_element(TimeStr,560,6,5,rgb(255,255,255))
 		end if
+		
+		if .BossMaxHealth < 1e4 then
+			BossHP = str(.BossMaxHealth)
+		elseif .BossMaxHealth < 1e6 then
+			BossHP = str(ceil(.BossMaxHealth/1e3))+"K"
+		elseif .BossMaxHealth < 1e9 then
+			BossHP = str(ceil(.BossMaxHealth/1e6))+"M"
+		else
+			BossHP = str(ceil(.BossMaxHealth/1e9))+"B"
+		end if
 	
 		'Boss/Ceiling health display
 		if MouseX >= 669 AND MouseY >= 5 AND MouseX < 742 AND MouseY < 32 then
-			ui_element(str(.BossMaxHealth),671,6,4,rgb(255,255,0))
+			ui_element(BossHP,671,6,4,rgb(255,255,0))
 			if ButtonCombo > 0 then
 				edit_boss_health
 			end if
 		else
-			ui_element(str(.BossMaxHealth),671,6,4,rgb(255,255,255))
+			ui_element(BossHP,671,6,4,rgb(255,255,255))
 		end if
 	
 		'Password display
