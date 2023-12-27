@@ -82,7 +82,7 @@ Electric Recharge is an artistic 20-level campaign, referencing an computing the
 Patriarch Memorial is an artistic 25-level campaign, designed as a memory of the past. Moderate-Hard difficulty. Save points are present in every level up to level 23. No continues are permitted beyond this level.
 
 #### Fusion Designs
-Fusion Designs is a shorter than usual 14-level campaign. This campaign makes use of the newly introduced "brick fusion" mechanic, allowing for blocks of *any* shape. Save points are present in every level up to level 13.
+Fusion Designs is a hybrid 20-level campaign. This campaign makes use of the newly introduced "brick fusion" mechanic, allowing for blocks of *any* shape. Save points are present in every level up to level 19.
 
 #### Challenge Campaign
 The 30-level Challenge Campaign amps up the difficulty several notches by spamming strong blocks like it is hard to believe. Every level demonstrates one or more of the following: Invincible blocks, strong blocks (some will be bio-regenerative), and invisible blocks that may lead to any of the preceding elements
@@ -95,7 +95,7 @@ Maximum Insanity makes Challenge Campaign look easy by mixing the most dangerous
 #### Celestial Journey
 Celestial Journey is the longest finite official campaign, at 40 levels. It makes plenty of cross-universe references, and is still on par with that of the **Challenge Campaign**.
 
-Like Maximum Insanity, save points appear every five levels starting with level 1. Unlike previous campaigns, every ten levels starting at level 10 is a boss battle, and continues are disallowed on these levels.
+Like Maximum Insanity, save points appear every five levels starting with level 1. In addition to a final boss at level 40, there is a mid-boss at level 20. Both of these levels disallow continues.
 
 #### Endless Shuffle
 Endless Shuffle is a unique official campaign, technically comprised of unlimited length. Specifically, this campaign will shuffle *all* of the previous levels into a single gigantic experience. Because of its unique shuffling mechanism, its difficulty is naturally unpredictable. This campaign is also the hardest / takes the longest to unlock, requiring a true 100% completion to even unlock.

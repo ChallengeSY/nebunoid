@@ -4,72 +4,60 @@ LEVEL DATA FILE - FUSION DESIGNS LEVEL 8
 *BEGIN*
 ================================================================================
 
-Level Name            := Hidden Locks
+Level Name            := Trimino Layering
 Level Description     := 
-Level Password        := JSXSKVNA
-Level game number     := 2187
+Level Password        := APHPZACC
+Level game number     := 2051
 Level time limit      := 0
-Number of Brushes     := 9
-Brush 1 Color         := &h80FF8000
+Number of Brushes     := 6
+Brush 1 Color         := &h80890D7C
 Brush 1 Score Value   := 10*
-Brush 1 Hit Degrade   := -1
+Brush 1 Hit Degrade   := 0
 Brush 1 Increase Spd  := FALSE
-Brush 2 Color         := &hB0FFD700
+Brush 2 Color         := &h80BE007F
 Brush 2 Score Value   := 10*
-Brush 2 Hit Degrade   := 2
+Brush 2 Hit Degrade   := 0
 Brush 2 Increase Spd  := FALSE
-Brush 3 Color         := &hB0CD7F32
+Brush 3 Color         := &h80B83A32
 Brush 3 Score Value   := 10*
-Brush 3 Hit Degrade   := 2
+Brush 3 Hit Degrade   := 0
 Brush 3 Increase Spd  := FALSE
-Brush 4 Color         := &h80BC241A
+Brush 4 Color         := &h80945D1F
 Brush 4 Score Value   := 10*
 Brush 4 Hit Degrade   := 0
 Brush 4 Increase Spd  := FALSE
-Brush 5 Color         := &h80BC241A
-Brush 5 Score Value   := 10*
-Brush 5 Hit Degrade   := 0
+Brush 5 Color         := &hB0CD7F32
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 6
 Brush 5 Increase Spd  := FALSE
-Brush 6 Color         := &h807A14C0
+Brush 6 Color         := &hB0FFD700
 Brush 6 Score Value   := 10*
-Brush 6 Hit Degrade   := 0
-Brush 6 Increase Spd  := FALSE
-Brush 7 Color         := &h807A14C0
-Brush 7 Score Value   := 10*
-Brush 7 Hit Degrade   := 0
-Brush 7 Increase Spd  := FALSE
-Brush 8 Color         := &h808875C9
-Brush 8 Score Value   := 10*
-Brush 8 Hit Degrade   := 0
-Brush 8 Increase Spd  := FALSE
-Brush 9 Color         := &h808875C9
-Brush 9 Score Value   := 10*
-Brush 9 Hit Degrade   := 0
-Brush 9 Increase Spd  := FALSE
+Brush 6 Hit Degrade   := 6
+Brush 6 Increase Spd  := TRUE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|         11         
- 2| 333333333333333333 
- 3| 34545454  45454543 
- 4| 35454545  54545453 
- 5| 34545454  45454543 
- 6| 3   3333333333   3 
- 7| 3  33        33  3 
- 8| 3 33    11    33 3 
- 9| 3 3 3333333333 3 3 
-10| 3 3 3898  8983 3 3 
-11| 3 3 3333333333 3 3 
-12| 3 376767  767673 3 
-13| 3 367676  676763 3 
-14| 3 376767  767673 3 
-15| 3 367676  676763 3 
-16| 3 33333333333333 3 
-17| 3 45454 11 45454 3 
-18| 3 54545    54545 3 
-19| 333333333333333333 
-20|                    
+ 1|1144334411433211334 
+ 2|12243114134432212344
+ 3|42332213233123322 33
+ 4|44344233221122355223
+ 5|332411443344114 5211
+ 6|31221224311413443321
+ 7|41134233221323312322
+ 8|44334434423322112233
+ 9|11223324114433441143
+10|13323122122431141344
+11|44314113423322132331
+12|34114433443442332211
+13|33221122332411443344
+14|22321332312212243114
+15|12334431411342552213
+16|1125 411443344544233
+17|32255322112233241144
+18|33 22332133231221224
+19|44321223443141134233
+20| 433112334114433443 
 
 ================================================================================
 *END*

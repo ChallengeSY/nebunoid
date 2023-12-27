@@ -55,7 +55,7 @@ const FunctionTwelve = chr(255,134)
 const FPS = 60
 const SavedHighSlots = 10
 const TotalHighSlots = SavedHighSlots + 4
-const TotalOfficialLevels = 260
+const TotalOfficialLevels = 266
 const MaxBullets = 40
 const BaseFlash = 128
 const LevelClearDelay = 640
@@ -374,7 +374,7 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.Namee = "Fusion Designs"
 					.Folder = "official/fusion"
 					.Difficulty = "Medium to Hard"
-					.SetSize = 14
+					.SetSize = 20
 				case 8
 					.Namee = "Challenge Campaign"
 					.Folder = "official/challenge"
@@ -400,7 +400,7 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.Folder = "official/endless"
 					.Difficulty = "Unpredictable"
 					.SetSize = 1000
-					if TotalStars >= 220 then
+					if TotalStars >= 236 then
 						.StarsToUnlock = TotalOfficialLevels 'ALL of the previous levels
 					else
 						.StarsToUnlock = 1000 'Keep the player from knowing the exact requirement at first
@@ -425,8 +425,14 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					close #19
 					
 					.SetMastered = -abs(sgn(FileExists(.Namee+".flag")))
-					if .SetMastered = 0 then
-						'Campaign has not yet been cleared; exclude a star from this calculation
+					if .SetMastered AND LevelsCleared < .TrueSize then
+						/'
+						 ' Invalidate mastery if this was a false final level clear
+						 ' (Keep the star credit, though)
+						 '/
+						.SetMastered = 0
+					elseif .SetMastered = 0 then
+						'Campaign has not been cleared; exclude a star from this calculation
 						LevelsCleared -= 1
 					end if
 				else
@@ -839,10 +845,13 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 	put ExplodePic,(-int(ExplodeCycle/ExplodeAniRate),0),BaseExplode,pset
 	if CondensedLevel then
 		line ExplodePic,(24,0)-(47,23),rgb(255,0,255),bf
-		for BID as ubyte = 0 to 1
-			draw_border(ExplodePic,BID,BID,23-BID,23-BID,255-BID*127)
-		next BID
-	else
+		
+		if (Gamestyle AND (1 SHL STYLE_FUSION)) = 0 then
+			for BID as ubyte = 0 to 1
+				draw_border(ExplodePic,BID,BID,23-BID,23-BID,255-BID*127)
+			next BID
+		end if
+	elseif (Gamestyle AND (1 SHL STYLE_FUSION)) = 0 then
 		for BID as ubyte = 0 to 1
 			draw_border(ExplodePic,BID,BID,47-BID,23-BID,255-BID*127)
 		next BID

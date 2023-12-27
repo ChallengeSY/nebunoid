@@ -4,72 +4,52 @@ LEVEL DATA FILE - FUSION DESIGNS LEVEL 3
 *BEGIN*
 ================================================================================
 
-Level Name            := Wall busting puzzle
+Level Name            := Rectangular Checkerboard
 Level Description     := 
-Level Password        := HSTAKKJE
-Level game number     := 2051
+Level Password        := CXPHSUKU
+Level game number     := 2059
 Level time limit      := 0
-Number of Brushes     := 9
-Brush 1 Color         := &h80404040
+Number of Brushes     := 4
+Brush 1 Color         := &h800000FF
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 0
 Brush 1 Increase Spd  := FALSE
-Brush 2 Color         := &h80808080
-Brush 2 Score Value   := 2
-Brush 2 Hit Degrade   := 1
+Brush 2 Color         := &h804040FF
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
 Brush 2 Increase Spd  := FALSE
-Brush 3 Color         := &h80FFFFFF
-Brush 3 Score Value   := 2
-Brush 3 Hit Degrade   := 2
+Brush 3 Color         := &h80FF0000
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
 Brush 3 Increase Spd  := FALSE
-Brush 4 Color         := &h80FFFFFF
-Brush 4 Score Value   := 2
-Brush 4 Hit Degrade   := 2
+Brush 4 Color         := &h80FF4040
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
 Brush 4 Increase Spd  := FALSE
-Brush 5 Color         := &h80FFFFFF
-Brush 5 Score Value   := 2
-Brush 5 Hit Degrade   := 2
-Brush 5 Increase Spd  := FALSE
-Brush 6 Color         := &hB0FFD700
-Brush 6 Score Value   := 10*
-Brush 6 Hit Degrade   := 6
-Brush 6 Increase Spd  := FALSE
-Brush 7 Color         := &hB0CD7F32
-Brush 7 Score Value   := 2
-Brush 7 Hit Degrade   := 6
-Brush 7 Increase Spd  := FALSE
-Brush 8 Color         := &hB0CD7F32
-Brush 8 Score Value   := 2
-Brush 8 Hit Degrade   := 6
-Brush 8 Increase Spd  := FALSE
-Brush 9 Color         := &h80FF8000
-Brush 9 Score Value   := 10*
-Brush 9 Hit Degrade   := -1
-Brush 9 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|                    
- 2| 777888777888777888 
- 3|  8337558447558337  
- 4|  8447448337448447  
- 5| 965563365563365569 
- 6|  6446446336446446  
- 7|  6336556446556336  
- 8| 888777888777888777 
- 9|  6  6  9  9  6  6  
-10| 96  6  6  6  6  69 
-11|  6 96  6  6  69 6  
-12|  6  6  9  9  6  6  
-13| 888777888777888777 
-14|  6336556446556336  
-15|  6446446336446446  
-16| 965563365563365569 
-17|  8447448337448447  
-18|  8337558447558337  
-19| 777888777888777888 
-20|                    
+ 1|11341134113411341134
+ 2|22342234223422342234
+ 3|34224322432243224311
+ 4|34114311431143114322
+ 5|11431134113411342234
+ 6|22432234223422341134
+ 7|34223422432243114311
+ 8|34113411431143224322
+ 9|11431143113422342234
+10|22432243223411341134
+11|34223422341143114311
+12|34113411342243224322
+13|11431143224322342234
+14|22432243114311341134
+15|34223411341134114311
+16|34113422342234224322
+17|11432243224322432234
+18|22431143114311431134
+19|34113411341134113411
+20|34223422342234223422
 
 ================================================================================
 *END*
