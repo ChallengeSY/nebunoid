@@ -248,6 +248,8 @@ sub local_gameplay
 			if DQ = 0 then
 				if .LevelNum > HighLevel AND .Lives > 0 then
 					HighLevel = .LevelNum
+					'Clear victory flag; likely new levels discovered
+					kill(CampaignName+".flag")
 				end if
 			end if
 			
@@ -2339,8 +2341,8 @@ sub local_gameplay
 										capsule_message("SPREAD EXPLODING")
 										for YID as byte = 1 to 20
 											for XID as byte = 1 to 20*(CondensedLevel+1)
-												with Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID)
-													if .HitDegrade < 0 AND AlreadySpread(XID,YID) = 0 then
+												with PlayerSlot(Player).TileSet(XID,YID)
+													if Pallete(.BrickID).HitDegrade < 0 AND AlreadySpread(XID,YID) = 0 then
 														AlreadySpread(XID,YID) = 1
 		
 														for YDID as byte = YID - 1 to YID + 1
@@ -2351,12 +2353,24 @@ sub local_gameplay
 																	PlayerSlot(Player).TileSet(XDID,YDID).BrickID <> PlayerSlot(Player).TileSet(XID,YID).BrickID then
 																	AlreadySpread(XDID,YDID) = 1
 																	PlayerSlot(Player).TileSet(XDID,YDID).BrickID = PlayerSlot(Player).TileSet(XID,YID).BrickID
-																	PlayerSlot(Player).TileSet(XDID,YDID).BaseBrickID = PlayerSlot(Player).TileSet(XID,YID).BaseBrickID
+																	if PlayerSlot(Player).TileSet(XDID,YDID).BaseBrickID = 0 then
+																		PlayerSlot(Player).TileSet(XDID,YDID).BaseBrickID = ZapBrush
+																	end if
 																end if
 															next XDID
 														next YDID
+													elseif .BrickID = 0 AND (GameStyle AND (1 SHL STYLE_FUSION)) then
+														.BaseBrickID = 0
 													end if
 												end with
+											next XID
+										next YID
+										
+										for YID as byte = 1 to 20
+											for XID as byte = 1 to 20*(CondensedLevel+1)
+												if AlreadySpread(XID,YID) then
+													damage_brick(XID,YID,PlayerSlot(Player).TileSet(XID,YID).BrickID)
+												end if
 											next XID
 										next YID
 										erase AlreadySpread
@@ -2815,6 +2829,11 @@ sub local_gameplay
 					if DQ = 0 then
 						TotalXP += int(.Score * .Difficulty)
 						high_score_input(Player)
+						if FileExists(CampaignName+".flag") = 0 then
+							'Intentionally empty victory file
+							open CampaignName+".flag" for output as #21
+							close #21
+						end if
 					end if
 					empty_hand(Player)
 	
@@ -2837,7 +2856,7 @@ sub local_gameplay
 						TotalXP += int(.Score * .Difficulty * 2)
 						high_score_input(Player)
 						if FileExists(CampaignName+".flag") = 0 then
-							'Intentionally empty victory file
+							'Just like before, only this is for a true victory
 							open CampaignName+".flag" for output as #21
 							close #21
 						end if
