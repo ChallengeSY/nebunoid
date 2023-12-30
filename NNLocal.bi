@@ -1031,6 +1031,10 @@ sub brick_collisions(BallID as short)
 								NewPalette = 0
 								play_clip(SFX_BRICK,.X)
 							elseif .Power = 1 then
+								if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade > 0 then
+									PlayerSlot(Player).Score += 2 * ball_ct_bonus
+									PointsScored += 2 * ball_ct_bonus
+								end if
 								NewPalette = 0
 								play_clip(SFX_BRICK,.X)
 							elseif Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade = PlayerSlot(Player).TileSet(XID,YID).BrickID then
