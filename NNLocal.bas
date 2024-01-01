@@ -1175,34 +1175,12 @@ sub local_gameplay
 								end if
 
 								play_clip(SFX_WALL,.X,convert_speed(.Speed))
-								.Trapped += 1
 								adjust_speed(BID,ActiveDifficulty / 100)
 								if .Power = -2 then
 									.Power = 0
 									TotalBC += 1
 								end if
-								if .Trapped >= TrapThreshold then
-									if GameStyle AND (1 SHL STYLE_BOSS) then
-										.Trapped = 0
-										.Speed = 0
-										TotalBC -= 1
-										
-										Instructions = "Balls that get stuck during a boss fight are removed from play."
-										InstructExpire = timer + 12
-										if TotalBC = 0 AND CampaignBarrier = 0 then
-											PlayerSlot(Player).Lives += 1
-										end if
-									else
-										.Trapped = 0
-										.Power = 1
-										.Duration = 60^2
-
-										if DisableHints = 0 then
-											Instructions = "Balls that get stuck can now kill any blocks in one hit!"
-											InstructExpire = timer + 12
-										end if
-									end if
-								end if
+								inc_tick_mark(Ball(BID))
 								.Angle = 180 - .Angle
 							elseif .X > 992 - BallSize AND _
 								(remainder(.Angle+3600,360) < 90 OR _
@@ -1216,34 +1194,12 @@ sub local_gameplay
 								end if
 
 								play_clip(SFX_WALL,.X,convert_speed(.Speed))
-								.Trapped += 1
 								adjust_speed(BID,ActiveDifficulty / 100)
 								if .Power = -2 then
 									.Power = 0
 									TotalBC += 1
 								end if
-								if .Trapped >= TrapThreshold then
-									if GameStyle AND (1 SHL STYLE_BOSS) then
-										.Trapped = 0
-										.Speed = 0
-										TotalBC -= 1
-										
-										Instructions = "Balls that get stuck during a boss fight are removed from play."
-										InstructExpire = timer + 12
-										if TotalBC = 0 AND CampaignBarrier = 0 then
-											PlayerSlot(Player).Lives += 1
-										end if
-									else
-										.Trapped = 0
-										.Power = 1
-										.Duration = 60^2
-
-										if DisableHints = 0 then
-											Instructions = "Balls that get stuck can now kill any blocks in one hit!"
-											InstructExpire = timer + 12
-										end if
-									end if
-								end if
+								inc_tick_mark(Ball(BID))
 								.Angle = 180 - .Angle
 							end if
 							brick_collisions(BID)
@@ -1303,17 +1259,7 @@ sub local_gameplay
 									if GameStyle AND (1 SHL STYLE_BOSS) then
 										.Trapped = 0
 									else
-										.Trapped += 1
-										if .Trapped >= 150 then
-											.Trapped = 0
-											.Power = 1
-											.Duration = 60^2
-	
-											if DisableHints = 0 then
-												Instructions = "Balls that get stuck can now kill any blocks in one hit!"
-												InstructExpire = timer + 12
-											end if
-										end if
+										inc_tick_mark(Ball(BID))
 									end if
 									.Spawned = 0
 									dynamic_speed_clip(.Speed,.X)
@@ -1402,17 +1348,7 @@ sub local_gameplay
 										end if
 									end with
 								else
-									.Trapped += 1
-									if .Trapped >= 150 then
-										.Trapped = 0
-										.Power = 1
-										.Duration = 60^2
-	
-										if DisableHints = 0 then
-											Instructions = "Balls that get stuck can now kill any blocks in one hit!"
-											InstructExpire = timer + 12
-										end if
-									end if
+									inc_tick_mark(Ball(BID))
 								end if
 								.Y = MinPlayHeight + BallSize
 								.Invul = 0
@@ -2483,7 +2419,7 @@ sub local_gameplay
 						.Threshold += SubsequentExtraLives
 					end if
 					
-					Instructions = "Extra life earned - Next life at "+str(.Threshold)+" points"
+					Instructions = "Extra life earned - Next life at "+commaSep(.Threshold)+" points"
 				else
 					.Threshold = 0
 					Instructions = "Extra life earned"
@@ -2560,7 +2496,7 @@ sub local_gameplay
 				end if
 			else
 				for HID as ubyte = 0 to NumHints
-					GameHints(HID) = DisableHints * 9
+					GameHints(HID) = abs(sgn(HintLevel < 3)) * 9
 				next HID
 				if NumPlayers > 1 then
 					MPAlternate += 1
@@ -2700,7 +2636,7 @@ sub local_gameplay
 				Instructions = "Below 0:30, further hits increase the warp timer"
 				InstructExpire = timer + 10
 				GameHints(4) = 3
-			elseif LevelDesc = 0 AND DisableHints = 0 AND len(LevelDescription) > 0 then
+			elseif LevelDesc = 0 AND HintLevel >= 1 AND len(LevelDescription) > 0 then
 				LevelDesc = 1
 				Instructions = LevelDescription
 				InstructExpire = timer + 4 + len(LevelDescription)/10

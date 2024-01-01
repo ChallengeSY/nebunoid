@@ -267,13 +267,13 @@ const BackCount = 99
 
 dim shared as ushort MinSize, StandardSize, MaxSize, CapsFalling, BulletsInPlay, _
 	Credits, CoinsPerCredit, CeleYear, BrickCount, XplodeCount, ZappableCount, Combo
-dim shared as short PaddleSize, CampaignBarrier, BulletStart, BacksLoaded, BoxGlow
+dim shared as short PaddleSize, HintLevel, CampaignBarrier, BulletStart, BacksLoaded, BoxGlow
 dim shared as HighSlot HighScore(TotalHighSlots)
 dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP, TotalStars
 dim shared as uinteger GameStyle, TourneyStyle, TourneyScore, ShotIndex
 
 dim shared as ubyte Fullscreen, JoyAnalog, JoyInvertAxes, ControlStyle, TapWindow, CondensedLevel, _
-	AllowHandicap, DisableHints, ShuffleLevels
+	AllowHandicap, ShuffleLevels
 dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness
 dim shared as single JoyAxis(7)
 dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, BlockBrushes
@@ -774,12 +774,12 @@ sub save_unlocks
 		print #10, "difficulty,"& PlayerSlot(Plr).Difficulty
 	next Plr
 	print #10, "handicap,";AllowHandicap
-	print #10, "nohints,";DisableHints
+	print #10, "hintlv,"& HintLevel
 	print #10, "enhanced,"& EnhancedGFX
 	print #10, "controls,";ControlStyle
 	print #10, "campbarr,";CampaignBarrier
 	print #10, "shuffle,";ShuffleLevels
-	print #10, "bgbright,";BGBrightness
+	print #10, "bgbright,"& BGBrightness
 	print #10, "musplayer,"& MusicPlrEnabled
 	print #10, "xp,"& TotalXP
 	close #10

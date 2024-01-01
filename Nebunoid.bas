@@ -36,7 +36,7 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.10"
+windowtitle "Nebunoid 1.11"
 
 'Foreground assets
 load_brick_gfx(MasterDir+"/gfx/blocks/")
@@ -105,6 +105,7 @@ line PaddleBar,(635,5)-(635,26),rgb(255,255,255)
 #ENDIF
 
 MusicPlrEnabled = 1
+HintLevel = 3
 
 'Background pooling
 BGBrightness = 50
@@ -137,8 +138,8 @@ if FileExists("conf.ini") then
 				end if
 			case "handicap"
 				input #10, AllowHandicap
-			case "nohints"
-				input #10, DisableHints
+			case "hintlv"
+				input #10, HintLevel
 			case "enhanced"
 				input #10, EnhancedGFX
 			case "controls"
@@ -188,7 +189,7 @@ do
 	put (0,0),Sideframes,trans
 	Result = getmouse(MouseX,MouseY,0,ButtonCombo)
 	put (40,10),TitleBanner,trans
-	gfxstring("Copyright (C) 2023 Paul Ruediger",0,753,3,3,2,rgb(255,255,255))
+	gfxstring("Copyright (C) 2023-2024 Paul Ruediger",0,753,3,3,2,rgb(255,255,255))
 
 	gfxstring("Exit",40,250,5,5,3,rgb(255,255,255))
 
@@ -406,7 +407,7 @@ sub shop
 	CustomItem(2,8) = "USB controller 4 "
 	CustomItem(2,10) = "Controller type"
 	CustomItem(2,11) = "Invert axes    "
-	CustomItem(MISC,1) = "Disable game hints     "
+	CustomItem(MISC,1) = "Game hint system       "
 	CustomItem(MISC,2) = "Enhanced particle GFX  "
 	CustomItem(MISC,3) = "Campaign barrier system"
 	CustomItem(MISC,4) = "Shuffle levels         "
@@ -758,7 +759,7 @@ sub shop
 				if MouseY >= SelY AND MouseY < SelY+30 then
 					select case PID
 						case 1
-							ItemDesc = "While active, no game or capsule hints will be given, except mystery capsules"
+							ItemDesc = "The hint level system determines which hints are given."
 						case 2
 							ItemDesc = "Enables particles to drop when blocks are hit. Sometimes gets intensive"
 						case 3
@@ -777,14 +778,12 @@ sub shop
 				#IFNDEF __USE_FBSOUND__
 				if PID = 7 then
 					gfxstring(CustomItem(MISC,PID)+" (unsupported)",5,PosY,4,4,3,rgb(128,128,128))
-				elseif (PID = 1 AND DisableHints = 1) OR _
-					(PID = 2 AND EnhancedGFX = 1) OR _
+				elseif (PID = 2 AND EnhancedGFX = 1) OR _
 					(PID = 3 AND CampaignBarrier = 1) OR _
 					(PID = 4 AND ShuffleLevels = 1) OR _
 					(PID = 5 AND FullScreen = 1) then
 				#ELSE
-				if (PID = 1 AND DisableHints = 1) OR _
-					(PID = 2 AND EnhancedGFX = 1) OR _
+				if (PID = 2 AND EnhancedGFX = 1) OR _
 					(PID = 3 AND CampaignBarrier = 1) OR _
 					(PID = 4 AND ShuffleLevels = 1) OR _
 					(PID = 5 AND FullScreen = 1) OR _
@@ -795,8 +794,6 @@ sub shop
 						draw_box(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							select case PID
-								case 1
-									DisableHints = 0
 								case 2
 									EnhancedGFX = 0
 								case 3
@@ -808,6 +805,26 @@ sub shop
 								case 7
 									MusicPlrEnabled = 0
 							end select
+						end if
+					end if
+				elseif PID = 1 then
+					select case HintLevel
+						case 0
+							gfxstring(CustomItem(MISC,PID)+" (No hints active)",5,PosY,4,4,3,rgb(255,255,255))
+						case 1
+							gfxstring(CustomItem(MISC,PID)+" (Level hints active)",5,PosY,4,4,3,rgb(128,255,128))
+						case 2
+							gfxstring(CustomItem(MISC,PID)+" (Capsule and level hints active)",5,PosY,4,4,3,rgb(128,255,128))
+						case else
+							gfxstring(CustomItem(MISC,PID)+" (All hints active)",5,PosY,4,4,3,rgb(0,255,0))
+					end select
+					if MouseY >= SelY AND MouseY < SelY+30 then
+						draw_box(0,SelY,1023,SelY+29)
+						if ButtonCombo > 0 AND HoldClick = 0 then
+							HintLevel -= 1
+							if HintLevel < 0 then
+							 	HintLevel = 3
+							end if
 						end if
 					end if
 				elseif PID = 6 then
@@ -827,8 +844,6 @@ sub shop
 						draw_box(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							select case PID
-								case 1
-									DisableHints = 1
 								case 2
 									EnhancedGFX = 1
 								case 3

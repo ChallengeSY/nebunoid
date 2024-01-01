@@ -821,6 +821,34 @@ sub damage_brick(BaseX as short, BaseY as short, NewPalette as short, NewID as s
 	end with
 end sub
 
+sub inc_tick_mark(ActiveObj as Basics)
+	with ActiveObj
+		.Trapped += 1
+		if .Trapped >= TrapThreshold then
+			if GameStyle AND (1 SHL STYLE_BOSS) then
+				.Trapped = 0
+				.Speed = 0
+				TotalBC -= 1
+				
+				Instructions = "Balls that get stuck during a boss fight are removed from play"
+				InstructExpire = timer + 12
+				if TotalBC = 0 then
+					PlayerSlot(Player).Lives += 1
+				end if
+			else
+				.Trapped = 0
+				.Power = 1
+				.Duration = 60^2
+				
+				if HintLevel >= 3 then
+					Instructions = "Balls that get stuck can now kill any blocks in one hit!"
+					InstructExpire = timer + 12
+				end if
+			end if
+		end if
+	end with
+end sub
+
 sub brick_collisions(BallID as short)
 	dim as ubyte HitFailed, PointsScored, ChooseParticle
 	dim as uinteger ColorDestroyed
@@ -890,29 +918,7 @@ sub brick_collisions(BallID as short)
 							else
 								adjust_speed(BallID,ActiveDifficulty / 100)
 							end if
-							.Trapped += 1
-							if .Trapped >= TrapThreshold then
-								if GameStyle AND (1 SHL STYLE_BOSS) then
-									.Trapped = 0
-									.Speed = 0
-									TotalBC -= 1
-									
-									Instructions = "Balls that get stuck during a boss fight are removed from play"
-									InstructExpire = timer + 12
-									if TotalBC = 0 then
-										PlayerSlot(Player).Lives += 1
-									end if
-								else
-									.Trapped = 0
-									.Power = 1
-									.Duration = 60^2
-									
-									if DisableHints = 0 then
-										Instructions = "Balls that get stuck can now kill any blocks in one hit!"
-										InstructExpire = timer + 12
-									end if
-								end if
-							end if
+							inc_tick_mark(Ball(BallID))
 						else
 							dim as ubyte PalleteRef, NewBrick, ColorRef
 							NewBrick = Pallete(PalleteRef).HitDegrade
@@ -925,29 +931,7 @@ sub brick_collisions(BallID as short)
 							
 							if .Power <= 0 then
 								if Pallete(PalleteRef).CalcedInvulnerable >= 2 then
-									.Trapped += 1
-									if .Trapped >= TrapThreshold then
-										if GameStyle AND (1 SHL STYLE_BOSS) then
-											.Trapped = 0
-											.Speed = 0
-											TotalBC -= 1
-		
-											Instructions = "Balls that get stuck during a boss fight are removed from play"
-											InstructExpire = timer + 12
-											if TotalBC = 0 AND CampaignBarrier = 0 then
-												PlayerSlot(Player).Lives += 1
-											end if
-										else
-											.Trapped = 0
-											.Power = 1
-											.Duration = 60^2
-											
-											if DisableHints = 0 then
-												Instructions = "Balls that get stuck can now kill any blocks in one hit!"
-												InstructExpire = timer + 12
-											end if
-										end if
-									end if
+									inc_tick_mark(Ball(BallID))
 								elseif NewBrick = 0 OR Pallete(NewBrick).CanRegen = 0 then
 									'Reset trap and (if needed) warp timer, but do not apply these to regen blocks
 									.Trapped = 0
@@ -1652,7 +1636,7 @@ sub transfer_control(GameEnded as ubyte = 0)
 end sub
 
 sub capsule_message(NewText as string, AlwaysShow as byte = 0)
-	if DisableHints = 0 OR AlwaysShow then
+	if HintLevel >= 2 OR AlwaysShow then
 		Instructions = NewText
 		InstructExpire = timer + max(5,2+len(NewText)/4)
 	end if
