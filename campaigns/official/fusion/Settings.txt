@@ -7,8 +7,8 @@ LEVEL DATA FILE - FUSION DESIGNS SETTINGS
 Camapign Name         := Fusion Designs
 Starting Lives        := 3
 Base capsule value    := 100
-Initial life bonus    := 0
-Life bonus every      := 0
+Initial life bonus    := 25000
+Life bonus every      := 35000
 Exploding value       := 8
 Secrets start at      := 0
 
