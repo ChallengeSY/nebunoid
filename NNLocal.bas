@@ -46,7 +46,7 @@ sub local_gameplay
 		end if
 		empty_hand(0)
 	end with
-	begin_local_game(0, 1)
+	begin_local_game(-1, 1)
 	
 	if LoadErrors then
 		exit sub
@@ -72,6 +72,7 @@ sub local_gameplay
 
 	NewPlrSlot.Lives = StartingLives + (ExtraBarrierPoint * CampaignBarrier)
 	InPassword = "--------"
+	SavedControls = ControlStyle
 	do
 		PlayerSlot(0).Difficulty = max(PlayerSlot(1).Difficulty,max(PlayerSlot(2).Difficulty,max(PlayerSlot(3).Difficulty,PlayerSlot(4).Difficulty)))
 		
@@ -245,7 +246,7 @@ sub local_gameplay
 		end if
 
 		with PlayerSlot(Player)
-			if DQ = 0 then
+			if DQ = 0 AND ControlStyle >= CTRL_DESKTOP then
 				if .LevelNum > HighLevel AND .Lives > 0 then
 					HighLevel = .LevelNum
 					'Clear victory flag; likely new levels discovered
@@ -637,7 +638,7 @@ sub local_gameplay
 			
 		if TotalBC = 1 AND ContinuousSplit = 1 then
 			force_release_balls
-			for BID as ubyte = 1 to NumBalls
+			for BID as short = 1 to NumBalls
 				with Ball(BID)
 					if .Speed > 0 then
 						for NewBall as short = 1 to 100
@@ -674,7 +675,37 @@ sub local_gameplay
 			.Grabbed = .X
 			.Y = 736 - PaddleHeight
 			if GamePaused = 0 then
-				if ControlStyle <= CTRL_LAPTOP then
+				if ControlStyle = CTRL_AI then
+					dim as Basics Deepest
+					dim as short ObjsFound = 0
+					Deepest.Y = 600.0
+					Deepest.X = DesireX
+					
+					for BID as short = 1 to NumBalls
+						with Ball(BID)
+							if .Y > Deepest.Y AND .Y < 736 + BallSize AND sin(degtorad(.Angle)) < 0 then
+								Deepest.Y = .Y
+								Deepest.X = .X
+								ObjsFound += 1
+							end if
+						end with
+					next BID
+					
+					for CID as short = 1 to MaxFallCaps
+						with Capsule(CID)
+							if .Y > Deepest.Y AND .Y < 736 AND .Angle <> CAP_SLOW AND .Angle <> CAP_NEGATER AND _
+								.Angle <> CAP_SLOW_PAD AND .Angle <> CAP_WEAK AND .Angle <> CAP_GRAVITY then
+								Deepest.Y = .Y
+								Deepest.X = .X
+								ObjsFound += 1
+							end if
+						end with
+					next CID
+
+					if ObjsFound > 0 AND (abs(DesireX - Deepest.X) > PaddleSize/2 OR abs(DesireX - Deepest.X) < 1) then 
+						DesireX = Deepest.X + irandom(-20,20)
+					end if
+				elseif ControlStyle <= CTRL_LAPTOP then
 					Result = getmouse(MouseX,0,0,ButtonCombo)
 					if Result = 0 then
 						if .Reverse > 0 then
@@ -1403,7 +1434,7 @@ sub local_gameplay
 				end with
 			next BID
 			
-			if (InType = "p" OR DebugConsole OR e.type = EVENT_WINDOW_LOST_FOCUS) AND LevelClear = 0 then
+			if (InType = "p" OR DebugConsole OR (e.type = EVENT_WINDOW_LOST_FOCUS AND ControlStyle >= CTRL_DESKTOP)) AND LevelClear = 0 then
 				GamePaused = 1
 			end if
 		elseif LevelClear > 0 then
@@ -1699,7 +1730,7 @@ sub local_gameplay
 								FreezeStr = (FreezeStr + 60) / 2 
 								Instructions = "Blizzard granted"
 							elseif DebugCode = "CURVEDOWN" then
-								for BID as ubyte = 1 to NumBalls
+								for BID as short = 1 to NumBalls
 									with Ball(BID)
 										if .Speed > 0 AND .Power <> -2 then
 											.Gravity = 900
@@ -1725,7 +1756,7 @@ sub local_gameplay
 									case 3
 										reset_paddle(1)
 									case 4
-										for BID as ubyte = 1 to NumBalls
+										for BID as short = 1 to NumBalls
 											with Ball(BID)
 												if .Speed > 0 then
 													.Power = -1
@@ -1749,7 +1780,7 @@ sub local_gameplay
 						end if
 						
 						with Paddle(1)
-							if ControlStyle <= CTRL_LAPTOP then
+							if ControlStyle >= CTRL_DESKTOP AND ControlStyle <= CTRL_LAPTOP then
 								if .Reverse > 0 then
 									setmouse(1024-.X,240,0,1)
 								else
@@ -1777,7 +1808,7 @@ sub local_gameplay
 			end if
 			
 			if InType = "p" AND DebugConsole = 0 then
-				if ControlStyle <= CTRL_LAPTOP then
+				if ControlStyle >= CTRL_DESKTOP AND ControlStyle <= CTRL_LAPTOP then
 					with Paddle(1)
 						if .Reverse > 0 then
 							setmouse(1024-.X,240,0,1)
@@ -1823,7 +1854,7 @@ sub local_gameplay
 								select case .Angle
 									case CAP_SLOW
 										capsule_message("SLOWER BALLS: All ball speeds slowed to minimum")
-										for BID as ubyte = 1 to NumBalls
+										for BID as short = 1 to NumBalls
 											with Ball(BID)
 												if .Speed > 0 AND .Power <> -2 then
 													.Speed = MinSpeed
@@ -1834,7 +1865,7 @@ sub local_gameplay
 										play_clip(SFX_POWER_UP,.X)
 									case CAP_FAST
 										capsule_message("FASTER BALLS")
-										for BID as ubyte = 1 to NumBalls
+										for BID as short = 1 to NumBalls
 											with Ball(BID)
 												if .Speed > 0 AND .Power <> -2 then
 													adjust_speed(BID,min(4,int(ActiveDifficulty+0.5)))
@@ -1888,7 +1919,7 @@ sub local_gameplay
 										force_release_balls
 										RollBall = irandom(1,TotalBC)
 										
-										for BID as ubyte = 1 to NumBalls
+										for BID as short = 1 to NumBalls
 											with Ball(BID)
 												if .Speed > 0 AND .Power <> -2 then
 													BallsFound += 1
@@ -1926,7 +1957,7 @@ sub local_gameplay
 										dim as ubyte Splitted(NumBalls)
 										capsule_message("SPLIT BALL")
 										force_release_balls
-										for BID as ubyte = 1 to NumBalls
+										for BID as short = 1 to NumBalls
 											with Ball(BID)
 												if .Speed > 0 AND Splitted(BID) = 0 AND .Power <> -2 then
 													for NewBall as short = 1 to 100
@@ -2014,7 +2045,7 @@ sub local_gameplay
 												dim as ubyte TotalNew = 0, Splitted(NumBalls)
 												capsule_message("MYSTERY CAPSULE: Quad Split",1)
 												force_release_balls
-												for BID as ubyte = 1 to NumBalls
+												for BID as short = 1 to NumBalls
 													with Ball(BID)
 														if .Speed > 0 AND Splitted(BID) = 0 AND .Power <> -2 then
 															TotalNew = 0
@@ -2053,7 +2084,7 @@ sub local_gameplay
 											play_clip(SFX_POWER_UP,.X)
 										elseif Effects < .8 AND (Gamestyle AND (1 SHL STYLE_BOSS)) = 0 then
 											capsule_message("MYSTERY CAPSULE: Lightning Balls (Fire/Breakthru combined)",1)
-											for BID as ubyte = 1 to NumBalls
+											for BID as short = 1 to NumBalls
 												with Ball(BID)
 													if .Speed > 0 AND .Power >= -1 then
 														.Power = 4
@@ -2068,7 +2099,7 @@ sub local_gameplay
 											capsule_message("MYSTERY CAPSULE: Split Deluxe",1)
 											force_release_balls
 											ContinuousSplit = 1
-											for BID as ubyte = 1 to NumBalls
+											for BID as short = 1 to NumBalls
 												with Ball(BID)
 													if .Speed > 0 AND Splitted(BID) = 0 AND .Power <> -2 then
 														for NewBall as short = 1 to 100
@@ -2109,7 +2140,7 @@ sub local_gameplay
 									case CAP_EXTENDER
 										dim as byte ExtraLen = 15
 										capsule_message("EFFECT EXTENDER: Timed effects last 0:"+str(ExtraLen)+" longer")
-										for FID as ubyte = 1 to NumBalls
+										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Duration > 0 AND .Power > -2 then
 													.Duration += ExtraLen*60
@@ -2139,7 +2170,7 @@ sub local_gameplay
 										play_clip(SFX_POWER_UP,.X)
 									case CAP_NEGATER
 										capsule_message("EFFECT NEGATER: Timed effects ended early")
-										for FID as ubyte = 1 to NumBalls
+										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Power > -2 then
 													.Duration = 0
@@ -2159,7 +2190,7 @@ sub local_gameplay
 										play_clip(SFX_POWER_DOWN,.X)
 									case CAP_WEAK
 										capsule_message("WEAKENED BALLS: Ball damage is temporarily inconsistent")
-										for FID as ubyte = 1 to NumBalls
+										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Power <> -2 then
 													if .Power <= 0 then
@@ -2175,7 +2206,7 @@ sub local_gameplay
 										play_clip(SFX_POWER_DOWN,.X)
 									case CAP_FIRE
 										capsule_message("FIRE BALLS: Explosive damage")
-										for FID as ubyte = 1 to NumBalls
+										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Power <> -2 then
 													if .Power = 2 then
@@ -2197,7 +2228,7 @@ sub local_gameplay
 										play_clip(SFX_POWER_UP,.X)
 									case CAP_THRU
 										capsule_message("BREAKTHRU BALLS: Balls do not bounce off of bricks")
-										for FID as ubyte = 1 to NumBalls
+										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Power <> -2 then
 													if .Power = 3 then
@@ -2219,7 +2250,7 @@ sub local_gameplay
 										play_clip(SFX_POWER_UP,.X)
 									case CAP_GRAVITY
 										capsule_message("GRAVITY BALLS: Balls temporarily curve towards the paddle")
-										for FID as ubyte = 1 to NumBalls
+										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Power <> -2 then
 													.Gravity = max(.Gravity,900)
@@ -2230,7 +2261,7 @@ sub local_gameplay
 										play_clip(SFX_POWER_DOWN,.X)
 									case CAP_MAXIMIZE
 										capsule_message("MAXIMUM BALL SPEED!!! Brace yourself!")
-										for FID as ubyte = 1 to NumBalls
+										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Speed > 0 AND .Power <> -2 then
 													.Speed = min(max(BaseMaxSpeed,.Speed + 2),BaseMaxSpeed + 2)
@@ -2463,10 +2494,10 @@ sub local_gameplay
 			end if
 
 			if InPassword <> "--------" then
-				Instructions = "Password: "+InPassword+" (Push 1-4 when done)"
+				Instructions = "Password: "+InPassword+" (Push 0-4 when done)"
 				InstructExpire = timer + 1
 				
-				for PID as ubyte = 1 to 4
+				for PID as ubyte = 0 to 4
 					if InType = str(PID) then
 						NumPlayers = PID
 						PassInput = 1
@@ -2496,7 +2527,7 @@ sub local_gameplay
 				end if
 			else
 				for HID as ubyte = 0 to NumHints
-					GameHints(HID) = abs(sgn(HintLevel < 3)) * 9
+					GameHints(HID) = abs(sgn(HintLevel < 3)) * 8
 				next HID
 				if NumPlayers > 1 then
 					MPAlternate += 1
@@ -2509,7 +2540,7 @@ sub local_gameplay
 				if PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignFolder <> EndlessFolder AND CampaignName <> PlaytestName AND Phase <> 0 then
 					Instructions = "Push F4 to open the level screen"
 				else
-					Instructions = "Push 1-4 to start a new campaign with that many players"
+					Instructions = "Push 0-4 to start a new campaign with that many players"
 				end if
 				InstructExpire = timer + 1
 			end if
@@ -2527,14 +2558,14 @@ sub local_gameplay
 			Instructions = "When three breakable blocks remain, a warp timer starts"
 			InstructExpire = timer + 10
 			GameHints(4) = 1
-		elseif TotalBC > 0 then
+		elseif TotalBC > 0 AND GameHints(0) < 1 then
 			GameHints(0) = 1
 		end if
 
 		if CampaignBarrier then
 			if AboveLine = 0 AND TotalBC > 0 AND BarrierStrength > 0 AND GamePaused = 0 then
 				with PlayerSlot(Player)
-					for BID as ubyte = 1 to NumBalls
+					for BID as short = 1 to NumBalls
 						with Ball(BID)
 							if .Speed > 0 AND .Power >= -1 then
 								.Angle = -.Angle
@@ -2588,7 +2619,7 @@ sub local_gameplay
 				end with
 			else
 				'Kill off any balls that did not make their way back
-				for BID as ubyte = 1 to NumBalls
+				for BID as short = 1 to NumBalls
 					with Ball(BID)
 						if sin(degtorad(.Angle)) < 0 AND .Speed > 0 AND .Y > 768 + BallSize then
 							.X = 320
@@ -2614,6 +2645,8 @@ sub local_gameplay
 			if GameHints(0) = 0 then
 				GameHints(0) = 1
 				select case ControlStyle
+					case CTRL_AI
+						Instructions = "The computer will automatically play this game"
 					case CTRL_DESKTOP
 						Instructions = "Perform [ACTION] (Click) to release a ball"
 					case CTRL_LAPTOP, CTRL_KEYBOARD
@@ -2627,6 +2660,10 @@ sub local_gameplay
 							Instructions = "Perform [ACTION] (Any Button) to release a ball"
 						end if
 				end select
+				InstructExpire = timer + 10
+			elseif GameHints(0) < 9 AND ControlStyle = CTRL_AI then
+				GameHints(0) = 9
+				Instructions = "Fair warning; the computer will neither give you stars nor new passwords!"
 				InstructExpire = timer + 10
 			elseif GameHints(4) = 1 AND PlayerSlot(Player).WarpTimer < 3540 then
 				Instructions = "The level is considered cleared once time expires"
@@ -2677,7 +2714,7 @@ sub local_gameplay
 		while timer < FrameTime + 1/60:sleep 1:wend
 		InType = inkey
 		if total_lives = 0 then
-			for PID as ubyte = 1 to 4
+			for PID as ubyte = 0 to 4
 				if InType = str(PID) AND InPassword = "--------" then
 					begin_local_game(PID, 1)
 					
@@ -2686,7 +2723,7 @@ sub local_gameplay
 				end if
 			next PID
 			
-		elseif actionButton AND ProhibitSpawn = 0 then
+		elseif (ControlStyle = CTRL_AI OR actionButton) AND ProhibitSpawn = 0 then
 			with Ball(1)
 				if ActiveDifficulty >= 3.5 then
 					.Speed = DefaultSpeed - irandom(0,30) / 100 
@@ -2736,7 +2773,9 @@ sub local_gameplay
 		end if
 		
 		if LevelClear >= LevelClearDelay AND actionButton then
-			setmouse(,,0,1)
+			if ControlStyle >= CTRL_DESKTOP then 
+				setmouse(,,0,1)
+			end if
 			LevelClear = 0
 			
 			dim as ubyte InPlay
@@ -2752,7 +2791,7 @@ sub local_gameplay
 				ProhibitSpawn = 0
 				LevelDesc = 0
 
-				for BID as ubyte = 1 to NumBalls
+				for BID as short = 1 to NumBalls
 					if Ball(BID).Speed > 0 then
 						InPlay = 1
 						exit for
@@ -2763,12 +2802,14 @@ sub local_gameplay
 				if .LevelNum >= SecretLevels AND HighLevel < SecretLevels AND SecretLevels > 0 then
 					play_clip(SFX_EXPLODE)
 					if DQ = 0 then
-						TotalXP += int(.Score * .Difficulty)
 						high_score_input(Player)
-						if FileExists(CampaignName+".flag") = 0 then
-							'Intentionally empty victory file
-							open CampaignName+".flag" for output as #21
-							close #21
+						if ControlStyle >= CTRL_DESKTOP then
+							TotalXP += int(.Score * .Difficulty)
+							if FileExists(CampaignName+".flag") = 0 then
+								'Intentionally empty victory file
+								open CampaignName+".flag" for output as #21
+								close #21
+							end if
 						end if
 					end if
 					empty_hand(Player)
@@ -2789,12 +2830,14 @@ sub local_gameplay
 				else
 					play_clip(SFX_LIFE)
 					if DQ = 0 then
-						TotalXP += int(.Score * .Difficulty * 2)
 						high_score_input(Player)
-						if FileExists(CampaignName+".flag") = 0 then
-							'Just like before, only this is for a true victory
-							open CampaignName+".flag" for output as #21
-							close #21
+						if ControlStyle >= CTRL_DESKTOP then
+							TotalXP += int(.Score * .Difficulty * 2)
+							if FileExists(CampaignName+".flag") = 0 then
+								'Just like before, only this is for a true victory
+								open CampaignName+".flag" for output as #21
+								close #21
+							end if
 						end if
 					end if
 					empty_hand(Player)
@@ -2851,6 +2894,7 @@ sub local_gameplay
 			close #2
 		end if
 	end if
+	ControlStyle = SavedControls
 	kill("Stats.dat")
 	if InType = XBox then
 		clean_up

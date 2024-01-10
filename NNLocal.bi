@@ -1112,7 +1112,15 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 	end if
 
 	with PlayerSlot(Player)
-		if ActiveDifficulty < 1.5 OR ActiveDifficulty >= 10.5 then
+		if ControlStyle = CTRL_AI then
+			CapWeight(CAP_GRAB) = 0
+			CapWeight(CAP_BLIZZARD) = 0
+			CapWeight(CAP_MAXIMIZE) = 4
+			CapWeight(CAP_GRAVITY) = 4
+			CapWeight(CAP_SLOW_PAD) = 4
+			CapWeight(CAP_NEGATER) = 2
+			CapWeight(CAP_REVERSE) = 0
+		elseif (ActiveDifficulty < 1.5 OR ActiveDifficulty >= 10.5) then
 			CapWeight(CAP_FAST) = 0
 			CapWeight(CAP_WEAK) = 0
 			CapWeight(CAP_MAXIMIZE) = 0
@@ -1310,8 +1318,8 @@ sub auxillary_view(ByRef TextAlpha as short, ByRef TextBeta as short)
 				end if
 				
 				DynamicString = space(2)+_
-					left(.Namee,20)+space(max(20-len(.Namee),0))+_
-					space(12-len(commaSep(.RawScore)))+commaSep(.RawScore)+_
+					left(.Namee,len(AIName))+space(max(len(AIName)-len(.Namee),0))+_
+					space(32-len(AIName)-len(commaSep(.RawScore)))+commaSep(.RawScore)+_
 					space(9-len(DispLevel))+DispLevel+_
 					space(7-len(DispDiff))+DispDiff+_
 					space(11-len(DispWeight))+DispWeight
@@ -1402,7 +1410,9 @@ sub high_score_input(PlayerNum as byte, Automatic as byte = 0)
 		end if
 		
 		if NewPosition <= SavedHighSlots then
-			if Automatic = 0 then
+			if ControlStyle = CTRL_AI then
+				NewName = AIName
+			elseif Automatic = 0 then
 				do
 					screenevent(@e)
 					line(302,349)-(721,449),rgb(0,0,0),bf
@@ -1430,13 +1440,17 @@ sub high_score_input(PlayerNum as byte, Automatic as byte = 0)
 					InType = inkey
 					screencopy
 					
-					if (InType >= "A" AND InType <= "Z") OR (InType >= "a" AND InType <= "z") OR (InType >= "0" AND InType <= "9") then
+					if (InType >= "A" AND InType <= "Z") OR (InType >= "a" AND InType <= "z") OR (InType >= "0" AND InType <= "9") OR InType = space(1) then
 						NewName += InType
 					elseif InType = Backspace then
 						NewName = left(NewName,len(NewName)-1)
 					end if
 				loop until InType = chr(13)
 				InType = chr(255)
+				
+				if lcase(NewName) = lcase(AIName) then
+					NewName = DummyName
+				end if
 			end if
 			if NewName = "" then
 				NewName = "Anonymous"
@@ -1704,7 +1718,9 @@ sub shuffle_levels
 end sub
 
 sub begin_local_game(InitPlayers as byte, InitLevel as short)
-	setmouse(,,0,1)
+	if InitPlayers > 0 then
+		setmouse(,,0,1)
+	end if
 	DQ = 0
 
 	Player = 1
@@ -1719,7 +1735,13 @@ sub begin_local_game(InitPlayers as byte, InitLevel as short)
 		HighScore(HID).NewEntry = 0
 	next HID
 	
-	if InitPlayers > 0 then
+	if InitPlayers >= 0 then
+		if InitPlayers > 0 then
+			ControlStyle = SavedControls
+		else
+			ControlStyle = CTRL_AI 
+		end if
+		
 		if InitLevel = 1 then
 			shuffle_levels
 		
@@ -1743,7 +1765,7 @@ sub begin_local_game(InitPlayers as byte, InitLevel as short)
 		PlayerSlot(PDID) = NewPlrSlot
 		PlayerSlot(PDID).Difficulty = DifficultyRAM(PDID)
 		fresh_level(PDID)
-		if PDID > InitPlayers then
+		if PDID > InitPlayers AND (PDID <> 1 OR InitPlayers < 0) then
 			PlayerSlot(PDID).Lives = 0
 		end if
 	next PDID

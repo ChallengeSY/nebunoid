@@ -10,6 +10,9 @@ Some blocks may *explode* upon contact, destroying themselves and adjacent block
 
 As soon as all of the scorable blocks are *eliminated* (from a regular ball's perspective), the level is cleared, bonuses are awarded, and a new level begins. The process repeats until either every life is exhausted (although a continue may be used to gain more lives), or until the campaign has been completed.
 
+#### Auto Play
+Nebunoid supports watching an Auto Play session; just start a *0* player session. Fair warning; the computer player will neither give stars, nor award passwords for levels that the player has never played before. Any high scores it is able to submit will be auto-named as such.
+
 ### Difficulty Levels
 Nebunoid supports a difficulty scale for *each* player, allowing players of varying skill to participate.
 

@@ -36,7 +36,7 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.11"
+windowtitle "Nebunoid 1.12"
 
 'Foreground assets
 load_brick_gfx(MasterDir+"/gfx/blocks/")
@@ -144,6 +144,7 @@ if FileExists("conf.ini") then
 				input #10, EnhancedGFX
 			case "controls"
 				input #10, ControlStyle
+				ControlStyle = max(ControlStyle,CTRL_DESKTOP)
 			case "campbarr"
 				input #10, CampaignBarrier
 			case "shuffle"
@@ -373,7 +374,7 @@ do
 	sleep 10
 	InType = inkey
 loop until InType = EscapeKey OR InType = XBox
-if ControlStyle >= CTRL_KEYBOARD then
+if ControlStyle < CTRL_DESKTOP OR ControlStyle >= CTRL_KEYBOARD then
 	ControlStyle = CTRL_DESKTOP
 end if
 save_unlocks

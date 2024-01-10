@@ -7,6 +7,9 @@ declare sub local_gameplay
 const PlaytestName = "Quick Playtest Level"
 const EndlessFolder = "official/endless"
 
+const AIName = "Nebunoid Intelligence"
+const DummyName = "Pumpkin Eater"
+
 'Speed range specs
 const DefaultSpeed = 8
 const MinSpeed = 6
@@ -130,7 +133,8 @@ enum CapsuleDesigns
 end enum
 
 enum ControlTypes
-	CTRL_DESKTOP = 0
+	CTRL_AI = -1
+	CTRL_DESKTOP
 	CTRL_LAPTOP
 	CTRL_TABLET
 	CTRL_KEYBOARD
@@ -272,8 +276,7 @@ dim shared as HighSlot HighScore(TotalHighSlots)
 dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP, TotalStars
 dim shared as uinteger GameStyle, TourneyStyle, TourneyScore, ShotIndex
 
-dim shared as ubyte Fullscreen, JoyAnalog, JoyInvertAxes, ControlStyle, TapWindow, CondensedLevel, _
-	AllowHandicap, ShuffleLevels
+dim shared as ubyte Fullscreen, JoyAnalog, JoyInvertAxes, TapWindow, CondensedLevel, AllowHandicap, ShuffleLevels
 dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness
 dim shared as single JoyAxis(7)
 dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, BlockBrushes
@@ -287,7 +290,7 @@ dim shared as ParticleSpecs Particles(Particount)
 
 dim shared as ubyte DQ, Player, NumPlayers, DispLives, Invis, GfxStyle, ExploTick, _
 	BallSize,  MenuMode, HoldClick, HoldAction
-dim shared as byte EnhancedGFX, GamePaused, TourneyValid, TotalMessages, TotalUnread
+dim shared as byte EnhancedGFX, GamePaused, TourneyValid, TotalMessages, TotalUnread, ControlStyle, SavedControls
 dim shared as any ptr BulletPic, MissilePic, CapsulePic(26), CapsuleBar(5), CapsuleBarFrame, PokerBar(5), Background, PaddlePic, _
 	SoftBrickPic, MultihitPic, InvinciblePic, ExplodePic, BaseExplode, SoftBrickConnL, SoftBrickConnR, SoftBrickConnT, SoftBrickConnB, _
 	MultihitConnL, MultihitConnR, MultihitConnT, MultihitConnB, InvincibleConnL, InvincibleConnR, InvincibleConnT, InvincibleConnB, _
@@ -375,6 +378,7 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.Folder = "official/fusion"
 					.Difficulty = "Medium to Hard"
 					.SetSize = 20
+					.StarsToUnlock = 15
 				case 8
 					.Namee = "Challenge Campaign"
 					.Folder = "official/challenge"
@@ -1385,6 +1389,8 @@ end sub
 function actionButton(HoldCheck as byte = 0) as integer
 	if HoldAction = 0 OR HoldCheck > 0 then
 		select case ControlStyle
+			case CTRL_AI
+				return -1
 			case CTRL_DESKTOP
 				return ButtonCombo
 			case CTRL_LAPTOP, CTRL_KEYBOARD
@@ -1401,4 +1407,6 @@ function actionButton(HoldCheck as byte = 0) as integer
 				end if
 		end select
 	end if
+	
+	return (ControlStyle = CTRL_AI)
 end function
