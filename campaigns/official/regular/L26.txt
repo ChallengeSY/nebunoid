@@ -5,7 +5,7 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 26
 ================================================================================
 
 Level Name            := Free the Love
-Level Description     := Free your friends, and they will join your side
+Level Description     := 
 Level Password        := EZSIWNTC
 Level game number     := 19
 Level time limit      := 0

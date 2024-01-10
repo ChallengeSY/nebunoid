@@ -7,7 +7,7 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 29
 Level Name            := Slim Pickings
 Level Description     := 
 Level Password        := CPNGCSOF
-Level game number     := 3
+Level game number     := 11
 Level time limit      := 300
 Number of Brushes     := 2
 Brush 1 Color         := &hB0FFD700

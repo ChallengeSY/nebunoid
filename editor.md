@@ -17,7 +17,7 @@ Levels may be designed with a wide variety of variations in mind that alter the 
 * Invisible (128): The level is invisible, flashing only when a block is hit
 * Hyper Speed (256): Balls move 50% faster
 * Boss Battle (512): Duke it out against a boss whose attacks can damage and destroy your paddle. Negates Breakable Ceiling
-* Horitonzal Rotation (1024): Non-invincible blocks rotate horizontally across the board, wrapping as necessary. Overrides Cavity and Fusion Brushes
+* Horizontal Rotation (1024): Non-invincible blocks rotate horizontally across the board, wrapping as necessary. Overrides Cavity and Fusion Brushes
 * Fusion Brushes (2048): Blocks of the same "brush" fuse together to form bigger blocks
 * Shrink Ceiling (4096): Paddle shrinks the first time a ball hits the ceiling on each life
 * Breakable Ceiling (8192): Blocks respawn by brush indefinitely. Break and bypass the ceiling to clear the level instead. Negates Boss Battle

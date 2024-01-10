@@ -5,7 +5,7 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 3
 ================================================================================
 
 Level Name            := Sturdy Diamonds
-Level Description     := Those bright white bricks require three hits to destroy.
+Level Description     := 
 Level Password        := YSXXBZHK
 Level game number     := 3
 Level time limit      := 0

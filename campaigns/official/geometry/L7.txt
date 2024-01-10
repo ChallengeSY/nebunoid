@@ -5,7 +5,7 @@ LEVEL DATA FILE - GEOMETRIC DESIGNS LEVEL 7
 ================================================================================
 
 Level Name            := Trapezoid
-Level Description     := 
+Level Description     := Invisible blocks become visible when hit...
 Level Password        := NTUYFICU
 Level game number     := 7
 Level time limit      := 0

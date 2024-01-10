@@ -5,7 +5,7 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 10
 ================================================================================
 
 Level Name            := To panic or not to panic?
-Level Description     := For this level, you will use two paddles
+Level Description     := 
 Level Password        := DSUDJKXT
 Level game number     := 7
 Level time limit      := 0

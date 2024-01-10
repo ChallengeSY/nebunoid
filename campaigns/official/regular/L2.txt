@@ -5,7 +5,7 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 2
 ================================================================================
 
 Level Name            := Hardened Triangle
-Level Description     := The brighter grey blocks need two hits to destroy.
+Level Description     := 
 Level Password        := CNEYQTNC
 Level game number     := 3
 Level time limit      := 0

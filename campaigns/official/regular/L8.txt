@@ -7,7 +7,7 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 8
 Level Name            := Split Apart
 Level Description     := 
 Level Password        := UMYDJSUF
-Level game number     := 3
+Level game number     := 7
 Level time limit      := 0
 Number of Brushes     := 3
 Brush 1 Color         := &h8040FFFF

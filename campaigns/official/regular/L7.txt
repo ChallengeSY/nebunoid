@@ -5,9 +5,9 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 7
 ================================================================================
 
 Level Name            := Blockade
-Level Description     := Beware of invincible blocks!
+Level Description     := 
 Level Password        := XUZILCVS
-Level game number     := 3
+Level game number     := 11
 Level time limit      := 0
 Number of Brushes     := 6
 Brush 1 Color         := &h8000FF00

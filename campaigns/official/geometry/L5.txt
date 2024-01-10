@@ -5,7 +5,7 @@ LEVEL DATA FILE - GEOMETRIC DESIGNS LEVEL 5
 ================================================================================
 
 Level Name            := Parallelogram
-Level Description     := 
+Level Description     := Thematically, this level uses two paddles in parallel.
 Level Password        := WBPQOSBB
 Level game number     := 7
 Level time limit      := 0

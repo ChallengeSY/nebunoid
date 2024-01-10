@@ -7,7 +7,7 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 17
 Level Name            := Armored Core
 Level Description     := 
 Level Password        := YVAINWGE
-Level game number     := 3
+Level game number     := 11
 Level time limit      := 0
 Number of Brushes     := 12
 Brush 1 Color         := &h80FF0000

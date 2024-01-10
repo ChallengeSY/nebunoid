@@ -5,7 +5,7 @@ LEVEL DATA FILE - GEOMETRIC DESIGNS LEVEL 4
 ================================================================================
 
 Level Name            := Triangles
-Level Description     := 
+Level Description     := This level grants two balls per life.
 Level Password        := ZOXEXGAB
 Level game number     := 11
 Level time limit      := 0

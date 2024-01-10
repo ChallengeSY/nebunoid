@@ -5,9 +5,9 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 21
 ================================================================================
 
 Level Name            := Dual Triangles
-Level Description     := For this level, each life begins with two balls.
+Level Description     := 
 Level Password        := GBLLILTX
-Level game number     := 11
+Level game number     := 15
 Level time limit      := 0
 Number of Brushes     := 14
 Brush 1 Color         := &h80FFFF00

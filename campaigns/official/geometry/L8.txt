@@ -5,7 +5,7 @@ LEVEL DATA FILE - GEOMETRIC DESIGNS LEVEL 8
 ================================================================================
 
 Level Name            := Rectangles and Squares
-Level Description     := 
+Level Description     := Free your friends, and they will join your side.
 Level Password        := IVUQVCMH
 Level game number     := 19
 Level time limit      := 0
