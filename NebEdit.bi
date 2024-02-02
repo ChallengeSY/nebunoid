@@ -833,7 +833,13 @@ sub brush_editor_submenu
 			color rgb(0,255,0)
 			print "S";
 			color rgb(255,255,255)
-			print "coring ("+str(.ScoreValue)+") / Connec";
+			print "coring (";
+			if .DynamicValue then
+				color rgb(255,128,255)
+			end if
+			print ""& .ScoreValue;
+			color rgb(255,255,255)
+			print ") / Connec";
 			color rgb(0,255,0)
 			print "t";
 			color rgb(255,255,255)
@@ -1154,13 +1160,57 @@ sub draw_brushes(BrushID as byte)
 			if ButtonCombo = 1 then
 				if SelectedBrush > BlockBrushes then
 					BlockBrushes += 1
+					dim as short NewRed, NewGreen, NewBlue, NewAlpha
+					
+					NewRed = irandom(0,255)
+					NewGreen = irandom(0,255)
+					NewBlue = irandom(0,255)
+					NewAlpha = 128
+					
+					if multikey(SC_W) then
+						'White
+						NewRed = 255
+						NewGreen = 255
+						NewBlue = 255
+					elseif multikey(SC_K) then
+						'Black
+						NewRed = 0
+						NewGreen = 0
+						NewBlue = 0
+					end if
+					
+					if multikey(SC_R) then
+						'Red
+						NewRed = 255
+					elseif multikey(SC_C) then
+						'Cyan
+						NewRed = 0
+					end if
+					
+					if multikey(SC_G) then
+						'Green
+						NewGreen = 255
+					elseif multikey(SC_U) then
+						'Purple
+						NewGreen = 0
+					end if
+					
+					if multikey(SC_B) then
+						'Blue
+						NewBlue = 255
+					elseif multikey(SC_Y) then
+						'Yellow
+						NewBlue = 0
+					end if
 					
 					with Pallete(SelectedBrush)
-						if rnd < 0.1 then
-							.PColoring = rgba(ceil(irandom(0,4)*63.25),ceil(irandom(0,4)*63.25),ceil(irandom(0,4)*63.25),128)
+						if multikey(SC_I) then
+							'Invisible
+							.PColoring = 0
 						else
-							.PColoring = rgba(irandom(0,255),irandom(0,255),irandom(0,255),128)
+							.PColoring = rgba(NewRed,NewGreen,NewBlue,NewAlpha)
 						end if
+						
 						.ScoreValue = 10
 						.DynamicValue = 1
 						.HitDegrade = 0

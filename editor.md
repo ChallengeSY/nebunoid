@@ -46,3 +46,15 @@ Brick "brushes" are managed on a per-level basis. A new brush can be easily made
 * 1-4: Quickly toggles a supported mirror control
 * Arrow keys: Shifts the entire level horizontally or vertically, wrapping around as necessary
 * Ctrl+P: Launches a program that immediately loads a single-level playtest "campaign"
+
+#### New brush controls
+Some influence can be performed over a brush by holding down key(s) while creating a brush. Presence is preferred over absence in case of conflicting keys.
+
+* __W__hite: Creates a white colored brush (max red/green/blue). Combinable with C/U/Y
+* Blac__k__: Creates a black colored brush (zero red/green/blue). Combinable with R/G/B
+* __R__ed: Creates a brush with maximum red
+* __G__reen: Creates a brush with maximum green
+* __B__lue: Creates a brush with maximum blue
+* __C__yan: Creates a brush with zero red
+* P__u__rple: Creates a brush with zero green
+* __Y__ellow: Creates a brush with zero blue
