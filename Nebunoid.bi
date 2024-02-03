@@ -34,7 +34,6 @@ Masterdir = curdir
 #ENDIF
 #include "WordWrap.bi"
 
-'#DEFINE __GAME_DEBUG__
 declare sub shop
 declare sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 'Keyboard commands
@@ -59,9 +58,9 @@ const FPS = 60
 const SavedHighSlots = 10
 const TotalHighSlots = SavedHighSlots + 4
 const TotalOfficialLevels = 266
-const MaxBullets = 40
+const MaxBullets = 60
 const BaseFlash = 128
-const LevelClearDelay = 640
+const LevelClearDelay = 720
 const ExplodeDelay = -6
 
 enum Difficulties
@@ -259,14 +258,15 @@ end type
 
 const ZapBrush = 36
 const SwapBrush = ZapBrush + 1
-dim shared as PlayerSpecs PlayerSlot(4), NewPlrSlot
+const MaxPlayers = 6
+dim shared as PlayerSpecs PlayerSlot(MaxPlayers), NewPlrSlot
 dim shared as PalleteSpecs Pallete(SwapBrush)
 dim shared as FB.event e
 const MISC = 3
 const ExplodeAniRate = 1
 const NumBalls = 128
 const MaxFallCaps = 12
-const Particount = 1250
+const Particount = 2500
 const BackCount = 99
 
 dim shared as ushort MinSize, StandardSize, MaxSize, CapsFalling, BulletsInPlay, _
@@ -276,12 +276,12 @@ dim shared as HighSlot HighScore(TotalHighSlots)
 dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP, TotalStars
 dim shared as uinteger GameStyle, TourneyStyle, TourneyScore, ShotIndex
 
-dim shared as ubyte Fullscreen, JoyAnalog, JoyInvertAxes, TapWindow, CondensedLevel, AllowHandicap, ShuffleLevels
-dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness
+dim shared as ubyte Fullscreen, JoyAnalog, JoyInvertAxes, TapWindow, CondensedLevel, AllowHandicap, ShuffleLevels, SpeedRunner
+dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness, SpeedRunTimer
 dim shared as single JoyAxis(7)
 dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, BlockBrushes
 dim shared as double ProgressiveQuota, InstructExpire, MisnExpire, TimeRem, Reminder = -1, _
-	FrameTime, PaddlePercent, DifficultyRAM(4)
+	FrameTime, PaddlePercent, DifficultyRAM(MaxPlayers)
 dim shared as string InType, ScoreFile, Instructions, CampaignFolder, BackList(BackCount), DiffTxt
 
 dim shared as BackSpecs BackSlot(BackCount)
@@ -321,7 +321,7 @@ end enum
 
 function total_lives as integer
 	dim as integer LivesFound
-	for PID as ubyte = 1 to 4
+	for PID as ubyte = 1 to MaxPlayers
 		with PlayerSlot(PID)
 			LivesFound += .Lives
 		end with
@@ -605,19 +605,25 @@ sub particle_system
 		next
 	end if
 end sub
-sub generate_particles(NewCount as ushort, XL as byte, YL as byte, _
+sub generate_particles(NewCount as integer, XL as byte, YL as byte, _
 	ApplyColor as uinteger)
-	dim as ushort NewParticle, FreeParticles
+	dim as integer NewParticle, FreeParticles, TrueCount
 
-	for PID as ushort = 1 to Particount
+	for PID as integer = 1 to Particount
 		with Particles(PID)
 			if .Y >= 768 OR .Blending <= 0 then
 				FreeParticles += 1
 			end if
 		end with
 	next PID
+	
+	if NewCount <= 100 then
+		TrueCount = NewCount
+	else
+		TrueCount = 100 + int(sqr(NewCount - 100))
+	end if
 
-	for PID as ushort = 1 to NewCount
+	for PID as integer = 1 to TrueCount
 		if FreeParticles = 0 then
 			exit for
 		end if
@@ -774,7 +780,7 @@ sub optimal_direction(InBall as short, BrickX as byte, BrickY as byte)
 end sub
 sub save_unlocks
 	open "conf.ini" for output as #10
-	for Plr as byte = 1 to 4
+	for Plr as byte = 1 to MaxPlayers
 		print #10, "difficulty,"& PlayerSlot(Plr).Difficulty
 	next Plr
 	print #10, "handicap,";AllowHandicap
@@ -786,6 +792,7 @@ sub save_unlocks
 	print #10, "bgbright,"& BGBrightness
 	print #10, "musplayer,"& MusicPlrEnabled
 	print #10, "xp,"& TotalXP
+	print #10, "speedrun,";SpeedRunner
 	close #10
 	kill("xp.dat")
 end sub
@@ -1007,17 +1014,71 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 										put(32+(XID-1)*24,96+(YID-1)*24),UseBrick,trans
 										with PlayerSlot(Player).TileSet(XID,YID)
 											if (Gamestyle AND (1 SHL STYLE_FUSION)) AND .BaseBrickID > 0 then
-												if XID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(int(XID-1),YID).BaseBrickID then
-													put(32+(XID-1)*24,96+(YID-1)*24),UseConnL,trans
-												end if
-												if XID < 40 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID+1,YID).BaseBrickID then
-													put(32+(XID-1)*24,96+(YID-1)*24),UseConnR,trans
-												end if
-												if YID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,int(YID-1)).BaseBrickID then
-													put(32+(XID-1)*24,96+(YID-1)*24),UseConnT,trans
-												end if
-												if YID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,YID+1).BaseBrickID then
-													put(32+(XID-1)*24,96+(YID-1)*24),UseConnB,trans
+												if Pallete(.BrickID).HitDegrade >= 0 then
+													if XID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(int(XID-1),YID).BaseBrickID then
+														put(32+(XID-1)*24,96+(YID-1)*24),UseConnL,trans
+													end if
+													if XID < 40 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID+1,YID).BaseBrickID then
+														put(32+(XID-1)*24,96+(YID-1)*24),UseConnR,trans
+													end if
+													if YID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,int(YID-1)).BaseBrickID then
+														put(32+(XID-1)*24,96+(YID-1)*24),UseConnT,trans
+													end if
+													if YID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,YID+1).BaseBrickID then
+														put(32+(XID-1)*24,96+(YID-1)*24),UseConnB,trans
+													end if
+												else
+													'Complicated mini-exploding edge cases
+													
+													'Left connectors
+													if XID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(int(XID-1),YID).BaseBrickID then
+														pset(32+(XID-1)*24,96+(YID-1)*24),rgb(255,255,255)
+														line(32+(XID-1)*24,97+(YID-1)*24)-(33+(XID-1)*24,97+(YID-1)*24),rgba(255,255,255,128)
+														
+														line(32+(XID-1)*24,94+(YID)*24)-(33+(XID-1)*24,94+(YID)*24),rgba(0,0,0,128)
+														pset(32+(XID-1)*24,95+(YID)*24),rgb(0,0,0)
+													else
+														line(32+(XID-1)*24,96+(YID-1)*24)-(32+(XID-1)*24,95+(YID)*24),rgb(255,255,255)
+														line(33+(XID-1)*24,97+(YID-1)*24)-(33+(XID-1)*24,94+(YID)*24),rgba(255,255,255,128)
+													end if
+													
+													'Right connectors
+													if XID < 40 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID+1,YID).BaseBrickID then
+														pset(31+(XID)*24,96+(YID-1)*24),rgb(255,255,255)
+														line(30+(XID)*24,97+(YID-1)*24)-(31+(XID)*24,97+(YID-1)*24),rgba(255,255,255,128)
+														
+														line(30+(XID)*24,94+(YID)*24)-(31+(XID)*24,94+(YID)*24),rgba(0,0,0,128)
+														pset(31+(XID)*24,95+(YID)*24),rgb(0,0,0)
+													else
+														if YID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,int(YID-1)).BaseBrickID then
+															pset(31+(XID)*24,96+(YID-1)*24),rgb(0,0,0)
+															pset(30+(XID)*24,97+(YID-1)*24),rgba(0,0,0,128)
+														else
+															pset(31+(XID)*24,96+(YID-1)*24),rgb(255,255,255)
+															pset(30+(XID)*24,97+(YID-1)*24),rgba(255,255,255,128)
+														end if
+														
+														line(31+(XID)*24,97+(YID-1)*24)-(31+(XID)*24,95+(YID)*24),rgb(0,0,0)
+														line(30+(XID)*24,98+(YID-1)*24)-(30+(XID)*24,94+(YID)*24),rgba(0,0,0,128)
+													end if
+													
+													'Top connectors
+													if YID > 1 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,int(YID-1)).BaseBrickID then
+														pset(33+(XID-1)*24,96+(YID-1)*24),rgba(255,255,255,128)
+														pset(30+(XID)*24,96+(YID-1)*24),rgba(0,0,0,128)
+													else
+														line(33+(XID-1)*24,96+(YID-1)*24)-(30+(XID)*24,96+(YID-1)*24),rgb(255,255,255)
+														line(34+(XID-1)*24,97+(YID-1)*24)-(29+(XID)*24,97+(YID-1)*24),rgba(255,255,255,128)
+													end if
+													
+													'Bottom connectors
+													if YID < 20 AND .BaseBrickID = PlayerSlot(Player).TileSet(XID,YID+1).BaseBrickID then
+														pset(33+(XID-1)*24,95+(YID)*24),rgba(255,255,255,128)
+														pset(30+(XID)*24,95+(YID)*24),rgba(0,0,0,128)
+													else
+														line(33+(XID-1)*24,95+(YID)*24)-(30+(XID)*24,95+(YID)*24),rgb(0,0,0)
+														line(34+(XID-1)*24,94+(YID)*24)-(29+(XID)*24,94+(YID)*24),rgba(0,0,0,128)
+													end if
 												end if
 											end if
 										end with

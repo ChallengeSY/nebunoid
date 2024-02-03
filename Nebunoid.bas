@@ -36,7 +36,7 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.12"
+windowtitle "Nebunoid 1.13"
 
 'Foreground assets
 load_brick_gfx(MasterDir+"/gfx/blocks/")
@@ -128,7 +128,7 @@ if FileExists("conf.ini") then
 		select case NullString
 			case "difficulty"
 				PlayersFound += 1
-				if PlayersFound <= 4 then
+				if PlayersFound <= MaxPlayers then
 					with PlayerSlot(PlayersFound)
 						input #10, .Difficulty
 						.Difficulty = max(.Difficulty,1.0)
@@ -156,6 +156,8 @@ if FileExists("conf.ini") then
 				BGBrightness = max(min(BGBrightness,100),0)
 			case "xp"
 				input #10, TotalXP
+			case "speedrun"
+				input #10, SpeedRunner
 		end select
 	loop until eof(10)
 	close #10
@@ -165,6 +167,9 @@ if FileExists("xp.dat") then
 	input #10, TotalXP
 	close #10
 end if
+while FileExists("screen"+str(ShotIndex)+".bmp")
+	ShotIndex += 1
+wend
 if CampaignFolder = "" then CampaignFolder = "official/intro"
 if PlayerSlot(1).Difficulty = 0 then PlayerSlot(1).Difficulty = 4.0
 while inkey <> "":wend
@@ -380,7 +385,7 @@ end if
 save_unlocks
 
 sub shop
-	dim as ubyte TotalCount(0 to MISC) => {0, 0, 12, 7}
+	dim as ubyte TotalCount(0 to MISC) => {0, 0, 12, 8}
 	dim as ubyte CTRL_BUTTON_ACTION, CTRL_AXIS_MOVEMENT
 
 	dim as string ItemDesc, CommunityFolder, CustomItem(MISC,12)
@@ -408,13 +413,14 @@ sub shop
 	CustomItem(2,8) = "USB controller 4 "
 	CustomItem(2,10) = "Controller type"
 	CustomItem(2,11) = "Invert axes    "
-	CustomItem(MISC,1) = "Game hint system       "
-	CustomItem(MISC,2) = "Enhanced particle GFX  "
-	CustomItem(MISC,3) = "Campaign barrier system"
-	CustomItem(MISC,4) = "Shuffle levels         "
-	CustomItem(MISC,5) = "Full screen setting    "
-	CustomItem(MISC,6) = "Background brightness  "
-	CustomItem(MISC,7) = "Music player           "
+	CustomItem(MISC,1) = "Game hint system     "
+	CustomItem(MISC,2) = "Enhanced particle GFX"
+	CustomItem(MISC,3) = "Barrier system       "
+	CustomItem(MISC,4) = "Shuffle levels       "
+	CustomItem(MISC,5) = "Full screen setting  "
+	CustomItem(MISC,6) = "Background brightness"
+	CustomItem(MISC,7) = "Music player         "
+	CustomItem(MISC,8) = "Speedrun mode        "
 	
 	read_campaigns(1)
 	
@@ -461,14 +467,14 @@ sub shop
 			
 			CalcX = 182+PlayerSlot(PageNum).Difficulty*50
 
-			put(222,300),DiffStick,trans
+			put(222,360),DiffStick,trans
 			if DiffUnlocked < 12 then
-				line(194+(DiffUnlocked+0.5)*50,300)-(821,374),rgba(0,0,0,192),bf
+				line(194+(DiffUnlocked+0.5)*50,360)-(821,434),rgba(0,0,0,192),bf
 			end if
-			put(CalcX,300),DiffSelector,trans
+			put(CalcX,360),DiffSelector,trans
 			ApproxDiff = int(PlayerSlot(PageNum).Difficulty * 10 + 0.51) / 10
 			
-			if MouseX >= 222 AND MouseX < 822 AND MouseY >= 322 AND MouseY < 342 AND ButtonCombo > 0 then
+			if MouseX >= 222 AND MouseX < 822 AND MouseY >= 382 AND MouseY < 402 AND ButtonCombo > 0 then
 				InX = MouseX - 247
 				with PlayerSlot(PageNum)
 					.Difficulty = 1 + InX/50
@@ -519,7 +525,7 @@ sub shop
 			if AllowHandicap then
 				dim as uinteger PlrColor
 				
-				for PID as ubyte = 1 to 4
+				for PID as ubyte = 1 to MaxPlayers
 					ApproxDiff = int(PlayerSlot(PID).Difficulty * 10 + 0.51) / 10
 					ComputeDiff = ApproxDiff + 1e-6
 					get_difficulty_names(ApproxDiff)
@@ -544,15 +550,15 @@ sub shop
 				next PID
 			else
 				gfxstring("Difficulty for everyone: "+DiffTxt+" ("+left(str(ComputeDiff),len(str(int(ComputeDiff)))+2)+")",5,90,4,4,3,rgb(128,192,255))
-				for PID as ubyte = 2 to 4
+				for PID as ubyte = 2 to MaxPlayers
 					PlayerSlot(PID).Difficulty = PlayerSlot(1).Difficulty
 					gfxstring("Difficulty for player "+str(PID)+": "+DiffTxt+" ("+left(str(ComputeDiff),len(str(int(ComputeDiff)))+2)+")",5,(PID+2)*30,4,4,3,rgb(64,64,128))
 				next PID
 			end if
 			if DiffUnlocked < 12 then
-				gfxstring("Next difficulty unlock : "+commaSep(NextStarsUnlock)+" stars",5,210,4,4,3,rgb(255,128,128))
+				gfxstring("Next difficulty unlock : "+commaSep(NextStarsUnlock)+" stars",5,270,4,4,3,rgb(255,128,128))
 			else
-				gfxstring("All difficulties unlocked",5,210,4,4,3,rgb(128,128,128))
+				gfxstring("All difficulties unlocked",5,270,4,4,3,rgb(128,128,128))
 			end if
 			
 			gfxstring("Speed increase  : Every "+left(str(100/BallDiff),4)+" bounces/blocks",5,550,4,4,3,rgb(128,128,255))
@@ -773,6 +779,8 @@ sub shop
 							ItemDesc = "Determines how dark to make the backgrounds."
 						case 7
 							ItemDesc = "Determines whether music will play while a game is in progress (Shortcut: F5)"
+						case 8
+							ItemDesc = "Determines whether Nebunoid should show a speedrun timer. Only effective in solo play"
 					end select
 				end if
 				
@@ -782,13 +790,15 @@ sub shop
 				elseif (PID = 2 AND EnhancedGFX = 1) OR _
 					(PID = 3 AND CampaignBarrier = 1) OR _
 					(PID = 4 AND ShuffleLevels = 1) OR _
-					(PID = 5 AND FullScreen = 1) then
+					(PID = 5 AND FullScreen = 1)OR _
+					(PID = 8 AND SpeedRunner = 1) then
 				#ELSE
 				if (PID = 2 AND EnhancedGFX = 1) OR _
 					(PID = 3 AND CampaignBarrier = 1) OR _
 					(PID = 4 AND ShuffleLevels = 1) OR _
 					(PID = 5 AND FullScreen = 1) OR _
-					(PID = 7 AND MusicPlrEnabled = 1) then
+					(PID = 7 AND MusicPlrEnabled = 1) OR _
+					(PID = 8 AND SpeedRunner = 1) then
 				#ENDIF
 					gfxstring(CustomItem(MISC,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
 					if MouseY >= SelY AND MouseY < SelY+30 then
@@ -805,6 +815,8 @@ sub shop
 									toggle_fullscreen(-1)
 								case 7
 									MusicPlrEnabled = 0
+								case 8
+									SpeedRunner = 0
 							end select
 						end if
 					end if
@@ -855,6 +867,8 @@ sub shop
 									toggle_fullscreen(1)
 								case 7
 									MusicPlrEnabled = 1
+								case 8
+									SpeedRunner = 1
 							end select
 						end if
 					end if

@@ -1,7 +1,7 @@
 ## Nebunoid Manual
 Nebunoid is a nebula themed Arkanoid/Breakout-type game. In this game, your objective is to bash through various colored blocks with a ball and a paddle, scoring as many points as you can while also clearing as many levels as possible.
 
-When a campaign is started from scratch or resumed from a password, up to four players may play the game, alternating turns when a level is finished or when a life is lost by dropping the *last* ball.
+When a campaign is started from scratch or resumed from a password, up to six players may play the game, alternating turns when a level is finished or when a life is lost by dropping the *last* ball.
 
 ### Gameplay
 At the beginning of each life, the ball starts off slow, making it easy to rebound. Hitting the blocks, walls, and the paddle will make it go faster; making it harder to keep the ball in play.
@@ -58,7 +58,7 @@ In addition, there is a collection of 7 gem-themed capsules available outside of
 ----
 
 ### Campaigns
-There are 230 levels, split into ten (10) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
+There are 236 levels, split into ten (10) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
 
 Stars are earned by completing levels for the first time. Harder campaigns require a certain number of stars to break their locks open.
 

@@ -74,7 +74,12 @@ sub local_gameplay
 	InPassword = "--------"
 	SavedControls = ControlStyle
 	do
-		PlayerSlot(0).Difficulty = max(PlayerSlot(1).Difficulty,max(PlayerSlot(2).Difficulty,max(PlayerSlot(3).Difficulty,PlayerSlot(4).Difficulty)))
+		PlayerSlot(0).Difficulty = max(PlayerSlot(1).Difficulty,_
+			max(PlayerSlot(2).Difficulty,_
+			max(PlayerSlot(3).Difficulty,_
+			max(PlayerSlot(4).Difficulty,_
+			max(PlayerSlot(5).Difficulty,_
+			PlayerSlot(6).Difficulty)))))
 		
 		if ControlStyle > CTRL_KEYBOARD then
 			getJoystick(ControlStyle-4,JoyButtonCombo,JoyAxis(0),JoyAxis(1),JoyAxis(2),JoyAxis(3),JoyAxis(4),JoyAxis(5),JoyAxis(6),JoyAxis(7))
@@ -267,12 +272,14 @@ sub local_gameplay
 			end if
 			
 			'Score display
-			if .DispScore < 1e6 then
+			if .Score < 1e6 then
 				ScoreRef = commaSep(.Score)
-			elseif .DispScore < 1e8 then
+			elseif .Score < 1e8 then
 				ScoreRef = commaSep(int(.Score/1e3))+"K"
-			else
+			elseif .Score < 1e11 then
 				ScoreRef = commaSep(int(.Score/1e6))+"M"
+			else
+				ScoreRef = commaSep(int(.Score/1e9))+"B"
 			end if
 			ui_element(ScoreRef,45,6,7,rgba(255,255,255,224))
 			
@@ -308,8 +315,10 @@ sub local_gameplay
 					ScoreRef = commaSep(ModdedHiScore)
 				elseif ModdedHiScore < 1e8 then
 					ScoreRef = commaSep(int(ModdedHiScore / 1e3))+"K"
-				else
+				elseif ModdedHiScore < 1e11 then
 					ScoreRef = commaSep(int(ModdedHiScore / 1e6))+"M"
+				else
+					ScoreRef = commaSep(int(ModdedHiScore / 1e9))+"B"
 				end if
 				
 				TargetColoring = rgba(255,255,255,224)
@@ -324,8 +333,10 @@ sub local_gameplay
 							ScoreRef = commaSep(.Score)
 						elseif .Score < 1e8 then
 							ScoreRef = commaSep(int(.Score / 1e3))+"K"
-						else
+						elseif .Score < 1e11 then
 							ScoreRef = commaSep(int(.Score / 1e6))+"M"
+						else
+							ScoreRef = commaSep(int(.Score / 1e9))+"B"
 						end if
 					end if
 				elseif TargetPos = 1 then
@@ -395,6 +406,14 @@ sub local_gameplay
 					str(int(remainder(DispTime,60)/10))+_
 					str(int(remainder(DispTime,10)))
 				ui_element(TimeStr,560,6,5,DColor)
+			elseif SpeedRunner AND NumPlayers = 1 then
+				TimeRem = SpeedRunTimer / 60
+				DispTime = int(TimeRem+1-(1e-10))
+				TimeStr = str(int(DispTime/60))+":"+_
+					str(int(remainder(DispTime,60)/10))+_
+					str(int(remainder(DispTime,10)))
+
+				ui_element(TimeStr,560,6,5,rgba(255,255,255,224))
 			elseif .WarpTimer < 3600 then
 				TimeRem = .WarpTimer / 60
 				DispTime = int(TimeRem+1-(1e-10))
@@ -534,7 +553,7 @@ sub local_gameplay
 		
 		if PaddleHealth > 0 AND PaddleHealth < 110 * 60 then
 			dim as uinteger HealthColor
-			dim as short DmgMulti = int(sqr(ActiveDifficulty + 0.5))
+			dim as short DmgMulti = int(sqr(ActiveDifficulty) + 0.5)
 			
 			if PaddleHealth < 15 * DmgMulti * 60 then
 				HealthColor = rgb(192,0,0)
@@ -679,7 +698,7 @@ sub local_gameplay
 					dim as Basics Deepest
 					dim as short ObjsFound = 0
 					Deepest.Y = 600.0
-					Deepest.X = DesireX
+					Deepest.X = Paddle(1).X
 					
 					for BID as short = 1 to NumBalls
 						with Ball(BID)
@@ -702,8 +721,10 @@ sub local_gameplay
 						end with
 					next CID
 
-					if ObjsFound > 0 AND (abs(DesireX - Deepest.X) > PaddleSize/2 OR abs(DesireX - Deepest.X) < 1) then 
-						DesireX = Deepest.X + irandom(-20,20)
+					if ObjsFound > 0 AND (abs(DesireX - Deepest.X) > PaddleSize/2 OR abs(DesireX - Deepest.X) < PaddleSize/100) then 
+						DesireX = Deepest.X + irandom(-PaddleSize/4,PaddleSize/4)
+					elseif ObjsFound = 0 then
+						DesireX = Deepest.X
 					end if
 				elseif ControlStyle <= CTRL_LAPTOP then
 					Result = getmouse(MouseX,0,0,ButtonCombo)
@@ -992,12 +1013,16 @@ sub local_gameplay
 			WepCooldown -= 1
 		end if
 
+		if SpeedRunner AND PlayerSlot(1).Lives > 0 AND NumPlayers <= 1 then
+			SpeedRunTimer += 1
+		end if
+			
 		if total_lives > 0 AND GamePaused = 0 AND LevelClear = 0 then
 			if multikey(SC_TAB) then
 				Instructions = "Auxilliary lists may not be accessed while a game is running."
 				InstructExpire = timer + 7
 			end if
-			
+
 			InPassword = "--------"
 			if actionButton AND PaddleSize > 0 AND TotalBC > 0 AND WepCooldown = 0 then
 				if PlayerSlot(Player).BulletAmmo > 0 AND Bullet(BulletStart).Y <= MinPlayHeight - 20 AND Bullet(BulletStart+1).Y <= MinPlayHeight - 20 then
@@ -1551,6 +1576,8 @@ sub local_gameplay
 				gfxstring("Unused gems     : "+str(Bonuses(3)),40,391,5,5,3,rgb(255,255,255))
 				gfxstring("Lives leftover  : "+str(Bonuses(4)),40,421,5,5,3,rgb(255,255,255))
 				gfxstring("Total bonus     : "+str(Bonuses(0)),40,451,5,5,3,rgb(255,255,255))
+				
+				SpeedRunTimer -= 1
 			else
 				line(0,343)-(LevelClear,433),rgba(0,0,0,64),bf
 				line(0,343)-(LevelClear,343),rgb(255,255,255)
@@ -2317,7 +2344,7 @@ sub local_gameplay
 																if XDID > 0 AND XDID <= 20*(CondensedLevel+1) AND _
 																	YDID > 0 AND YDID <= 20 AND _
 																	abs(XDID-XID) + abs(YDID-YID) = 1 AND _
-																	PlayerSlot(Player).TileSet(XDID,YDID).BrickID <> PlayerSlot(Player).TileSet(XID,YID).BrickID then
+																	Pallete(PlayerSlot(Player).TileSet(XDID,YDID).BrickID).HitDegrade >= 0 then
 																	AlreadySpread(XDID,YDID) = 1
 																	PlayerSlot(Player).TileSet(XDID,YDID).BrickID = PlayerSlot(Player).TileSet(XID,YID).BrickID
 																	if PlayerSlot(Player).TileSet(XDID,YDID).BaseBrickID = 0 then
@@ -2494,10 +2521,10 @@ sub local_gameplay
 			end if
 
 			if InPassword <> "--------" then
-				Instructions = "Password: "+InPassword+" (Push 0-4 when done)"
+				Instructions = "Password: "+InPassword+" (Push 0-"+str(MaxPlayers)+" when done)"
 				InstructExpire = timer + 1
 				
-				for PID as ubyte = 0 to 4
+				for PID as ubyte = 0 to MaxPlayers
 					if InType = str(PID) then
 						NumPlayers = PID
 						PassInput = 1
@@ -2540,7 +2567,7 @@ sub local_gameplay
 				if PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignFolder <> EndlessFolder AND CampaignName <> PlaytestName AND Phase <> 0 then
 					Instructions = "Push F4 to open the level screen"
 				else
-					Instructions = "Push 0-4 to start a new campaign with that many players"
+					Instructions = "Push 0-"+str(MaxPlayers)+" to start a new campaign with that many players"
 				end if
 				InstructExpire = timer + 1
 			end if
@@ -2711,10 +2738,10 @@ sub local_gameplay
 			line(0,0)-(1023,767),rgba(128,128,255,(100-SpeedMod)/100*255),bf
 		end if
 		screencopy
-		while timer < FrameTime + 1/60:sleep 1:wend
+		while timer < FrameTime + 1/60:sleep 0:wend
 		InType = inkey
 		if total_lives = 0 then
-			for PID as ubyte = 0 to 4
+			for PID as ubyte = 0 to MaxPlayers
 				if InType = str(PID) AND InPassword = "--------" then
 					begin_local_game(PID, 1)
 					
@@ -2879,7 +2906,7 @@ sub local_gameplay
 		end if
 	loop
 	release_music
-	for PID as ubyte = 1 to 4
+	for PID as ubyte = 1 to MaxPlayers
 		with PlayerSlot(PID)
 			if .Lives > 0 AND DQ = 0 then
 				TotalXP += int(.Score * .Difficulty)

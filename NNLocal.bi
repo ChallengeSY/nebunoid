@@ -1,6 +1,7 @@
 const NumHints = 4
 const TrapThreshold = 200
 const CheatScore = 20000000
+const LevelsPerPage = 28
 dim shared as string CampaignName, CampaignLevelName, CampaignPassword, LevelDescription
 dim shared as ushort StartingLives, HighLevel, CampaignBricks, _
 	SecretLevels, AttackBricks
@@ -697,7 +698,7 @@ function level_list as string
 	dim as string LevelPass, OutPass
 
 	do
-		AdjustPagination = min(max(SelectLevel-15,0),max(LevelsRegistered-29,0))
+		AdjustPagination = min(max(SelectLevel-ceil(LevelsPerPage/2),0),max(LevelsRegistered-LevelsPerPage,0))
 		LevelsRegistered = 0
 		cls
 		gfxstring("Level list for "+CampaignName,0,0,5,4,4,rgb(0,255,255))
@@ -717,7 +718,7 @@ function level_list as string
 			if LegalLevel then
 				LevelsRegistered += 1
 				
-				if LevelsRegistered-AdjustPagination > 0 AND LevelsRegistered-AdjustPagination < 30 then
+				if LevelsRegistered-AdjustPagination > 0 AND LevelsRegistered-AdjustPagination <= LevelsPerPage then
 					if LevelsRegistered = SelectLevel then
 						line(0,18+(LevelsRegistered-AdjustPagination)*25)-(1023,41+(LevelsRegistered-AdjustPagination)*25),rgb(0,0,128),bf
 						LegalChoice = LegalLevel
@@ -728,6 +729,12 @@ function level_list as string
 				end if
 			end if
 		next LevelID
+		
+		if LevelsRegistered > 1 then
+			gfxstring("Use [UP]/[DN] to navigate the levels. Press [ENTER] to quickly get a password.",0,20+(LevelsPerPage+1)*25,4,3,3,rgb(255,0,255))
+		else
+			gfxstring("No passwords have been collected for this campaign. Press [ESC] to return.",0,20+(LevelsPerPage+1)*25,4,3,3,rgb(255,0,255))
+		end if
 		screencopy
 		sleep 15
 		InType = inkey
@@ -740,9 +747,9 @@ function level_list as string
 		elseif InType = DownArrow then
 			SelectLevel += 1
 		elseif InType = PageUp then
-			SelectLevel -= 28
+			SelectLevel -= LevelsPerPage - 1 
 		elseif InType = PageDn then
-			SelectLevel += 28
+			SelectLevel += LevelsPerPage - 1
 		end if
 		
 		if SelectLevel < 1 then
@@ -852,7 +859,8 @@ end sub
 sub brick_collisions(BallID as short)
 	dim as ubyte HitFailed, PointsScored, ChooseParticle
 	dim as uinteger ColorDestroyed
-	dim as short ScoreMultiplier, BonusMultiplier, ActualGain, MinX, MaxX, MinY, MaxY, NewPalette
+	dim as short ScoreMultiplier, BonusMultiplier, MinX, MaxX, MinY, MaxY, NewPalette
+	dim as integer ActualGain
 	
 	if CondensedLevel then
 		MinX = (Ball(BallID).X-44)/24
@@ -1095,8 +1103,14 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 		else
 			CapWeight(CAP_LIFE) = 1
 		end if
+		
+		if (SecretLevels > 0 AND .LevelNum >= SecretLevels - 1) OR _
+			(check_level(.LevelNum + 1) = "" AND CampaignFolder <> EndlessFolder) then
+			CapWeight(CAP_WARP) = 0
+		else
+			CapWeight(CAP_WARP) = 1
+		end if
 	end with
-	CapWeight(CAP_WARP) = 1
 	
 	if TotalBC * 2 > NumBalls then
 		CapWeight(CAP_SPLIT_BALL) = 0
@@ -1730,6 +1744,7 @@ sub begin_local_game(InitPlayers as byte, InitLevel as short)
 	destroy_balls
 	destroy_capsules
 	LevelDesc = 0
+	SpeedRunTimer = 0
 
 	for HID as byte = 1 to 10
 		HighScore(HID).NewEntry = 0
@@ -1760,7 +1775,7 @@ sub begin_local_game(InitPlayers as byte, InitLevel as short)
 
 	NewPlrSlot.LevelNum = InitLevel
 	copy_wall
-	for PDID as ubyte = 1 to 4
+	for PDID as ubyte = 1 to MaxPlayers
 		DifficultyRAM(PDID) = PlayerSlot(PDID).Difficulty
 		PlayerSlot(PDID) = NewPlrSlot
 		PlayerSlot(PDID).Difficulty = DifficultyRAM(PDID)
@@ -1773,3 +1788,4 @@ sub begin_local_game(InitPlayers as byte, InitLevel as short)
 
 	FrameTime = timer
 end sub
+
