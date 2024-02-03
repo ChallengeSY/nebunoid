@@ -5,11 +5,11 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 7
 ================================================================================
 
 Level Name            := Blockade
-Level Description     := 
+Level Description     := Some invincible blocks can be hit for extra points.
 Level Password        := XUZILCVS
 Level game number     := 11
 Level time limit      := 0
-Number of Brushes     := 6
+Number of Brushes     := 7
 Brush 1 Color         := &h8000FF00
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 0
@@ -30,10 +30,14 @@ Brush 5 Color         := &hB0FFD700
 Brush 5 Score Value   := 10*
 Brush 5 Hit Degrade   := 5
 Brush 5 Increase Spd  := FALSE
-Brush 6 Color         := &h80FF8000
-Brush 6 Score Value   := 10*
-Brush 6 Hit Degrade   := -1
+Brush 6 Color         := &hB0CD7F32
+Brush 6 Score Value   := 2
+Brush 6 Hit Degrade   := 5
 Brush 6 Increase Spd  := FALSE
+Brush 7 Color         := &h80FF8000
+Brush 7 Score Value   := 10*
+Brush 7 Hit Degrade   := -1
+Brush 7 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
@@ -43,13 +47,13 @@ Level Grid  11111111112
  3|                    
  4|                    
  5|11551111111111115511
- 6|11651111111111115611
- 7|22652222222222225622
- 8|22652222222222225622
- 9|33653333333333335633
-10|33653333333333335633
-11|44654444444444445644
-12|44654444444444445644
+ 6|11761111111111116711
+ 7|22762222222222226722
+ 8|22762222222222226722
+ 9|33763333333333336733
+10|33763333333333336733
+11|44764444444444446744
+12|44764444444444446744
 13|5555            5555
 14|                    
 15|                    
