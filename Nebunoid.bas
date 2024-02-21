@@ -171,7 +171,13 @@ while FileExists("screen"+str(ShotIndex)+".bmp")
 	ShotIndex += 1
 wend
 if CampaignFolder = "" then CampaignFolder = "official/intro"
-if PlayerSlot(1).Difficulty = 0 then PlayerSlot(1).Difficulty = 4.0
+for PID as byte = 1 to 6
+	with PlayerSlot(PID)
+		if .Difficulty = 0 then
+			.Difficulty = 4.0
+		end if
+	end with
+next PID
 while inkey <> "":wend
 while screenevent(@e):wend
 screenset 1,0
