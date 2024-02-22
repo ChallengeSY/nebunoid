@@ -798,7 +798,12 @@ sub save_unlocks
 end sub
 
 function ball_ct_bonus as byte
-	'More balls = more points per block; subject to Diminishing Returns
+	'The Computer Player does not benefit from Multiball bonus
+	if ControlStyle = CTRL_AI then
+		return 1
+	end if
+	
+	'Otherwise, more balls = more points per block; subject to Diminishing Returns
 	return int(sqr(TotalBC) + 0.5)
 end function
 
@@ -1471,3 +1476,4 @@ function actionButton(HoldCheck as byte = 0) as integer
 	
 	return (ControlStyle = CTRL_AI)
 end function
+
