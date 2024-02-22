@@ -9,6 +9,7 @@ Usually when playing with someone, it is to defeat them in some fashion.
 
 For example; we could do a mechanism where the blocks are shared between the two players (and from opposite sides), but that they would otherwise be controlling their own paddle(s) and balls.
 * We would need to ditch the multi-ball multiplayer. Otherwise, one player could dominate the scoreboard if they were lucky with these capsules.
+* Breakable Ceiling levels would lose their unique flag.
 * Some levels are only possible to do from the bottom. We could add a flag that causes only the bottom half of the level to be visible, mirrored to the opposite half.
 * Lives could be unlimited, _or_ they could reset on the beginning of each level. (Example: Losing all of your lives would cause you to sit out rest of the level. If this was to happen to both players, the rest of the level is skipped.)
 
