@@ -4,68 +4,80 @@ LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 25
 *BEGIN*
 ================================================================================
 
-Level Name            := Escape the black hole
-Level Description     := The reactor's demise has created a black hole!
-Level Password        := --------
-Level game number     := 17411
-Level time limit      := 360
-Number of Brushes     := 8
-Brush 1 Color         := &h80010101
+Level Name            := Arrowheads
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 2059
+Level time limit      := 0
+Number of Brushes     := 11
+Brush 1 Color         := &hC0FFD700
 Brush 1 Score Value   := 10*
-Brush 1 Hit Degrade   := 0
+Brush 1 Hit Degrade   := 1
 Brush 1 Increase Spd  := FALSE
-Brush 2 Color         := &h80080808
-Brush 2 Score Value   := 10*
-Brush 2 Hit Degrade   := 0
+Brush 2 Color         := &hC0CD7F32
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
 Brush 2 Increase Spd  := FALSE
-Brush 3 Color         := &h800F0F0F
-Brush 3 Score Value   := 10*
-Brush 3 Hit Degrade   := 0
+Brush 3 Color         := &hC0CD7F32
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 1
 Brush 3 Increase Spd  := FALSE
-Brush 4 Color         := &h801F1F1F
+Brush 4 Color         := &h80FF0000
 Brush 4 Score Value   := 10*
 Brush 4 Hit Degrade   := 0
 Brush 4 Increase Spd  := FALSE
-Brush 5 Color         := &h802F2F2F
+Brush 5 Color         := &h80FF8000
 Brush 5 Score Value   := 10*
 Brush 5 Hit Degrade   := 0
 Brush 5 Increase Spd  := FALSE
-Brush 6 Color         := &h80404040
+Brush 6 Color         := &h80FFFF00
 Brush 6 Score Value   := 10*
 Brush 6 Hit Degrade   := 0
 Brush 6 Increase Spd  := FALSE
-Brush 7 Color         := &h80585858
+Brush 7 Color         := &h8000FF00
 Brush 7 Score Value   := 10*
 Brush 7 Hit Degrade   := 0
 Brush 7 Increase Spd  := FALSE
-Brush 8 Color         := &h80787878
+Brush 8 Color         := &h8000FFFF
 Brush 8 Score Value   := 10*
 Brush 8 Hit Degrade   := 0
 Brush 8 Increase Spd  := FALSE
+Brush 9 Color         := &h800000FF
+Brush 9 Score Value   := 10*
+Brush 9 Hit Degrade   := 0
+Brush 9 Increase Spd  := FALSE
+Brush 10 Color        := &h808000FF
+Brush 10 Score Value  := 10*
+Brush 10 Hit Degrade  := 0
+Brush 10 Increase Spd := FALSE
+Brush 11 Color        := &h80FF00FF
+Brush 11 Score Value  := 10*
+Brush 11 Hit Degrade  := 0
+Brush 11 Increase Spd := FALSE
 
-Level Grid  1111111111222222222233333333334
-   1234567890123456789012345678901234567890
--------------------------------------------
- 1|                                        
- 2|                                        
- 3|                                        
- 4|                                        
- 5|    1111    1111    1111    1111    1111
- 6|1111222211112222111122221111222211112222
- 7|2222333322223333222233332222333322223333
- 8|3333444433334444333344443333444433334444
- 9|4444555544445555444455554444555544445555
-10|5555666655556666555566665555666655556666
-11|6666777766667777666677776666777766667777
-12|7777888877778888777788887777888877778888
-13|8888    8888    8888    8888    8888    
-14|                                        
-15|                                        
-16|                                        
-17|                                        
-18|                                        
-19|                                        
-20|                                        
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1| 33223322332233     
+ 2|      BA8876442     
+ 3|      BA99765522    
+ 4|       BA8876443    
+ 5|       BA99765533   
+ 6|        BA8876442   
+ 7|        BA99765522  
+ 8|         BA8876443  
+ 9|   2233223322332233 
+10|   BABA989876765454 
+11|   BABA989876765454 
+12|   2233223322332233 
+13|         BA8876443  
+14|        BA99765522  
+15|        BA8876442   
+16|       BA99765533   
+17|       BA8876443    
+18|      BA99765522    
+19|      BA8876442     
+20| 33223322332233     
 
 ================================================================================
 *END*

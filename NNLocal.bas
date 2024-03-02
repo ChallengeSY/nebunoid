@@ -2815,6 +2815,7 @@ sub local_gameplay
 				end if
 				.LevelNum += 1
 				.PerfectClear = 1
+				.GameOverCombo = 0
 				ProhibitSpawn = 0
 				LevelDesc = 0
 
@@ -2890,6 +2891,7 @@ sub local_gameplay
 				GamePaused = 1
 			elseif total_lives > 0 AND CampaignName <> PlaytestName then
 				PlayerSlot(Player).Lives = 1
+				PlayerSlot(Player).GameOverCombo = -1
 				ProhibitSpawn = 2
 				if GameStyle AND (1 SHL STYLE_BONUS) then
 					GameStyle -= 2^STYLE_BONUS

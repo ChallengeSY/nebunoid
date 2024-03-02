@@ -1504,7 +1504,7 @@ sub game_over
 	setmouse(,,0,0)
 	dim as string PrintStr
 	dim as short CenterX
-	dim as byte UseChoice, ValidChoice(2)
+	dim as byte UseChoice, ValidChoice(2), LevelSkippable
 	
 	if NumPlayers > 1 then
 		PrintStr = "Game Over, Player "+str(Player)
@@ -1530,6 +1530,14 @@ sub game_over
 			TotalXP += int(.Score * .Difficulty)
 			save_unlocks
 		end if
+		
+		if .Score > 0 then
+			.GameOverCombo += 1
+		else
+			.GameOverCombo = 0
+		end if
+		
+		LevelSkippable = (.GameOverCombo >= 2 AND check_level(.LevelNum+1) <> "" AND (.LevelNum < SecretLevels - 1 OR SecretLevels <= 0))
 	end with
 
 	do
@@ -1542,31 +1550,33 @@ sub game_over
 			ValidChoice(1) = 0
 			UseChoice = 2
 		else
-			if PlayerSlot(Player).Difficulty < 6.5 OR PlayerSlot(Player).LevelNum = 1 then
-				ValidChoice(0) = 1
-			else
-				ValidChoice(0) = 0
-			end if
-
-			if PlayerSlot(Player).Difficulty > 3.5 then
-				ValidChoice(1) = 1
-			else
-				ValidChoice(1) = 0
-			end if
+			ValidChoice(0) = 1
+			ValidChoice(1) = 1
 		end if
 		
 		for COption as byte = 0 to 2
 			select case COption
 				case 0
-					PrintStr = "Restart level"
+					PrintStr = "Use a continue"
 				case 1
-					PrintStr = "Reduce difficulty"
+					if LevelSkippable then
+						PrintStr = "Skip level"
+					elseif PlayerSlot(Player).Difficulty > 3.5 AND PlayerSlot(Player).Difficulty < 6.5 then
+						PrintStr = "Reduce difficulty"
+					else
+						PrintStr = ""
+						ValidChoice(1) = 0
+					end if
 				case 2
 					PrintStr = "End game"
 			end select
 			CenterX = 512-gfxlength(PrintStr,4,3,3)/2
 			if ValidChoice(COption) then
-				gfxstring(PrintStr,CenterX,359+COption*30,4,3,3,rgb(255,255,255))
+				if left(PrintStr,4) = "Skip" then
+					gfxstring(PrintStr,CenterX,359+COption*30,4,3,3,rgb(255,255,128))
+				else
+					gfxstring(PrintStr,CenterX,359+COption*30,4,3,3,rgb(255,255,255))
+				end if
 			else
 				gfxstring(PrintStr,CenterX,359+COption*30,4,3,3,rgb(128,128,128))
 			end if
@@ -1581,11 +1591,15 @@ sub game_over
 		screencopy
 		
 		if InType = DownArrow then
-			UseChoice += 1
-			if UseChoice > 2 then UseChoice = 0
+			do
+				UseChoice += 1
+				if UseChoice > 2 then UseChoice = 0
+			loop until ValidChoice(UseChoice)
 		elseif InType = UpArrow then
-			UseChoice -= 1
-			if UseChoice < 0 then UseChoice = 2
+			do
+				UseChoice -= 1
+				if UseChoice < 0 then UseChoice = 2
+			loop until ValidChoice(UseChoice)
 		end if
 		if InType = XBox then
 			UseChoice = 2
@@ -1595,18 +1609,29 @@ sub game_over
 	InType = chr(255)
 	
 	if UseChoice < 2 then
-		'Use a continue
 		with PlayerSlot(Player)
-			if UseChoice = 1 then
-				if .Difficulty >= 11 then
-					.Difficulty = 10
-				elseif .Difficulty >= 8.5 then
-					.Difficulty -= 1
-				else
-					.Difficulty = max(.Difficulty - 0.5,3.5)
+			if UseChoice = 1 AND LevelSkippable then
+				'Skip level
+				while .Difficulty >= 6.5
+					.Difficulty -= 0.5
+				wend
+				
+				.LevelNum += 1
+				.GameOverCombo = 0
+			else
+				'Reduce difficulty (if appropriate)
+				if (.Difficulty >= 6.5 AND .LevelNum > 1) OR UseChoice = 1 then
+					if .Difficulty >= 11 then
+						.Difficulty = 10
+					elseif .Difficulty >= 8.5 then
+						.Difficulty -= 1
+					else
+						.Difficulty = max(.Difficulty - 0.5,3.5)
+					end if
 				end if
 			end if
 			
+			'Use a continue
 			fresh_level(Player)
 			load_level(.LevelNum)
 			generate_cavity

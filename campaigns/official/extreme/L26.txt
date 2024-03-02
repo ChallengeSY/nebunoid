@@ -1,40 +1,40 @@
 ================================================================================
-LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 18
+LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 26
 ================================================================================
 *BEGIN*
 ================================================================================
 
-Level Name            := Chilling Columns
+Level Name            := The Impossible
 Level Description     := 
-Level Password        := ++++++++
-Level game number     := 4099
+Level Password        := STARBASE
+Level game number     := 3
 Level time limit      := 0
 Number of Brushes     := 18
-Brush 1 Color         := &h800000FF
+Brush 1 Color         := &h80FF00FF
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 0
 Brush 1 Increase Spd  := FALSE
-Brush 2 Color         := &h802020FF
+Brush 2 Color         := &h80FF20FF
 Brush 2 Score Value   := 10*
 Brush 2 Hit Degrade   := 0
 Brush 2 Increase Spd  := FALSE
-Brush 3 Color         := &h804040FF
+Brush 3 Color         := &h80FF40FF
 Brush 3 Score Value   := 10*
 Brush 3 Hit Degrade   := 0
 Brush 3 Increase Spd  := FALSE
-Brush 4 Color         := &h806060FF
+Brush 4 Color         := &h80FF60FF
 Brush 4 Score Value   := 10*
 Brush 4 Hit Degrade   := 0
 Brush 4 Increase Spd  := FALSE
-Brush 5 Color         := &h80A0A0FF
+Brush 5 Color         := &h80FFA0FF
 Brush 5 Score Value   := 10*
 Brush 5 Hit Degrade   := 0
 Brush 5 Increase Spd  := FALSE
-Brush 6 Color         := &h80C0C0FF
+Brush 6 Color         := &h80FFC0FF
 Brush 6 Score Value   := 10*
 Brush 6 Hit Degrade   := 0
 Brush 6 Increase Spd  := FALSE
-Brush 7 Color         := &h80F0F0FF
+Brush 7 Color         := &h80FFF0FF
 Brush 7 Score Value   := 10*
 Brush 7 Hit Degrade   := 0
 Brush 7 Increase Spd  := FALSE
@@ -58,54 +58,54 @@ Brush 12 Color        := &hB0CD7F32
 Brush 12 Score Value  := 2
 Brush 12 Hit Degrade  := 11
 Brush 12 Increase Spd := FALSE
-Brush 13 Color        := &h808080FF
+Brush 13 Color        := &h80FF80FF
 Brush 13 Score Value  := 10*
 Brush 13 Hit Degrade  := 0
 Brush 13 Increase Spd := FALSE
-Brush 14 Color        := &h80FF00FF
-Brush 14 Score Value  := 10*
-Brush 14 Hit Degrade  := 0
+Brush 14 Color        := &h00000000
+Brush 14 Score Value  := 2
+Brush 14 Hit Degrade  := 1
 Brush 14 Increase Spd := FALSE
-Brush 15 Color        := &h00000000
+Brush 15 Color        := &h80204020
 Brush 15 Score Value  := 2
-Brush 15 Hit Degrade  := 14
+Brush 15 Hit Degrade  := 0*
 Brush 15 Increase Spd := FALSE
-Brush 16 Color        := &h80204020
+Brush 16 Color        := &h80408040
 Brush 16 Score Value  := 2
-Brush 16 Hit Degrade  := 0*
+Brush 16 Hit Degrade  := 15*
 Brush 16 Increase Spd := FALSE
-Brush 17 Color        := &h80408040
+Brush 17 Color        := &h8080FF80
 Brush 17 Score Value  := 2
-Brush 17 Hit Degrade  := 16*
+Brush 17 Hit Degrade  := 16
 Brush 17 Increase Spd := FALSE
-Brush 18 Color        := &h8080FF80
-Brush 18 Score Value  := 2
-Brush 18 Hit Degrade  := 17
+Brush 18 Color        := &h80FF8000
+Brush 18 Score Value  := 10*
+Brush 18 Hit Degrade  := -1
 Brush 18 Increase Spd := FALSE
 
 Level Grid  1111111111222222222233333333334
    1234567890123456789012345678901234567890
 -------------------------------------------
- 1|F   F              FF              F   F
- 2| F  F              FF              F  F 
- 3|  F F              FF              F F  
- 4|   FF              FF              FF   
- 5|FFFFFC11I222C333I44CCDDI555C666I77CFFFFF
- 6|     C11I222C333I44CCDDI555C666I77C     
- 7|     C11I222C333I44CCDDI555C666I77C     
- 8|     C11I222C333I44CCDDI555C666I77C     
- 9|     C111I22C33I444CCDDDI55C66I777C     
-10|     C111I22C33I444CCDDDI55C66I777C     
-11|     C111I22C33I444CCDDDI55C66I777C     
-12|FFFFFC111I22C33I444CCDDDI55C66I777CFFFFF
-13|                                        
-14|                                        
-15|                                        
-16|                                        
-17|                                        
-18|                                        
-19|                                        
-20|                                        
+ 1|IBBBBBBBBIIBBBBBBBBIIBBBBBBBBIIBBBBBBBBI
+ 2|B   11   BB   22   BB   33   BB   44   B
+ 3|B  1111  BB  2222  BB  3333  BB  4444  B
+ 4|B 111111 BB 222222 BB 333333 BB 444444 B
+ 5|B11111111BB22222222BB33333333BB44444444B
+ 6|B11111111BB22222222BB33333333BB44444444B
+ 7|BE111111EBBE222222EBBE333333EBBE444444EB
+ 8|BAE1111EABBAE2222EABBAE3333EABBAE4444EAB
+ 9|BHAE11EAHBBHAE22EAHBBHAE33EAHBBHAE44EAHB
+10|IBBBBBBBBIIBBBBBBBBIIBBBBBBBBIIBBBBBBBBI
+11|IBBBBBBBBIIBBBBBBBBIIBBBBBBBBIIBBBBBBBBI
+12|BHAEDDEAHBBHAE55EAHBBHAE66EAHBBHAE77EAHB
+13|BAEDDDDEABBAE5555EABBAE6666EABBAE7777EAB
+14|BEDDDDDDEBBE555555EBBE666666EBBE777777EB
+15|BDDDDDDDDBB55555555BB66666666BB77777777B
+16|BDDDDDDDDBB55555555BB66666666BB77777777B
+17|B DDDDDD BB 555555 BB 666666 BB 777777 B
+18|B  DDDD  BB  5555  BB  6666  BB  7777  B
+19|B   DD   BB   55   BB   66   BB   77   B
+20|IBCCCCCCBIIBCCCCCCBIIBCCCCCCBIIBCCCCCCBI
 
 ================================================================================
 *END*

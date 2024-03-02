@@ -4,108 +4,73 @@ LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 15
 *BEGIN*
 ================================================================================
 
-Level Name            := Chilling Columns
-Level Description     := 
+Level Name            := Ceiling Guardian
+Level Description     := Can you break the ceiling without causing any blocks to respawn?
 Level Password        := ++++++++
-Level game number     := 4099
+Level game number     := 12291
 Level time limit      := 0
-Number of Brushes     := 18
-Brush 1 Color         := &h800000FF
+Level boss health     := 300
+Number of Brushes     := 9
+Brush 1 Color         := &h8000FFFF
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 0
 Brush 1 Increase Spd  := FALSE
-Brush 2 Color         := &h802020FF
+Brush 2 Color         := &h8020FFFF
 Brush 2 Score Value   := 10*
 Brush 2 Hit Degrade   := 0
 Brush 2 Increase Spd  := FALSE
-Brush 3 Color         := &h804040FF
+Brush 3 Color         := &h8040FFFF
 Brush 3 Score Value   := 10*
 Brush 3 Hit Degrade   := 0
 Brush 3 Increase Spd  := FALSE
-Brush 4 Color         := &h806060FF
+Brush 4 Color         := &h8060FFFF
 Brush 4 Score Value   := 10*
 Brush 4 Hit Degrade   := 0
 Brush 4 Increase Spd  := FALSE
-Brush 5 Color         := &h80A0A0FF
+Brush 5 Color         := &h8080FFFF
 Brush 5 Score Value   := 10*
 Brush 5 Hit Degrade   := 0
 Brush 5 Increase Spd  := FALSE
-Brush 6 Color         := &h80C0C0FF
+Brush 6 Color         := &h80A0FFFF
 Brush 6 Score Value   := 10*
 Brush 6 Hit Degrade   := 0
 Brush 6 Increase Spd  := FALSE
-Brush 7 Color         := &h80F0F0FF
+Brush 7 Color         := &h80C0FFFF
 Brush 7 Score Value   := 10*
 Brush 7 Hit Degrade   := 0
 Brush 7 Increase Spd  := FALSE
-Brush 8 Color         := &h80404040
+Brush 8 Color         := &hB0FFD700
 Brush 8 Score Value   := 10*
-Brush 8 Hit Degrade   := 0
-Brush 8 Increase Spd  := FALSE
-Brush 9 Color         := &h80808080
+Brush 8 Hit Degrade   := 8
+Brush 8 Increase Spd  := TRUE
+Brush 9 Color         := &hB0CD7F32
 Brush 9 Score Value   := 2
 Brush 9 Hit Degrade   := 8
 Brush 9 Increase Spd  := FALSE
-Brush 10 Color        := &h80FFFFFF
-Brush 10 Score Value  := 2
-Brush 10 Hit Degrade  := 9
-Brush 10 Increase Spd := FALSE
-Brush 11 Color        := &hB0FFD700
-Brush 11 Score Value  := 10*
-Brush 11 Hit Degrade  := 11
-Brush 11 Increase Spd := FALSE
-Brush 12 Color        := &hB0CD7F32
-Brush 12 Score Value  := 2
-Brush 12 Hit Degrade  := 11
-Brush 12 Increase Spd := FALSE
-Brush 13 Color        := &h808080FF
-Brush 13 Score Value  := 10*
-Brush 13 Hit Degrade  := 0
-Brush 13 Increase Spd := FALSE
-Brush 14 Color        := &h80FF00FF
-Brush 14 Score Value  := 10*
-Brush 14 Hit Degrade  := 0
-Brush 14 Increase Spd := FALSE
-Brush 15 Color        := &h00000000
-Brush 15 Score Value  := 2
-Brush 15 Hit Degrade  := 14
-Brush 15 Increase Spd := FALSE
-Brush 16 Color        := &h80204020
-Brush 16 Score Value  := 2
-Brush 16 Hit Degrade  := 0*
-Brush 16 Increase Spd := FALSE
-Brush 17 Color        := &h80408040
-Brush 17 Score Value  := 2
-Brush 17 Hit Degrade  := 16*
-Brush 17 Increase Spd := FALSE
-Brush 18 Color        := &h8080FF80
-Brush 18 Score Value  := 2
-Brush 18 Hit Degrade  := 17
-Brush 18 Increase Spd := FALSE
 
-Level Grid  1111111111222222222233333333334
-   1234567890123456789012345678901234567890
--------------------------------------------
- 1|F   F              FF              F   F
- 2| F  F              FF              F  F 
- 3|  F F              FF              F F  
- 4|   FF              FF              FF   
- 5|FFFFFC11I222C333I44CCDDI555C666I77CFFFFF
- 6|     C11I222C333I44CCDDI555C666I77C     
- 7|     C11I222C333I44CCDDI555C666I77C     
- 8|     C11I222C333I44CCDDI555C666I77C     
- 9|     C111I22C33I444CCDDDI55C66I777C     
-10|     C111I22C33I444CCDDDI55C66I777C     
-11|     C111I22C33I444CCDDDI55C66I777C     
-12|FFFFFC111I22C33I444CCDDDI55C66I777CFFFFF
-13|                                        
-14|                                        
-15|                                        
-16|                                        
-17|                                        
-18|                                        
-19|                                        
-20|                                        
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3|                    
+ 4|                    
+ 5|91111911119111191111
+ 6|29222292222922229222
+ 7|33933339333393333933
+ 8|44494444944449444494
+ 9|55559555595555955559
+10|96666966669666696666
+11|79777797777977779777
+12|                    
+13|                    
+14|                    
+15|                    
+16|                    
+17|                    
+18|                    
+19|                    
+20|                    
 
 ================================================================================
 *END*

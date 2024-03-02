@@ -4,96 +4,48 @@ LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 19
 *BEGIN*
 ================================================================================
 
-Level Name            := MultiRainbow
-Level Description     := 
+Level Name            := Cavity Boxes
+Level Description     := That is a lot of potential juggling...
 Level Password        := ++++++++
-Level game number     := 3
+Level game number     := 31
 Level time limit      := 0
-Number of Brushes     := 15
-Brush 1 Color         := &h80FF0000
+Number of Brushes     := 3
+Brush 1 Color         := &h80BE14ED
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 0
 Brush 1 Increase Spd  := FALSE
-Brush 2 Color         := &h80800000
+Brush 2 Color         := &h80FFDA00
 Brush 2 Score Value   := 10*
-Brush 2 Hit Degrade   := 0
+Brush 2 Hit Degrade   := 2
 Brush 2 Increase Spd  := FALSE
-Brush 3 Color         := &h80FF8000
-Brush 3 Score Value   := 2
-Brush 3 Hit Degrade   := 2
+Brush 3 Color         := &h80F698BE
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
 Brush 3 Increase Spd  := FALSE
-Brush 4 Color         := &h80804000
-Brush 4 Score Value   := 2
-Brush 4 Hit Degrade   := 2
-Brush 4 Increase Spd  := FALSE
-Brush 5 Color         := &h80FFFF00
-Brush 5 Score Value   := 2
-Brush 5 Hit Degrade   := 4
-Brush 5 Increase Spd  := FALSE
-Brush 6 Color         := &h80808000
-Brush 6 Score Value   := 2
-Brush 6 Hit Degrade   := 4
-Brush 6 Increase Spd  := FALSE
-Brush 7 Color         := &h8000FF00
-Brush 7 Score Value   := 2
-Brush 7 Hit Degrade   := 6
-Brush 7 Increase Spd  := FALSE
-Brush 8 Color         := &h80008000
-Brush 8 Score Value   := 2
-Brush 8 Hit Degrade   := 6
-Brush 8 Increase Spd  := FALSE
-Brush 9 Color         := &h8000FFFF
-Brush 9 Score Value   := 2
-Brush 9 Hit Degrade   := 8
-Brush 9 Increase Spd  := FALSE
-Brush 10 Color        := &h80008080
-Brush 10 Score Value  := 2
-Brush 10 Hit Degrade  := 8
-Brush 10 Increase Spd := FALSE
-Brush 11 Color        := &h800000FF
-Brush 11 Score Value  := 2
-Brush 11 Hit Degrade  := 10
-Brush 11 Increase Spd := FALSE
-Brush 12 Color        := &h80000080
-Brush 12 Score Value  := 2
-Brush 12 Hit Degrade  := 10
-Brush 12 Increase Spd := FALSE
-Brush 13 Color        := &h808000FF
-Brush 13 Score Value  := 2
-Brush 13 Hit Degrade  := 12
-Brush 13 Increase Spd := FALSE
-Brush 14 Color        := &h80400080
-Brush 14 Score Value  := 2
-Brush 14 Hit Degrade  := 12
-Brush 14 Increase Spd := FALSE
-Brush 15 Color        := &h80FF00FF
-Brush 15 Score Value  := 2
-Brush 15 Hit Degrade  := 14
-Brush 15 Increase Spd := FALSE
 
-Level Grid  11111111112
-   12345678901234567890
------------------------
- 1|                    
- 2|                    
- 3|       FFFFFF       
- 4|    FFFDDDDDDFFF    
- 5|  FFDDDBBBBBBDDDFF  
- 6|FFDDBBB999999BBBDDFF
- 7|DDBB999777777999BBDD
- 8|BB9977755555577799BB
- 9|99775553333335557799
-10|77553331111113335577
-11|5533111      1113355
-12|3311            1133
-13|11                11
-14|                    
-15|                    
-16|                    
-17|                    
-18|                    
-19|                    
-20|                    
+Level Grid  1111111111222222222233333333334
+   1234567890123456789012345678901234567890
+-------------------------------------------
+ 1|2222222222222222222222222222222222222222
+ 2|1   11   1  1  1  1  1  1  1  1   11   1
+ 3|1   11   1  1  1  1  1  1  1  1   11   1
+ 4|1113333113333113111111113113333113333111
+ 5|1  3  3  1  1  3  1  1  3  1  1  3  3  1
+ 6|1  3  3  1  1  3  1  1  3  1  1  3  3  1
+ 7|1113333111111113133333313111111113333111
+ 8|1  1   1   1    13    31    1   1   1  1
+ 9|1  1   1   1    13333331    1   1   1  1
+10|2222222222222222222  2222222222222222222
+11|2222222222222222222  2222222222222222222
+12|1  1   1   1    13333331    1   1   1  1
+13|1  1   1   1    13    31    1   1   1  1
+14|1113333111111113133333313111111113333111
+15|1  3  3  1  1  3  1  1  3  1  1  3  3  1
+16|1  3  3  1  1  3  1  1  3  1  1  3  3  1
+17|1113333113333113111111113113333113333111
+18|1   11   1  1  1  1  1  1  1  1   11   1
+19|1   11   1  1  1  1  1  1  1  1   11   1
+20|1111111111111111113333111111111111111111
 
 ================================================================================
 *END*

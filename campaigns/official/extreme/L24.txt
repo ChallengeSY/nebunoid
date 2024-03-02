@@ -4,50 +4,41 @@ LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 24
 *BEGIN*
 ================================================================================
 
-Level Name            := Galaxy Reactor
-Level Description     := Destroy the reactor core to annihilate the alien empire!
-Level Password        := --------
-Level game number     := 513
+Level Name            := Maximum Deception
+Level Description     := Clues are few and far between...
+Level Password        := ++++++++
+Level game number     := 3
 Level time limit      := 0
-Level boss health     := 1500
-Number of Brushes     := 4
-Brush 1 Color         := &h808080FF
+Number of Brushes     := 2
+Brush 1 Color         := &h00000000
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 1
 Brush 1 Increase Spd  := FALSE
-Brush 2 Color         := &h80802020
+Brush 2 Color         := &h00000000
 Brush 2 Score Value   := 10*
-Brush 2 Hit Degrade   := 0*
+Brush 2 Hit Degrade   := 0
 Brush 2 Increase Spd  := FALSE
-Brush 3 Color         := &h80FF4040
-Brush 3 Score Value   := 10*
-Brush 3 Hit Degrade   := 2
-Brush 3 Increase Spd  := FALSE
-Brush 4 Color         := &hB0FFD700
-Brush 4 Score Value   := 10*
-Brush 4 Hit Degrade   := 4
-Brush 4 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|44444444444444444444
- 2|44444444444444444444
- 3|14444444444444444441
- 4|      33333333      
- 5|       333333       
- 6|        3333        
- 7|        3333        
- 8|        3333        
- 9|        3333        
-10|       333333       
-11|      33333333      
-12|  1444444444444441  
-13|                    
+ 1|11111111112211111111
+ 2|                    
+ 3|                    
+ 4|                    
+ 5|11111111111122211111
+ 6|                    
+ 7|                    
+ 8|                    
+ 9|11111122221111111111
+10|                    
+11|                    
+12|                    
+13|11111111111111122222
 14|                    
 15|                    
 16|                    
-17|                    
+17|22222211111111111111
 18|                    
 19|                    
 20|                    

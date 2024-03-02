@@ -13,6 +13,11 @@ As soon as all of the scorable blocks are *eliminated* (from a regular ball's pe
 #### Auto Play
 Nebunoid supports watching an Auto Play session; just start a *0* player session. Fair warning; the computer player will neither give stars, nor award passwords for levels that the player has never played before. Any high scores it is able to submit will be auto-named as such.
 
+#### Skip Level feature
+Not all levels are made the same. Nonetheless, Nebunoid rewards preserverence. When appropriate, it will allow the player the option to skip the level.
+
+Fair warning; using the Skip Level feature on a high difficulty game will automatically reduce the difficulty as if the player had fouled their way to no harder than Medium-Hard.
+
 ### Difficulty Levels
 Nebunoid supports a difficulty scale for *each* player, allowing players of varying skill to participate.
 
@@ -58,7 +63,7 @@ In addition, there is a collection of 7 gem-themed capsules available outside of
 ----
 
 ### Campaigns
-There are 236 levels, split into ten (10) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
+There are 241 levels, split into ten (10) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
 
 Stars are earned by completing levels for the first time. Harder campaigns require a certain number of stars to break their locks open.
 
@@ -93,7 +98,7 @@ The 30-level Challenge Campaign amps up the difficulty several notches by spammi
 Additionally, save points appear less frequently than they did in previous campaigns; appearing every three levels starting with level 1, up to level 28. As usual, the final level disallows continues.
 
 #### Maximum Insanity
-Maximum Insanity makes Challenge Campaign look easy by mixing the most dangerous elements into 25 levels worth of sinister combinations. Save points appear even less frequently; every five levels starting with level 1, up to level 21.
+Maximum Insanity makes Challenge Campaign look easy by mixing the most dangerous elements into 30 levels worth of sinister combinations. Save points appear even less frequently; every five levels starting with level 1, up to level 26.
 
 #### Celestial Journey
 Celestial Journey is the longest finite official campaign, at 40 levels. It makes plenty of cross-universe references, and is still on par with that of the **Challenge Campaign**.

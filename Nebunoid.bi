@@ -57,7 +57,7 @@ const FunctionTwelve = chr(255,134)
 const FPS = 60
 const SavedHighSlots = 10
 const TotalHighSlots = SavedHighSlots + 4
-const TotalOfficialLevels = 266
+const TotalOfficialLevels = 271
 const MaxBullets = 60
 const BaseFlash = 128
 const LevelClearDelay = 720
@@ -219,6 +219,7 @@ type PlayerSpecs
 	Lives as short
 	Threshold as uinteger
 	PerfectClear as byte
+	GameOverCombo as byte
 	Difficulty as double
 	BulletAmmo as short
 	MissileAmmo as short
@@ -390,7 +391,7 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.Namee = "Maximum Insanity"
 					.Folder = "official/extreme"
 					.Difficulty = "Very Hard to Extreme"
-					.SetSize = 25
+					.SetSize = 30
 					.StarsToUnlock = 75
 				case 10
 					.Namee = "Celestial Journey"
@@ -786,8 +787,8 @@ sub save_unlocks
 	print #10, "handicap,";AllowHandicap
 	print #10, "hintlv,"& HintLevel
 	print #10, "enhanced,"& EnhancedGFX
-	print #10, "controls,";ControlStyle
-	print #10, "campbarr,";CampaignBarrier
+	print #10, "controls,"& ControlStyle
+	print #10, "campbarr,"& CampaignBarrier
 	print #10, "shuffle,";ShuffleLevels
 	print #10, "bgbright,"& BGBrightness
 	print #10, "musplayer,"& MusicPlrEnabled

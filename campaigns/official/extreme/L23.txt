@@ -4,58 +4,90 @@ LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 23
 *BEGIN*
 ================================================================================
 
-Level Name            := Instability
+Level Name            := MultiRainbow
 Level Description     := 
 Level Password        := ++++++++
-Level game number     := 4105
+Level game number     := 3
 Level time limit      := 0
-Number of Brushes     := 7
-Brush 1 Color         := &h00000000
+Number of Brushes     := 15
+Brush 1 Color         := &h80FF0000
 Brush 1 Score Value   := 10*
-Brush 1 Hit Degrade   := 1
+Brush 1 Hit Degrade   := 0
 Brush 1 Increase Spd  := FALSE
-Brush 2 Color         := &hB0FFD700
+Brush 2 Color         := &h80800000
 Brush 2 Score Value   := 10*
-Brush 2 Hit Degrade   := 2
-Brush 2 Increase Spd  := TRUE
-Brush 3 Color         := &h00000000
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80FF8000
 Brush 3 Score Value   := 2
 Brush 3 Hit Degrade   := 2
 Brush 3 Increase Spd  := FALSE
-Brush 4 Color         := &h80FF00FF
-Brush 4 Score Value   := 10*
-Brush 4 Hit Degrade   := 0
+Brush 4 Color         := &h80804000
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 2
 Brush 4 Increase Spd  := FALSE
-Brush 5 Color         := &h00000000
+Brush 5 Color         := &h80FFFF00
 Brush 5 Score Value   := 2
 Brush 5 Hit Degrade   := 4
 Brush 5 Increase Spd  := FALSE
-Brush 6 Color         := &h80FF0000
-Brush 6 Score Value   := 10*
-Brush 6 Hit Degrade   := 0
+Brush 6 Color         := &h80808000
+Brush 6 Score Value   := 2
+Brush 6 Hit Degrade   := 4
 Brush 6 Increase Spd  := FALSE
-Brush 7 Color         := &h80FF8000
-Brush 7 Score Value   := 10*
-Brush 7 Hit Degrade   := 0
+Brush 7 Color         := &h8000FF00
+Brush 7 Score Value   := 2
+Brush 7 Hit Degrade   := 6
 Brush 7 Increase Spd  := FALSE
+Brush 8 Color         := &h80008000
+Brush 8 Score Value   := 2
+Brush 8 Hit Degrade   := 6
+Brush 8 Increase Spd  := FALSE
+Brush 9 Color         := &h8000FFFF
+Brush 9 Score Value   := 2
+Brush 9 Hit Degrade   := 8
+Brush 9 Increase Spd  := FALSE
+Brush 10 Color        := &h80008080
+Brush 10 Score Value  := 2
+Brush 10 Hit Degrade  := 8
+Brush 10 Increase Spd := FALSE
+Brush 11 Color        := &h800000FF
+Brush 11 Score Value  := 2
+Brush 11 Hit Degrade  := 10
+Brush 11 Increase Spd := FALSE
+Brush 12 Color        := &h80000080
+Brush 12 Score Value  := 2
+Brush 12 Hit Degrade  := 10
+Brush 12 Increase Spd := FALSE
+Brush 13 Color        := &h808000FF
+Brush 13 Score Value  := 2
+Brush 13 Hit Degrade  := 12
+Brush 13 Increase Spd := FALSE
+Brush 14 Color        := &h80400080
+Brush 14 Score Value  := 2
+Brush 14 Hit Degrade  := 12
+Brush 14 Increase Spd := FALSE
+Brush 15 Color        := &h80FF00FF
+Brush 15 Score Value  := 2
+Brush 15 Hit Degrade  := 14
+Brush 15 Increase Spd := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|11111111111111111111
+ 1|                    
  2|                    
- 3|                    
- 4|      5  77  5      
- 5|     5356776535     
- 6|    533567765335    
- 7|   53135666653135   
- 8|  5311355555531135  
- 9| 531111333333111135 
-10|  5311355555531135  
-11|   53135666653135   
-12|    533567765335    
-13|     5356776535     
-14|      5  77  5      
+ 3|       FFFFFF       
+ 4|    FFFDDDDDDFFF    
+ 5|  FFDDDBBBBBBDDDFF  
+ 6|FFDDBBB999999BBBDDFF
+ 7|DDBB999777777999BBDD
+ 8|BB9977755555577799BB
+ 9|99775553333335557799
+10|77553331111113335577
+11|5533111      1113355
+12|3311            1133
+13|11                11
+14|                    
 15|                    
 16|                    
 17|                    
