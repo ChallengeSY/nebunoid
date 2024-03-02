@@ -1675,7 +1675,7 @@ sub transfer_control(GameEnded as ubyte = 0)
 		rotate_back
 		load_level(PlayerSlot(Player).LevelNum)
 		
-		if Playerslot(Player).Lives > 0 then
+		if Playerslot(Player).Lives > 0 AND ControlStyle >= CTRL_DESKTOP then
 			GamePaused = 1
 		end if
 	end if
