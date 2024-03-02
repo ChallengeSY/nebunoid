@@ -1689,7 +1689,7 @@ sub local_gameplay
 							kill(CampaignName+".dat")
 							kill(CampaignName+".flag")
 						elseif DebugCode = "IWANTTOPLAY" then
-							if NumPlayers >= 4 then
+							if NumPlayers >= 6 OR ControlStyle < CTRL_DESKTOP then
 								Instructions = "No room to add another player"
 							else
 								dim as short LowestLevel = 999
