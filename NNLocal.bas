@@ -2927,6 +2927,7 @@ sub local_gameplay
 	kill("Stats.dat")
 	if InType = XBox then
 		clean_up
+		save_unlocks
 		end 0
 	end if
 	erase EndlessShuffList

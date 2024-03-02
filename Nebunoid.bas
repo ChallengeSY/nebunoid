@@ -902,6 +902,7 @@ sub shop
 		InType = inkey
 		if InType = XBox then
 			clean_up
+			save_unlocks
 			end 0
 		end if
 		screenevent(@e)
