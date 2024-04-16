@@ -4,7 +4,7 @@ LEVEL DATA FILE - GEOMETRIC DESIGNS LEVEL 12
 *BEGIN*
 ================================================================================
 
-Level Name            := Pyromid
+Level Name            := Pyramid
 Level Description     := 
 Level Password        := ++++++++
 Level game number     := 3
