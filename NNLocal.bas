@@ -1721,6 +1721,15 @@ sub local_gameplay
 								
 								Instructions = "Here comes a new challenger! Turns will cycle as usual."
 							end if
+						elseif DebugCode = "SKIPTURN" then
+							if NumPlayers <= 1 then
+								Instructions = "No effect in a 1-player game"
+							elseif TotalBC > 0 then
+								Instructions = "Not available if there are already balls in play"
+							else
+								transfer_control
+								Instructions = "Skip successful. Ready to go, Player "+str(Player)+"?"
+							end if
 						elseif DebugCode = "PUMPKINEATER" then
 							if DQ = 0 then
 								Instructions = "Cheat mode turned on! High scores will not be saved"
