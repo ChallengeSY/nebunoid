@@ -1537,7 +1537,8 @@ sub game_over
 			.GameOverCombo = 0
 		end if
 		
-		LevelSkippable = (.GameOverCombo >= 2 AND check_level(.LevelNum+1) <> "" AND (.LevelNum < SecretLevels - 1 OR SecretLevels <= 0))
+		LevelSkippable = (.GameOverCombo >= 2 AND check_level(.LevelNum+1) <> "--------" AND check_level(.LevelNum+1) <> "" AND _
+			(.LevelNum < SecretLevels - 1 OR SecretLevels <= 0))
 	end with
 
 	do
