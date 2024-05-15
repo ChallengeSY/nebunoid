@@ -36,7 +36,7 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.14"
+windowtitle "Nebunoid 1.15"
 
 'Foreground assets
 load_brick_gfx(MasterDir+"/gfx/blocks/")
@@ -120,48 +120,7 @@ while NullString <> ""
 wend
 shuffle_backs
 
-if FileExists("conf.ini") then
-	dim as byte PlayersFound = 0
-	open "conf.ini" for input as #10
-	do
-		input #10, NullString
-		select case NullString
-			case "difficulty"
-				PlayersFound += 1
-				if PlayersFound <= MaxPlayers then
-					with PlayerSlot(PlayersFound)
-						input #10, .Difficulty
-						.Difficulty = max(.Difficulty,1.0)
-					end with
-				else
-					input #10, NullString
-				end if
-			case "handicap"
-				input #10, AllowHandicap
-			case "hintlv"
-				input #10, HintLevel
-			case "enhanced"
-				input #10, EnhancedGFX
-			case "controls"
-				input #10, ControlStyle
-				ControlStyle = max(ControlStyle,CTRL_DESKTOP)
-			case "campbarr"
-				input #10, CampaignBarrier
-			case "shuffle"
-				input #10, ShuffleLevels
-			case "musplayer"
-				input #10, MusicPlrEnabled
-			case "bgbright"
-				input #10, BGBrightness
-				BGBrightness = max(min(BGBrightness,100),0)
-			case "xp"
-				input #10, TotalXP
-			case "speedrun"
-				input #10, SpeedRunner
-		end select
-	loop until eof(10)
-	close #10
-end if
+load_config
 if FileExists("xp.dat") then
 	open "xp.dat" for input as #10
 	input #10, TotalXP
@@ -388,7 +347,7 @@ loop until InType = EscapeKey OR InType = XBox
 if ControlStyle < CTRL_DESKTOP OR ControlStyle >= CTRL_KEYBOARD then
 	ControlStyle = CTRL_DESKTOP
 end if
-save_unlocks
+save_config
 
 sub shop
 	dim as ubyte TotalCount(0 to MISC) => {0, 0, 12, 8}
@@ -902,7 +861,7 @@ sub shop
 		InType = inkey
 		if InType = XBox then
 			clean_up
-			save_unlocks
+			save_config
 			end 0
 		end if
 		screenevent(@e)

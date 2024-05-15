@@ -176,7 +176,17 @@ input #2, NullString, OtherMusVol
 input #2, NullString, TrackerVol
 close #2
 
+if Command(1) = "-k" then
+	ReservedMB = valint(Command(2)) * 1e6	
+end if
+
 for Stream as short = 0 to MusicLoaded - 1
+	if fre < ReservedMB then
+		print "Note: Loading sequence ended early; remaining RAM below reserved threshold"
+		MusicLoaded = Stream
+		exit for
+	end if
+	
 	with PlaySlot(Stream)
 		if right(.Filename,4) = ".ogg" then
 			loadOk = fbs_Load_OGGFile(data_path & "mus/" & .Filename,@.Waveform)

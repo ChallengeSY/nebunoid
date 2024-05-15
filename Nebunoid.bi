@@ -15,6 +15,7 @@ const DefaultSpeed = 8
 const MinSpeed = 6
 randomize timer
 
+dim shared as uinteger ReservedMB
 dim shared as string NullString, Masterdir
 dim as byte ScreenCreated = 0
 dim shared as byte MusicPlrEnabled
@@ -277,7 +278,7 @@ dim shared as HighSlot HighScore(TotalHighSlots)
 dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP, TotalStars
 dim shared as uinteger GameStyle, TourneyStyle, TourneyScore, ShotIndex
 
-dim shared as ubyte Fullscreen, JoyAnalog, JoyInvertAxes, TapWindow, CondensedLevel, AllowHandicap, ShuffleLevels, SpeedRunner
+dim shared as ubyte Fullscreen, ConfigLoaded = 0, JoyAnalog, JoyInvertAxes, TapWindow, CondensedLevel, AllowHandicap, ShuffleLevels, SpeedRunner
 dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness, SpeedRunTimer
 dim shared as single JoyAxis(7)
 dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, BlockBrushes
@@ -779,7 +780,8 @@ sub optimal_direction(InBall as short, BrickX as byte, BrickY as byte)
 		end if
 	end with
 end sub
-sub save_unlocks
+
+sub save_config
 	open "conf.ini" for output as #10
 	for Plr as byte = 1 to MaxPlayers
 		print #10, "difficulty,"& PlayerSlot(Plr).Difficulty
@@ -796,6 +798,52 @@ sub save_unlocks
 	print #10, "speedrun,";SpeedRunner
 	close #10
 	kill("xp.dat")
+end sub
+sub load_config
+	if ConfigLoaded = 0 AND FileExists("conf.ini") then
+		dim as byte PlayersFound = 0
+		open "conf.ini" for input as #10
+		do
+			input #10, NullString
+			select case NullString
+				case "difficulty"
+					PlayersFound += 1
+					if PlayersFound <= MaxPlayers then
+						with PlayerSlot(PlayersFound)
+							input #10, .Difficulty
+							.Difficulty = max(.Difficulty,1.0)
+						end with
+					else
+						input #10, NullString
+					end if
+				case "handicap"
+					input #10, AllowHandicap
+				case "hintlv"
+					input #10, HintLevel
+				case "enhanced"
+					input #10, EnhancedGFX
+				case "controls"
+					input #10, ControlStyle
+					ControlStyle = max(ControlStyle,CTRL_DESKTOP)
+				case "campbarr"
+					input #10, CampaignBarrier
+				case "shuffle"
+					input #10, ShuffleLevels
+				case "musplayer"
+					input #10, MusicPlrEnabled
+				case "bgbright"
+					input #10, BGBrightness
+					BGBrightness = max(min(BGBrightness,100),0)
+				case "xp"
+					input #10, TotalXP
+				case "speedrun"
+					input #10, SpeedRunner
+			end select
+		loop until eof(10)
+		close #10
+		
+		ConfigLoaded = 1
+	end if
 end sub
 
 function ball_ct_bonus as byte
@@ -1477,4 +1525,5 @@ function actionButton(HoldCheck as byte = 0) as integer
 	
 	return (ControlStyle = CTRL_AI)
 end function
+
 

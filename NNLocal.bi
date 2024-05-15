@@ -1528,7 +1528,7 @@ sub game_over
 		if DQ = 0 then
 			high_score_input(Player)
 			TotalXP += int(.Score * .Difficulty)
-			save_unlocks
+			save_config
 		end if
 		
 		if .Score > 0 then

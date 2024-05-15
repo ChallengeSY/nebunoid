@@ -2850,7 +2850,7 @@ sub local_gameplay
 					.LevelNum -= 1
 					.Lives = 0
 					.SetCleared = 1
-					save_unlocks
+					save_config
 				elseif check_level(.LevelNum) <> "" then
 					Gamestyle = 0
 					rotate_back
@@ -2878,7 +2878,7 @@ sub local_gameplay
 					.SetCleared = 1
 					.LevelNum -= 1
 					.Lives = 0
-					save_unlocks
+					save_config
 				end if
 			end with
 			transfer_control
@@ -2930,7 +2930,7 @@ sub local_gameplay
 	kill("Stats.dat")
 	if InType = XBox then
 		clean_up
-		save_unlocks
+		save_config
 		end 0
 	end if
 	erase EndlessShuffList
