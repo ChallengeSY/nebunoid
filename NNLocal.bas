@@ -2076,49 +2076,43 @@ sub local_gameplay
 											force_release_balls
 											capsule_message("MYSTERY CAPSULE: Super Expand! Size +100 = "+str(PaddleSize)+" pixels",1)
 											play_clip(SFX_POWER_UP,.X)
-										elseif Effects < .675 then
-											if CampaignFolder = EndlessFolder then
-												dim as ubyte TotalNew = 0, Splitted(NumBalls)
-												capsule_message("MYSTERY CAPSULE: Quad Split",1)
-												force_release_balls
-												for BID as short = 1 to NumBalls
-													with Ball(BID)
-														if .Speed > 0 AND Splitted(BID) = 0 AND .Power <> -2 then
-															TotalNew = 0
-															for NewBall as short = 1 to 100
-																with Ball(NewBall)
-																	if .Speed <= 0 then
-																		TotalNew += 1
-																		Splitted(NewBall) = 1
-																		.Speed = int(Ball(BID).Speed)
-																		.X = Ball(BID).X
-																		.Y = Ball(BID).Y
-																		.Spawned = 0
-																		.Power = Ball(BID).Power
-																		.Duration = Ball(BID).Duration
-																		.Angle = Ball(BID).Angle + 90 * TotalNew
-																		TotalBC += 1
-																		if TotalNew >= 3 then
-																			exit for
-																		end if
+										elseif Effects < .7 then
+											dim as ubyte TotalNew = 0, Splitted(NumBalls)
+											capsule_message("MYSTERY CAPSULE: Quad Split",1)
+											force_release_balls
+											for BID as short = 1 to NumBalls
+												with Ball(BID)
+													if .Speed > 0 AND Splitted(BID) = 0 AND .Power <> -2 then
+														TotalNew = 0
+														for NewBall as short = 1 to 100
+															with Ball(NewBall)
+																if .Speed <= 0 then
+																	TotalNew += 1
+																	Splitted(NewBall) = 1
+																	.Speed = int(Ball(BID).Speed)
+																	.X = Ball(BID).X
+																	.Y = Ball(BID).Y
+																	.Spawned = 0
+																	.Power = Ball(BID).Power
+																	.Duration = Ball(BID).Duration
+																	.Angle = Ball(BID).Angle + 90 * TotalNew
+																	TotalBC += 1
+																	if TotalNew >= 3 then
+																		exit for
 																	end if
-																end with
-															next
-														end if
-													end with
-												next BID
-												erase Splitted
-												play_clip(SFX_POWER_UP,.X)
-											else
-												capsule_message("MYSTERY CAPSULE: Bonus life!",1)
-												PlayerSlot(Player).Lives += 1
-												play_clip(SFX_LIFE,.X)
-											end if
-										elseif Effects < .775 then
+																end if
+															end with
+														next
+													end if
+												end with
+											next BID
+											erase Splitted
+											play_clip(SFX_POWER_UP,.X)
+										elseif Effects < .8 then
 											capsule_message("MYSTERY CAPSULE: Flowing points",1)
 											ConstIncrease = 1
 											play_clip(SFX_POWER_UP,.X)
-										elseif Effects < .8 AND (Gamestyle AND (1 SHL STYLE_BOSS)) = 0 then
+										elseif Effects < .9 AND (Gamestyle AND (1 SHL STYLE_BOSS)) = 0 then
 											capsule_message("MYSTERY CAPSULE: Lightning Balls (Fire/Breakthru combined)",1)
 											for BID as short = 1 to NumBalls
 												with Ball(BID)
@@ -2130,7 +2124,7 @@ sub local_gameplay
 											next BID
 											force_release_balls
 											play_clip(SFX_POWER_UP,.X)
-										elseif Effects < .825 then
+										elseif Effects < .925 then
 											dim as ubyte Splitted(NumBalls)
 											capsule_message("MYSTERY CAPSULE: Split Deluxe",1)
 											force_release_balls
@@ -2159,12 +2153,12 @@ sub local_gameplay
 											next BID
 											erase Splitted
 											play_clip(SFX_POWER_UP,.X)
-										elseif Effects < .85 then
+										elseif Effects < .95 then
 											capsule_message("MYSTERY CAPSULE: Deep Freeze!",1)
 											Paddle(1).Blizzard = 3600
 											FreezeStr = 60
 											play_clip(SFX_POWER_UP,.X)
-										elseif Effects < .9 AND PaddleHealth < 97 * 60 then
+										elseif PaddleHealth < 97 * 60 then
 											capsule_message("MYSTERY CAPSULE: Full repair!",1)
 											PaddleHealth = 110 * 60
 											play_clip(SFX_POWER_UP,.X)
