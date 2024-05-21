@@ -2741,7 +2741,11 @@ sub local_gameplay
 			line(0,0)-(1023,767),rgba(128,128,255,(100-SpeedMod)/100*255),bf
 		end if
 		screencopy
-		while timer < FrameTime + 1/60:sleep 0:wend
+		while timer < FrameTime + 1/60
+			if Command(1) = "-k" then
+				sleep 1
+			end if
+		wend
 		InType = inkey
 		if total_lives = 0 then
 			for PID as ubyte = 0 to MaxPlayers
