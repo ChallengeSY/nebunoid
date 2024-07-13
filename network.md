@@ -1,5 +1,5 @@
 ## Notice
-Nebunoid does not have network multiplayer, but it is planned. Unless/until it is implemented, this document serves as a reference for what might be implemented into the game.
+Nebunoid does not have network multiplayer, but it is remotely planned. Unless/until it is implemented, this document serves as a reference for what might be implemented into the game.
 
 ## Planned system
 Nebunoid likely will go with a serverless system. Instead, the host shares the public/network IP address, and forwards a specific port. The visitor needs only to connect to a host to play together.

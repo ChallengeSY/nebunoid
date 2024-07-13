@@ -1,5 +1,5 @@
 ## Nebunoid Manual
-Nebunoid is a nebula themed Arkanoid/Breakout-type game. In this game, your objective is to bash through various colored blocks with a ball and a paddle, scoring as many points as you can while also clearing as many levels as possible.
+Nebunoid is a nebula themed Arkanoid/Breakout-type game. In this game, the player's objective is to bash through various colored blocks with a ball and a paddle, scoring as many points as they can while also clearing as many levels as possible.
 
 When a campaign is started from scratch or resumed from a password, up to six players may play the game, alternating turns when a level is finished or when a life is lost by dropping the *last* ball.
 
@@ -36,7 +36,7 @@ Nebunoid supports a difficulty scale for *each* player, allowing players of vary
 | Nightmare   |  11.0 - 12.0 |   40- 80-120 | Increased  |                5% | Reduce to 10.0      | No red caps  |
 
 (1) Maximum spawn chance; achieved when there are *no* falling capsules in play. Diminishing Returns decreases this chance (by 1% per capsule) as there are more capsules falling.  
-(2) You can use the level select system (F4) or passwords to play the game from any level with a password.
+(2) One can use the level select system (F4) or passwords to play the game from any level with a password.
     This system is unavailable if the "Shuffle Levels" option is active, or if one or more players has a continue penalty whenever they get a game over.  
 (3) Alternatively, players can choose to reduce the difficulty by 0.5 to make their next credit easier. A player will not drop below Medium-Easy (difficulty 3.5) this way
 
