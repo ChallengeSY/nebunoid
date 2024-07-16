@@ -2603,7 +2603,13 @@ sub local_gameplay
 								.LHY = 0
 								.Spawned = 0
 								.Invul = 0
+								
+								'Negate Gravity Balls, and cap Weakened balls to 3 seconds
 								.Gravity = 0
+								if .Power = -1 then
+									.Duration = min(.Duration,180)
+								end if
+								
 								if int(.Speed) > 14 then
 									.Speed = 12
 								elseif int(.Speed) > 12 then
@@ -2616,7 +2622,11 @@ sub local_gameplay
 							end if
 						end with
 					next BID
-	
+					
+					'Cap Slow Paddle and Reverse Paddle to just 3 seconds
+					Paddle(1).Sluggish = min(Paddle(1).Sluggish,180)
+					Paddle(1).Reverse = min(Paddle(1).Reverse,180)
+					
 					.Lives -= 1
 					play_clip(SFX_POWER_DOWN)
 					PaddleHealth += 50 * 60
@@ -2641,8 +2651,8 @@ sub local_gameplay
 					if PaddleSize < MinSize then
 						render_paddle(MinSize)
 					end if
-					if PaddleSize < StandardSize - 25 then
-						render_paddle(PaddleSize + 25)
+					if PaddleSize < StandardSize - 40 then
+						render_paddle(PaddleSize + 40)
 					elseif PaddleSize < StandardSize then
 						render_paddle(StandardSize)
 					end if
