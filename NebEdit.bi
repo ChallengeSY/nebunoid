@@ -13,6 +13,18 @@ dim as short InstruAlpha, InstruBeta, InstruGamma
 dim shared as byte CampaignUnsaved, LevelUnsaved, SelectedBrush, BrushEditor, HighlightX, HighlightY, MirrorEditing
 dim shared as short MaxLevels
 dim shared as string MirrorOptions(3)
+
+#IF __FB_DEBUG__ 
+dim shared as string ActiveFolder
+if Command(1) = "--dev" then
+	ActiveFolder = "official"
+else
+	ActiveFolder = "community"
+end if
+#ELSE
+const as string ActiveFolder = "community"
+#ENDIF
+
 MirrorOptions(0) = "Mirror horizontally"
 MirrorOptions(1) = "Mirror vertically"
 MirrorOptions(2) = "Mirror from opposite corner"
@@ -396,8 +408,60 @@ sub duplicate_level(LevID as short, DestCampaign as string = CampaignFolder)
 				InstructExpire = timer + 10
 			end if
 			exit for
+			
+		elseif LID = 999 then
+			Instructions = "No room to store duplicate level"
+			InstructExpire = timer + 10
 		end if
 	next LID
+end sub
+
+sub import_brushes(LevID as short)
+	dim as string AuxFile = MasterDir + "/campaigns/" + CampaignFolder + "/L"+str(LevID)+".txt"
+	dim as string ReadLine
+	
+	if FileExists(AuxFile) then
+		open AuxFile for input as #8
+		do
+			line input #8, ReadLine
+			
+			if eof(8) then
+				Instructions = "Brush data not found"
+				InstructExpire = timer + 10
+				
+				exit sub
+			end if
+		loop until left(ReadLine,17) = "Number of Brushes"
+
+		BlockBrushes = valint(right(ReadLine,2))
+		
+		for BID as short = 1 to 35
+			with Pallete(BID)
+				if BID <= BlockBrushes then 
+					input #8, ReadLine
+					.PColoring = valint(right(ReadLine,len(ReadLine)-25))
+					input #8, ReadLine
+					.ScoreValue = valint(right(ReadLine,len(ReadLine)-25))
+					.DynamicValue = abs(sgn(right(ReadLine,1) = "*"))
+					input #8, ReadLine
+					.HitDegrade = valint(right(ReadLine,len(ReadLine)-25))
+					.CanRegen = abs(sgn(right(ReadLine,1) = "*"))
+					input #8, ReadLine
+					.IncreaseSpeed = abs(sgn(ucase(right(ReadLine,4)) = "TRUE"))
+				else
+					.PColoring = 0
+					.ScoreValue = 10
+					.DynamicValue = 1
+					.HitDegrade = 0
+					.CanRegen = 0
+					.IncreaseSpeed = 0
+				end if
+			end with
+		next BID
+		close #8
+
+		LevelUnsaved = 1
+	end if
 end sub
 
 sub flip_level(Vertically as byte = 0)
@@ -531,7 +595,7 @@ end sub
 
 sub level_options
 	dim as ubyte OptionsPage = 0
-	dim as short SwapTarget
+	dim as short SwapTarget, ImportTarget
 	dim as string CopyToFolder
 	do
 		locate 48,1
@@ -568,7 +632,10 @@ sub level_options
 			color rgb(255,255,255)
 			print "oss health / ";
 		else
-			print "S";
+			color rgb(0,255,0)
+			print "I";
+			color rgb(255,255,255)
+			print "mport brushes / S";
 			color rgb(0,255,0)
 			print "w";
 			color rgb(255,255,255)
@@ -576,11 +643,11 @@ sub level_options
 			color rgb(0,255,0)
 			print "u";
 			color rgb(255,255,255)
-			print "plicate level / ";
+			print "plicate / ";
 			color rgb(0,255,0)
 			print "D";
 			color rgb(255,255,255)
-			print "elete level / Cop";
+			print "elete / Cop";
 			color rgb(0,255,0)
 			print "y";
 			color rgb(255,255,255)
@@ -715,31 +782,42 @@ sub level_options
 					screencopy
 					do
 						InType = lcase(inkey)
-						if InType = "y" then
-							screenset 0,0
-							locate 48,1
-							print space(127);
-							locate 48,1
-							line input ; "Enter campaign folder to copy to: ",CopyToFolder
-							screenset 1,0
-							if CopyToFolder <> "" then
-								CopyToFolder = "community/"+CopyToFolder
-								duplicate_level(PlayerSlot(Player).LevelNum,CopyToFolder)
-							end if
-							exit do
+						if InType = "n" then
+							exit do,do
 						end if
-					loop until InType = "n"
-				else
+					loop until InType = "y"
+				end if
+				
+				screenset 0,0
+				locate 48,1
+				print space(127);
+				locate 48,1
+				line input ; "Enter campaign folder to copy to: ",CopyToFolder
+				screenset 1,0
+				if CopyToFolder <> "" then
+					CopyToFolder = ActiveFolder+"/"+CopyToFolder
+					duplicate_level(PlayerSlot(Player).LevelNum,CopyToFolder)
+				end if
+				exit do
+				
+			case "i"
+				if PlayerSlot(Player).LevelNum > 1 OR FileExists(MasterDir + "/campaigns/" + CampaignFolder + "/L2.txt") then
 					screenset 0,0
 					locate 48,1
 					print space(127);
 					locate 48,1
-					line input ; "Enter campaign folder to copy to: ",CopyToFolder
+					input ; "Enter level number to import brushes from: ",ImportTarget
 					screenset 1,0
-					if CopyToFolder <> "" then
-						CopyToFolder = "community/"+CopyToFolder
-						duplicate_level(PlayerSlot(Player).LevelNum,CopyToFolder)
+					if ImportTarget > 0 then
+						import_brushes(ImportTarget)
 					end if
+				else
+					locate 48,1
+					print space(127);
+					locate 48,1
+					print "You need another level to import from.";
+					screencopy
+					sleep
 				end if
 				exit do
 				
