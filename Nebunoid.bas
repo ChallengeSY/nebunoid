@@ -277,7 +277,7 @@ do
 					if MouseY >= 316+YID*30 AND MouseY <= 345+YID*30 AND .Namee <> "" AND .SetLocked = 0 then
 						draw_box(32,316+YID*30,991,345+YID*30)
 						if ButtonCombo > 0 AND HoldClick = 0 then
-							if YID = 12 then
+							if YID = CampaignsPerPage+1 then
 								'Switch to community campaigns
 								MenuMode += 1
 								HoldClick = 1
