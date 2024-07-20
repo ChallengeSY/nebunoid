@@ -377,12 +377,18 @@ sub save_scores
 		close #1
 	end if
 end sub
-sub set_zapped_pallete(NewColoring as uinteger)
-	with Pallete(ZapBrush)
+sub set_aux_pallete(WorkBrush as short, NewColoring as uinteger)
+	dim as byte BrushDiv = 1
+	select case WorkBrush
+		case ZapBrush
+			BrushDiv = 4
+	end select 
+	
+	with Pallete(WorkBrush)
 		if .PColoring = rgba(0,0,0,128) then
-			.PColoring = rgba(retrivePrimary(NewColoring,RGBA_RED) / 4,_
-				retrivePrimary(NewColoring,RGBA_GREEN) / 4,_
-				retrivePrimary(NewColoring,RGBA_BLUE) / 4,_
+			.PColoring = rgba(retrivePrimary(NewColoring,RGBA_RED) / BrushDiv,_
+				retrivePrimary(NewColoring,RGBA_GREEN) / BrushDiv,_
+				retrivePrimary(NewColoring,RGBA_BLUE) / BrushDiv,_
 				128)
 		end if
 	end with
@@ -398,7 +404,7 @@ sub apply_block_properties
 			next PID
 			
 			if .PColoring = 0 then
-				.ZapDegrade = ZapBrush
+				.ZapDegrade = 0
 			else
 				.ZapDegrade = BID
 			end if
@@ -408,7 +414,7 @@ sub apply_block_properties
 				if TestGrade = Pallete(TestGrade).HitDegrade then
 					.CalcedInvulnerable = 1
 					if BID = TestGrade then
-						set_zapped_pallete(.PColoring)
+						set_aux_pallete(ZapBrush,.PColoring)
 					end if
 					.ZapDegrade = ZapBrush
 					exit while
@@ -426,7 +432,7 @@ sub apply_block_properties
 							.CalcedInvulnerable = 1
 						end if
 						if .CalcedInvulnerable = 1 then
-							set_zapped_pallete(.PColoring)
+							set_aux_pallete(ZapBrush,.PColoring)
 						end if
 						.ZapDegrade = ZapBrush
 						exit while
@@ -435,6 +441,10 @@ sub apply_block_properties
 			wend
 			if TestGrade < 0 then
 				.CalcedInvulnerable = -1
+				
+				if TestGrade = -2 then
+					set_aux_pallete(BloomBrush,.PColoring)
+				end if
 			end if
 
 			if .CanRegen > 0 then
@@ -534,6 +544,14 @@ function load_level_file(LoadLevel as string) as integer
 		.ZapDegrade = ZapBrush
 		.UsedInlevel = 0
 	end with
+	with Pallete(BloomBrush)
+		.PColoring = rgba(0,0,0,128)
+		.ScoreValue = int(BaseCapsuleValue / 10)
+		.DynamicValue = 1
+		.ZapDegrade = BloomBrush
+		.UsedInlevel = 0
+	end with
+
 
 	'Phase 2: Apply regeneration, breakability, and zappability
 	apply_block_properties
@@ -759,7 +777,7 @@ function level_list as string
 		if SelectLevel > LevelsRegistered then
 			SelectLevel = LevelsRegistered
 		end if
-	loop until InType = chr(13) AND LegalChoice
+	loop until InType = EnterKey AND LegalChoice
 	
 	if SelectLevel = 1 then
 		OutPass = "--------"
@@ -1018,7 +1036,7 @@ sub brick_collisions(BallID as short)
 									PlayerSlot(Player).Score += 2 * ball_ct_bonus
 									PointsScored += 2 * ball_ct_bonus
 								end if
-								NewPalette = ExplodeDelay
+								NewPalette = min(ExplodeDelay,ExplodeDelay + (Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade + 1) * 100)
 							elseif .Power = 3 AND Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).CalcedInvulnerable >= 2 then
 								NewPalette = 0
 								play_clip(SFX_BRICK,.X)
@@ -1459,7 +1477,7 @@ sub high_score_input(PlayerNum as byte, Automatic as byte = 0)
 					elseif InType = Backspace then
 						NewName = left(NewName,len(NewName)-1)
 					end if
-				loop until InType = chr(13)
+				loop until InType = EnterKey
 				InType = chr(255)
 				
 				if lcase(NewName) = lcase(AIName) then
@@ -1606,7 +1624,7 @@ sub game_over
 			UseChoice = 2
 			exit do
 		end if
-	loop until InType = chr(13) AND ValidChoice(UseChoice)
+	loop until InType = EnterKey AND ValidChoice(UseChoice)
 	InType = chr(255)
 	
 	if UseChoice < 2 then

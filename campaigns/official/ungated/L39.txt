@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - UNGATED ADAPTATIONS LEVEL 39
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Serious Flare Shortage
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &h80004000
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80408040
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1*
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h8080FF80
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2*
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h00000000
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|  4444  4  4444  4  
+ 2|444  4444  4  4  4  
+ 3|           4  4  4  
+ 4|           4  4  4  
+ 5|444444444  4  4  444
+ 6|        4     4     
+ 7|        4     4     
+ 8|  4444  44 444444444
+ 9|     4  4        4  
+10|     4  4           
+11|  4444  4  4        
+12|  4        444444444
+13|  4        4        
+14|  4444444444        
+15|     4     4  4444  
+16|     4     4  4  4  
+17|  4  4  4  4  4  4  
+18|  4     4     4  4  
+19|  4     4     4  4  
+20|444444444444444  4  
+
+================================================================================
+*END*
+================================================================================

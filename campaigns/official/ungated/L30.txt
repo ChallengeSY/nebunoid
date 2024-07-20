@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - UNGATED ADAPTATIONS LEVEL 30
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Power Crisis
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 14
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &h80404040
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80808080
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80FFFFFF
+Brush 3 Score Value   := 2
+Brush 3 Hit Degrade   := 2
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &hC0FFD700
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 4
+Brush 4 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|   111111  111111   
+ 3|   333331  133333   
+ 4|   311131  131113   
+ 5|   31 131  131 13   
+ 6|33331 131  131 13333
+ 7|31111 131  131 11113
+ 8|3     131  131     3
+ 9|3 11  13    31  11 3
+10|32332  2 44 2  23323
+11|32332  2 44 2  23323
+12|3 11  13    31  11 3
+13|3     131  131     3
+14|31111 131  131 11113
+15|33331 131  131 13333
+16|   31 131  131 13   
+17|   311131  131113   
+18|   333331  133333   
+19|   111111  111111   
+20|                    
+
+================================================================================
+*END*
+================================================================================

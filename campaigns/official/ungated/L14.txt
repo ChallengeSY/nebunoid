@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - UNGATED ADAPTATIONS LEVEL 14
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Feline Gazing
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &h80FFFFFF
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h80C0C0C0
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80000000
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80FFC0FF
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|          4   4     
+ 2|          41114     
+ 3|          23131     
+ 4|          21111     
+ 5|          21111     
+ 6|         21111      
+ 7|        211111      
+ 8|       2111111      
+ 9|      211111111     
+10|     2111111111     
+11|     2111111111     
+12|    21111111111     
+13|    2111111 111     
+14|   22 1114441144    
+15|   2                
+16|   22 2   2         
+17|    22 2 2          
+18|        2           
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

@@ -14,7 +14,8 @@ dim shared as byte CampaignUnsaved, LevelUnsaved, SelectedBrush, BrushEditor, Hi
 dim shared as short MaxLevels
 dim shared as string MirrorOptions(3)
 
-#IF __FB_DEBUG__ 
+#IF __FB_DEBUG__
+'Debug mode exclusive switch that would otherwise force the editor to modify exclusively community campaigns 
 dim shared as string ActiveFolder
 if Command(1) = "--dev" then
 	ActiveFolder = "official"
@@ -460,6 +461,7 @@ sub import_brushes(LevID as short)
 		next BID
 		close #8
 
+		apply_block_properties
 		LevelUnsaved = 1
 	end if
 end sub
@@ -1044,8 +1046,8 @@ sub brush_editor_submenu
 					input ; "Connect this brush to which ID";NewRed
 					screenset 1,0
 					
-					if NewRed < -1 then
-						NewRed = -1
+					if NewRed < -2 then
+						NewRed = -2
 					elseif NewRed > 35 then
 						NewRed = 35
 					end if

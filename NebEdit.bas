@@ -239,7 +239,7 @@ do
 					InstructExpire = timer + 10
 				end if
 				if CampaignFolder <> "" then
-					CampaignFolder = "community/" + CampaignFolder
+					CampaignFolder = ActiveFolder + "/" + CampaignFolder
 				end if
 				if FileExists(MasterDir + "/campaigns/" + CampaignFolder + "/Settings.txt") then
 					load_settings
@@ -273,6 +273,7 @@ do
 						InType = lcase(inkey)
 						if InType = "y" then
 							save_campaign(.LevelNum)
+							Instructions = ""
 							exit do
 						end if
 					loop until InType = "n"

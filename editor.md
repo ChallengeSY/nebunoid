@@ -1,9 +1,6 @@
 ## Nebunoid Level Editor
 Nebunoid comes with a decently powerful level editor, allowing new community campaigns to be made.
 
-## Controls
-The editor uses mouse and keyboard to carry out its functionality. Several controls can be easily edited by tapping on a given control when highlighted.
-
 ### Available variations
 Levels may be designed with a wide variety of variations in mind that alter the gameplay to varying degrees. There are a few restrictions, but it still allows for a lot of flexibility.
 
@@ -30,6 +27,7 @@ Boss battles are handled a little differently than a regular level. Brush #1 is 
 When a ball causes damage to a boss, the damage the boss receives is controlled by the speed. Faster balls deal more damage per hit.
 
 ### Campaign editing controls
+The editor uses mouse and keyboard to carry out its functionality. Several controls can be easily edited by tapping on a given control when highlighted.
 
 #### Keyboard controls
 * Ctrl+L: Loads a campaign folder, or creates a new one if it does not exist
@@ -38,9 +36,11 @@ When a ball causes damage to a boss, the damage the boss receives is controlled 
 * Minus sign: Goes backward one level
 
 ### Level editing controls
-In addition to highlighting controls mentioned above, mirror options can be adjusted by clicking on the brick count display.
+In addition to highlighting controls mentioned above, mirror options can be adjusted by clicking on the block count display.
 
-Brick "brushes" are managed on a per-level basis. A new brush can be easily made by clicking on the empty + sign. Existing brushes can be edited by right clicking as such.
+Block "brushes" are managed on a per-level basis. A new brush can be easily made by clicking on the empty + sign. Existing brushes can be edited by right clicking as such.
+
+There can be a maximum of 35 brushes per level. There also exist automatically generated zap and bloom brushes (named after zap blocks and bloomed blocks made), which do not count against the 35 brush limit.
 
 #### Keyboard controls
 * 1-4: Quickly toggles a supported mirror control
@@ -59,3 +59,12 @@ Some influence can be performed over a brush by holding down key(s) while creati
 * P__u__rple: Creates a brush with zero green
 * __Y__ellow: Creates a brush with zero blue
 * __I__nvisible: Creates an invisible brush (overrides all of the above)
+
+### Block compositions
+Nebunoid supports a fair amount of block types and compositions. 
+
+* Soft block: These are the most basic blocks. They are simple in appearance, and go down in one hit
+* Exploding block: These blocks explode (-1), destroying their surroundings in one hit. Some of them leave behind "bloomed" blocks (-2) in their wake
+* Invincible block: These blocks are immune to normal damage. When in their final state, they can no longer score points, but no longer impede level progression
+* Multi-Hit blocks: These blocks take multiple hits to destroy, chaining into another brush. Possible to form a repeating chain, causing blocks bound to such chains to also no longer impede progression
+* Invisible block: These blocks are invisible. They may use *any* of the above properties. Vulnerable to Zap Blocks powerup

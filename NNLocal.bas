@@ -1680,7 +1680,7 @@ sub local_gameplay
 					Instructions = "Please enter the code: "+DebugCode
 					InstructExpire = timer + 1
 					
-					if InType = chr(13) then
+					if InType = EnterKey then
 						if DebugCode = "" then
 							Instructions = "No code applied"
 						elseif DebugCode = "LEVELAXE" then
@@ -2378,7 +2378,7 @@ sub local_gameplay
 											for XID as ubyte = 1 to 20*(CondensedLevel+1)
 												with Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID)
 													if .HitDegrade < 0 then
-													PlayerSlot(Player).TileSet(XID,YID).BrickID = -1
+														PlayerSlot(Player).TileSet(XID,YID).BrickID = -1 + (.HitDegrade + 1) * 100
 													end if
 												end with
 											next XID

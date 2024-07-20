@@ -1,0 +1,92 @@
+================================================================================
+LEVEL DATA FILE - UNGATED ADAPTATIONS LEVEL 32
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Double Pyramid
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 13
+Brush 1 Color         := &hC0FFD700
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 1
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &hC0CD7F32
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h800080FF
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := -2
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80404040
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Spd  := FALSE
+Brush 5 Color         := &h80808080
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Spd  := FALSE
+Brush 6 Color         := &h80FFFFFF
+Brush 6 Score Value   := 2
+Brush 6 Hit Degrade   := 5
+Brush 6 Increase Spd  := FALSE
+Brush 7 Color         := &h80FFFFFF
+Brush 7 Score Value   := 10*
+Brush 7 Hit Degrade   := 0
+Brush 7 Increase Spd  := FALSE
+Brush 8 Color         := &h8080FFFF
+Brush 8 Score Value   := 10*
+Brush 8 Hit Degrade   := 0
+Brush 8 Increase Spd  := FALSE
+Brush 9 Color         := &h8040FFFF
+Brush 9 Score Value   := 10*
+Brush 9 Hit Degrade   := 0
+Brush 9 Increase Spd  := FALSE
+Brush 10 Color        := &h8000FFFF
+Brush 10 Score Value  := 10*
+Brush 10 Hit Degrade  := 0
+Brush 10 Increase Spd := FALSE
+Brush 11 Color        := &h80FF80FF
+Brush 11 Score Value  := 10*
+Brush 11 Hit Degrade  := 0
+Brush 11 Increase Spd := FALSE
+Brush 12 Color        := &h80FF40FF
+Brush 12 Score Value  := 10*
+Brush 12 Hit Degrade  := 0
+Brush 12 Increase Spd := FALSE
+Brush 13 Color        := &h80FF00FF
+Brush 13 Score Value  := 10*
+Brush 13 Hit Degrade  := 0
+Brush 13 Increase Spd := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|CCB6     66     6899
+ 2|CCB6    6336    6899
+ 3|CC3B6  631136  68399
+ 4|CCCB6  631136  68999
+ 5|CCCB6   6336   68999
+ 6|CCCB6    66    68999
+ 7|3CC3B6        683993
+ 8|DCCCB6        68999A
+ 9|DCCCB6   55   68999A
+10|DCCCB6  5225  68999A
+11|D3CC3B6 5225 683993A
+12|DDCCCB6  55  68999AA
+13|DDCCCB6      68999AA
+14|DDCCCB6      68999AA
+15|DD3CC3B6    683993AA
+16|DDDCCCB6    68999AAA
+17|DDDCCCB6    68999AAA
+18|DDDCCCB6    68999AAA
+19|3DD3CC3B6  683993AA3
+20|666666666  666666666
+
+================================================================================
+*END*
+================================================================================

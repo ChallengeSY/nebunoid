@@ -58,7 +58,7 @@ const FunctionTwelve = chr(255,134)
 const FPS = 60
 const SavedHighSlots = 10
 const TotalHighSlots = SavedHighSlots + 4
-const TotalOfficialLevels = 271
+const TotalOfficialLevels = 311
 const MaxBullets = 60
 const BaseFlash = 128
 const LevelClearDelay = 720
@@ -259,7 +259,8 @@ type HighSlot
 end type
 
 const ZapBrush = 36
-const SwapBrush = ZapBrush + 1
+const BloomBrush = ZapBrush + 1
+const SwapBrush = ZapBrush + 2
 const MaxPlayers = 6
 dim shared as PlayerSpecs PlayerSlot(MaxPlayers), NewPlrSlot
 dim shared as PalleteSpecs Pallete(SwapBrush)
@@ -302,7 +303,7 @@ dim shared as any ptr BulletPic, MissilePic, CapsulePic(26), CapsuleBar(5), Caps
 	FramesetMerged, Sideframes, Topframe, DiffStick, DiffSelector, BasePaddle, PaddleBar
 
 const Interpolation = 120 'Ball updates per frame
-const CampaignsPerPage = 11 
+const CampaignsPerPage = 12
 const CustomizePerPage = 20
 const PaddleHeight = 18
 const CustomizePadding = 60
@@ -337,7 +338,7 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 	dim as string CommunityFolder
 	TotalStars = 0
 	
-	for OCID as ubyte = 1 to 12 'Official campaigns first
+	for OCID as ubyte = 1 to 13 'Official campaigns first
 		with OfficialCampaigns(OCID)
 			.TrueSize = 0
 			
@@ -389,29 +390,35 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.TrueSize = 35
 					.StarsToUnlock = 25
 				case 9
+					.Namee = "Ungated Adaptations"
+					.Folder = "official/ungated"
+					.Difficulty = "Hard to Extreme"
+					.SetSize = 40
+					.StarsToUnlock = 50
+				case 10
 					.Namee = "Maximum Insanity"
 					.Folder = "official/extreme"
 					.Difficulty = "Very Hard to Extreme"
 					.SetSize = 30
-					.StarsToUnlock = 75
-				case 10
+					.StarsToUnlock = 100
+				case 11
 					.Namee = "Celestial Journey"
 					.Folder = "official/universe"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 40
 					.TrueSize = 50
-					.StarsToUnlock = 125
-				case 11
+					.StarsToUnlock = 150
+				case 12
 					.Namee = "Endless Shuffle"
 					.Folder = "official/endless"
 					.Difficulty = "Unpredictable"
 					.SetSize = 1000
-					if TotalStars >= 236 then
+					if TotalStars >= 276 then
 						.StarsToUnlock = TotalOfficialLevels 'ALL of the previous levels
 					else
 						.StarsToUnlock = 1000 'Keep the player from knowing the exact requirement at first
 					end if
-				case 12
+				case CampaignsPerPage+1
 					.Namee = "(Community campaigns)"
 					.SetSize = 0
 				case else
@@ -476,7 +483,7 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 			CommunityFolder = Dir()
 		wend
 		
-		OfficialCampaigns(12).SetSize = CommunityFoldersFound
+		OfficialCampaigns(CampaignsPerPage+1).SetSize = CommunityFoldersFound
 	end if
 end sub
 
@@ -945,19 +952,25 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 								(31+(XID)*48,95+(YID)*24),rgba(255,128,0,128),bf
 						end if
 						if GamePaused = 0 then
-							if .BrickID < -1 then
+							if .BrickID < -1 AND .BrickID <> -101 then
 								'Exploding in progress
 								.BrickID += 1
 								Invis = 12
 							else
+								dim as short FinalBrush = 0
+								if .BrickID = -101 then
+									'Make extra "Bloom" blocks
+									FinalBrush = BloomBrush
+								end if
+								
 								'Finish exploding
 								for YDID as byte = YID - 1 to YID + 1
 									for XDID as byte = XID - 1 to XID + 1
 										if XDID > 0 AND XDID <= 20*(CondensedLevel+1) AND YDID > 0 AND YDID <= 20 then
 											RefPallete = PlayerSlot(Player).TileSet(XDID,YDID).BrickID
 											
-											if RefPallete > 0 OR (XDID = XID AND YDID = YID) then
-												if (RefPallete > 0 AND Pallete(RefPallete).CalcedInvulnerable >= 0) OR _
+											if (RefPallete >= 0 AND RefPallete <> FinalBrush) OR (XDID = XID AND YDID = YID) then
+												if (RefPallete >= 0 AND Pallete(RefPallete).CalcedInvulnerable >= 0) OR _
 													(XDID = XID AND YDID = YID) then
 													
 													if TotalBC > 0 then
@@ -967,13 +980,13 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 													end if
 													
 													PlayerSlot(Player).Score += ScoreBonus
-													damage_brick(XDID,YDID,0,0,(XDID = XID AND YDID = YID))
+													damage_brick(XDID,YDID,FinalBrush,0,(XDID = XID AND YDID = YID))
 													Invis = 12
 													generate_capsule(XDID,YDID,1)
 													generate_particles(ScoreBonus,XDID,YDID,rgb(255,192,160))
 													
 												else
-													damage_brick(XDID,YDID,ExplodeDelay,0)
+													damage_brick(XDID,YDID,ExplodeDelay + (Pallete(RefPallete).HitDegrade + 1) * 100,0)
 													
 													if (XDID > XID AND YID = YDID) OR YDID > YID then
 														PlayerSlot(Player).TileSet(XDID,YDID).BrickID -= 1 

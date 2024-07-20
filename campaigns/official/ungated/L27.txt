@@ -1,67 +1,67 @@
 ================================================================================
-LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 23
+LEVEL DATA FILE - UNGATED ADAPTATIONS LEVEL 27
 ================================================================================
 *BEGIN*
 ================================================================================
 
-Level Name            := Junction Piece
+Level Name            := Razz of Speed!
 Level Description     := 
 Level Password        := ++++++++
-Level game number     := 3
+Level game number     := 259
 Level time limit      := 0
 Number of Brushes     := 7
-Brush 1 Color         := &h80FF8000
+Brush 1 Color         := &h80FFFF00
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 0
 Brush 1 Increase Spd  := FALSE
-Brush 2 Color         := &h80FF9020
+Brush 2 Color         := &h80FFFF80
 Brush 2 Score Value   := 10*
 Brush 2 Hit Degrade   := 0
 Brush 2 Increase Spd  := FALSE
-Brush 3 Color         := &h80FFA040
+Brush 3 Color         := &h80000000
 Brush 3 Score Value   := 10*
 Brush 3 Hit Degrade   := 0
 Brush 3 Increase Spd  := FALSE
-Brush 4 Color         := &h80FFB060
+Brush 4 Color         := &h80FF0000
 Brush 4 Score Value   := 10*
 Brush 4 Hit Degrade   := 0
 Brush 4 Increase Spd  := FALSE
-Brush 5 Color         := &h80FFC080
+Brush 5 Color         := &h80FF4040
 Brush 5 Score Value   := 10*
 Brush 5 Hit Degrade   := 0
 Brush 5 Increase Spd  := FALSE
-Brush 6 Color         := &h80FFD0A0
+Brush 6 Color         := &h00000000
 Brush 6 Score Value   := 10*
-Brush 6 Hit Degrade   := 0
+Brush 6 Hit Degrade   := 7
 Brush 6 Increase Spd  := FALSE
-Brush 7 Color         := &h808080FF
+Brush 7 Color         := &h80FF00FF
 Brush 7 Score Value   := 10*
-Brush 7 Hit Degrade   := -2
+Brush 7 Hit Degrade   := 0
 Brush 7 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|         66        7
- 2|        6556        
- 3|       654456      7
- 4|       654456       
- 5|       654456      7
- 6|       654456       
- 7|       654456      7
- 8|  66666654456       
- 9| 655555543356      7
-10|6444444432156       
-11|6444444432156      7
-12| 655555543356       
-13|  66666654456      7
-14|       654456       
-15|       654456      7
-16|       654456       
-17|       654456      7
-18|       654456       
-19|        6556       7
-20|         66         
+ 1|                    
+ 2|       666666       
+ 3|     6611111166     
+ 4|    611111111116    
+ 5|   61121111112116   
+ 6|  6112321111232116  
+ 7|  6123332112333216  
+ 8| 611123211112321116 
+ 9| 611112111111211116 
+10| 611111111111111116 
+11| 611222221122222116 
+12| 612333352253333216 
+13| 611233354453332116 
+14|  6112235445322116  
+15|  6111125445211116  
+16|   61111244211116   
+17|    611112211116    
+18|     6611111166     
+19|       666666       
+20|                    
 
 ================================================================================
 *END*

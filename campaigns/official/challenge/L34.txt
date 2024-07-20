@@ -9,7 +9,7 @@ Level Description     := Good luck handling this regenerative border.
 Level Password        := ++++++++
 Level game number     := 11
 Level time limit      := 0
-Number of Brushes     := 5
+Number of Brushes     := 6
 Brush 1 Color         := &h80FF00FF
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 0
@@ -30,12 +30,16 @@ Brush 5 Color         := &h8080FF80
 Brush 5 Score Value   := 2
 Brush 5 Hit Degrade   := 4
 Brush 5 Increase Spd  := FALSE
+Brush 6 Color         := &h808080FF
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := -2
+Brush 6 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
  1|55555555555555555555
- 2|55555555555555555555
+ 2|56555555555555555565
  3|55555555555555555555
  4|55522222222222222555
  5|55522222222222222555
@@ -52,7 +56,7 @@ Level Grid  11111111112
 16|55522222222222222555
 17|55522222222222222555
 18|55555555555555555555
-19|55555555555555555555
+19|56555555555555555565
 20|55555555555555555555
 
 ================================================================================

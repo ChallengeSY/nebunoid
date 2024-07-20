@@ -1,0 +1,60 @@
+================================================================================
+LEVEL DATA FILE - UNGATED ADAPTATIONS LEVEL 13
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Easy Walk
+Level Description     := 
+Level Password        := ONEYYQCV
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 5
+Brush 1 Color         := &h8000FF00
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h8000C000
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80FFFFFF
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h800000FF
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Spd  := FALSE
+Brush 5 Color         := &h804040FF
+Brush 5 Score Value   := 10*
+Brush 5 Hit Degrade   := 0
+Brush 5 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|    454    444      
+ 2|    454    454      
+ 3|    444    454      
+ 4|    444    454      
+ 5|    454    444      
+ 6|    454    444      
+ 7|    454    454      
+ 8|    444    454      
+ 9|    454    454      
+10|    454    444      
+11|    454    454      
+12|    444    454      
+13|    444    454      
+14|    333    444      
+15|    3333   444      
+16|    33333  333      
+17|           3333     
+18|           33333    
+19|11111111111111111111
+20|22222222222222222222
+
+================================================================================
+*END*
+================================================================================

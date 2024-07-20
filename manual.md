@@ -6,7 +6,7 @@ When a campaign is started from scratch or resumed from a password, up to six pl
 ### Gameplay
 At the beginning of each life, the ball starts off slow, making it easy to rebound. Hitting the blocks, walls, and the paddle will make it go faster; making it harder to keep the ball in play.
 
-Some blocks may *explode* upon contact, destroying themselves and adjacent blocks, and potentially triggering chain reactions. These blocks are also the only ones that will always be hit by weakened balls.
+Some blocks may *explode* upon contact, destroying themselves and adjacent blocks, and potentially triggering chain reactions. These block types and more can be found in the [editor documentation](editor.md).
 
 As soon as all of the scorable blocks are *eliminated* (from a regular ball's perspective), the level is cleared, bonuses are awarded, and a new level begins. The process repeats until either every life is exhausted (although a continue may be used to gain more lives), or until the campaign has been completed.
 
@@ -93,15 +93,18 @@ Patriarch Memorial is an artistic 25-level campaign, designed as a memory of the
 Fusion Designs is a hybrid 20-level campaign. This campaign makes use of the newly introduced "brick fusion" mechanic, allowing for blocks of *any* shape. Save points are present in every level up to level 19.
 
 #### Challenge Campaign
-The 30-level Challenge Campaign amps up the difficulty several notches by spamming strong blocks like it is hard to believe. Every level demonstrates one or more of the following: Invincible blocks, strong blocks (some will be bio-regenerative), and invisible blocks that may lead to any of the preceding elements
+The 30-level Challenge Campaign amps up the difficulty several notches by spamming strong blocks like it is hard to believe. Every level demonstrates one or more of the following: Invincible blocks, strong blocks (some will be bio-regenerative), and invisible blocks that may lead to any of the preceding elements. This is also the first campaign to introduce exploding blocks that bloom instead of destroy outright.
 
 Additionally, save points appear less frequently than they did in previous campaigns; appearing every three levels starting with level 1, up to level 28. As usual, the final level disallows continues.
+
+#### Ungated Adaptations
+This 40-level campaign was originally built as a trilogy of sets for a script-enhanced title. Although scripting itself is absent, this campaign takes near full advantage of Nebunoid's own mechanics in order to form an overpowering experience.
 
 #### Maximum Insanity
 Maximum Insanity makes Challenge Campaign look easy by mixing the most dangerous elements into 30 levels worth of sinister combinations. Save points appear even less frequently; every five levels starting with level 1, up to level 26.
 
 #### Celestial Journey
-Celestial Journey is the longest finite official campaign, at 40 levels. It makes plenty of cross-universe references, and is still on par with that of the **Challenge Campaign**.
+Celestial Journey is another long official campaign, at 40 levels. It makes plenty of cross-universe references, and is still on par with that of the **Challenge Campaign**.
 
 Like Maximum Insanity, save points appear every five levels starting with level 1. In addition to a final boss at level 40, there is a mid-boss at level 20. Both of these levels disallow continues.
 

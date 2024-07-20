@@ -36,7 +36,7 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.15"
+windowtitle "Nebunoid 1.16"
 
 'Foreground assets
 load_brick_gfx(MasterDir+"/gfx/blocks/")
@@ -173,21 +173,21 @@ do
 	gfxstring("Customize",40,200,5,5,3,rgb(255,255,255))
 	
 	if MenuMode = 0 then
-		gfxstring("Powerup Capsules",40,350,5,4,3,rgb(255,255,255))
+		gfxstring("Powerup Capsules",40,320,5,4,3,rgb(255,255,255))
 		for PID as byte = 1 to 13
-			put(40,375+PID*25),CapsulePic(PID),trans
-			gfxstring(TitleCapNames(PID),80,375+PID*25,4,4,3,rgb(255,255,255))
+			put(40,345+PID*25),CapsulePic(PID),trans
+			gfxstring(TitleCapNames(PID),80,345+PID*25,4,4,3,rgb(255,255,255))
 		next PID
 
-		gfxstring("Powerdown/Neutral Capsules",520,350,5,4,3,rgb(255,255,255))
+		gfxstring("Powerdown/Neutral Capsules",520,320,5,4,3,rgb(255,255,255))
 		for PID as byte = 14 to 26
-			put(520,375+(PID-13)*25),CapsulePic(PID),trans
-			gfxstring(TitleCapNames(PID),560,375+(PID-13)*25,4,4,3,rgb(255,255,255))
+			put(520,345+(PID-13)*25),CapsulePic(PID),trans
+			gfxstring(TitleCapNames(PID),560,345+(PID-13)*25,4,4,3,rgb(255,255,255))
 		next PID
 	elseif MenuMode = 1 then
 		dim as uinteger Availability
-		gfxstring("Official Campaign Selection",40,350,5,4,3,rgb(255,192,64))
-		gfxstring(commaSep(TotalStars)+" stars",820,350,5,4,3,rgb(255,192,64))
+		gfxstring("Official Campaign Selection",40,320,5,4,3,rgb(255,192,64))
+		gfxstring(commaSep(TotalStars)+" stars",820,320,5,4,3,rgb(255,192,64))
 		for Item as byte = 1 to CampaignsPerPage+1
 			with OfficialCampaigns(Item)
 				if .Namee <> "" then
@@ -195,16 +195,16 @@ do
 						if TotalStars >= .StarsToUnlock then
 							.SetLocked = 0
 							Availability = rgb(255,255,255)
-							gfxstring("("+.Difficulty+")",340,351+Item*30,4,3,3,Availability)
+							gfxstring("("+.Difficulty+")",340,321+Item*30,4,3,3,Availability)
 						else
 							.SetLocked = -1
 							Availability = rgb(128,128,128)
 							if .StarsToUnlock > 999 then
-								gfxstring("(100% stars to unlock)",340,351+Item*30,4,3,3,Availability)
+								gfxstring("(100% stars to unlock)",340,321+Item*30,4,3,3,Availability)
 							else
-								gfxstring("("+commaSep(.StarsToUnlock)+" stars to unlock)",340,351+Item*30,4,3,3,Availability)
+								gfxstring("("+commaSep(.StarsToUnlock)+" stars to unlock)",340,321+Item*30,4,3,3,Availability)
 							end if
-					end if
+						end if
 					else
 						if .SetSize > 0 then
 							Availability = rgb(255,255,255)
@@ -213,19 +213,19 @@ do
 						end if
 						.SetLocked = (.SetSize = 0)
 					end if
-					gfxstring(.Namee,40,351+Item*30,4,3,3,Availability)
+					gfxstring(.Namee,40,321+Item*30,4,3,3,Availability)
 					if .SetMastered then
-						gfxstring("Size "+str(.SetSize),820,351+Item*30,4,3,3,rgb(255,215,0))
+						gfxstring("Size "+str(.SetSize),820,321+Item*30,4,3,3,rgb(255,215,0))
 					elseif .SetSize <= 999 then
-						gfxstring("Size "+str(.SetSize),820,351+Item*30,4,3,3,Availability)
+						gfxstring("Size "+str(.SetSize),820,321+Item*30,4,3,3,Availability)
 					end if
 				end if
 			end with
 		next Item
 	else
 		dim as uinteger Availability
-		gfxstring("Community Campaign Selection",40,0350,5,4,3,rgb(255,192,64))
-		for Item as byte = 1*(MenuMode-2)*CampaignsPerPage to min((MenuMode-1)*CampaignsPerPage,OfficialCampaigns(12).SetSize)
+		gfxstring("Community Campaign Selection",40,320,5,4,3,rgb(255,192,64))
+		for Item as byte = 1*(MenuMode-2)*CampaignsPerPage to min((MenuMode-1)*CampaignsPerPage,OfficialCampaigns(CampaignsPerPage+1).SetSize)
 			with CommunityCampaigns(Item)
 				if .Namee <> "" then
 					if .SetSize > 0 then
@@ -233,16 +233,16 @@ do
 					else
 						Availability = rgb(128,128,128)
 					end if
-					gfxstring(.Namee,40,351+Item*30,4,3,3,Availability)
-					gfxstring("Size "+str(.SetSize),820,351+Item*30,4,3,3,Availability)
+					gfxstring(.Namee,40,321+Item*30,4,3,3,Availability)
+					gfxstring("Size "+str(.SetSize),820,321+Item*30,4,3,3,Availability)
 				end if
 			end with
 		next Item
 		
-		if MenuMode >= 1 + ceil(OfficialCampaigns(12).SetSize/11) then
-			gfxstring("(Back to official campaigns)",40,351+(CampaignsPerPage+1)*30,4,3,3,rgb(255,255,255))
+		if MenuMode >= 1 + ceil(OfficialCampaigns(CampaignsPerPage+1).SetSize/11) then
+			gfxstring("(Back to official campaigns)",40,321+(CampaignsPerPage+1)*30,4,3,3,rgb(255,255,255))
 		else
-			gfxstring("(More community campaigns)",40,351+(CampaignsPerPage+1)*30,4,3,3,rgb(255,255,255))
+			gfxstring("(More community campaigns)",40,321+(CampaignsPerPage+1)*30,4,3,3,rgb(255,255,255))
 		end if
 	end if
 	
@@ -274,8 +274,8 @@ do
 			'Official campaign mouse input
 			for YID as ubyte = 1 to CampaignsPerPage+1
 				with OfficialCampaigns(YID)
-					if MouseY >= 346+YID*30 AND MouseY <= 375+YID*30 AND .Namee <> "" AND .SetLocked = 0 then
-						draw_box(32,346+YID*30,991,375+YID*30)
+					if MouseY >= 316+YID*30 AND MouseY <= 345+YID*30 AND .Namee <> "" AND .SetLocked = 0 then
+						draw_box(32,316+YID*30,991,345+YID*30)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							if YID = 12 then
 								'Switch to community campaigns
@@ -300,8 +300,8 @@ do
 				ReadID = YID + (MenuMode-2)*CampaignsPerPage
 				
 				with CommunityCampaigns(ReadID)
-					if ReadID <= OfficialCampaigns(12).SetSize AND MouseY >= 346+YID*30 AND MouseY <= 375+YID*30 AND .Namee <> "" AND .SetSize > 0 then
-						draw_box(32,346+YID*30,991,375+YID*30)
+					if ReadID <= OfficialCampaigns(CampaignsPerPage+1).SetSize AND MouseY >= 316+YID*30 AND MouseY <= 345+YID*30 AND .Namee <> "" AND .SetSize > 0 then
+						draw_box(32,316+YID*30,991,345+YID*30)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							if YID = 12 then
 								MenuMode += 1
@@ -317,11 +317,11 @@ do
 				end with
 			next YID
 			
-			if MouseY >= 346+(CampaignsPerPage+1)*30 AND MouseY <= 375+(CampaignsPerPage+1)*30 then
-				draw_box(32,346+(CampaignsPerPage+1)*30,991,375+(CampaignsPerPage+1)*30)
+			if MouseY >= 316+(CampaignsPerPage+1)*30 AND MouseY <= 345+(CampaignsPerPage+1)*30 then
+				draw_box(32,316+(CampaignsPerPage+1)*30,991,345+(CampaignsPerPage+1)*30)
 				if ButtonCombo > 0 AND HoldClick = 0 then
 					'Cycle community campaign pages; or go back to official campaigns if final page
-					if MenuMode >= 1 + ceil(OfficialCampaigns(12).SetSize/11) then
+					if MenuMode >= 1 + ceil(OfficialCampaigns(CampaignsPerPage+1).SetSize/11) then
 						MenuMode = 1
 					else
 						MenuMode += 1

@@ -1,0 +1,96 @@
+================================================================================
+LEVEL DATA FILE - UNGATED ADAPTATIONS LEVEL 8
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Semi-Limited Exposure
+Level Description     := 
+Level Password        := ++++++++
+Level game number     := 15
+Level time limit      := 0
+Number of Brushes     := 14
+Brush 1 Color         := &hC0FFD700
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 1
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &hC0CD7F32
+Brush 2 Score Value   := 2
+Brush 2 Hit Degrade   := 1
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80404040
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80808080
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Spd  := FALSE
+Brush 5 Color         := &h80FFFFFF
+Brush 5 Score Value   := 2
+Brush 5 Hit Degrade   := 4
+Brush 5 Increase Spd  := FALSE
+Brush 6 Color         := &h804040FF
+Brush 6 Score Value   := 10*
+Brush 6 Hit Degrade   := 0
+Brush 6 Increase Spd  := FALSE
+Brush 7 Color         := &h800000FF
+Brush 7 Score Value   := 10*
+Brush 7 Hit Degrade   := 0
+Brush 7 Increase Spd  := FALSE
+Brush 8 Color         := &h80FFFF40
+Brush 8 Score Value   := 10*
+Brush 8 Hit Degrade   := 0
+Brush 8 Increase Spd  := FALSE
+Brush 9 Color         := &h80FFFF00
+Brush 9 Score Value   := 10*
+Brush 9 Hit Degrade   := 0
+Brush 9 Increase Spd  := FALSE
+Brush 10 Color        := &h80FF4040
+Brush 10 Score Value  := 10*
+Brush 10 Hit Degrade  := 0
+Brush 10 Increase Spd := FALSE
+Brush 11 Color        := &h80FF0000
+Brush 11 Score Value  := 10*
+Brush 11 Hit Degrade  := 0
+Brush 11 Increase Spd := FALSE
+Brush 12 Color        := &h8040FF40
+Brush 12 Score Value  := 10*
+Brush 12 Hit Degrade  := 0
+Brush 12 Increase Spd := FALSE
+Brush 13 Color        := &h8000FF00
+Brush 13 Score Value  := 10*
+Brush 13 Hit Degrade  := 0
+Brush 13 Increase Spd := FALSE
+Brush 14 Color        := &h80FF8000
+Brush 14 Score Value  := 10*
+Brush 14 Hit Degrade  := -1
+Brush 14 Increase Spd := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|   EE          EE   
+ 3|  1111459999541111  
+ 4| E1   45EEEE54   1E 
+ 5| E1   45999954   1E 
+ 6|  1  2458888542  1  
+ 7|  4444458888544444  
+ 8|  5555558888555555  
+ 9|  DEDCCCC2286667E7  
+10|  DEDCCC21126667E7  
+11|  DEDCCC21126667E7  
+12|  DEDCCCA2266667E7  
+13|  555555AAAA555555  
+14|  444445AAAA544444  
+15|  1  245AAAA542  1  
+16| E1   45BBBB54   1E 
+17| E1   45EEEE54   1E 
+18|  111145BBBB541111  
+19|   EE          EE   
+20|                    
+
+================================================================================
+*END*
+================================================================================
