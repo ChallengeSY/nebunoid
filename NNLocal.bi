@@ -631,7 +631,7 @@ function load_level(LevNum as short) as integer
 		
 		if LevelsLeftover > 0 then
 			apply_diff_specs
-			for OCID as ubyte = 1 to 10
+			for OCID as ubyte = 1 to CampaignsPerPage
 				with OfficialCampaigns(OCID)
 					if LevelsLeftover > .TrueSize then
 						LevelsLeftover -= .TrueSize
