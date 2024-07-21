@@ -160,7 +160,7 @@ do
 	put (0,0),Sideframes,trans
 	Result = getmouse(MouseX,MouseY,0,ButtonCombo)
 	put (40,10),TitleBanner,trans
-	gfxstring("Copyright (C) 2023-2024 Paul Ruediger",0,753,3,3,2,rgb(255,255,255))
+	gfxstring("Copyright (C) 2023-2024 Paul Ruediger",40,753,3,3,2,rgb(255,255,255))
 
 	gfxstring("Exit",40,250,5,5,3,rgb(255,255,255))
 
@@ -790,7 +790,7 @@ sub shop
 						case 0
 							gfxstring(CustomItem(MISC,PID)+" (No hints active)",5,PosY,4,4,3,rgb(255,255,255))
 						case 1
-							gfxstring(CustomItem(MISC,PID)+" (Level hints active)",5,PosY,4,4,3,rgb(128,255,128))
+							gfxstring(CustomItem(MISC,PID)+" (Capsule hints active)",5,PosY,4,4,3,rgb(128,255,128))
 						case 2
 							gfxstring(CustomItem(MISC,PID)+" (Capsule and level hints active)",5,PosY,4,4,3,rgb(128,255,128))
 						case else

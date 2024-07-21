@@ -2713,7 +2713,7 @@ sub local_gameplay
 				Instructions = "Below 0:30, further hits increase the warp timer"
 				InstructExpire = timer + 10
 				GameHints(4) = 3
-			elseif LevelDesc = 0 AND HintLevel >= 1 AND len(LevelDescription) > 0 then
+			elseif LevelDesc = 0 AND HintLevel >= 2 AND len(LevelDescription) > 0 then
 				LevelDesc = 1
 				Instructions = LevelDescription
 				InstructExpire = timer + 4 + len(LevelDescription)/10

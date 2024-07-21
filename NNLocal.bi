@@ -877,200 +877,225 @@ end sub
 sub brick_collisions(BallID as short)
 	dim as ubyte HitFailed, PointsScored, ChooseParticle
 	dim as uinteger ColorDestroyed
-	dim as short ScoreMultiplier, BonusMultiplier, MinX, MaxX, MinY, MaxY, NewPalette
+	dim as short ScoreMultiplier, BonusMultiplier, MinX, MaxX, MinY, MaxY, CenterX, CenterY, WidthX, FinalX, FinalY, NewPalette
+	dim as single CalcDist, ShortestDist
 	dim as integer ActualGain
 	
-	if CondensedLevel then
-		MinX = (Ball(BallID).X-44)/24
-	else
-		MinX = (Ball(BallID).X-56)/48
-	end if
+	FinalX = -1 
+	FinalY = -1 
+	WidthX = 48/(1+CondensedLevel)
+	MinX = (Ball(BallID).X-56)/WidthX
 	MaxX = MinX + 2
 	MinY = (Ball(BallID).Y-108)/24
 	MaxY = MinY + 2
+	ShortestDist = 1e6 - 1
 	
 	for YID as byte = MinY to MaxY
 		for XID as byte = MinX to MaxX
 			with Ball(BallID)
-				if XID > 0 AND XID <= 40 AND YID > 0 AND YID <= 20 AND .Invul = 0 AND _
+				if .Invul then
+					'Skip this step, freshly spawned balls are unable to damage bricks
+					exit sub
+				end if
+				
+				if XID > 0 AND XID <= 40 AND YID > 0 AND YID <= 20 AND _
 					PlayerSlot(Player).TileSet(XID,YID).BrickID > 0 AND (.LHX <> XID OR .LHY <> YID) AND _
-					.X >= 32-BallSize+(XID-1)*48/(CondensedLevel + 1) AND _
-					.X <= 32+BallSize+(XID)*48/(CondensedLevel + 1) AND _
+					.X >= 32-BallSize+(XID-1)*WidthX AND .X <= 32+BallSize+(XID)*WidthX AND _
 					.Y >= 96-BallSize+(YID-1)*24 AND .Y <= 96+BallSize+(YID)*24 then
 					
-					if .Power <= 1 then
-						.LHX = XID
-						.LHY = YID
-					end if
-
-					if .Power < 0 AND .Duration > 0 AND rnd < .4 AND _
-						Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade >= 0 then
-						HitFailed = 1
-					end if
+					CenterX = 32+(XID-0.5)*WidthX
+					CenterY = 96+(YID-0.5)*24
+					CalcDist = sqr((.X - CenterX)^2 + (.Y - CenterY)^2)
 					
-					if .Power = -2 then
-						optimal_direction(BallID,XID,YID)
-					elseif HitFailed AND .Spawned = 0 then
-						optimal_direction(BallID,XID,YID)
-						
-						if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).IncreaseSpeed then
-							if .Speed < 12 then
-								.Speed = 12
-							else
-								adjust_speed(BallID,ActiveDifficulty / 50)
-							end if
-						else
-							adjust_speed(BallID,ActiveDifficulty / 100)
-						end if
-
-							NewPalette = PlayerSlot(Player).TileSet(XID,YID).BrickID
-						play_clip(SFX_INVINCIBLE,.X,convert_speed(.Speed))
-						Invis = 12
-					elseif .Invul = 0 AND .Spawned = 0 then
-						'Breakthru Balls and Lightning Balls do not bounce off of blocks
-						if .Power <> 3 AND .Power <> 4 then
-							optimal_direction(BallID,XID,YID)
-						end if
-
-						if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade = PlayerSlot(Player).TileSet(XID,YID).BrickID AND .Power <= 0 then
-							NewPalette = PlayerSlot(Player).TileSet(XID,YID).BrickID
-							play_clip(SFX_INVINCIBLE,.X,convert_speed(.Speed))
-							if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).IncreaseSpeed then
-								if .Speed < 12 then
-									.Speed = 12
-								else
-									adjust_speed(BallID,ActiveDifficulty / 50)
-								end if
-							else
-								adjust_speed(BallID,ActiveDifficulty / 100)
-							end if
-							inc_tick_mark(Ball(BallID))
-						else
-							dim as ubyte PalleteRef, NewBrick, ColorRef
-							NewBrick = Pallete(PalleteRef).HitDegrade
-							
-							if .Power = 1 OR .Power = 2 then
-								PalleteRef = Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).ZapDegrade
-							else
-								PalleteRef = PlayerSlot(Player).TileSet(XID,YID).BrickID
-							end if
-							
-							if .Power <= 0 then
-								if Pallete(PalleteRef).CalcedInvulnerable >= 2 then
-									inc_tick_mark(Ball(BallID))
-								elseif NewBrick = 0 OR Pallete(NewBrick).CanRegen = 0 then
-									'Reset trap and (if needed) warp timer, but do not apply these to regen blocks
-									.Trapped = 0
-									if PlayerSlot(Player).WarpTimer < 1800 then
-										PlayerSlot(Player).WarpTimer = 1800
-									end if
-								end if
-							else
-								'Blocks destroyed via assistance will reset the trap and warp timers anyway
-								.Trapped = 0
-								if PlayerSlot(Player).WarpTimer < 1800 then
-									PlayerSlot(Player).WarpTimer = 1800
-								end if
-							end if
-						
-							if Pallete(PalleteRef).DynamicValue then
-								ScoreMultiplier = int(.Speed) * 10
-								BonusMultiplier = 100
-								
-								'Provide scoring incentative for power downs
-								if PaddleSize <= 40 then
-									BonusMultiplier += 50
-								elseif PaddleSize <= 80 then
-									BonusMultiplier += 35
-								elseif PaddleSize <= 120 then
-									BonusMultiplier += 20
-								end if
-								
-								if Paddle(1).Sluggish > 0 then
-									BonusMultiplier += 50
-								end if
-
-								if Paddle(1).Reverse > 0 then
-									BonusMultiplier += 50
-								end if
-
-								ScoreMultiplier = int(ScoreMultiplier * BonusMultiplier/100)
-							else
-								ScoreMultiplier = 100
-							end if
-							
-							ActualGain = int(Pallete(PalleteRef).ScoreValue * ball_ct_bonus * ScoreMultiplier / 100)
-
-							with Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID)
-								PlayerSlot(Player).Score += ActualGain
-								PointsScored += ActualGain
-								ColorRef = .HitDegrade
-								if .PColoring = 0 then
-									with Pallete(ColorRef)
-										ColorDestroyed = rgb((retrivePrimary(.PColoring,RGBA_RED)+255)/2,_
-											(retrivePrimary(.PColoring,RGBA_GREEN)+255)/2,_
-											(retrivePrimary(.PColoring,RGBA_BLUE)+255)/2)
-									end with
-								else
-									ColorDestroyed = rgb((retrivePrimary(.PColoring,RGBA_RED)+255)/2,_
-										(retrivePrimary(.PColoring,RGBA_GREEN)+255)/2,_
-										(retrivePrimary(.PColoring,RGBA_BLUE)+255)/2)
-								end if
-							end with
-							if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).IncreaseSpeed then
-								if .Speed < 12 then
-									.Speed = 12
-								else
-									adjust_speed(BallID,ActiveDifficulty / 50)
-								end if
-								if ProgressiveQuota > 4 then
-									ProgressiveQuota = 4
-								end if 
-							else
-								adjust_speed(BallID,ActiveDifficulty / 100)
-							end if
-							
-							generate_capsule(XID,YID)
-							if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade < 0 OR .Power = 2 OR .Power = 4 then
-								if .Power = 2 then
-									PlayerSlot(Player).Score += 2 * ball_ct_bonus
-									PointsScored += 2 * ball_ct_bonus
-								end if
-								NewPalette = min(ExplodeDelay,ExplodeDelay + (Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade + 1) * 100)
-							elseif .Power = 3 AND Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).CalcedInvulnerable >= 2 then
-								NewPalette = 0
-								play_clip(SFX_BRICK,.X)
-							elseif .Power = 1 then
-								if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade > 0 then
-									PlayerSlot(Player).Score += 2 * ball_ct_bonus
-									PointsScored += 2 * ball_ct_bonus
-								end if
-								NewPalette = 0
-								play_clip(SFX_BRICK,.X)
-							elseif Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade = PlayerSlot(Player).TileSet(XID,YID).BrickID then
-								NewPalette = 0
-								play_clip(SFX_BRICK,.X)
-							else
-								if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade = 0 then
-									play_clip(SFX_BRICK,.X)
-								else
-									play_clip(SFX_HARDEN,.X,convert_speed(.Speed))
-								end if
-								NewPalette = Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade
-							end if
-						end if
-						Invis = 12
+					if CalcDist < ShortestDist then
+						'If able to hit multiple bricks, favor the closest brick (relative to ball)
+						ShortestDist = CalcDist
+						FinalX = XID
+						FinalY = YID
 					end if
-
-					if .Spawned = 0 AND .Power > -2 then
-						damage_brick(XID,YID,NewPalette,BallID)
-					end if
-					generate_particles(PointsScored,XID,YID,ColorDestroyed)
-					exit sub
 				end if
 			end with
 		next XID
 	next YID
+
+	
+	with Ball(BallID)
+		if FinalX > 0 AND FinalX <= 40 AND FinalY > 0 AND FinalY <= 20 then
+			if .Power <= 1 then
+				.LHX = FinalX
+				.LHY = FinalY
+			end if
+
+			if .Power < 0 AND .Duration > 0 AND rnd < .4 AND _
+				Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade >= 0 then
+				'Weakened Balls have a chance of dealing 0 damage
+				HitFailed = 1
+			end if
+			
+			if .Power = -2 then
+				'Ball is trapped in a cavity; deals no damage in this state
+				optimal_direction(BallID,FinalX,FinalY)
+			elseif HitFailed AND .Spawned = 0 then
+				'Failed to damage a brick
+				optimal_direction(BallID,FinalX,FinalY)
+				
+				if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).IncreaseSpeed then
+					if .Speed < 12 then
+						.Speed = 12
+					else
+						adjust_speed(BallID,ActiveDifficulty / 50)
+					end if
+				else
+					adjust_speed(BallID,ActiveDifficulty / 100)
+				end if
+
+				NewPalette = PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID
+				play_clip(SFX_INVINCIBLE,.X,convert_speed(.Speed))
+				Invis = 12
+			elseif .Invul = 0 AND .Spawned = 0 then
+				'Breakthru Balls and Lightning Balls do not bounce off of blocks
+				if .Power <> 3 AND .Power <> 4 then
+					optimal_direction(BallID,FinalX,FinalY)
+				end if
+
+				if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade = PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID AND .Power <= 0 then
+					'Invincible bricks are immune to normal damage
+					NewPalette = PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID
+					play_clip(SFX_INVINCIBLE,.X,convert_speed(.Speed))
+					if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).IncreaseSpeed then
+						if .Speed < 12 then
+							.Speed = 12
+						else
+							adjust_speed(BallID,ActiveDifficulty / 50)
+						end if
+					else
+						adjust_speed(BallID,ActiveDifficulty / 100)
+					end if
+					inc_tick_mark(Ball(BallID))
+				else
+					'Deal damage accordingly
+					dim as ubyte PalleteRef, NewBrick, ColorRef
+					NewBrick = Pallete(PalleteRef).HitDegrade
+					
+					if .Power = 1 OR .Power = 2 then
+						PalleteRef = Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).ZapDegrade
+					else
+						PalleteRef = PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID
+					end if
+					
+					if .Power <= 0 then
+						if Pallete(PalleteRef).CalcedInvulnerable >= 2 then
+							inc_tick_mark(Ball(BallID))
+						elseif NewBrick = 0 OR Pallete(NewBrick).CanRegen = 0 then
+							'Reset trap and (if needed) warp timer, but do not apply these to regen blocks
+							.Trapped = 0
+							if PlayerSlot(Player).WarpTimer < 1800 then
+								PlayerSlot(Player).WarpTimer = 1800
+							end if
+						end if
+					else
+						'Blocks destroyed via assistance will reset the trap and warp timers anyway
+						.Trapped = 0
+						if PlayerSlot(Player).WarpTimer < 1800 then
+							PlayerSlot(Player).WarpTimer = 1800
+						end if
+					end if
+				
+					if Pallete(PalleteRef).DynamicValue then
+						ScoreMultiplier = int(.Speed) * 10
+						BonusMultiplier = 100
+						
+						'Provide scoring incentative for power downs
+						if PaddleSize <= 40 then
+							BonusMultiplier += 50
+						elseif PaddleSize <= 80 then
+							BonusMultiplier += 35
+						elseif PaddleSize <= 120 then
+							BonusMultiplier += 20
+						end if
+						
+						if Paddle(1).Sluggish > 0 then
+							BonusMultiplier += 50
+						end if
+
+						if Paddle(1).Reverse > 0 then
+							BonusMultiplier += 50
+						end if
+
+						ScoreMultiplier = int(ScoreMultiplier * BonusMultiplier/100)
+					else
+						ScoreMultiplier = 100
+					end if
+					
+					ActualGain = int(Pallete(PalleteRef).ScoreValue * ball_ct_bonus * ScoreMultiplier / 100)
+
+					with Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID)
+						PlayerSlot(Player).Score += ActualGain
+						PointsScored += ActualGain
+						ColorRef = .HitDegrade
+						if .PColoring = 0 then
+							with Pallete(ColorRef)
+								ColorDestroyed = rgb((retrivePrimary(.PColoring,RGBA_RED)+255)/2,_
+									(retrivePrimary(.PColoring,RGBA_GREEN)+255)/2,_
+									(retrivePrimary(.PColoring,RGBA_BLUE)+255)/2)
+							end with
+						else
+							ColorDestroyed = rgb((retrivePrimary(.PColoring,RGBA_RED)+255)/2,_
+								(retrivePrimary(.PColoring,RGBA_GREEN)+255)/2,_
+								(retrivePrimary(.PColoring,RGBA_BLUE)+255)/2)
+						end if
+					end with
+					if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).IncreaseSpeed then
+						if .Speed < 12 then
+							.Speed = 12
+						else
+							adjust_speed(BallID,ActiveDifficulty / 50)
+						end if
+						if ProgressiveQuota > 4 then
+							ProgressiveQuota = 4
+						end if 
+					else
+						adjust_speed(BallID,ActiveDifficulty / 100)
+					end if
+					
+					generate_capsule(FinalX,FinalY)
+					if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade < 0 OR .Power = 2 OR .Power = 4 then
+						if .Power = 2 then
+							PlayerSlot(Player).Score += 2 * ball_ct_bonus
+							PointsScored += 2 * ball_ct_bonus
+						end if
+						NewPalette = min(ExplodeDelay,ExplodeDelay + (Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade + 1) * 100)
+					elseif .Power = 3 AND Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).CalcedInvulnerable >= 2 then
+						NewPalette = 0
+						play_clip(SFX_BRICK,.X)
+					elseif .Power = 1 then
+						if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade > 0 then
+							PlayerSlot(Player).Score += 2 * ball_ct_bonus
+							PointsScored += 2 * ball_ct_bonus
+						end if
+						NewPalette = 0
+						play_clip(SFX_BRICK,.X)
+					elseif Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade = PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID then
+						NewPalette = 0
+						play_clip(SFX_BRICK,.X)
+					else
+						if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade = 0 then
+							play_clip(SFX_BRICK,.X)
+						else
+							play_clip(SFX_HARDEN,.X,convert_speed(.Speed))
+						end if
+						NewPalette = Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade
+					end if
+				end if
+				Invis = 12
+			end if
+
+			if .Spawned = 0 AND .Power > -2 then
+				damage_brick(FinalX,FinalY,NewPalette,BallID)
+			end if
+			generate_particles(PointsScored,FinalX,FinalY,ColorDestroyed)
+		end if
+	end with
 end sub
 sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 	dim as ubyte Award, CapWeight(CAP_MAX)
@@ -1708,7 +1733,7 @@ sub transfer_control(GameEnded as ubyte = 0)
 end sub
 
 sub capsule_message(NewText as string, AlwaysShow as byte = 0)
-	if HintLevel >= 2 OR AlwaysShow then
+	if HintLevel >= 1 OR AlwaysShow then
 		Instructions = NewText
 		InstructExpire = timer + max(5,2+len(NewText)/4)
 	end if
