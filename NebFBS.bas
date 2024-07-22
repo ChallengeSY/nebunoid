@@ -73,7 +73,7 @@ screenset 1,0
 TitleBanner = ImageCreate(281,60)
 bload("gfx/banner.bmp",TitleBanner)
 
-put (40,10),TitleBanner,trans
+put (371,10),TitleBanner,trans
 declare function word_wrap(Text as string) as string
 declare function irandom(Minimum as integer, Maximum as integer) as integer
 

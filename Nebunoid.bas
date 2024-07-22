@@ -159,18 +159,18 @@ do
 	cls
 	put (0,0),Sideframes,trans
 	Result = getmouse(MouseX,MouseY,0,ButtonCombo)
-	put (40,10),TitleBanner,trans
+	put (371,10),TitleBanner,trans
 	gfxstring("Copyright (C) 2023-2024 Paul Ruediger",40,753,3,3,2,rgb(255,255,255))
 
-	gfxstring("Exit",40,250,5,5,3,rgb(255,255,255))
+	gfxstring("Exit",40,200,5,5,3,rgb(255,255,255))
 
 	if MenuMode > 0 then
-		gfxstring("Play local game",40,150,5,5,3,rgb(255,255,0))
+		gfxstring("Play local game",40,100,5,5,3,rgb(255,255,0))
 	else
-		gfxstring("Play local game",40,150,5,5,3,rgb(255,255,255))
+		gfxstring("Play local game",40,100,5,5,3,rgb(255,255,255))
 	end if
 	
-	gfxstring("Customize",40,200,5,5,3,rgb(255,255,255))
+	gfxstring("Customize",40,150,5,5,3,rgb(255,255,255))
 	
 	if MenuMode = 0 then
 		gfxstring("Powerup Capsules",40,320,5,4,3,rgb(255,255,255))
@@ -247,15 +247,15 @@ do
 	end if
 	
 	if MouseX >= 32 AND MouseX < 992 then
-		if MouseY >= 140 AND MouseY < 185 AND CampaignFolder <> "" then
-			draw_box(32,140,991,184)
+		if MouseY >= 90 AND MouseY < 135 AND CampaignFolder <> "" then
+			draw_box(32,90,991,134)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				read_campaigns
 				MenuMode = iif(MenuMode = 0,1,0)
 				HoldClick = 1
 			end if
-		elseif MouseY >= 190 AND MouseY < 235 then
-			draw_box(32,190,991,234)
+		elseif MouseY >= 140 AND MouseY < 185 then
+			draw_box(32,140,991,184)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				HoldClick = 1
 				shop
@@ -263,8 +263,8 @@ do
 				while inkey <> "":wend
 			end if
 		end if
-		if MouseY >= 240 AND MouseY < 285 then
-			draw_box(32,240,991,284)
+		if MouseY >= 190 AND MouseY < 235 then
+			draw_box(32,190,991,234)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				exit do
 			end if
