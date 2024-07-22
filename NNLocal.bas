@@ -1889,7 +1889,7 @@ sub local_gameplay
 								end if
 								select case .Angle
 									case CAP_SLOW
-										capsule_message("SLOWER BALLS: All ball speeds slowed to minimum")
+										capsule_message("SLOWER BALLS: All ball speeds slowed to minimum",-1)
 										for BID as short = 1 to NumBalls
 											with Ball(BID)
 												if .Speed > 0 AND .Power <> -2 then
@@ -1900,7 +1900,7 @@ sub local_gameplay
 										next BID
 										play_clip(SFX_POWER_UP,.X)
 									case CAP_FAST
-										capsule_message("FASTER BALLS")
+										capsule_message("FASTER BALLS",-1)
 										for BID as short = 1 to NumBalls
 											with Ball(BID)
 												if .Speed > 0 AND .Power <> -2 then
@@ -1920,7 +1920,7 @@ sub local_gameplay
 											end if
 										end if
 										PaddleAdjust = max(PaddleAdjust,0)
-										capsule_message("EXPAND PADDLE: Size +40 pixels = "+str(PaddleSize)+" pixels")
+										capsule_message("EXPAND PADDLE: Size +40 pixels = "+str(PaddleSize)+" pixels",-1)
 										force_release_balls
 										play_clip(SFX_POWER_UP,.X)
 									case CAP_REDUCE
@@ -1931,7 +1931,7 @@ sub local_gameplay
 											end if
 										end if
 										PaddleAdjust = min(PaddleAdjust,0)
-										capsule_message("REDUCE PADDLE: Size -40 pixels = "+str(PaddleSize)+" pixels")
+										capsule_message("REDUCE PADDLE: Size -40 pixels = "+str(PaddleSize)+" pixels",-1)
 										force_release_balls
 										play_clip(SFX_POWER_DOWN,.X)
 									case CAP_LIFE
@@ -1991,7 +1991,7 @@ sub local_gameplay
 										play_clip(SFX_POWER_UP,.X)
 									case CAP_SPLIT_BALL
 										dim as ubyte Splitted(NumBalls)
-										capsule_message("SPLIT BALL")
+										capsule_message("SPLIT BALL",-1)
 										force_release_balls
 										for BID as short = 1 to NumBalls
 											with Ball(BID)
@@ -2219,7 +2219,7 @@ sub local_gameplay
 										force_release_balls
 										play_clip(SFX_POWER_DOWN,.X)
 									case CAP_WEAK
-										capsule_message("WEAKENED BALLS: Ball damage is temporarily inconsistent")
+										capsule_message("WEAKENED BALLS: Ball damage is temporarily inconsistent",-1)
 										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Power <> -2 then
@@ -2300,7 +2300,7 @@ sub local_gameplay
 										next FID
 										play_clip(SFX_POWER_DOWN,.X)
 									case CAP_GRAB
-										capsule_message("GRABBING PADDLE")
+										capsule_message("GRABBING PADDLE",-1)
 										Paddle(1).Grabbing += 1800
 										play_clip(SFX_POWER_UP,.X)
 									case CAP_SLOW_PAD
@@ -2335,7 +2335,7 @@ sub local_gameplay
 										play_clip(SFX_POWER_DOWN,.X)
 									case CAP_SPREAD
 										dim as ubyte AlreadySpread(40,20)
-										capsule_message("SPREAD EXPLODING")
+										capsule_message("SPREAD EXPLODING",-1)
 										for YID as byte = 1 to 20
 											for XID as byte = 1 to 20*(CondensedLevel+1)
 												with PlayerSlot(Player).TileSet(XID,YID)
@@ -2373,7 +2373,7 @@ sub local_gameplay
 										erase AlreadySpread
 										play_clip(SFX_POWER_UP,.X)
 									case CAP_DETONATE
-										capsule_message("DETONATE EXPLODING")
+										capsule_message("DETONATE EXPLODING",-1)
 										for YID as ubyte = 1 to 20
 											for XID as ubyte = 1 to 20*(CondensedLevel+1)
 												with Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID)
@@ -2431,7 +2431,7 @@ sub local_gameplay
 										RecalcGems = 1
 										
 										if GemMultiplier = 0 then
-											capsule_message(GemType+" GEM collected")
+											capsule_message(GemType+" GEM collected",-1)
 											play_clip(SFX_HARDEN,.X)
 										else
 											PlayerSlot(Player).Score += BaseCapsuleValue * GemMultiplier

@@ -790,7 +790,7 @@ sub shop
 						case 0
 							gfxstring(CustomItem(MISC,PID)+" (No hints active)",5,PosY,4,4,3,rgb(255,255,255))
 						case 1
-							gfxstring(CustomItem(MISC,PID)+" (Capsule hints active)",5,PosY,4,4,3,rgb(128,255,128))
+							gfxstring(CustomItem(MISC,PID)+" (Uncommon hints active)",5,PosY,4,4,3,rgb(128,255,128))
 						case 2
 							gfxstring(CustomItem(MISC,PID)+" (Capsule and level hints active)",5,PosY,4,4,3,rgb(128,255,128))
 						case else

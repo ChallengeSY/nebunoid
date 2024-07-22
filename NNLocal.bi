@@ -917,8 +917,8 @@ sub brick_collisions(BallID as short)
 			end with
 		next XID
 	next YID
-
 	
+	'If a suitable match has been found, calculate the results accordingly
 	with Ball(BallID)
 		if FinalX > 0 AND FinalX <= 40 AND FinalY > 0 AND FinalY <= 20 then
 			if .Power <= 1 then
@@ -1733,7 +1733,7 @@ sub transfer_control(GameEnded as ubyte = 0)
 end sub
 
 sub capsule_message(NewText as string, AlwaysShow as byte = 0)
-	if HintLevel >= 1 OR AlwaysShow then
+	if HintLevel >= 1 - AlwaysShow then
 		Instructions = NewText
 		InstructExpire = timer + max(5,2+len(NewText)/4)
 	end if
