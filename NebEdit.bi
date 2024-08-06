@@ -1,5 +1,8 @@
 #include "Nebunoid.bi"
 #include "NNLocal.bas"
+#IFNDEF __FB_DOS__
+#include "fbthread.bi"
+#ENDIF
 
 #IF defined(__FB_WIN32__) OR defined(__FB_DOS__)
 const GameProgram = "\Nebunoid.exe"
@@ -10,9 +13,14 @@ const GameProgram = "/Nebunoid"
 
 dim as string TimeStr, GameInfo, BossHP
 dim as short InstruAlpha, InstruBeta, InstruGamma
-dim shared as byte CampaignUnsaved, LevelUnsaved, SelectedBrush, BrushEditor, HighlightX, HighlightY, MirrorEditing
+
 dim shared as short MaxLevels
 dim shared as string MirrorOptions(3)
+dim shared as byte CampaignUnsaved, LevelUnsaved, SelectedBrush, BrushEditor, HighlightX, HighlightY, MirrorEditing, PlaytestUse
+dim shared as any ptr PlaytestLock, PlaytestSes
+
+const CtrlP = chr(16)
+const CtrlS = chr(19)
 
 #IF __FB_DEBUG__
 'Debug mode exclusive switch that would otherwise force the editor to modify exclusively community campaigns 
@@ -1721,6 +1729,39 @@ function save_campaign(SaveLvNum as short) as integer
 	return FileError
 end function
 
+sub launch_playtest(ByVal InternalPtr as any ptr = 0)
+	#IFNDEF __FB_DOS__
+	if PlaytestLock = 0 then
+		locate 48,1
+		print space(127);
+		locate 48,1
+		print "Quick playtest in session. This program is suspended until session is concluded.";
+		screencopy
+	else
+		MutexLock PlaytestLock
+		PlaytestUse = 1
+	end if
+	#ENDIF
+	
+	exec(MasterDir + GameProgram,"-l "+quote(CampaignFolder + "/L" + str(PlayerSlot(Player).LevelNum)))
+	InType = ""
+	while inkey <> "":wend
+	
+	#IFNDEF __FB_DOS__
+	if PlaytestLock <> 0 AND PlaytestSes <> 0 then
+		MutexUnlock PlaytestLock
+		PlaytestUse = 0
+	end if
+	#ENDIF
+end sub
+
+#IFNDEF __FB_DOS__
+sub cleanup_editor destructor
+	ThreadDetach PlaytestSes
+	MutexDestroy PlaytestLock
+end sub
+#ENDIF
+
 sub reset_editor_specs
 	MirrorEditing = 0
 	SelectedBrush = 0
@@ -1730,5 +1771,3 @@ sub reset_editor_specs
 		Instructions = LevelDescription
 	end if
 end sub
-
-

@@ -13,6 +13,11 @@ PlayerSlot(Player).LevelNum = 1
 PlayerSlot(Player).PerfectClear = 1
 ActiveDifficulty = 4
 
+#IFNDEF __FB_DOS__
+'Prep for binding a thread to it 
+PlaytestLock = MutexCreate
+#ENDIF
+
 do
 	cls
 	Result = getmouse(MouseX,MouseY,0,ButtonCombo)
@@ -256,12 +261,15 @@ do
 				reset_editor_specs
 				.LevelNum = 1
 			end if
-		elseif InType = chr(19) AND CampaignFolder <> "" then
+		elseif InType = CtrlS AND CampaignFolder <> "" then
 			save_campaign(.LevelNum)
-		elseif InType = chr(16) AND CampaignFolder <> "" then
+		elseif InType = CtrlP AND CampaignFolder <> "" then
 			if BrickCount = 0 then
 				Instructions = "No blocks detected. Sequence aborted."
 				InstructExpire = timer + 5
+			elseif PlaytestUse then
+				Instructions = "Nebunoid is already running! Sequence aborted."
+				InstructExpire = timer + 7
 			else
 				if LevelUnsaved then
 					locate 48,1
@@ -273,21 +281,20 @@ do
 						InType = lcase(inkey)
 						if InType = "y" then
 							save_campaign(.LevelNum)
-							Instructions = ""
+							if PlaytestLock = 0 then
+								Instructions = ""
+							end if
 							exit do
 						end if
 					loop until InType = "n"
 				end if
 			
 				if LevelUnsaved = 0 then
-					locate 48,1
-					print space(127);
-					locate 48,1
-					print "Quick playtest in session. This program is suspended until session is concluded.";
-					screencopy
-					exec(MasterDir + GameProgram,"-l "+quote(CampaignFolder + "/L" + str(.LevelNum)))
-					InType = ""
-					while inkey <> "":wend
+					if PlaytestLock = 0 then
+						launch_playtest
+					else
+						PlaytestSes = ThreadCreate(@launch_playtest)
+					end if
 				endif
 			end if
 		elseif InType = LeftArrow then
