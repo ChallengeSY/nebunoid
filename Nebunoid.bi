@@ -282,7 +282,7 @@ dim shared as uinteger GameStyle, TourneyStyle, TourneyScore, ShotIndex
 dim shared as ubyte Fullscreen, ConfigLoaded = 0, JoyAnalog, JoyInvertAxes, TapWindow, CondensedLevel, AllowHandicap, ShuffleLevels, SpeedRunner
 dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness, SpeedRunTimer
 dim shared as single JoyAxis(7)
-dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, BlockBrushes
+dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, ProgressiveDelay, BlockBrushes
 dim shared as double ProgressiveQuota, InstructExpire, MisnExpire, TimeRem, Reminder = -1, _
 	FrameTime, PaddlePercent, DifficultyRAM(MaxPlayers)
 dim shared as string InType, ScoreFile, Instructions, CampaignFolder, BackList(BackCount), DiffTxt
@@ -899,7 +899,7 @@ declare sub damage_brick(BaseX as short, BaseY as short, NewPalette as short, Ne
 
 function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 	dim as ubyte AlphaV
-	dim as uinteger Coloring, ScoreBonus, Count, XPanning
+	dim as uinteger XColoring, ScoreBonus, Count, XPanning
 	dim as byte RefPallete, MaxY
 	dim as ubyte BlocksInPallete(35)
 	dim as string PrintChar
@@ -940,16 +940,21 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 			with PlayerSlot(Player).Tileset(XID,YID)
 				if YID <= MaxY then
 					if .BrickID <= -1 then
+						XColoring = rgba(255,128,0,128)
+						if .BrickID < -100 then
+							XColoring = rgba(0,128,255,128)
+						end if
+						
 						if CondensedLevel then
 							XPanning = 48+(XID-1)*24
 							put(32+(XID-1)*24,96+(YID-1)*24),ExplodePic,trans
 							line(32+(XID-1)*24,96+(YID-1)*24)-_
-								(31+(XID)*24,95+(YID)*24),rgba(255,128,0,128),bf
+								(31+(XID)*24,95+(YID)*24),XColoring,bf
 						else
 							XPanning = 56+(XID-1)*48
 							put(32+(XID-1)*48,96+(YID-1)*24),ExplodePic,trans
 							line(32+(XID-1)*48,96+(YID-1)*24)-_
-								(31+(XID)*48,95+(YID)*24),rgba(255,128,0,128),bf
+								(31+(XID)*48,95+(YID)*24),XColoring,bf
 						end if
 						if GamePaused = 0 then
 							if .BrickID < -1 AND .BrickID <> -101 then

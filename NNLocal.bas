@@ -932,6 +932,9 @@ sub local_gameplay
 					if .Repairs > 0 then
 						.Repairs -= 1
 					end if
+					if ProgressiveDelay > 0 then
+						ProgressiveDelay -= 1
+					end if
 				end if
 			end if
 			
@@ -1282,7 +1285,11 @@ sub local_gameplay
 										TotalBC += 1
 									end if
 									
-									ProgressiveBounces += 1
+									if ProgressiveDelay <= 0 then
+										'Impose a delay in between bounces
+										ProgressiveBounces += 1
+										ProgressiveDelay = 9
+									end if
 	
 									if ProgressiveBounces >= ProgressiveQuota AND (GameStyle AND (1 SHL STYLE_PROGRESSIVE)) then
 										ProgressiveBounces = 0
