@@ -14,7 +14,7 @@ As soon as all of the scorable blocks are *eliminated* (from a regular ball's pe
 Nebunoid supports watching an Auto Play session; just start a *0* player session. Fair warning; the computer player will neither give stars, nor award passwords for levels that the player has never played before. Any high scores it is able to submit will be auto-named as such.
 
 #### Skip Level feature
-Not all levels are made the same. Nonetheless, Nebunoid rewards preserverence. When the required 2 legitimate game overs in a row is reached, it will allow the player the option to skip the level. This feature is not available when not on a level before a "fatal" level (a level that disallows continues outright).
+Not all levels are made the same. Nonetheless, Nebunoid rewards preserverence. When the required 2 legitimate game overs in a row is reached, it will allow the player the option to skip the level. This feature is available when not on a level before a "fatal" level (a level that disallows continues outright).
 
 Fair warning; using the Skip Level feature on a high difficulty game will automatically reduce the difficulty as if the player had fouled their way to no harder than Medium-Hard.
 
