@@ -36,7 +36,7 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.16"
+windowtitle "Nebunoid 1.17"
 
 'Foreground assets
 load_brick_gfx(MasterDir+"/gfx/blocks/")
@@ -88,21 +88,7 @@ BasePaddle = ImageCreate(1080,PaddleHeight)
 bload(MasterDir + "/gfx/paddle.bmp",BasePaddle)
 
 PaddleBar = ImageCreate(640,31)
-#IFDEF __USE_FBSOUND__
-put PaddleBar, (0,0), LoadingBar, pset
-line PaddleBar,(5,5)-(634,25),rgb(0,0,0),bf
-ImageDestroy(LoadingBar)
-#ELSE
-line PaddleBar,(0,0)-(639,30),rgb(0,0,0),bf
-line PaddleBar,(0,0)-(639,0),rgb(255,255,255)
-line PaddleBar,(0,0)-(0,30),rgb(255,255,255)
-
-for Thickness as byte = 1 to 3
-	line PaddleBar,(Thickness,Thickness)-(639-Thickness,30-Thickness),rgb(128,128,255),b
-next Thickness
-line PaddleBar,(5,26)-(635,26),rgb(255,255,255)
-line PaddleBar,(635,5)-(635,26),rgb(255,255,255)
-#ENDIF
+bload(MasterDir + "/gfx/meter.bmp",PaddleBar)
 
 MusicPlrEnabled = 1
 HintLevel = 3

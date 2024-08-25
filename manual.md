@@ -10,6 +10,15 @@ Some blocks may *explode* upon contact, destroying themselves and adjacent block
 
 As soon as all of the scorable blocks are *eliminated* (from a regular ball's perspective), the level is cleared, bonuses are awarded, and a new level begins. The process repeats until either every life is exhausted (although a continue may be used to gain more lives), or until the campaign has been completed.
 
+#### Additional Tips
+* Life Restock (documented below) causes the game to restore one missing life upon completing a level. This makes it difficult (though not impossible) to get a game over under these conditions
+* There is a "softlock" guard mechanism that causes balls otherwise stuck to become "metallic". These balls destroy *any* block in one hit
+* Weakened Balls will negate any balls that are powered up, only truly weakening balls that are previously normal balls to have a 40% chance of not damaging a block
+* Paddles are not permitted to have both bullets and missiles stockpiled at the same time. When picking up one of these capsules, it will zero out the other's ammunition
+* Extra Life has a variable rarity. Its gold color significanies its very rare status under normal conditions, but it has a double appearance chance (akin to a purple "rare" capsule)
+* The Shuffle Levels option shuffles most levels in a campaign, ignoring fatal levels in the process. Rumor has it that secret levels might not be affected by this process
+* Grabble Paddles automatically release each held ball after 5 seconds. In addition, several capsules force release held balls. Both are intentional to counter a multiplier that exists simply for having multiple balls in play
+
 #### Auto Play
 Nebunoid supports watching an Auto Play session; just start a *0* player session. Fair warning; the computer player will neither give stars, nor award passwords for levels that the player has never played before. Any high scores it is able to submit will be auto-named as such.
 
@@ -36,7 +45,7 @@ Nebunoid supports a difficulty scale for *each* player, allowing players of vary
 | Nightmare   |  11.0 - 12.0 |   40- 80-120 | Increased  |                5% | Reduce to 10.0      | No red caps  |
 
 (1) Maximum spawn chance; achieved when there are *no* falling capsules in play. Diminishing Returns decreases this chance (by 1% per capsule) as there are more capsules falling.  
-(2) One can use the level select system (F4) or passwords to play the game from any level with a password.
+(2) One can use the level select system (F4) or passwords to play the game from any level with a password. The need to remember passwords is virtually eliminated.
     This system is unavailable if the "Shuffle Levels" option is active, or if one or more players has a continue penalty whenever they get a game over.  
 (3) Alternatively, players can choose to reduce the difficulty by 0.5 to make their next credit easier. A player will not drop below Medium-Easy (difficulty 3.5) this way
 
@@ -45,7 +54,7 @@ Nebunoid supports a difficulty scale for *each* player, allowing players of vary
 ### Powerup Capsules
 Nebunoid has 27 capsules of varying power, and rarity. The power-up capsules are colored green, blue, purple, or gold (depending on its rarity), and may be collected to acquire special abilities. The power-down capsules are all colored red, and will generally make the gameplay more challenging when collected. Neutral capsules are colored grey, and can cause some interesting effects when collected. In any case, powerup capsules which have a more potent effect tend to spawn less frequently than weaker capsules.
 
-These capsules also provide a little bit of recovery when in a boss battle.
+Some capsules have a timed duration. Power-up capsules (but not power-down capsules) have a stacking effect whenever multiples are collected in a short duration of time. These capsules also provide a little bit of recovery when in a boss battle.
 
 #### Gem capsules
 In addition, there is a collection of 7 gem-themed capsules available outside of Effortless difficulty. These capsules are used to form 5-gem poker-style hands. If a decent hand is formed this way, extra points will be awarded once the hand is complete. Unused gems at the end of the campaign also award points based on the same mechanics.

@@ -1516,6 +1516,12 @@ sub clean_up destructor
 		ImageDestroy(PaddlePic)
 		ImageDestroy(PaddleBar)
 		ImageDestroy(TitleBanner)
+
+		#IFDEF __USE_FBSOUND__
+		StopPreload = 1
+		ThreadWait PreloadThread
+		MutexDestroy PreloadLock
+		#ENDIF
 	end if
 end sub
 
@@ -1543,5 +1549,3 @@ function actionButton(HoldCheck as byte = 0) as integer
 	
 	return (ControlStyle = CTRL_AI)
 end function
-
-
