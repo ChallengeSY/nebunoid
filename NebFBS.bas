@@ -83,7 +83,7 @@ if PreloadLock = 0 then
 	print "Note: Multi-Thread loading unsuccessful. Falling back to main thread to pre-load songs."
 	print
 else
-	print "Preloading sonuds..."
+	print "Preloading sounds..."
 	screencopy
 end if
 

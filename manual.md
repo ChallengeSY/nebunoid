@@ -1,7 +1,7 @@
 ## Nebunoid Manual
 Nebunoid is a nebula themed Arkanoid/Breakout-type game. In this game, the player's objective is to bash through various colored blocks with a ball and a paddle, scoring as many points as they can while also clearing as many levels as possible.
 
-When a campaign is started from scratch or resumed from a password, up to six players may play the game, alternating turns when a level is finished or when a life is lost by dropping the *last* ball.
+When a campaign is started from scratch or resumed from a password, up to six (6) players may play the game, alternating turns when a level is finished or when a life is lost by dropping the *last* ball.
 
 ### Gameplay
 At the beginning of each life, the ball starts off slow, making it easy to rebound. Hitting the blocks, walls, and the paddle will make it go faster; making it harder to keep the ball in play.
@@ -93,7 +93,7 @@ Save points are available for nearly every level in the campaign, being absent o
 Fortified Letters is decently more challenging than Regular Season. Every English letter is represented in this campaign, for a total of 26 levels. Save points are present in every level, except for the final level (which disallows continues instead).
 
 #### Electric Recharge
-Electric Recharge is an artistic 20-level campaign, referencing an computing themed universe. Save points are present in every level up to level 19, with the exception of level 13.
+Electric Recharge is an artistic 20-level campaign, referencing a computing themed universe. Save points are present in every level up to level 19, with the exception of level 13.
 
 #### Patriarch Memorial
 Patriarch Memorial is an artistic 25-level campaign, designed as a memory of the past. Moderate-Hard difficulty. Save points are present in every level up to level 23. No continues are permitted beyond this level.
