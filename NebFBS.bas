@@ -82,6 +82,9 @@ locate 6,1
 if PreloadLock = 0 then
 	print "Note: Multi-Thread loading unsuccessful. Falling back to main thread to pre-load songs."
 	print
+else
+	print "Preloading sonuds..."
+	screencopy
 end if
 
 dim shared as integer clipWave(clipCount), musicPlr
