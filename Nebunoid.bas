@@ -211,18 +211,20 @@ do
 	else
 		dim as uinteger Availability
 		gfxstring("Community Campaign Selection",40,320,5,4,3,rgb(255,192,64))
-		for Item as byte = 1*(MenuMode-2)*CampaignsPerPage to min((MenuMode-1)*CampaignsPerPage,OfficialCampaigns(CampaignsPerPage+1).SetSize)
-			with CommunityCampaigns(Item)
-				if .Namee <> "" then
-					if .SetSize > 0 then
-						Availability = rgb(255,255,255)
-					else
-						Availability = rgb(128,128,128)
+		for Item as byte = 1+(MenuMode-2)*CampaignsPerPage to (MenuMode-1)*CampaignsPerPage
+			if Item <= UBound(CommunityCampaigns) then
+				with CommunityCampaigns(Item)
+					if .Namee <> "" then
+						if .SetSize > 0 then
+							Availability = rgb(255,255,255)
+						else
+							Availability = rgb(128,128,128)
+						end if
+						gfxstring(.Namee,40,351+remainder(Item-1,CampaignsPerPage)*30,4,3,3,Availability)
+						gfxstring("Size "+str(.SetSize),820,351+remainder(Item-1,CampaignsPerPage)*30,4,3,3,Availability)
 					end if
-					gfxstring(.Namee,40,321+Item*30,4,3,3,Availability)
-					gfxstring("Size "+str(.SetSize),820,321+Item*30,4,3,3,Availability)
-				end if
-			end with
+				end with
+			end if
 		next Item
 		
 		if MenuMode >= 1 + ceil(OfficialCampaigns(CampaignsPerPage+1).SetSize/11) then
@@ -285,13 +287,12 @@ do
 			for YID as ubyte = 1 to CampaignsPerPage+1
 				ReadID = YID + (MenuMode-2)*CampaignsPerPage
 				
-				with CommunityCampaigns(ReadID)
-					if ReadID <= OfficialCampaigns(CampaignsPerPage+1).SetSize AND MouseY >= 316+YID*30 AND MouseY <= 345+YID*30 AND .Namee <> "" AND .SetSize > 0 then
-						draw_box(32,316+YID*30,991,345+YID*30)
-						if ButtonCombo > 0 AND HoldClick = 0 then
-							if YID = 12 then
-								MenuMode += 1
-							else
+				if ReadID <= UBound(CommunityCampaigns) then
+					with CommunityCampaigns(ReadID)
+						if ReadID <= OfficialCampaigns(CampaignsPerPage+1).SetSize AND YID <= CampaignsPerPage AND _
+							MouseY >= 316+YID*30 AND MouseY <= 345+YID*30 AND .Namee <> "" AND .SetSize > 0 then
+							draw_box(32,316+YID*30,991,345+YID*30)
+							if ButtonCombo > 0 AND HoldClick = 0 then
 								CampaignFolder = .Folder
 								local_gameplay
 								load_title_capsules
@@ -299,15 +300,15 @@ do
 								while inkey <> "":wend
 							end if
 						end if
-					end if
-				end with
+					end with
+				end if
 			next YID
 			
 			if MouseY >= 316+(CampaignsPerPage+1)*30 AND MouseY <= 345+(CampaignsPerPage+1)*30 then
 				draw_box(32,316+(CampaignsPerPage+1)*30,991,345+(CampaignsPerPage+1)*30)
 				if ButtonCombo > 0 AND HoldClick = 0 then
 					'Cycle community campaign pages; or go back to official campaigns if final page
-					if MenuMode >= 1 + ceil(OfficialCampaigns(CampaignsPerPage+1).SetSize/11) then
+					if MenuMode >= 1 + ceil(OfficialCampaigns(CampaignsPerPage+1).SetSize/CampaignsPerPage) then
 						MenuMode = 1
 					else
 						MenuMode += 1

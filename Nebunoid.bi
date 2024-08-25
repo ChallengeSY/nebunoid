@@ -308,8 +308,7 @@ const CustomizePerPage = 20
 const PaddleHeight = 18
 const CustomizePadding = 60
 const CustomizeSelect = CustomizePadding - 5
-dim shared as LevelsetSpecs OfficialCampaigns(CampaignsPerPage+1)
-redim shared as LevelsetSpecs CommunityCampaigns(1)
+dim shared as LevelsetSpecs OfficialCampaigns(CampaignsPerPage+1), CommunityCampaigns()
 
 enum BounceDirections
 	BOUNCE_E = 1
