@@ -319,6 +319,7 @@ sub load_scores
 		with HighScore(HID)
 			.Namee = ""
 			.RawScore = 0
+			.GameTime = -1
 			.Difficulty = 1
 			.LevelStart = 1
 			.LevelFinal = 1
@@ -339,16 +340,28 @@ sub load_scores
 		next HID
 	else
 		if FileExists(CampaignName+".csv") then
+			dim as byte TimeCol = 0
+			
 			open CampaignName+".csv" for input as #1
 			for HID as byte = 0 to SavedHighSlots
-				with HighScore(HID)
-					input #1, .Namee
-					input #1, .RawScore
-					input #1, .LevelStart
-					input #1, .LevelFinal
-					input #1, .Difficulty
-					.NewEntry = 0
-				end with
+				if HID = 0 then
+					dim as string ReadHeader
+					line input #1, ReadHeader
+					
+					TimeCol = sgn(abs(instr(ReadHeader, "Game Time") > 0)) 
+				else
+					with HighScore(HID)
+						input #1, .Namee
+						input #1, .RawScore
+						if TimeCol then
+							input #1, .GameTime
+						end if
+						input #1, .LevelStart
+						input #1, .LevelFinal
+						input #1, .Difficulty
+						.NewEntry = 0
+					end with
+				end if
 			next HID
 			close #1
 		else
@@ -356,6 +369,7 @@ sub load_scores
 				with HighScore(HID)
 					.Namee = "No name"
 					.RawScore = 0
+					.GameTime = -1
 					.LevelStart = 1
 					.LevelFinal = 1
 					.Difficulty = (SavedHighSlots - HID) / 2 + 1
@@ -368,10 +382,10 @@ end sub
 sub save_scores
 	if CampaignFolder <> "community/misc" then
 		open CampaignName+".csv" for output as #1
-		print #1, "Name,"+quote("Raw Score")+","+quote("Level Started")+","+quote("Level Ended")+",Difficulty"  
+		print #1, "Name,"+quote("Raw Score")+","+quote("Game Time")+","+quote("Level Started")+","+quote("Level Ended")+",Difficulty"  
 		for HID as byte = 1 to SavedHighSlots
 			with HighScore(HID)
-				print #1, quote(.Namee);","& .RawScore;","& .LevelStart;","& .LevelFinal;","&.Difficulty  
+				print #1, quote(.Namee);","& .RawScore;","& .GameTime;","& .LevelStart;","& .LevelFinal;","&.Difficulty  
 			end with
 		next HID
 		close #1
@@ -1455,14 +1469,7 @@ sub high_score_input(PlayerNum as byte, Automatic as byte = 0)
 	if NewPosition > 0 then
 		if NewPosition < TotalHighSlots then
 			for BumpHS as byte = (TotalHighSlots - 1) to NewPosition step -1
-				with HighScore(BumpHS+1)
-					.Namee = HighScore(BumpHS).Namee
-					.RawScore = HighScore(BumpHS).RawScore
-					.LevelStart = HighScore(BumpHS).LevelStart
-					.LevelFinal = HighScore(BumpHS).LevelFinal
-					.Difficulty = HighScore(BumpHS).Difficulty
-					.NewEntry = HighScore(BumpHS).NewEntry
-				end with
+				HighScore(BumpHS+1) = HighScore(BumpHS)
 			next BumpHS
 		end if
 		
@@ -1519,6 +1526,7 @@ sub high_score_input(PlayerNum as byte, Automatic as byte = 0)
 		with HighScore(NewPosition)
 			.Namee = NewName
 			.RawScore = PlayerSlot(PlayerNum).Score
+			.GameTime = PlayerSlot(PlayerNum).PlayTime
 			.LevelStart = PlayerSlot(PlayerNum).InitialLevel
 			.LevelFinal = PlayerSlot(PlayerNum).LevelNum
 			.Difficulty = PlayerSlot(PlayerNum).Difficulty
@@ -1813,7 +1821,6 @@ sub begin_local_game(InitPlayers as byte, InitLevel as short)
 	destroy_balls
 	destroy_capsules
 	LevelDesc = 0
-	SpeedRunTimer = 0
 
 	for HID as byte = 1 to 10
 		HighScore(HID).NewEntry = 0
@@ -1848,6 +1855,7 @@ sub begin_local_game(InitPlayers as byte, InitLevel as short)
 		DifficultyRAM(PDID) = PlayerSlot(PDID).Difficulty
 		PlayerSlot(PDID) = NewPlrSlot
 		PlayerSlot(PDID).Difficulty = DifficultyRAM(PDID)
+		PlayerSlot(PDID).PlayTime = 0
 		fresh_level(PDID)
 		if PDID > InitPlayers AND (PDID <> 1 OR InitPlayers < 0) then
 			PlayerSlot(PDID).Lives = 0

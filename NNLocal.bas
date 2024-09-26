@@ -406,14 +406,6 @@ sub local_gameplay
 					str(int(remainder(DispTime,60)/10))+_
 					str(int(remainder(DispTime,10)))
 				ui_element(TimeStr,560,6,5,DColor)
-			elseif SpeedRunner AND NumPlayers = 1 then
-				TimeRem = SpeedRunTimer / 60
-				DispTime = int(TimeRem+1-(1e-10))
-				TimeStr = str(int(DispTime/60))+":"+_
-					str(int(remainder(DispTime,60)/10))+_
-					str(int(remainder(DispTime,10)))
-
-				ui_element(TimeStr,560,6,5,rgba(255,255,255,224))
 			elseif .WarpTimer < 3600 then
 				TimeRem = .WarpTimer / 60
 				DispTime = int(TimeRem+1-(1e-10))
@@ -1016,8 +1008,8 @@ sub local_gameplay
 			WepCooldown -= 1
 		end if
 
-		if SpeedRunner AND PlayerSlot(1).Lives > 0 AND NumPlayers <= 1 then
-			SpeedRunTimer += 1
+		if PlayerSlot(Player).Lives > 0 then
+			PlayerSlot(Player).PlayTime += 1
 		end if
 			
 		if total_lives > 0 AND GamePaused = 0 AND LevelClear = 0 then
@@ -1584,7 +1576,7 @@ sub local_gameplay
 				gfxstring("Lives leftover  : "+str(Bonuses(4)),40,421,5,5,3,rgb(255,255,255))
 				gfxstring("Total bonus     : "+str(Bonuses(0)),40,451,5,5,3,rgb(255,255,255))
 				
-				SpeedRunTimer -= 1
+				PlayerSlot(Player).PlayTime -= 1
 			else
 				line(0,343)-(LevelClear,433),rgba(0,0,0,64),bf
 				line(0,343)-(LevelClear,343),rgb(255,255,255)
@@ -2957,4 +2949,5 @@ sub local_gameplay
 	erase EndlessShuffList
 	setmouse(,,0,0)
 end sub
+
 

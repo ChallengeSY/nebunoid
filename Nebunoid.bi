@@ -224,6 +224,7 @@ type PlayerSpecs
 	Difficulty as double
 	BulletAmmo as short
 	MissileAmmo as short
+	PlayTime as integer
 
 	WarpTimer as short
 	BossHealth as integer
@@ -252,6 +253,7 @@ end type
 type HighSlot
 	Namee as string
 	RawScore as uinteger
+	GameTime as integer
 	LevelStart as integer
 	LevelFinal as integer
 	Difficulty as double
@@ -279,8 +281,8 @@ dim shared as HighSlot HighScore(TotalHighSlots)
 dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP, TotalStars
 dim shared as uinteger GameStyle, TourneyStyle, TourneyScore, ShotIndex
 
-dim shared as ubyte Fullscreen, ConfigLoaded = 0, JoyAnalog, JoyInvertAxes, TapWindow, CondensedLevel, AllowHandicap, ShuffleLevels, SpeedRunner
-dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness, SpeedRunTimer
+dim shared as ubyte Fullscreen, ConfigLoaded = 0, JoyAnalog, JoyInvertAxes, TapWindow, CondensedLevel, AllowHandicap, ShuffleLevels
+dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness
 dim shared as single JoyAxis(7)
 dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, ProgressiveDelay, BlockBrushes
 dim shared as double ProgressiveQuota, InstructExpire, MisnExpire, TimeRem, Reminder = -1, _
@@ -417,7 +419,7 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.Folder = "official/endless"
 					.Difficulty = "Unpredictable"
 					.SetSize = 1000
-					if TotalStars >= 276 then
+					if TotalStars >= 288 then
 						.StarsToUnlock = TotalOfficialLevels 'ALL of the previous levels
 					else
 						.StarsToUnlock = 1000 'Keep the player from knowing the exact requirement at first
@@ -806,7 +808,6 @@ sub save_config
 	print #10, "bgbright,"& BGBrightness
 	print #10, "musplayer,"& MusicPlrEnabled
 	print #10, "xp,"& TotalXP
-	print #10, "speedrun,";SpeedRunner
 	close #10
 	kill("xp.dat")
 end sub
@@ -847,8 +848,6 @@ sub load_config
 					BGBrightness = max(min(BGBrightness,100),0)
 				case "xp"
 					input #10, TotalXP
-				case "speedrun"
-					input #10, SpeedRunner
 			end select
 		loop until eof(10)
 		close #10
@@ -982,7 +981,9 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 												if (RefPallete >= 0 AND Pallete(RefPallete).CalcedInvulnerable >= 0) OR _
 													(XDID = XID AND YDID = YID) then
 													
-													if TotalBC > 0 then
+													if RefPallete = 0 then
+														ScoreBonus = 0
+													elseif TotalBC > 0 then
 														ScoreBonus = ball_ct_bonus * ExplodingValue
 													elseif total_lives > 0 then
 														ScoreBonus = ExplodingValue

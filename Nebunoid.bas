@@ -337,7 +337,7 @@ end if
 save_config
 
 sub shop
-	dim as ubyte TotalCount(0 to MISC) => {0, 0, 12, 8}
+	dim as ubyte TotalCount(0 to MISC) => {0, 0, 12, 7}
 	dim as ubyte CTRL_BUTTON_ACTION, CTRL_AXIS_MOVEMENT
 
 	dim as string ItemDesc, CommunityFolder, CustomItem(MISC,12)
@@ -372,7 +372,6 @@ sub shop
 	CustomItem(MISC,5) = "Full screen setting  "
 	CustomItem(MISC,6) = "Background brightness"
 	CustomItem(MISC,7) = "Music player         "
-	CustomItem(MISC,8) = "Speedrun mode        "
 	
 	read_campaigns(1)
 	
@@ -731,8 +730,6 @@ sub shop
 							ItemDesc = "Determines how dark to make the backgrounds."
 						case 7
 							ItemDesc = "Determines whether music will play while a game is in progress (Shortcut: F5)"
-						case 8
-							ItemDesc = "Determines whether Nebunoid should show a speedrun timer. Only effective in solo play"
 					end select
 				end if
 				
@@ -742,15 +739,13 @@ sub shop
 				elseif (PID = 2 AND EnhancedGFX = 1) OR _
 					(PID = 3 AND CampaignBarrier = 1) OR _
 					(PID = 4 AND ShuffleLevels = 1) OR _
-					(PID = 5 AND FullScreen = 1)OR _
-					(PID = 8 AND SpeedRunner = 1) then
+					(PID = 5 AND FullScreen = 1) then
 				#ELSE
 				if (PID = 2 AND EnhancedGFX = 1) OR _
 					(PID = 3 AND CampaignBarrier = 1) OR _
 					(PID = 4 AND ShuffleLevels = 1) OR _
 					(PID = 5 AND FullScreen = 1) OR _
-					(PID = 7 AND MusicPlrEnabled = 1) OR _
-					(PID = 8 AND SpeedRunner = 1) then
+					(PID = 7 AND MusicPlrEnabled = 1) then
 				#ENDIF
 					gfxstring(CustomItem(MISC,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
 					if MouseY >= SelY AND MouseY < SelY+30 then
@@ -767,8 +762,6 @@ sub shop
 									toggle_fullscreen(-1)
 								case 7
 									MusicPlrEnabled = 0
-								case 8
-									SpeedRunner = 0
 							end select
 						end if
 					end if
@@ -819,8 +812,6 @@ sub shop
 									toggle_fullscreen(1)
 								case 7
 									MusicPlrEnabled = 1
-								case 8
-									SpeedRunner = 1
 							end select
 						end if
 					end if
