@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - TIMES OF THE YEAR LEVEL 6
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Travel bi Plane
+Level Description     := 
+Level Password        := UVLRDQVZ
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &h80FFFFFF
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h8000FFFF
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h8000FF00
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h80808080
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3|                    
+ 4|                    
+ 5|  33                
+ 6|  33                
+ 7|  33                
+ 8|  333               
+ 9|  333               
+10|  333               
+11|  33333             
+12| 111111111111111    
+13|  1111111111111122  
+14|     11111111111111 
+15|        111111111   
+16|          4    4    
+17|                    
+18|                    
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

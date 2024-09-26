@@ -159,21 +159,21 @@ do
 	gfxstring("Customize",40,150,5,5,3,rgb(255,255,255))
 	
 	if MenuMode = 0 then
-		gfxstring("Powerup Capsules",40,320,5,4,3,rgb(255,255,255))
+		gfxstring("Powerup Capsules",40,290,5,4,3,rgb(255,255,255))
 		for PID as byte = 1 to 13
-			put(40,345+PID*25),CapsulePic(PID),trans
-			gfxstring(TitleCapNames(PID),80,345+PID*25,4,4,3,rgb(255,255,255))
+			put(40,315+PID*25),CapsulePic(PID),trans
+			gfxstring(TitleCapNames(PID),80,315+PID*25,4,4,3,rgb(255,255,255))
 		next PID
 
-		gfxstring("Powerdown/Neutral Capsules",520,320,5,4,3,rgb(255,255,255))
+		gfxstring("Powerdown/Neutral Capsules",520,290,5,4,3,rgb(255,255,255))
 		for PID as byte = 14 to 26
-			put(520,345+(PID-13)*25),CapsulePic(PID),trans
-			gfxstring(TitleCapNames(PID),560,345+(PID-13)*25,4,4,3,rgb(255,255,255))
+			put(520,315+(PID-13)*25),CapsulePic(PID),trans
+			gfxstring(TitleCapNames(PID),560,315+(PID-13)*25,4,4,3,rgb(255,255,255))
 		next PID
 	elseif MenuMode = 1 then
 		dim as uinteger Availability
-		gfxstring("Official Campaign Selection",40,320,5,4,3,rgb(255,192,64))
-		gfxstring(commaSep(TotalStars)+" stars",820,320,5,4,3,rgb(255,192,64))
+		gfxstring("Official Campaign Selection",40,290,5,4,3,rgb(255,192,64))
+		gfxstring(commaSep(TotalStars)+" stars",820,290,5,4,3,rgb(255,192,64))
 		for Item as byte = 1 to CampaignsPerPage+1
 			with OfficialCampaigns(Item)
 				if .Namee <> "" then
@@ -181,14 +181,14 @@ do
 						if TotalStars >= .StarsToUnlock then
 							.SetLocked = 0
 							Availability = rgb(255,255,255)
-							gfxstring("("+.Difficulty+")",340,321+Item*30,4,3,3,Availability)
+							gfxstring("("+.Difficulty+")",340,291+Item*30,4,3,3,Availability)
 						else
 							.SetLocked = -1
 							Availability = rgb(128,128,128)
 							if .StarsToUnlock > 999 then
-								gfxstring("(100% stars to unlock)",340,321+Item*30,4,3,3,Availability)
+								gfxstring("(100% stars to unlock)",340,291+Item*30,4,3,3,Availability)
 							else
-								gfxstring("("+commaSep(.StarsToUnlock)+" stars to unlock)",340,321+Item*30,4,3,3,Availability)
+								gfxstring("("+commaSep(.StarsToUnlock)+" stars to unlock)",340,291+Item*30,4,3,3,Availability)
 							end if
 						end if
 					else
@@ -199,18 +199,18 @@ do
 						end if
 						.SetLocked = (.SetSize = 0)
 					end if
-					gfxstring(.Namee,40,321+Item*30,4,3,3,Availability)
+					gfxstring(.Namee,40,291+Item*30,4,3,3,Availability)
 					if .SetMastered then
-						gfxstring("Size "+str(.SetSize),820,321+Item*30,4,3,3,rgb(255,215,0))
+						gfxstring("Size "+str(.SetSize),820,291+Item*30,4,3,3,rgb(255,215,0))
 					elseif .SetSize <= 999 then
-						gfxstring("Size "+str(.SetSize),820,321+Item*30,4,3,3,Availability)
+						gfxstring("Size "+str(.SetSize),820,291+Item*30,4,3,3,Availability)
 					end if
 				end if
 			end with
 		next Item
 	else
 		dim as uinteger Availability
-		gfxstring("Community Campaign Selection",40,320,5,4,3,rgb(255,192,64))
+		gfxstring("Community Campaign Selection",40,290,5,4,3,rgb(255,192,64))
 		for Item as byte = 1+(MenuMode-2)*CampaignsPerPage to (MenuMode-1)*CampaignsPerPage
 			if Item <= UBound(CommunityCampaigns) then
 				with CommunityCampaigns(Item)
@@ -220,17 +220,17 @@ do
 						else
 							Availability = rgb(128,128,128)
 						end if
-						gfxstring(.Namee,40,351+remainder(Item-1,CampaignsPerPage)*30,4,3,3,Availability)
-						gfxstring("Size "+str(.SetSize),820,351+remainder(Item-1,CampaignsPerPage)*30,4,3,3,Availability)
+						gfxstring(.Namee,40,321+remainder(Item-1,CampaignsPerPage)*30,4,3,3,Availability)
+						gfxstring("Size "+str(.SetSize),820,321+remainder(Item-1,CampaignsPerPage)*30,4,3,3,Availability)
 					end if
 				end with
 			end if
 		next Item
 		
 		if MenuMode >= 1 + ceil(OfficialCampaigns(CampaignsPerPage+1).SetSize/11) then
-			gfxstring("(Back to official campaigns)",40,321+(CampaignsPerPage+1)*30,4,3,3,rgb(255,255,255))
+			gfxstring("(Back to official campaigns)",40,291+(CampaignsPerPage+1)*30,4,3,3,rgb(255,255,255))
 		else
-			gfxstring("(More community campaigns)",40,321+(CampaignsPerPage+1)*30,4,3,3,rgb(255,255,255))
+			gfxstring("(More community campaigns)",40,291+(CampaignsPerPage+1)*30,4,3,3,rgb(255,255,255))
 		end if
 	end if
 	
@@ -262,8 +262,8 @@ do
 			'Official campaign mouse input
 			for YID as ubyte = 1 to CampaignsPerPage+1
 				with OfficialCampaigns(YID)
-					if MouseY >= 316+YID*30 AND MouseY <= 345+YID*30 AND .Namee <> "" AND .SetLocked = 0 then
-						draw_box(32,316+YID*30,991,345+YID*30)
+					if MouseY >= 286+YID*30 AND MouseY <= 315+YID*30 AND .Namee <> "" AND .SetLocked = 0 then
+						draw_box(32,286+YID*30,991,315+YID*30)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							if YID = CampaignsPerPage+1 then
 								'Switch to community campaigns
@@ -290,8 +290,8 @@ do
 				if ReadID <= UBound(CommunityCampaigns) then
 					with CommunityCampaigns(ReadID)
 						if ReadID <= OfficialCampaigns(CampaignsPerPage+1).SetSize AND YID <= CampaignsPerPage AND _
-							MouseY >= 316+YID*30 AND MouseY <= 345+YID*30 AND .Namee <> "" AND .SetSize > 0 then
-							draw_box(32,316+YID*30,991,345+YID*30)
+							MouseY >= 286+YID*30 AND MouseY <= 315+YID*30 AND .Namee <> "" AND .SetSize > 0 then
+							draw_box(32,286+YID*30,991,315+YID*30)
 							if ButtonCombo > 0 AND HoldClick = 0 then
 								CampaignFolder = .Folder
 								local_gameplay
@@ -304,8 +304,8 @@ do
 				end if
 			next YID
 			
-			if MouseY >= 316+(CampaignsPerPage+1)*30 AND MouseY <= 345+(CampaignsPerPage+1)*30 then
-				draw_box(32,316+(CampaignsPerPage+1)*30,991,345+(CampaignsPerPage+1)*30)
+			if MouseY >= 286+(CampaignsPerPage+1)*30 AND MouseY <= 315+(CampaignsPerPage+1)*30 then
+				draw_box(32,286+(CampaignsPerPage+1)*30,991,315+(CampaignsPerPage+1)*30)
 				if ButtonCombo > 0 AND HoldClick = 0 then
 					'Cycle community campaign pages; or go back to official campaigns if final page
 					if MenuMode >= 1 + ceil(OfficialCampaigns(CampaignsPerPage+1).SetSize/CampaignsPerPage) then

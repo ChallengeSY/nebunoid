@@ -72,7 +72,7 @@ In addition, there is a collection of 7 gem-themed capsules available outside of
 ----
 
 ### Campaigns
-There are 281 levels, split into eleven (11) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
+There are 293 levels, split into twelve (12) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
 
 Stars are earned by completing levels for the first time. Harder campaigns require a certain number of stars to break their locks open.
 
@@ -82,7 +82,10 @@ A [level editor](editor.md) also exists, allowing community campaigns to be crea
 Introductory Training is a much shorter 10-level campaign, geared to introduce players new to the genre. Few obstacles exist throughout this campaign, and the player is given a maximum quantity of lives.
 
 #### Geometric Designs
-Geometric Designs is a shorter than usual 10-level campaign. Although less accomodating than Introductory Training, this set is still fairly easy in difficulty. Save points are present in every level, except for the final level.
+Geometric Designs is another short 10-level campaign. Although less accomodating than Introductory Training, this set is still fairly easy in difficulty. Save points are present in every level, except for the final level.
+
+#### Times of the Year
+Times of the Year is a short 12-level campaign, with roughly the same specifications as Geometric Designs. This is also the first campaign to introduce exploding blocks that bloom instead of destroy outright.
 
 #### Regular Season
 Regular Season is the most balanced campaign, containing 30 levels. A wide variety of obstacles are demonstrated in this campaign, but no bio blocks are present.
@@ -102,7 +105,7 @@ Patriarch Memorial is an artistic 25-level campaign, designed as a memory of the
 Fusion Designs is a hybrid 20-level campaign. This campaign makes use of the newly introduced "brick fusion" mechanic, allowing for blocks of *any* shape. Save points are present in every level up to level 19.
 
 #### Challenge Campaign
-The 30-level Challenge Campaign amps up the difficulty several notches by spamming strong blocks like it is hard to believe. Every level demonstrates one or more of the following: Invincible blocks, strong blocks (some will be bio-regenerative), and invisible blocks that may lead to any of the preceding elements. This is also the first campaign to introduce exploding blocks that bloom instead of destroy outright.
+The 30-level Challenge Campaign amps up the difficulty several notches by spamming strong blocks like it is hard to believe. Every level demonstrates one or more of the following: Invincible blocks, strong blocks (some will be bio-regenerative), and invisible blocks that may lead to any of the preceding elements.
 
 Additionally, save points appear less frequently than they did in previous campaigns; appearing every three levels starting with level 1, up to level 28. As usual, the final level disallows continues.
 

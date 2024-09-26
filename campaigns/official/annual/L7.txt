@@ -1,0 +1,56 @@
+================================================================================
+LEVEL DATA FILE - TIMES OF THE YEAR LEVEL 7
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Palmtree Lagoon
+Level Description     := 
+Level Password        := HMXFOUPQ
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 4
+Brush 1 Color         := &h80FFFFC0
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h800000FF
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h80804000
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h8000FF00
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := 0
+Brush 4 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3|        44 44       
+ 4|         444        
+ 5|       4444444      
+ 6|      444 3 444     
+ 7|          3         
+ 8|          3         
+ 9|          3         
+10|          3         
+11|         3          
+12|         3          
+13|         3          
+14|         3          
+15|    1111 3  1111    
+16|  1111111111111111  
+17|22222222222222222222
+18|22222222222222222222
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

@@ -1,0 +1,52 @@
+================================================================================
+LEVEL DATA FILE - TIMES OF THE YEAR LEVEL 3
+================================================================================
+*BEGIN*
+================================================================================
+
+Level Name            := Clover of Clubs
+Level Description     := 
+Level Password        := QJYLARTR
+Level game number     := 3
+Level time limit      := 0
+Number of Brushes     := 3
+Brush 1 Color         := &h8060FF60
+Brush 1 Score Value   := 10*
+Brush 1 Hit Degrade   := 0
+Brush 1 Increase Spd  := FALSE
+Brush 2 Color         := &h8000FF00
+Brush 2 Score Value   := 10*
+Brush 2 Hit Degrade   := 0
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &h8000A000
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 0
+Brush 3 Increase Spd  := FALSE
+
+Level Grid  11111111112
+   12345678901234567890
+-----------------------
+ 1|                    
+ 2|                    
+ 3|       11           
+ 4|      1221          
+ 5|     122223         
+ 6|     122223         
+ 7|   11 1223 11       
+ 8|  1221 33 1221      
+ 9| 122223  122223     
+10| 122223  122223     
+11|  1223 11 1223      
+12|   33 1221 23       
+13|     1222223        
+14|     122223 3       
+15|      1223   33     
+16|       33      22   
+17|                 22 
+18|                   1
+19|                    
+20|                    
+
+================================================================================
+*END*
+================================================================================

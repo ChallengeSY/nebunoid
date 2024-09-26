@@ -58,7 +58,7 @@ const FunctionTwelve = chr(255,134)
 const FPS = 60
 const SavedHighSlots = 10
 const TotalHighSlots = SavedHighSlots + 4
-const TotalOfficialLevels = 311
+const TotalOfficialLevels = 323
 const MaxBullets = 60
 const BaseFlash = 128
 const LevelClearDelay = 720
@@ -303,7 +303,7 @@ dim shared as any ptr BulletPic, MissilePic, CapsulePic(26), CapsuleBar(5), Caps
 	FramesetMerged, Sideframes, Topframe, DiffStick, DiffSelector, BasePaddle, PaddleBar
 
 const Interpolation = 120 'Ball updates per frame
-const CampaignsPerPage = 12
+const CampaignsPerPage = 13
 const CustomizePerPage = 20
 const PaddleHeight = 18
 const CustomizePadding = 60
@@ -337,7 +337,7 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 	dim as string CommunityFolder
 	TotalStars = 0
 	
-	for OCID as ubyte = 1 to 13 'Official campaigns first
+	for OCID as ubyte = 1 to CampaignsPerPage+1 'Official campaigns first
 		with OfficialCampaigns(OCID)
 			.TrueSize = 0
 			
@@ -354,60 +354,65 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 					.SetSize = 10
 					.TrueSize = 15
 				case 3
+					.Namee = "Times of the Year"
+					.Folder = "official/annual"
+					.Difficulty = "Easy to Medium"
+					.SetSize = 12
+				case 4
 					.Namee = "Regular Season"
 					.Folder = "official/regular"
 					.Difficulty = "Easy to Hard"
 					.SetSize = 30
 					.TrueSize = 35
-				case 4
+				case 5
 					.Namee = "Fortified Letters"
 					.Folder = "official/alphabet"
 					.Difficulty = "Easy to Hard"
 					.SetSize = 26
-				case 5
+				case 6
 					.Namee = "Electric Recharge"
 					.Folder = "official/electric"
 					.Difficulty = "Easy to Hard"
 					.SetSize = 20
 					.TrueSize = 25
-				case 6
+				case 7
 					.Namee = "Patriarch Memorial"
 					.Folder = "official/memorial"
 					.Difficulty = "Medium to Hard"
 					.SetSize = 25
-				case 7
+				case 8
 					.Namee = "Fusion Designs"
 					.Folder = "official/fusion"
 					.Difficulty = "Medium to Hard"
 					.SetSize = 20
 					.StarsToUnlock = 15
-				case 8
+				case 9
 					.Namee = "Challenge Campaign"
 					.Folder = "official/challenge"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 30
 					.TrueSize = 35
 					.StarsToUnlock = 25
-				case 9
+				case 10
 					.Namee = "Ungated Adaptations"
 					.Folder = "official/ungated"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 40
 					.StarsToUnlock = 50
-				case 10
+				case 11
 					.Namee = "Maximum Insanity"
 					.Folder = "official/extreme"
 					.Difficulty = "Very Hard to Extreme"
 					.SetSize = 30
 					.StarsToUnlock = 100
-				case 11
+				case 12
 					.Namee = "Celestial Journey"
 					.Folder = "official/universe"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 40
 					.TrueSize = 50
 					.StarsToUnlock = 150
-				case 12
+				case 13
 					.Namee = "Endless Shuffle"
 					.Folder = "official/endless"
 					.Difficulty = "Unpredictable"
