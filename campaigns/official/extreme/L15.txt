@@ -5,7 +5,7 @@ LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 15
 ================================================================================
 
 Level Name            := Ceiling Guardian
-Level Description     := Can you break the ceiling without causing any blocks to respawn?
+Level Description     := 
 Level Password        := ++++++++
 Level game number     := 12291
 Level time limit      := 0

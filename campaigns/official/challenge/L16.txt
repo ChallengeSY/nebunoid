@@ -5,7 +5,7 @@ LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 16
 ================================================================================
 
 Level Name            := Bioclash
-Level Description     := Not all exploding blocks destroy outright...
+Level Description     := 
 Level Password        := GKBSOPMR
 Level game number     := 4099
 Level time limit      := 0
@@ -38,7 +38,7 @@ Level Grid  11111111112
  2|  555          555  
  3|  525          525  
  4|  55555      55555  
- 5|   2515 5555 5152   
+ 5|    515 5555 515    
  6|  55555      55555  
  7|  525          525  
  8|  555          555  

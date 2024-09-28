@@ -5,7 +5,7 @@ LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 43
 ================================================================================
 
 Level Name            := Invincible Switches
-Level Description     := These invincible blocks have some interesting properties
+Level Description     := These invincible blocks have some unique properties.
 Level Password        := ++++++++
 Level game number     := 3
 Level time limit      := 0

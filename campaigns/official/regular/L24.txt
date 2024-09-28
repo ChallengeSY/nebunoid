@@ -9,41 +9,45 @@ Level Description     :=
 Level Password        := WOUMGOWC
 Level game number     := 3
 Level time limit      := 0
-Number of Brushes     := 3
+Number of Brushes     := 4
 Brush 1 Color         := &h80FF8000
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := -1
 Brush 1 Increase Spd  := FALSE
-Brush 2 Color         := &hB0FFD700
+Brush 2 Color         := &h808080FF
 Brush 2 Score Value   := 10*
-Brush 2 Hit Degrade   := 2
-Brush 2 Increase Spd  := TRUE
-Brush 3 Color         := &hB0CD7F32
-Brush 3 Score Value   := 2
-Brush 3 Hit Degrade   := 2
-Brush 3 Increase Spd  := FALSE
+Brush 2 Hit Degrade   := -2
+Brush 2 Increase Spd  := FALSE
+Brush 3 Color         := &hB0FFD700
+Brush 3 Score Value   := 10*
+Brush 3 Hit Degrade   := 3
+Brush 3 Increase Spd  := TRUE
+Brush 4 Color         := &hB0CD7F32
+Brush 4 Score Value   := 2
+Brush 4 Hit Degrade   := 3
+Brush 4 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
  1|                    
  2|                    
- 3|  1133  3113  3311  
- 4|  11133 3113 33111  
- 5|  3111333113331113  
- 6|  3311133113311133  
- 7|   33113311331133   
- 8|    333333333333    
- 9|  3333333333333333  
-10|  1111132222311111  
-11|  1111132222311111  
-12|  3333333333333333  
-13|    333333333333    
-14|   33113311331133   
-15|  3311133113311133  
-16|  3111333113331113  
-17|  11133 3113 33111  
-18|  1133  3113  3311  
+ 3|  2144  4224  4412  
+ 4|  11144 4114 44111  
+ 5|  4111444114441114  
+ 6|  4411144114411144  
+ 7|   44114411441144   
+ 8|    444444444444    
+ 9|  4444444444444444  
+10|  2111143333411112  
+11|  2111143333411112  
+12|  4444444444444444  
+13|    444444444444    
+14|   44114411441144   
+15|  4411144114411144  
+16|  4111444114441114  
+17|  11144 4114 44111  
+18|  2144  4224  4412  
 19|                    
 20|                    
 

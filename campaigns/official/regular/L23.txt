@@ -9,7 +9,7 @@ Level Description     := The level is invisible, only flashing when a brick is h
 Level Password        := IIELFQDW
 Level game number     := 139
 Level time limit      := 0
-Number of Brushes     := 13
+Number of Brushes     := 14
 Brush 1 Color         := &h8000FFFF
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 0
@@ -62,6 +62,10 @@ Brush 13 Color        := &h80FF4000
 Brush 13 Score Value  := 10*
 Brush 13 Hit Degrade  := -1
 Brush 13 Increase Spd := FALSE
+Brush 14 Color        := &h808080FF
+Brush 14 Score Value  := 10*
+Brush 14 Hit Degrade  := -2
+Brush 14 Increase Spd := FALSE
 
 Level Grid  11111111112
    12345678901234567890
@@ -73,8 +77,8 @@ Level Grid  11111111112
  5|                    
  6|                    
  7|                    
- 8|     DDDDDDDDDD     
- 9|DDDDDAAAAAAAAAADDDDD
+ 8|     EDDDDDDDDE     
+ 9|DDDDEAAAAAAAAAAEDDDD
 10|AAAAA1111111111AAAAA
 11|11111222222222211111
 12|22222333333333322222
