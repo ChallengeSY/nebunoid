@@ -934,27 +934,47 @@ sub local_gameplay
 				if .Blizzard > 0 then
 					put (40,71),CapsuleBar(1),trans
 					put (81,73),CapsuleBarFrame,pset
-					line(82,74)-(min(82+int(.Blizzard/30),142),86),rgb(255,255,0),bf
+					line(82,74)-(min(82+int(.Blizzard/60),112),86),rgb(255,255,0),bf
 				end if
 				if .Grabbing > 0 then
-					put (150,71),CapsuleBar(2),trans
-					put (191,73),CapsuleBarFrame,pset
-					line(192,74)-(min(192+int(.Grabbing/30),252),86),rgb(255,255,0),bf
+					put (120,71),CapsuleBar(2),trans
+					put (161,73),CapsuleBarFrame,pset
+					line(162,74)-(min(162+int(.Grabbing/60),192),86),rgb(255,255,0),bf
 				end if
 				if .Repairs > 0 then
-					put (260,71),CapsuleBar(3),trans
-					put (301,73),CapsuleBarFrame,pset
-					line(302,74)-(min(302+int(.Repairs/30),362),86),rgb(255,255,0),bf
+					put (200,71),CapsuleBar(3),trans
+					put (241,73),CapsuleBarFrame,pset
+					line(242,74)-(min(242+int(.Repairs/60),272),86),rgb(255,255,0),bf
 				end if
 				if .Reverse > 0 then
-					put (370,71),CapsuleBar(4),trans
-					put (411,73),CapsuleBarFrame,pset
-					line(412,74)-(min(412+int(.Reverse/15),472),86),rgb(255,255,0),bf
+					put (280,71),CapsuleBar(4),trans
+					put (321,73),CapsuleBarFrame,pset
+					line(322,74)-(min(322+int(.Reverse/30),352),86),rgb(255,255,0),bf
 				end if
 				if .Sluggish > 0 then
-					put (480,71),CapsuleBar(5),trans
-					put (521,73),CapsuleBarFrame,pset
-					line(522,74)-(min(522+int(.Sluggish/15),582),86),rgb(255,255,0),bf
+					put (360,71),CapsuleBar(5),trans
+					put (401,73),CapsuleBarFrame,pset
+					line(402,74)-(min(402+int(.Sluggish/30),432),86),rgb(255,255,0),bf
+				end if
+				if .Fireball > 0 then
+					put (440,71),CapsuleBar(6),trans
+					put (481,73),CapsuleBarFrame,pset
+					line(482,74)-(min(482+int(.Fireball/40),512),86),rgb(255,255,0),bf
+				end if
+				if .Breakthru > 0 then
+					put (520,71),CapsuleBar(7),trans
+					put (561,73),CapsuleBarFrame,pset
+					line(562,74)-(min(562+int(.Breakthru/40),592),86),rgb(255,255,0),bf
+				end if
+				if .WeakDmg > 0 then
+					put (600,71),CapsuleBar(8),trans
+					put (641,73),CapsuleBarFrame,pset
+					line(642,74)-(min(642+int(.WeakDmg/30),672),86),rgb(255,255,0),bf
+				end if
+				if .GravBall > 0 then
+					put (680,71),CapsuleBar(9),trans
+					put (721,73),CapsuleBarFrame,pset
+					line(722,74)-(min(722+int(.GravBall/30),752),86),rgb(255,255,0),bf
 				end if
 				
 				for PokerID as byte = 1 to 5
@@ -965,16 +985,28 @@ sub local_gameplay
 					put (40,71),CapsuleBar(1),alpha,128
 				end if
 				if .Grabbing > 0 AND (.Grabbing > 180 OR remainder(.Grabbing,60) < 30) then
-					put (150,71),CapsuleBar(2),alpha,128
+					put (120,71),CapsuleBar(2),alpha,128
 				end if
 				if .Repairs > 0 AND (.Repairs > 180 OR remainder(.Repairs,60) < 30) then
-					put (260,71),CapsuleBar(3),alpha,128
+					put (200,71),CapsuleBar(3),alpha,128
 				end if
 				if .Reverse > 0 AND (.Reverse > 180 OR remainder(.Reverse,60) < 30) then
-					put (370,71),CapsuleBar(4),alpha,128
+					put (280,71),CapsuleBar(4),alpha,128
 				end if
 				if .Sluggish > 0 AND (.Sluggish > 180 OR remainder(.Sluggish,60) < 30) then
-					put (480,71),CapsuleBar(5),alpha,128
+					put (360,71),CapsuleBar(5),alpha,128
+				end if
+				if .Fireball > 0 AND (.Fireball > 180 OR remainder(.Fireball,60) < 30) then
+					put (440,71),CapsuleBar(6),alpha,128
+				end if
+				if .Breakthru > 0 AND (.Breakthru > 180 OR remainder(.Breakthru,60) < 30) then
+					put (520,71),CapsuleBar(7),alpha,128
+				end if
+				if .WeakDmg > 0 AND (.WeakDmg > 180 OR remainder(.WeakDmg,60) < 30) then
+					put (600,71),CapsuleBar(8),alpha,128
+				end if
+				if .GravBall > 0 AND (.GravBall > 180 OR remainder(.GravBall,60) < 30) then
+					put (680,71),CapsuleBar(9),alpha,128
 				end if
 				
 				for PokerID as byte = 1 to 5
@@ -1059,6 +1091,7 @@ sub local_gameplay
 				end if
 			end if
 			
+			' Handle bullets
 			BulletsInPlay = 0
 			for MSID as ubyte = 1 to MaxBullets
 				with Bullet(MSID)
@@ -1121,6 +1154,14 @@ sub local_gameplay
 					end if
 				end with
 			next MSID
+			
+			with Paddle(1)
+				.Fireball = 0
+				.Breakthru = 0
+				.WeakDmg = 0
+				.GravBall = 0
+			end with
+			'Handle balls
 			for BID as short = 1 to NumBalls
 				with Ball(BID)
 					if .Speed > 0 then
@@ -1137,6 +1178,23 @@ sub local_gameplay
 								.Power = 0
 							end if
 						end if
+						
+						select case .Power
+							case -1
+								Paddle(1).WeakDmg = max(.Duration, Paddle(1).WeakDmg)
+							case 0
+								if PlayerSlot(Player).Difficulty < 2.5 then
+									Paddle(1).WeakDmg = max(.Duration, Paddle(1).WeakDmg)
+								end if
+							case 2
+								Paddle(1).Fireball = max(.Duration, Paddle(1).Fireball)
+							case 3
+								Paddle(1).Breakthru = max(.Duration, Paddle(1).Breakthru)
+							case 4
+								Paddle(1).Fireball = max(.Duration, Paddle(1).Fireball)
+								Paddle(1).Breakthru = max(.Duration, Paddle(1).Breakthru)
+						end select
+						Paddle(1).GravBall = max(.Gravity, Paddle(1).GravBall) 
 						
 						if sin(degtorad(.Angle)) > 0 AND .Power > -2 AND .Grabbed = 0 then
 							HeadingUpwards = 1

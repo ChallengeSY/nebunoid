@@ -181,6 +181,10 @@ type Basics
 	Sluggish as short
 	Reverse as short
 	Blizzard as short
+	Fireball as short
+	Breakthru as short
+	WeakDmg as short
+	GravBall as short
 end type
 type ParticleSpecs
 	X as Single
@@ -296,7 +300,7 @@ dim shared as ParticleSpecs Particles(Particount)
 dim shared as ubyte DQ, Player, NumPlayers, DispLives, Invis, GfxStyle, ExploTick, _
 	BallSize,  MenuMode, HoldClick, HoldAction
 dim shared as byte EnhancedGFX, GamePaused, TourneyValid, TotalMessages, TotalUnread, ControlStyle, SavedControls
-dim shared as any ptr BulletPic, MissilePic, CapsulePic(26), CapsuleBar(5), CapsuleBarFrame, PokerBar(5), Background, PaddlePic, _
+dim shared as any ptr BulletPic, MissilePic, CapsulePic(26), CapsuleBar(9), CapsuleBarFrame, PokerBar(5), Background, PaddlePic, _
 	SoftBrickPic, MultihitPic, InvinciblePic, ExplodePic, BaseExplode, SoftBrickConnL, SoftBrickConnR, SoftBrickConnT, SoftBrickConnB, _
 	MultihitConnL, MultihitConnR, MultihitConnT, MultihitConnB, InvincibleConnL, InvincibleConnR, InvincibleConnT, InvincibleConnB, _
 	SoftBrickPicMini, MultihitMini, InvincibleMini, SoftBrickConnMiniL, SoftBrickConnMiniR, SoftBrickConnMiniT, SoftBrickConnMiniB, _

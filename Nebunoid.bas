@@ -36,25 +36,31 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.17"
+windowtitle "Nebunoid 1.18"
 
 'Foreground assets
 load_brick_gfx(MasterDir+"/gfx/blocks/")
 
-for CapID as ubyte = 1 to 5
+for CapID as ubyte = 1 to 9
 	CapsuleBar(CapID) = ImageCreate(38,19)
-	PokerBar(CapID) = ImageCreate(38,19)
+	if CapID <= 5 then 
+		PokerBar(CapID) = ImageCreate(38,19)
+	end if
 next CapID
 bload(MasterDir + "/gfx/caps/blizzard.bmp",CapsuleBar(1))
 bload(MasterDir + "/gfx/caps/grab.bmp",CapsuleBar(2))
 bload(MasterDir + "/gfx/caps/repairs.bmp",CapsuleBar(3))
 bload(MasterDir + "/gfx/caps/reverse.bmp",CapsuleBar(4))
 bload(MasterDir + "/gfx/caps/slowpad.bmp",CapsuleBar(5))
+bload(MasterDir + "/gfx/caps/fire.bmp",CapsuleBar(6))
+bload(MasterDir + "/gfx/caps/thru.bmp",CapsuleBar(7))
+bload(MasterDir + "/gfx/caps/weak.bmp",CapsuleBar(8))
+bload(MasterDir + "/gfx/caps/gravity.bmp",CapsuleBar(9))
 
-CapsuleBarFrame = ImageCreate(63,15)
-line CapsuleBarFrame,(0,0)-(62,14),rgb(0,0,0),bf
-line CapsuleBarFrame,(0,0)-(62,14),rgb(255,255,255),b
-line CapsuleBarFrame,(0,0)-(62,0),rgb(128,128,128)
+CapsuleBarFrame = ImageCreate(33,15)
+line CapsuleBarFrame,(0,0)-(32,14),rgb(0,0,0),bf
+line CapsuleBarFrame,(0,0)-(32,14),rgb(255,255,255),b
+line CapsuleBarFrame,(0,0)-(32,0),rgb(128,128,128)
 line CapsuleBarFrame,(0,0)-(0,14),rgb(128,128,128)
 
 BulletPic = ImageCreate(5,10)
