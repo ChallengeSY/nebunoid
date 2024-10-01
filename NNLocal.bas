@@ -1243,9 +1243,6 @@ sub local_gameplay
 								end if
 								.X += int(.Speed)*cos(degtorad(.Angle))*1.5/1.3/Interpolation * (SpeedMod / 100)
 								.Y += int(.Speed)*-sin(degtorad(.Angle))*1.5/1.3/Interpolation * (SpeedMod / 100)
-								if ConstIncrease > 0 AND Update = 1 then
-									BoostIncrease += .0015 * int(.Speed)
-								end if
 							else
 								if sin(degtorad(.Angle)) > 0 AND _
 									(GameStyle AND (1 SHL STYLE_STEER)) AND _
@@ -1262,9 +1259,6 @@ sub local_gameplay
 								end if
 								.X += int(.Speed)*cos(degtorad(.Angle))/1.3/Interpolation * (SpeedMod / 100)
 								.Y += int(.Speed)*-sin(degtorad(.Angle))/1.3/Interpolation * (SpeedMod / 100)
-								if ConstIncrease > 0 AND Update = 1 then
-									BoostIncrease += .001 * int(.Speed)
-								end if
 							end if
 
 							if (.Y < 736 + BallSize OR sin(degtorad(.Angle)) > 0 OR (GameStyle AND (1 SHL STYLE_BONUS))) AND _
@@ -2165,23 +2159,7 @@ sub local_gameplay
 											next BID
 											erase Splitted
 											play_clip(SFX_POWER_UP,.X)
-										elseif Effects < .8 then
-											capsule_message("MYSTERY CAPSULE: Flowing points",1)
-											ConstIncrease = 1
-											play_clip(SFX_POWER_UP,.X)
-										elseif Effects < .9 AND (Gamestyle AND (1 SHL STYLE_BOSS)) = 0 then
-											capsule_message("MYSTERY CAPSULE: Lightning Balls (Fire/Breakthru combined)",1)
-											for BID as short = 1 to NumBalls
-												with Ball(BID)
-													if .Speed > 0 AND .Power >= -1 then
-														.Power = 4
-														.Duration = 20*60
-													end if
-												end with
-											next BID
-											force_release_balls
-											play_clip(SFX_POWER_UP,.X)
-										elseif Effects < .925 then
+										elseif Effects < .725 then
 											dim as ubyte Splitted(NumBalls)
 											capsule_message("MYSTERY CAPSULE: Split Deluxe",1)
 											force_release_balls
@@ -2210,12 +2188,27 @@ sub local_gameplay
 											next BID
 											erase Splitted
 											play_clip(SFX_POWER_UP,.X)
-										elseif Effects < .95 then
+										elseif Effects < .75 then
 											capsule_message("MYSTERY CAPSULE: Deep Freeze!",1)
 											Paddle(1).Blizzard = 3600
 											FreezeStr = 60
 											play_clip(SFX_POWER_UP,.X)
-										elseif PaddleHealth < 97 * 60 then
+										elseif Effects < .85 AND (Gamestyle AND (1 SHL STYLE_BOSS)) = 0 then
+											capsule_message("MYSTERY CAPSULE: Random ball damage!",1)
+											for BID as short = 1 to NumBalls
+												with Ball(BID)
+													if .Speed > 0 AND .Power >= -1 then
+														.Power = irandom(1,4)
+														if .Power < 2 then
+															.Power -= 2
+														end if
+														.Duration = 20*60
+													end if
+												end with
+											next BID
+											force_release_balls
+											play_clip(SFX_BRICKS_RESPAWN,.X)
+										elseif Effects < .85 AND PaddleHealth < 97 * 60 then
 											capsule_message("MYSTERY CAPSULE: Full repair!",1)
 											PaddleHealth = 110 * 60
 											play_clip(SFX_POWER_UP,.X)

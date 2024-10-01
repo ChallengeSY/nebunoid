@@ -8,8 +8,8 @@ dim shared as ushort StartingLives, HighLevel, CampaignBricks, _
 dim shared as integer BaseCapsuleValue, PowerTick, PaddleHealth, InitialExtraLife, SubsequentExtraLives, LevelTimeLimit
 dim shared as short SpeedMod, BackIter
 dim shared as ubyte CapID, ExtraBarrierPoint, GameHints(NumHints), LevelDesc, ContinuousSplit
-dim shared as byte ConstIncrease, PaddleAdjust
-dim shared as double ActiveDifficulty, BoostIncrease, AttackTick, BaseMaxSpeed
+dim shared as byte PaddleAdjust
+dim shared as double ActiveDifficulty, AttackTick, BaseMaxSpeed
 
 redim shared as integer ShuffleList(1)
 dim shared as integer EndlessShuffList(TotalOfficialLevels)
@@ -123,8 +123,6 @@ end sub
 sub reset_paddle(OnlyGoods as byte = 0)
 	apply_diff_specs
 	render_paddle(StandardSize)
-	ConstIncrease = 0
-	BoostIncrease = 0
 	PaddleAdjust = 0
 	if ActiveDifficulty < 1.45 then
 		PlayerSlot(Player).BulletAmmo = 32
