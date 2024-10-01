@@ -91,10 +91,6 @@ sub local_gameplay
 		end if
 		
 		with PlayerSlot(Player)
-			while BoostIncrease >= 1
-				BoostIncrease -= 1
-				.Score += 1
-			wend
 			PowerTick += SpeedMod
 			
 			screenevent(@e)

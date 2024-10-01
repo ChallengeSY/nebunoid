@@ -124,21 +124,30 @@ sub reset_paddle(OnlyGoods as byte = 0)
 	apply_diff_specs
 	render_paddle(StandardSize)
 	PaddleAdjust = 0
-	if ActiveDifficulty < 1.45 then
-		PlayerSlot(Player).BulletAmmo = 32
-	else
-		PlayerSlot(Player).BulletAmmo = 0
-	end if
-	PlayerSlot(Player).MissileAmmo = 0
+	with PlayerSlot(Player)
+		if ActiveDifficulty < 1.45 then
+			.BulletAmmo = 32
+		else
+			.BulletAmmo = 0
+		end if
+		.MissileAmmo = 0
+	end with
 	ContinuousSplit = 0
-	if OnlyGoods = 0 then
-		Paddle(1).Sluggish = 0
-		Paddle(1).Reverse = 0
-	end if
-	Paddle(1).Spawned = 0
-	Paddle(1).Repairs = 0
-	Paddle(1).Grabbing = 0
-	Paddle(1).Blizzard = 0
+	with Paddle(1)
+		if OnlyGoods = 0 then
+			.Sluggish = 0
+			.Reverse = 0
+		end if
+		.Spawned = 0
+		.Repairs = 0
+		.Grabbing = 0
+		.Blizzard = 0
+		
+		.Fireball = 0
+		.Breakthru = 0
+		.WeakDmg = 0
+		.GravBall = 0
+	end with
 	HoldAction = 1
 	ProgressiveBounces = 0
 	ProgressiveQuota = 8
