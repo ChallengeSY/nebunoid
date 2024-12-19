@@ -3,7 +3,7 @@
 using FB
 #include "vbcompat.bi"
 dim shared as string QuickPlayFile
-declare sub local_gameplay
+declare sub localGameplay
 const PlaytestName = "Quick Playtest Level"
 const EndlessFolder = "official/endless"
 
@@ -36,7 +36,7 @@ Masterdir = curdir
 #include "WordWrap.bi"
 
 declare sub shop
-declare sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
+declare sub generateCapsule(InX as byte, InY as byte, Explode as ubyte = 0)
 'Keyboard commands
 const EscapeKey = chr(27)
 const UpArrow = chr(255,72)
@@ -279,7 +279,7 @@ const Particount = 2500
 const BackCount = 99
 
 dim shared as ushort MinSize, StandardSize, MaxSize, CapsFalling, BulletsInPlay, _
-	Credits, CoinsPerCredit, CeleYear, BrickCount, XplodeCount, ZappableCount, Combo
+	Credits, CoinsPerCredit, CeleYear, BrickCount, XplodeCount, ZappableCount, DispGrid, Combo
 dim shared as short PaddleSize, HintLevel, CampaignBarrier, BulletStart, BacksLoaded, BoxGlow
 dim shared as HighSlot HighScore(TotalHighSlots)
 dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP, TotalStars
@@ -338,7 +338,7 @@ function total_lives as integer
 	return LivesFound
 end function
 
-sub read_campaigns(StarsOnly as ubyte = 0)
+sub readCampaigns(StarsOnly as ubyte = 0)
 	dim as integer CommunityFoldersFound = 0, LevelsCleared
 	dim as string CommunityFolder
 	TotalStars = 0
@@ -497,7 +497,7 @@ sub read_campaigns(StarsOnly as ubyte = 0)
 	end if
 end sub
 
-sub load_title_capsules
+sub loadTitleCapsules
 	dim as string TitleCaps(1 to 26) => {"slow", "split", "grab", "spread", "detonate", "zap", "bullet", "blizzard", "fire", "thru", "missile", "warp", "life", _
 		"fast", "weak", "max", "gravity", "reverse", "slowpad", "", "expand", "reduce", "mystery", "disruption", "extender", "negater"}
 	for PID as byte = 1 to 26
@@ -524,13 +524,13 @@ sub toggle_fullscreen(ForceSetting as byte = 0)
 	end if
 end sub
 
-sub draw_border(Model as any ptr, StartX as short, StartY as short, EndX as short, EndY as short, Opacity as short)
+sub drawBorder(Model as any ptr, StartX as short, StartY as short, EndX as short, EndY as short, Opacity as short)
 	line Model,(StartX,StartY)-(EndX,StartY),rgba(255,255,255,Opacity)
 	line Model,(StartX,StartY)-(StartX,EndY),rgba(255,255,255,Opacity)
 	line Model,(EndX,StartY+1)-(EndX,EndY-1),rgba(0,0,0,Opacity)
 	line Model,(StartX+1,EndY)-(EndX,EndY),rgba(0,0,0,Opacity)
 end sub
-sub draw_box(StartX as short,StartY as short,EndX as short,EndY as short)
+sub drawBox(StartX as short,StartY as short,EndX as short,EndY as short)
 	BoxGlow -= 3
 	if BoxGlow <= -128 then
 		BoxGlow += 255
@@ -553,7 +553,7 @@ sub draw_box(StartX as short,StartY as short,EndX as short,EndY as short)
 	next BID
 end sub
 
-sub get_difficulty_names(DifficultyAmt as double)
+sub getDifficultyNames(DifficultyAmt as double)
 	select case int(DifficultyAmt+0.5)
 		case DIFF_KIDS
 			DiffTxt = "Effortless"
@@ -582,7 +582,7 @@ sub get_difficulty_names(DifficultyAmt as double)
 	end select
 end sub
 
-sub render_paddle(NewSize as short)
+sub renderPaddle(NewSize as short)
 	if NewSize > 960 then
 		NewSize = 960
 	end if
@@ -594,10 +594,10 @@ sub render_paddle(NewSize as short)
 	put PaddlePic,(-int(PaddleCycle/10),0),BasePaddle,pset
 	line PaddlePic,(PaddleSize,0)-(1079,PaddleHeight-1),rgb(255,0,255),bf
 	for BID as ubyte = 0 to int(sqr(PaddleSize/20))
-		draw_border(PaddlePic,BID,BID,PaddleSize-1-BID,PaddleHeight-1-BID,255-BID*32)
+		drawBorder(PaddlePic,BID,BID,PaddleSize-1-BID,PaddleHeight-1-BID,255-BID*32)
 	next BID
 end sub
-sub particle_system
+sub particleSystem
 	if EnhancedGFX > 0 then
 		for PID as ushort = 0 to Particount
 			with Particles(PID)
@@ -624,7 +624,7 @@ sub particle_system
 		next
 	end if
 end sub
-sub generate_particles(NewCount as integer, XL as byte, YL as byte, _
+sub generateParticles(NewCount as integer, XL as byte, YL as byte, _
 	ApplyColor as uinteger)
 	dim as integer NewParticle, FreeParticles, TrueCount
 
@@ -665,7 +665,7 @@ sub generate_particles(NewCount as integer, XL as byte, YL as byte, _
 	next PID
 end sub
 
-sub force_release_balls
+sub forceReleaseBalls
 	for BID as short = 1 to NumBalls
 		with Ball(BID)
 			if .Grabbed > 0 then
@@ -676,7 +676,7 @@ sub force_release_balls
 	next
 end sub
 
-sub optimal_direction(InBall as short, BrickX as byte, BrickY as byte)
+sub optimalDirection(InBall as short, BrickX as byte, BrickY as byte)
 	dim as short StartX, BWidth, StartY, BHeight
 	dim as double CenterX, CenterY, PreviousX, PreviousY, DeltaX, DeltaY, NewDX, NewDY, NewDZ, InternalMultiplier
 	dim as ubyte BounceAngle, SwapSpecs
@@ -798,7 +798,7 @@ sub optimal_direction(InBall as short, BrickX as byte, BrickY as byte)
 	end with
 end sub
 
-sub save_config
+sub saveConfig
 	open "conf.ini" for output as #10
 	for Plr as byte = 1 to MaxPlayers
 		print #10, "difficulty,"& PlayerSlot(Plr).Difficulty
@@ -815,7 +815,7 @@ sub save_config
 	close #10
 	kill("xp.dat")
 end sub
-sub load_config
+sub loadConfig
 	if ConfigLoaded = 0 AND FileExists("conf.ini") then
 		dim as byte PlayersFound = 0
 		open "conf.ini" for input as #10
@@ -860,7 +860,7 @@ sub load_config
 	end if
 end sub
 
-function ball_ct_bonus as byte
+function ballCtBonus as byte
 	'The Computer Player does not benefit from Multiball bonus
 	if ControlStyle = CTRL_AI then
 		return 1
@@ -870,7 +870,7 @@ function ball_ct_bonus as byte
 	return int(sqr(TotalBC) + 0.5)
 end function
 
-sub respawn_blocks(BrushID as short)
+sub respawnBlocks(BrushID as short)
 	dim as ushort BlocksRespawned = 0
 	
 	'Respawns all blocks that were origianlly bound to the selected brush
@@ -894,17 +894,17 @@ sub respawn_blocks(BrushID as short)
 			.BossHealth -= max(int(.BossMaxHealth/100),1)
 			
 			if .BossHealth <= 0 then
-				play_clip(SFX_WALL_BROKEN)
+				playClip(SFX_WALL_BROKEN)
 			end if
 		end with
 		
-		play_clip(SFX_BRICKS_RESPAWN)
+		playClip(SFX_BRICKS_RESPAWN)
 	end if
 end sub
 
-declare sub damage_brick(BaseX as short, BaseY as short, NewPalette as short, NewID as short = 0, OnlySelf as byte = 0)
+declare sub damageBrick(BaseX as short, BaseY as short, NewPalette as short, NewID as short = 0, OnlySelf as byte = 0)
 
-function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
+function dispWall(FrameTick as short, DispSetting as byte = 0) as integer
 	dim as ubyte AlphaV
 	dim as uinteger XColoring, ScoreBonus, Count, XPanning
 	dim as byte RefPallete, MaxY
@@ -927,12 +927,12 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 		
 		if (Gamestyle AND (1 SHL STYLE_FUSION)) = 0 then
 			for BID as ubyte = 0 to 1
-				draw_border(ExplodePic,BID,BID,23-BID,23-BID,255-BID*127)
+				drawBorder(ExplodePic,BID,BID,23-BID,23-BID,255-BID*127)
 			next BID
 		end if
 	elseif (Gamestyle AND (1 SHL STYLE_FUSION)) = 0 then
 		for BID as ubyte = 0 to 1
-			draw_border(ExplodePic,BID,BID,47-BID,23-BID,255-BID*127)
+			drawBorder(ExplodePic,BID,BID,47-BID,23-BID,255-BID*127)
 		next BID
 	end if
 	
@@ -988,25 +988,25 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 													if RefPallete = 0 then
 														ScoreBonus = 0
 													elseif TotalBC > 0 then
-														ScoreBonus = ball_ct_bonus * ExplodingValue
+														ScoreBonus = ballCtBonus * ExplodingValue
 													elseif total_lives > 0 then
 														ScoreBonus = ExplodingValue
 													end if
 													
 													PlayerSlot(Player).Score += ScoreBonus
-													damage_brick(XDID,YDID,FinalBrush,0,(XDID = XID AND YDID = YID))
+													damageBrick(XDID,YDID,FinalBrush,0,(XDID = XID AND YDID = YID))
 													Invis = 12
-													generate_capsule(XDID,YDID,1)
-													generate_particles(ScoreBonus,XDID,YDID,rgb(255,192,160))
+													generateCapsule(XDID,YDID,1)
+													generateParticles(ScoreBonus,XDID,YDID,rgb(255,192,160))
 													
 												else
-													damage_brick(XDID,YDID,ExplodeDelay + (Pallete(RefPallete).HitDegrade + 1) * 100,0)
+													damageBrick(XDID,YDID,ExplodeDelay + (100 * (Pallete(RefPallete).CalcedInvulnerable + 1)),0)
 													
 													if (XDID > XID AND YID = YDID) OR YDID > YID then
 														PlayerSlot(Player).TileSet(XDID,YDID).BrickID -= 1 
 													end if
 													
-													generate_capsule(XDID,YDID,1)
+													generateCapsule(XDID,YDID,1)
 													Invis = 12
 												end if
 												
@@ -1015,7 +1015,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 									next XDID
 								next YDID
 								
-								play_clip(SFX_EXPLODE,XPanning)
+								playClip(SFX_EXPLODE,XPanning)
 							end if
 						end if
 						
@@ -1026,25 +1026,33 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 						if .BrickID <> Pallete(.BrickID).ZapDegrade then
 							ZappableCount += 1
 						end if
-	
+						
 						if DispSetting >= 1 then
 							with Pallete(.BrickID)
 								if .PColoring = 0 then
 									if DispSetting = 2 then
+										dim as uinteger BorderColor = rgb(112,112,112)
+										
 										if PlayerSlot(Player).TileSet(XID,YID).BrickID < 10 then
 											PrintChar = str(PlayerSlot(Player).TileSet(XID,YID).BrickID)
 										else	
 											PrintChar = chr(55+PlayerSlot(Player).TileSet(XID,YID).BrickID)
 										end if
-	
+										
+										if .CalcedInvulnerable = 2 then 
+											BorderColor = Pallete(.ZapDegrade).PColoring
+										elseif .HitDegrade > 0 ANDALSO Pallete(.HitDegrade).PColoring > 0 then
+											BorderColor = Pallete(.HitDegrade).PColoring
+										end if
+										
 										if CondensedLevel then
 											line(32+(XID-1)*24,96+(YID-1)*24)-_
-												(31+(XID)*24,95+(YID)*24),rgb(255,255,255),b,&b1010101010101010
+												(31+(XID)*24,95+(YID)*24),BorderColor,b,&b1010101010101010
 												
 											printgfx(PrintChar,41+(XID-1)*24,103+(YID-1)*24,2,rgb(255,255,255))
 										else	
 											line(32+(XID-1)*48,96+(YID-1)*24)-_
-												(31+(XID)*48,95+(YID)*24),rgb(255,255,255),b,&b1010101010101010
+												(31+(XID)*48,95+(YID)*24),BorderColor,b,&b1010101010101010
 												
 											printgfx(PrintChar,53+(XID-1)*48,103+(YID-1)*24,2,rgb(255,255,255))
 										end if
@@ -1312,6 +1320,31 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 						else
 							Count += 1
 						end if
+					elseif DispGrid then
+						dim as uinteger LineStyle = &b0011110000111100
+						if YID <= 20 OR (GameStyle AND (1 SHL STYLE_PROGRESSIVE)) then
+							if CondensedLevel then
+								if XID < 40 ANDALSO PlayerSlot(Player).Tileset(XID+1,YID).BrickID = 0 then
+									line(31+(XID)*24,96+(YID-1)*24)-_
+										(31+(XID)*24,95+(YID)*24),rgb(255,255,255),,LineStyle
+								end if
+								
+								if YID >= 24 ORELSE PlayerSlot(Player).Tileset(XID,YID+1).BrickID = 0 then
+									line(32+(XID-1)*24,95+(YID)*24)-_
+										(31+(XID)*24,95+(YID)*24),rgb(255,255,255),,LineStyle
+								end if
+							else
+								if XID < 20 ANDALSO PlayerSlot(Player).Tileset(XID+1,YID).BrickID = 0 then
+									line(31+(XID)*48,96+(YID-1)*24)-_
+										(31+(XID)*48,95+(YID)*24),rgb(255,255,255),,LineStyle
+								end if
+								
+								if YID >= 24 ORELSE PlayerSlot(Player).Tileset(XID,YID+1).BrickID = 0 then
+									line(32+(XID-1)*48,95+(YID)*24)-_
+										(31+(XID)*48,95+(YID)*24),rgb(255,255,255),,LineStyle
+								end if
+							end if
+						end if
 					end if
 				end if
 				
@@ -1352,7 +1385,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 	if (Gamestyle AND (1 SHL STYLE_BREAKABLE_CEILING)) AND DispSetting < 2 AND PlayerSlot(Player).BossHealth > 0 then
 		for BID as ubyte = 1 to BlockBrushes
 			if Pallete(BID).UsedInlevel > 0 AND BlocksInPallete(BID) = 0 then
-				respawn_blocks(BID)
+				respawnBlocks(BID)
 			end if
 		next BID
 	end if
@@ -1362,7 +1395,7 @@ function disp_wall(FrameTick as short, DispSetting as byte = 0) as integer
 	return Count
 end function
 
-sub disp_mouse(MX as integer, MY as integer, MC as uinteger)
+sub dispMouse(MX as integer, MY as integer, MC as uinteger)
 	for NID as ubyte = 1 to 10
 		line (MX+NID,MY+NID)-(MX+20,MY+10),MC
 		line (MX+NID,MY+NID)-(MX+10,MY+20),MC
@@ -1390,7 +1423,7 @@ sub shuffle_backs
 	erase SlotUsed
 end sub
 
-sub load_brick_gfx(BasePath as string)
+sub loadBrickGfx(BasePath as string)
 	'Rectangular bricks
 	SoftBrickPic = ImageCreate(48,24)
 	bload(BasePath+"soft.bmp",SoftBrickPic)
@@ -1469,7 +1502,7 @@ sub load_brick_gfx(BasePath as string)
 	bload(BasePath+"explode.bmp",BaseExplode)
 end sub
 
-sub clean_up destructor
+sub cleanUp destructor
 	if Command(1) <> "/c" then
 		ImageDestroy(SoftBrickPic)
 		ImageDestroy(SoftBrickConnL)

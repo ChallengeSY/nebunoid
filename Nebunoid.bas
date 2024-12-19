@@ -36,10 +36,10 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.18"
+windowtitle "Nebunoid 1.19"
 
 'Foreground assets
-load_brick_gfx(MasterDir+"/gfx/blocks/")
+loadBrickGfx(MasterDir+"/gfx/blocks/")
 
 for CapID as ubyte = 1 to 9
 	CapsuleBar(CapID) = ImageCreate(38,19)
@@ -112,7 +112,7 @@ while NullString <> ""
 wend
 shuffle_backs
 
-load_config
+loadConfig
 if FileExists("xp.dat") then
 	open "xp.dat" for input as #10
 	input #10, TotalXP
@@ -135,14 +135,14 @@ screenset 1,0
 setmouse(,,0,0)
 if Command(1) = "-l" then 
 	QuickPlayFile = Command(2)
-	local_gameplay
+	localGameplay
 	end 0
 end if
 dim as string TitleCapNames(1 to 26) => {"Slower Balls", "Split Balls", "Grabbing Paddle", "Spread Exploding", "Detonate Exploding", "Zap Blocks", _
 	"Bullet Paddle", "Blizzard", "Fire Balls", "Breakthru Balls", "Missile Paddle", "Warp Level", "Extra Life", _
 	"Faster Balls", "Weakened Balls", "Maximum Speed!", "Gravity Balls", "Reverse Paddle", "Slow Paddle", "", _
 	"Expand Paddle", "Reduce Paddle", "Mystery Capsule", "Disruption", "Effect Extender", "Effect Negater"}
-load_title_capsules
+loadTitleCapsules
 KeyboardSpeed = 20
 
 'Main Menu
@@ -242,14 +242,14 @@ do
 	
 	if MouseX >= 32 AND MouseX < 992 then
 		if MouseY >= 90 AND MouseY < 135 AND CampaignFolder <> "" then
-			draw_box(32,90,991,134)
+			drawBox(32,90,991,134)
 			if ButtonCombo > 0 AND HoldClick = 0 then
-				read_campaigns
+				readCampaigns
 				MenuMode = iif(MenuMode = 0,1,0)
 				HoldClick = 1
 			end if
 		elseif MouseY >= 140 AND MouseY < 185 then
-			draw_box(32,140,991,184)
+			drawBox(32,140,991,184)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				HoldClick = 1
 				shop
@@ -258,7 +258,7 @@ do
 			end if
 		end if
 		if MouseY >= 190 AND MouseY < 235 then
-			draw_box(32,190,991,234)
+			drawBox(32,190,991,234)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				exit do
 			end if
@@ -269,7 +269,7 @@ do
 			for YID as ubyte = 1 to CampaignsPerPage+1
 				with OfficialCampaigns(YID)
 					if MouseY >= 286+YID*30 AND MouseY <= 315+YID*30 AND .Namee <> "" AND .SetLocked = 0 then
-						draw_box(32,286+YID*30,991,315+YID*30)
+						drawBox(32,286+YID*30,991,315+YID*30)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							if YID = CampaignsPerPage+1 then
 								'Switch to community campaigns
@@ -277,8 +277,8 @@ do
 								HoldClick = 1
 							else
 								CampaignFolder = .Folder
-								local_gameplay
-								load_title_capsules
+								localGameplay
+								loadTitleCapsules
 								MenuMode = 0
 								while inkey <> "":wend
 							end if
@@ -297,11 +297,11 @@ do
 					with CommunityCampaigns(ReadID)
 						if ReadID <= OfficialCampaigns(CampaignsPerPage+1).SetSize AND YID <= CampaignsPerPage AND _
 							MouseY >= 286+YID*30 AND MouseY <= 315+YID*30 AND .Namee <> "" AND .SetSize > 0 then
-							draw_box(32,286+YID*30,991,315+YID*30)
+							drawBox(32,286+YID*30,991,315+YID*30)
 							if ButtonCombo > 0 AND HoldClick = 0 then
 								CampaignFolder = .Folder
-								local_gameplay
-								load_title_capsules
+								localGameplay
+								loadTitleCapsules
 								MenuMode = 0
 								while inkey <> "":wend
 							end if
@@ -311,7 +311,7 @@ do
 			next YID
 			
 			if MouseY >= 286+(CampaignsPerPage+1)*30 AND MouseY <= 315+(CampaignsPerPage+1)*30 then
-				draw_box(32,286+(CampaignsPerPage+1)*30,991,315+(CampaignsPerPage+1)*30)
+				drawBox(32,286+(CampaignsPerPage+1)*30,991,315+(CampaignsPerPage+1)*30)
 				if ButtonCombo > 0 AND HoldClick = 0 then
 					'Cycle community campaign pages; or go back to official campaigns if final page
 					if MenuMode >= 1 + ceil(OfficialCampaigns(CampaignsPerPage+1).SetSize/CampaignsPerPage) then
@@ -328,7 +328,7 @@ do
 		toggle_fullscreen
 	end if
 	if Result = 0 then
-		disp_mouse(MouseX,MouseY,MouseColor)
+		dispMouse(MouseX,MouseY,MouseColor)
 	end if
 	if HoldClick > 0 AND ButtonCombo = 0 then
 		HoldClick = 0
@@ -340,7 +340,7 @@ loop until InType = EscapeKey OR InType = XBox
 if ControlStyle < CTRL_DESKTOP OR ControlStyle >= CTRL_KEYBOARD then
 	ControlStyle = CTRL_DESKTOP
 end if
-save_config
+saveConfig
 
 sub shop
 	dim as ubyte TotalCount(0 to MISC) => {0, 0, 12, 7}
@@ -379,7 +379,7 @@ sub shop
 	CustomItem(MISC,6) = "Background brightness"
 	CustomItem(MISC,7) = "Music player         "
 	
-	read_campaigns(1)
+	readCampaigns(1)
 	
 	do
 		MouseColor = rgb(0,255,128)
@@ -396,7 +396,7 @@ sub shop
 			else
 				gfxstring(Filter(FID),5+256*FID,50,4,4,3,rgb(255,0,255))
 				if MouseY >= 45 AND MouseY < 75 AND MouseX > 256*FID AND MouseX < 256*(FID+1) then
-					draw_box(256*FID,45,256*(FID+1)-1,74)
+					drawBox(256*FID,45,256*(FID+1)-1,74)
 					if ButtonCombo > 0 AND HoldClick = 0 then
 						AFilter = FID
 						PageNum = 1
@@ -450,7 +450,7 @@ sub shop
 			ContinueSpecs = "None"
 			WarpSystem = abs(sgn(ApproxDiff + 0.5 < DIFF_HARD))
 			ExtraInfo = "None"
-			get_difficulty_names(ApproxDiff)
+			getDifficultyNames(ApproxDiff)
 			select case int(ApproxDiff+0.5)
 				case DIFF_KIDS
 					ExtraInfo = "Metal / No red caps / Restock / Slow speed / Bullet ammo"
@@ -485,7 +485,7 @@ sub shop
 				for PID as ubyte = 1 to MaxPlayers
 					ApproxDiff = int(PlayerSlot(PID).Difficulty * 10 + 0.51) / 10
 					ComputeDiff = ApproxDiff + 1e-6
-					get_difficulty_names(ApproxDiff)
+					getDifficultyNames(ApproxDiff)
 					
 					if PageNum = PID then
 						PlrColor = rgb(128,192,255)
@@ -497,7 +497,7 @@ sub shop
 					if PID = PageNum then
 						BallDiff = ApproxDiff
 					elseif MouseY >= (PID+2)*30-5 AND MouseY < (PID+3)*30-5 then
-						draw_box(0,(PID+2)*30-5,1023,(PID+3)*30-6)
+						drawBox(0,(PID+2)*30-5,1023,(PID+3)*30-6)
 						
 						if ButtonCombo AND HoldClick = 0 then
 							PageNum = PID
@@ -530,7 +530,7 @@ sub shop
 			if AllowHandicap then
 				gfxstring("Handicap system: ON",5,700,4,4,3,rgb(255,0,255))
 				if MouseY >= 695 AND MouseY < 724 then
-					draw_box(0,695,1023,724)
+					drawBox(0,695,1023,724)
 					if ButtonCombo > 0 AND HoldClick = 0 then
 						HoldClick = 1
 						PageNum = 1
@@ -540,7 +540,7 @@ sub shop
 			else
 				gfxstring("Handicap system: OFF",5,700,4,4,3,rgb(255,0,255))
 				if MouseY >= 695 AND MouseY < 724 then
-					draw_box(0,695,1023,724)
+					drawBox(0,695,1023,724)
 					if ButtonCombo > 0 AND HoldClick = 0 then
 						HoldClick = 1
 						AllowHandicap = 1
@@ -591,7 +591,7 @@ sub shop
 				elseif PID <= 4 then
 					gfxstring(CustomItem(2,PID)+" (available)",5,PosY,4,4,3,rgb(255,255,255))
 					if MouseY >= SelY AND MouseY < SelY+30 then
-						draw_box(0,SelY,1023,SelY+29)
+						drawBox(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 then
 							ControlStyle = PID - 1
 						end if
@@ -609,7 +609,7 @@ sub shop
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Use and customize this USB Controller to play"
 							
-							draw_box(0,SelY,1023,SelY+29)
+							drawBox(0,SelY,1023,SelY+29)
 							if ButtonCombo > 0 then
 								JoyAnalog = 0
 								JoyKeySetting = 0	
@@ -636,7 +636,7 @@ sub shop
 								ItemDesc = "An Analog Controller has one or more flexible axes. Click to change"
 							end if
 							
-							draw_box(0,SelY,1023,SelY+29)
+							drawBox(0,SelY,1023,SelY+29)
 							if ButtonCombo > 0 AND HoldClick = 0 then
 								HoldClick = 1
 								JoyAnalog = 1 - JoyAnalog
@@ -660,7 +660,7 @@ sub shop
 						if MouseY >= SelY AND MouseY < SelY+30 then
 							ItemDesc = "Inverts all Controller axes to improve flexibility"
 
-							draw_box(0,SelY,1023,SelY+29)
+							drawBox(0,SelY,1023,SelY+29)
 							if ButtonCombo > 0 AND HoldClick = 0 then
 								HoldClick = 1
 								JoyInvertAxes = 1 - JoyInvertAxes
@@ -755,7 +755,7 @@ sub shop
 				#ENDIF
 					gfxstring(CustomItem(MISC,PID)+" (active)",5,PosY,4,4,3,rgb(0,255,0))
 					if MouseY >= SelY AND MouseY < SelY+30 then
-						draw_box(0,SelY,1023,SelY+29)
+						drawBox(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							select case PID
 								case 2
@@ -783,7 +783,7 @@ sub shop
 							gfxstring(CustomItem(MISC,PID)+" (All hints active)",5,PosY,4,4,3,rgb(0,255,0))
 					end select
 					if MouseY >= SelY AND MouseY < SelY+30 then
-						draw_box(0,SelY,1023,SelY+29)
+						drawBox(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							HintLevel -= 1
 							if HintLevel < 0 then
@@ -794,7 +794,7 @@ sub shop
 				elseif PID = 6 then
 					gfxstring(CustomItem(MISC,PID)+" ("+str(BGBrightness)+"%)",5,PosY,4,4,3,rgb(255,255,255))
 					if MouseY >= SelY AND MouseY < SelY+30 then
-						draw_box(0,SelY,1023,SelY+29)
+						drawBox(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							BGBrightness -= 25
 							if BGBrightness < 0 then
@@ -805,7 +805,7 @@ sub shop
 				else
 					gfxstring(CustomItem(MISC,PID)+" (inactive)",5,PosY,4,4,3,rgb(255,255,255))
 					if MouseY >= SelY AND MouseY < SelY+30 then
-						draw_box(0,SelY,1023,SelY+29)
+						drawBox(0,SelY,1023,SelY+29)
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							select case PID
 								case 2
@@ -829,13 +829,13 @@ sub shop
 		end if
 		gfxstring("Exit",5,730,4,4,3,rgb(255,255,255))
 		if MouseY >= 725 AND MouseY < 754 then
-			draw_box(0,725,1023,754)
+			drawBox(0,725,1023,754)
 			if ButtonCombo > 0 AND HoldClick = 0 then
 				exit do
 			end if
 		end if
 		if Result = 0 then
-			disp_mouse(MouseX,MouseY,MouseColor)
+			dispMouse(MouseX,MouseY,MouseColor)
 		end if
 		if ButtonCombo > 0 then
 			HoldClick = 1
@@ -844,8 +844,8 @@ sub shop
 		end if
 		InType = inkey
 		if InType = XBox then
-			clean_up
-			save_config
+			cleanUp
+			saveConfig
 			end 0
 		end if
 		screenevent(@e)

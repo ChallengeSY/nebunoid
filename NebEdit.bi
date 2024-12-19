@@ -21,6 +21,7 @@ dim shared as any ptr PlaytestLock, PlaytestSes
 
 const CtrlP = chr(16)
 const CtrlS = chr(19)
+const CtrlG = chr(7)
 
 #IF __FB_DEBUG__
 'Debug mode exclusive switch that would otherwise force the editor to modify exclusively community campaigns 
@@ -41,7 +42,7 @@ MirrorOptions(3) = "Mirror diagonally"
 Player = 1
 CondensedLevel = 0
 
-sub clear_level
+sub clearLevel
 	for YID as ubyte = 1 to 24
 		for XID as ubyte = 1 to 40
 			with PlayerSlot(Player).Tileset(XID,YID)
@@ -71,7 +72,7 @@ sub clear_level
 	CondensedLevel = 0
 end sub
 
-sub edit_starting_lives
+sub editStartingLives
 	dim as string NewTxtValue
 
 	screenset 0,0
@@ -91,8 +92,8 @@ sub edit_starting_lives
 	CampaignUnsaved = 1
 end sub
 
-declare sub level_options
-sub campaign_metadata
+declare sub levelOptions
+sub campaignMetadata
 	dim as integer NewIntValue
 	dim as string NewStrValue
 	
@@ -153,7 +154,7 @@ sub campaign_metadata
 				end if
 				exit do
 			case "l"
-				edit_starting_lives
+				editStartingLives
 				exit do
 			case "c"
 				screenset 0,0
@@ -214,14 +215,14 @@ sub campaign_metadata
 				exit do
 				
 			case "v"
-				level_options
+				levelOptions
 				exit do
 				
 		end select
 	loop until InType = EscapeKey
 end sub
 
-sub edit_level_password
+sub editLevelPassword
 	locate 48,1
 	print space(127);
 	locate 48,1
@@ -294,7 +295,7 @@ sub edit_level_password
 	loop until InType = EscapeKey
 end sub
 
-sub edit_level_variations
+sub editLevelVariations
 	dim as ubyte StyleID
 	dim as string StyleNames(15) => {"Powerups", "Extra Height", "Dual Paddles", "Double Juggling", "Cavity", "Progressive", "Steerable Balls", "Invisible", _
 		"Hyper Speed", "Boss Battle", "Horizontal Rotation", "Fusion Brushes", "Shrink Ceiling", "Breakable Ceiling", "Fatal Timer", ""}
@@ -339,7 +340,7 @@ sub edit_level_variations
 	LevelUnsaved = 1
 end sub
 
-sub edit_time_limit
+sub editTimeLimit
 	screenset 0,0
 	locate 48,1
 	print space(127);
@@ -350,7 +351,7 @@ sub edit_time_limit
 	LevelUnsaved = 1
 end sub
 
-sub edit_boss_health
+sub editBossHealth
 	screenset 0,0
 	locate 48,1
 	print space(127);
@@ -361,7 +362,7 @@ sub edit_boss_health
 	LevelUnsaved = 1
 end sub
 
-sub delete_level(LevID as short)
+sub deleteLevel(LevID as short)
 	dim as string OldFile, NewFile
 	OldFile = MasterDir + "/campaigns/" + CampaignFolder + "/L"+str(LevID)+".txt"
 	kill(OldFile)
@@ -382,11 +383,11 @@ sub delete_level(LevID as short)
 		end if
 		SelectedBrush = 0
 		LevelUnsaved = 0
-		load_level(.LevelNum)
+		loadLevel(.LevelNum)
 	end with
 end sub
 
-sub swap_levels(LevelA as short, LevelB as short)
+sub swapLevels(LevelA as short, LevelB as short)
 	dim as string FileA, FileB, FileX
 	FileA = MasterDir + "/campaigns/" + CampaignFolder + "/L"+str(LevelA)+".txt"
 	FileB = MasterDir + "/campaigns/" + CampaignFolder + "/L"+str(LevelB)+".txt"
@@ -401,7 +402,7 @@ sub swap_levels(LevelA as short, LevelB as short)
 	end if
 end sub
 
-sub duplicate_level(LevID as short, DestCampaign as string = CampaignFolder)
+sub duplicateLevel(LevID as short, DestCampaign as string = CampaignFolder)
 	dim as string OldFile, NewFile
 	OldFile = MasterDir + "/campaigns/" + CampaignFolder + "/L"+str(LevID)+".txt"
 	
@@ -425,7 +426,7 @@ sub duplicate_level(LevID as short, DestCampaign as string = CampaignFolder)
 	next LID
 end sub
 
-sub import_brushes(LevID as short)
+sub importBrushes(LevID as short)
 	dim as string AuxFile = MasterDir + "/campaigns/" + CampaignFolder + "/L"+str(LevID)+".txt"
 	dim as string ReadLine
 	
@@ -469,12 +470,12 @@ sub import_brushes(LevID as short)
 		next BID
 		close #8
 
-		apply_block_properties
+		applyBlockProperties
 		LevelUnsaved = 1
 	end if
 end sub
 
-sub flip_level(Vertically as byte = 0)
+sub flipLevel(Vertically as byte = 0)
 	dim as byte MaxCols = 20*(CondensedLevel+1)
 	dim as byte MaxRows = 20
 	if (Gamestyle AND (1 SHL STYLE_PROGRESSIVE)) then
@@ -498,7 +499,7 @@ sub flip_level(Vertically as byte = 0)
 	LevelUnsaved = 1
 end sub
 
-sub rotate_level(CCW as byte = 0)
+sub rotateLevel(CCW as byte = 0)
 	dim as byte MaxCols = 20*(CondensedLevel+1)
 	dim as byte MaxRows = 20
 	dim as single TempX, TempY, NewX, NewY
@@ -547,7 +548,7 @@ sub rotate_level(CCW as byte = 0)
 	LevelUnsaved = 1
 end sub
 
-sub transform_options
+sub transformSubmenu
 	do
 		locate 48,1
 		print space(127);
@@ -584,26 +585,26 @@ sub transform_options
 				exit do
 				
 			case "h"
-				flip_level(0)
+				flipLevel(0)
 				exit do
 				
 			case "v"
-				flip_level(1)
+				flipLevel(1)
 				exit do
 				
 			case "w"
-				rotate_level(0)
+				rotateLevel(0)
 				exit do
 				
 			case "c"
-				rotate_level(1)
+				rotateLevel(1)
 				exit do
 				
 		end select
 	loop until InType = EscapeKey
 end sub
 
-sub level_options
+sub levelOptions
 	dim as ubyte OptionsPage = 0
 	dim as short SwapTarget, ImportTarget
 	dim as string CopyToFolder
@@ -694,23 +695,23 @@ sub level_options
 				exit do
 				
 			case "p"
-				edit_level_password
+				editLevelPassword
 				exit do
 				
 			case "g"
-				edit_level_variations
+				editLevelVariations
 				exit do
 				
 			case "t"
-				edit_time_limit
+				editTimeLimit
 				exit do
 				
 			case "b"
-				edit_boss_health
+				editBossHealth
 				exit do
 				
 			case "f"
-				transform_options
+				transformSubmenu
 				exit do
 				
 			case "m"
@@ -729,7 +730,7 @@ sub level_options
 					do
 						InType = lcase(inkey)
 						if InType = "y" then
-							delete_level(PlayerSlot(Player).LevelNum)
+							deleteLevel(PlayerSlot(Player).LevelNum)
 							exit do
 						end if
 					loop until InType = "n"
@@ -752,7 +753,7 @@ sub level_options
 					input ; "Enter level number to swap with: ",SwapTarget
 					screenset 1,0
 					if SwapTarget > 0 then
-						swap_levels(PlayerSlot(Player).LevelNum,SwapTarget)
+						swapLevels(PlayerSlot(Player).LevelNum,SwapTarget)
 					end if
 				else
 					locate 48,1
@@ -774,12 +775,12 @@ sub level_options
 					do
 						InType = lcase(inkey)
 						if InType = "y" then
-							duplicate_level(PlayerSlot(Player).LevelNum)
+							duplicateLevel(PlayerSlot(Player).LevelNum)
 							exit do
 						end if
 					loop until InType = "n"
 				else
-					duplicate_level(PlayerSlot(Player).LevelNum)
+					duplicateLevel(PlayerSlot(Player).LevelNum)
 				end if
 				exit do
 				
@@ -806,7 +807,7 @@ sub level_options
 				screenset 1,0
 				if CopyToFolder <> "" then
 					CopyToFolder = ActiveFolder+"/"+CopyToFolder
-					duplicate_level(PlayerSlot(Player).LevelNum,CopyToFolder)
+					duplicateLevel(PlayerSlot(Player).LevelNum,CopyToFolder)
 				end if
 				exit do
 				
@@ -819,7 +820,7 @@ sub level_options
 					input ; "Enter level number to import brushes from: ",ImportTarget
 					screenset 1,0
 					if ImportTarget > 0 then
-						import_brushes(ImportTarget)
+						importBrushes(ImportTarget)
 					end if
 				else
 					locate 48,1
@@ -835,7 +836,7 @@ sub level_options
 	loop until InType = EscapeKey
 end sub
 
-sub delete_brush(DelID as integer)
+sub deleteBrush(DelID as integer)
 	dim as short FinalBrush = ZapBrush - 1
 	
 	for DID as ubyte = DelID to FinalBrush-1
@@ -871,7 +872,7 @@ sub delete_brush(DelID as integer)
 	SelectedBrush = 0 
 end sub
 
-sub swap_brushes(BrushA as short, BrushB as short)
+sub swapBrushes(BrushA as short, BrushB as short)
 	Pallete(SwapBrush) = Pallete(BrushA)
 	Pallete(BrushA) = Pallete(BrushB)
 	Pallete(BrushB) = Pallete(SwapBrush)
@@ -905,7 +906,7 @@ sub swap_brushes(BrushA as short, BrushB as short)
 	next YID
 end sub
 
-sub brush_editor_submenu
+sub brushEditorSubmenu
 	dim as integer NewRed, NewGreen, NewBlue, NewAlpha
 	dim as longint NewClrInteger
 	dim as string NewTxtValue
@@ -1085,7 +1086,7 @@ sub brush_editor_submenu
 					exit do
 					
 				case "d"
-					delete_brush(BrushEditor)
+					deleteBrush(BrushEditor)
 					LevelUnsaved = 1
 					exit do
 					
@@ -1098,7 +1099,7 @@ sub brush_editor_submenu
 					screenset 1,0
 					
 					if NewRed > 0 AND NewRed <= BlockBrushes then
-						swap_brushes(BrushEditor,NewRed)
+						swapBrushes(BrushEditor,NewRed)
 					end if
 					LevelUnsaved = 1
 					exit do
@@ -1106,11 +1107,11 @@ sub brush_editor_submenu
 			end select
 		end with
 	loop until InType = EscapeKey
-	apply_block_properties
+	applyBlockProperties
 	BrushEditor = 0
 end sub
 
-sub draw_brushes(BrushID as byte)
+sub drawBrushes(BrushID as byte)
 	dim as ubyte BrushX = BrushID
 	dim as single BrushY = 25.5
 	dim as string PrintChar
@@ -1125,9 +1126,16 @@ sub draw_brushes(BrushID as byte)
 		end if
 		
 		if .PColoring = 0 then
+			dim as uinteger BorderColor = rgb(112,112,112)
+			if .CalcedInvulnerable = 2 then 
+				BorderColor = Pallete(.ZapDegrade).PColoring
+			elseif .HitDegrade > 0 ANDALSO Pallete(.HitDegrade).PColoring > 0 then
+				BorderColor = Pallete(.HitDegrade).PColoring
+			end if
+			
 			if CondensedLevel then
 				line(32+(BrushX-1)*24,96+(BrushY-1)*24)-_
-					(31+(BrushX)*24,95+(BrushY)*24),rgb(255,255,255),b,&b1010101010101010
+					(31+(BrushX)*24,95+(BrushY)*24),BorderColor,b,&b1010101010101010
 				
 				if SelectedBrush = BrushID then
 					printgfx(PrintChar,41+(BrushX-1)*24,103+(BrushY-1)*24,2,rgb(255,255,0))
@@ -1141,7 +1149,7 @@ sub draw_brushes(BrushID as byte)
 				endif
 				
 				line(32+(BrushX-1)*48,96+(BrushY-1)*24)-_
-					(31+(BrushX)*48,95+(BrushY)*24),rgb(255,255,255),b,&b1010101010101010
+					(31+(BrushX)*48,95+(BrushY)*24),BorderColor,b,&b1010101010101010
 
 				if SelectedBrush = BrushID then
 					printgfx(PrintChar,53+(BrushX-1)*48,103+(BrushY-1)*24,2,rgb(255,255,0))
@@ -1158,7 +1166,7 @@ sub draw_brushes(BrushID as byte)
 				put(32+(BrushX-1)*24,96+(BrushY-1)*24),ExplodePic,trans
 				if (GameStyle AND (1 SHL STYLE_FUSION)) then
 					for BID as ubyte = 0 to 1
-						draw_border(0,32+(BrushX-1)*24+BID,96+(BrushY-1)*24+BID,31+(BrushX)*24-BID,95+(BrushY)*24-BID,255-BID*127)
+						drawBorder(0,32+(BrushX-1)*24+BID,96+(BrushY-1)*24+BID,31+(BrushX)*24-BID,95+(BrushY)*24-BID,255-BID*127)
 					next BID
 				end if
 				XplodeCount += 1
@@ -1202,7 +1210,7 @@ sub draw_brushes(BrushID as byte)
 				put(32+(BrushX-1)*48,96+(BrushY-1)*24),ExplodePic,trans
 				if (GameStyle AND (1 SHL STYLE_FUSION)) then
 					for BID as ubyte = 0 to 1
-						draw_border(0,32+(BrushX-1)*48+BID,96+(BrushY-1)*24+BID,31+(BrushX)*48-BID,95+(BrushY)*24-BID,255-BID*127)
+						drawBorder(0,32+(BrushX-1)*48+BID,96+(BrushY-1)*24+BID,31+(BrushX)*48-BID,95+(BrushY)*24-BID,255-BID*127)
 					next BID
 				end if
 				XplodeCount += 1
@@ -1314,7 +1322,7 @@ sub draw_brushes(BrushID as byte)
 	end with
 end sub
 
-sub mirror_options
+sub mirrorSubmenu
 	dim as ubyte MirrorID
 	do
 		locate 48,1
@@ -1361,7 +1369,7 @@ sub mirror_options
 	loop until InType = EscapeKey
 end sub
 
-sub draw_bricks(PaintX as byte, PaintY as byte)
+sub drawBricks(PaintX as byte, PaintY as byte)
 	dim as byte SupportX, SupportY, SupportZ
 	
 	if PaintX > 0 AND PaintY > 0 AND PaintX <= 20*(1+CondensedLevel) AND PaintY <= 24 then
@@ -1532,7 +1540,7 @@ sub draw_bricks(PaintX as byte, PaintY as byte)
 	end if
 end sub
 
-sub shift_field(ShiftX as byte, ShiftY as byte)
+sub shiftField(ShiftX as byte, ShiftY as byte)
 	dim as byte MaxCols = 20*(CondensedLevel+1)
 	dim as byte MaxRows = 20
 	if (Gamestyle AND (1 SHL STYLE_PROGRESSIVE)) then
@@ -1574,7 +1582,7 @@ sub shift_field(ShiftX as byte, ShiftY as byte)
 	LevelUnsaved = 1
 end sub
 
-function save_level(SaveLvNum as short) as integer
+function saveLevel(SaveLvNum as short) as integer
 	dim as string SaveFile, PrintBlockChar, SpeedIncrease
 	dim as short SaveRows = 20
 	dim as integer FileError
@@ -1681,7 +1689,7 @@ function save_level(SaveLvNum as short) as integer
 	return FileError
 end function
 
-function save_campaign(SaveLvNum as short) as integer
+function saveCampaign(SaveLvNum as short) as integer
 	dim as string SaveFile
 	dim as integer FileError
 	mkdir(MasterDir+"/campaigns/community")
@@ -1716,7 +1724,7 @@ function save_campaign(SaveLvNum as short) as integer
 		print #3, string(80,"=")
 		close #3
 	
-		FileError = FileError OR save_level(SaveLvNum)
+		FileError = FileError OR saveLevel(SaveLvNum)
 		CampaignUnsaved = 0
 	end if
 	if FileError = 0 then
@@ -1729,7 +1737,7 @@ function save_campaign(SaveLvNum as short) as integer
 	return FileError
 end function
 
-sub launch_playtest(ByVal InternalPtr as any ptr = 0)
+sub launchPlaytest(ByVal InternalPtr as any ptr = 0)
 	#IFNDEF __FB_DOS__
 	if PlaytestLock = 0 then
 		locate 48,1
@@ -1756,13 +1764,13 @@ sub launch_playtest(ByVal InternalPtr as any ptr = 0)
 end sub
 
 #IFNDEF __FB_DOS__
-sub cleanup_editor destructor
+sub cleanupEditor destructor
 	ThreadDetach PlaytestSes
 	MutexDestroy PlaytestLock
 end sub
 #ENDIF
 
-sub reset_editor_specs
+sub resetEditorSpecs
 	MirrorEditing = 0
 	SelectedBrush = 0
 	if LevelDescription = "" then

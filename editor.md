@@ -30,6 +30,7 @@ When a ball causes damage to a boss, the damage the boss receives is controlled 
 The editor uses mouse and keyboard to carry out its functionality. Several controls can be easily edited by tapping on a given control when highlighted.
 
 #### Keyboard controls
+* Ctrl+G: Toggles the grid display
 * Ctrl+L: Loads a campaign folder, or creates a new one if it does not exist
 * Ctrl+S: Saves the current level and campagin
 * Plus sign: Goes forward one level

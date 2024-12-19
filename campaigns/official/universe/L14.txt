@@ -5,7 +5,7 @@ LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 14
 ================================================================================
 
 Level Name            := Iron Yellow Star
-Level Description     := Be careful. Bricks can take as many as fifteen hits!
+Level Description     := Be careful. Blocks can take as many as fifteen hits!
 Level Password        := ++++++++
 Level game number     := 3
 Level time limit      := 0

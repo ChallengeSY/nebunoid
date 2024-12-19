@@ -5,7 +5,7 @@ LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 15
 ================================================================================
 
 Level Name            := Armored Descent
-Level Description     := Beware of its progressive descension feature!
+Level Description     := 
 Level Password        := ++++++++
 Level game number     := 4131
 Level time limit      := 0

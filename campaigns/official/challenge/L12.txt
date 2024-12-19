@@ -26,45 +26,45 @@ Brush 4 Color         := &h8000FF00
 Brush 4 Score Value   := 10*
 Brush 4 Hit Degrade   := 0
 Brush 4 Increase Spd  := FALSE
-Brush 5 Color         := &h800000FF
+Brush 5 Color         := &h8000FFFF
 Brush 5 Score Value   := 10*
 Brush 5 Hit Degrade   := 0
 Brush 5 Increase Spd  := FALSE
-Brush 6 Color         := &h806000B0
+Brush 6 Color         := &h800000FF
 Brush 6 Score Value   := 10*
 Brush 6 Hit Degrade   := 0
 Brush 6 Increase Spd  := FALSE
-Brush 7 Color         := &h80FF00FF
+Brush 7 Color         := &h806000B0
 Brush 7 Score Value   := 10*
 Brush 7 Hit Degrade   := 0
 Brush 7 Increase Spd  := FALSE
-Brush 8 Color         := &h80404040
+Brush 8 Color         := &h80FF00FF
 Brush 8 Score Value   := 10*
 Brush 8 Hit Degrade   := 0
 Brush 8 Increase Spd  := FALSE
-Brush 9 Color         := &h80808080
-Brush 9 Score Value   := 2
-Brush 9 Hit Degrade   := 8
+Brush 9 Color         := &h80404040
+Brush 9 Score Value   := 10*
+Brush 9 Hit Degrade   := 0
 Brush 9 Increase Spd  := FALSE
-Brush 10 Color        := &h80FFFFFF
+Brush 10 Color        := &h80808080
 Brush 10 Score Value  := 2
 Brush 10 Hit Degrade  := 9
 Brush 10 Increase Spd := FALSE
-Brush 11 Color        := &hB0FFD700
-Brush 11 Score Value  := 10*
-Brush 11 Hit Degrade  := 11
+Brush 11 Color        := &h80FFFFFF
+Brush 11 Score Value  := 2
+Brush 11 Hit Degrade  := 10
 Brush 11 Increase Spd := FALSE
-Brush 12 Color        := &hB0CD7F32
-Brush 12 Score Value  := 2
-Brush 12 Hit Degrade  := 11
+Brush 12 Color        := &hB0FFD700
+Brush 12 Score Value  := 10*
+Brush 12 Hit Degrade  := 12
 Brush 12 Increase Spd := FALSE
-Brush 13 Color        := &h8000FFFF
-Brush 13 Score Value  := 10*
-Brush 13 Hit Degrade  := 0
+Brush 13 Color        := &hB0CD7F32
+Brush 13 Score Value  := 2
+Brush 13 Hit Degrade  := 12
 Brush 13 Increase Spd := FALSE
 Brush 14 Color        := &h00000000
 Brush 14 Score Value  := 2
-Brush 14 Hit Degrade  := 7
+Brush 14 Hit Degrade  := 8
 Brush 14 Increase Spd := FALSE
 Brush 15 Color        := &h80204020
 Brush 15 Score Value  := 10*
@@ -82,26 +82,26 @@ Brush 17 Increase Spd := FALSE
 Level Grid  11111111112
    12345678901234567890
 -----------------------
- 1|H1A1A1A1A1A1A1A1A1H1
- 2|1H1A1A1A1A1A1A1A1H1A
- 3|A2H2A2A2A2A2A2A2H2A2
- 4|2A2H2A2A2A2A2A2H2A2A
- 5|A3A3H3A3A3A3A3H3A3A3
- 6|3A3A3H3A3A3A3H3A3A3A
- 7|A4A4A4H4A4A4H4A4A4A4
- 8|4A4A4A4H4A4H4A4A4A4A
- 9|ADADADADHDHDADADADAD
-10|DADADADADHDADADADADA
-11|A5A5A5A5A5A5A5A5A5A5
-12|5A5A5A5A5A5A5A5A5A5A
-13|A6A6A6A6A6A6A6A6A6A6
-14|6A6A6A6A6A6A6A6A6A6A
-15|A7A7A7A7A7A7A7A7A7A7
-16|7A7A7A7A7A7A7A7A7A7A
-17|EEECCCCCCCCCCCCCCEEE
+ 1|H1B1B1B1B1B1B1B1B1H1
+ 2|1H1B1B1B1B1B1B1B1H1B
+ 3|B2H2B2B2B2B2B2B2H2B2
+ 4|2B2H2B2B2B2B2B2H2B2B
+ 5|B3B3H3B3B3B3B3H3B3B3
+ 6|3B3B3H3B3B3B3H3B3B3B
+ 7|B4B4B4H4B4B4H4B4B4B4
+ 8|4B4B4B4H4B4H4B4B4B4B
+ 9|B5B5B5B5H5H5B5B5B5B5
+10|5B5B5B5B5H5B5B5B5B5B
+11|B6B6B6B6B6B6B6B6B6B6
+12|6B6B6B6B6B6B6B6B6B6B
+13|B7B7B7B7B7B7B7B7B7B7
+14|7B7B7B7B7B7B7B7B7B7B
+15|B8B8B8B8B8B8B8B8B8B8
+16|8B8B8B8B8B8B8B8B8B8B
+17|EEEDDDDDDDDDDDDDDEEE
 18|   E            E   
 19|   E            E   
-20|CCCCCCCHHHHHHCCCCCCC
+20|DDDDDDDHHHHHHDDDDDDD
 
 ================================================================================
 *END*

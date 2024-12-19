@@ -78,7 +78,7 @@ for PID as short = 0 to clipCount
 next PID
 music = NULL
 
-sub play_clip(ID as byte, Panning as short = 320, HertzMod as short = 100)
+sub playClip(ID as byte, Panning as short = 320, HertzMod as short = 100)
 	if ID >= 0 then
 		dim as ubyte PauseLength(0 to clipCount)
 		for clipID as ubyte = 0 to  clipCount
@@ -99,25 +99,25 @@ sub play_clip(ID as byte, Panning as short = 320, HertzMod as short = 100)
 		end if
 	end if
 end sub
-sub dynamic_speed_clip(BallSpeed as double, Panning as short = 320)
+sub dynamicSpeedClip(BallSpeed as double, Panning as short = 320)
 	play_clip(SFX_BALL)
 end sub
-sub decrement_pauses
+sub decrementPauses
 	for ID as ubyte = 0 to clipCount
 		if clipPause(ID) > 0 then
 			clipPause(ID) -= 1
 		end if
 	next ID
 end sub
-function convert_speed(InSpeed as double) as short
+function convertSpeed(InSpeed as double) as short
 	return 100+(int(InSpeed)-8)*5
 end function
-sub release_music
+sub releaseMusic
 	Mix_HaltMusic
 	Mix_FreeMusic(music)
 	music = NULL
 end sub
-sub rotate_music
+sub rotateMusic
 	'Currently unimplemented with the SDL framework
 end sub
 sub cleanSDL destructor

@@ -1,5 +1,5 @@
 #include "NNLocal.bi"
-sub local_gameplay
+sub localGameplay
 	dim as string InMusic, InPassword
 	dim as short LevelClear, PassInput, InstruAlpha, InstruBeta, InstruGamma, Phase, AboveLine, HeadingUpwards, RotationFrame, _
 		ProhibitSpawn, WepCooldown, DebugConsole, FreezeStr, ScoreTick, MinPlayHeight, ShowTopUI, RecalcGems
@@ -11,14 +11,14 @@ sub local_gameplay
 	InstruAlpha = 4
 	
 	Player = 1
-	apply_diff_specs
+	applyDiffSpecs
 	
 	DesireX = 512
 	PaddleHealth = 6600
 	ShowTopUI = 60
 
 	ShuffleList(1) = 1
-	fix_first_level
+	fixFirstLevel
 	if QuickPlayFile = "" then
 		LoadErrors = load_settings
 	else
@@ -44,14 +44,14 @@ sub local_gameplay
 		else
 			.Threshold = InitialExtraLife
 		end if
-		empty_hand(0)
+		emptyHand(0)
 	end with
-	begin_local_game(-1, 1)
+	beginLocalGame(-1, 1)
 	
 	if LoadErrors then
 		exit sub
 	else
-		load_scores
+		loadScores
 	end if
 	
 	if FileExists(CampaignName+".dat") then
@@ -96,7 +96,7 @@ sub local_gameplay
 			screenevent(@e)
 			FrameTime += 1/FPS
 			cls
-			decrement_pauses
+			decrementPauses
 			if CampaignBarrier AND .Lives > 0 then
 				BarrierStrength = .Lives - 1
 			else
@@ -277,7 +277,7 @@ sub local_gameplay
 			else
 				ScoreRef = commaSep(int(.Score/1e9))+"B"
 			end if
-			ui_element(ScoreRef,45,6,7,rgba(255,255,255,224))
+			uiElement(ScoreRef,45,6,7,rgba(255,255,255,224))
 			
 			/'
 			 ' Target score display - Changes based on number of players:
@@ -340,7 +340,7 @@ sub local_gameplay
 				elseif TargetPos = 2 then
 					TargetColoring = rgba(205,127,50,224)
 				end if
-				ui_element(ScoreRef,192,6,7,TargetColoring)
+				uiElement(ScoreRef,192,6,7,TargetColoring)
 			end if
 		
 			'Timer display
@@ -353,10 +353,10 @@ sub local_gameplay
 				TimeStr = str(int(DispTime/60))+":"+_
 					str(int(remainder(DispTime,60)/10))+_
 					str(int(remainder(DispTime,10)))
-				ui_element(str(TimeStr),560,6,5,rgba(255,255,0,224))
+				uiElement(str(TimeStr),560,6,5,rgba(255,255,0,224))
 	
 				if .WarpTimer = 0 AND LevelClear = 0 then
-					play_clip(SFX_EXPLODE)
+					playClip(SFX_EXPLODE)
 					LevelClear = 1
 				elseif .WarpTimer > 1800 AND TotalBC = 0 then
 					.WarpTimer = 1800
@@ -383,17 +383,17 @@ sub local_gameplay
 				
 				if TimeRem < 0 AND LevelClear = 0 then
 					if (GameStyle AND (1 SHL STYLE_BONUS)) then
-						play_clip(SFX_EXPLODE)
+						playClip(SFX_EXPLODE)
 						LevelClear = 1
 					elseif (GameStyle AND (1 SHL STYLE_FATAL_TIMER)) = 0 AND .Lives > 1 then
-						play_clip(SFX_DEATH)
+						playClip(SFX_DEATH)
 						.PerfectClear = 0
 						.Lives -= 1
 						LevelClear = 1
 					else
 						.Lives = 1
 						ProhibitSpawn = 2
-						destroy_balls
+						destroyBalls
 					end if
 				end if
 
@@ -401,7 +401,7 @@ sub local_gameplay
 				TimeStr = str(int(DispTime/60))+":"+_
 					str(int(remainder(DispTime,60)/10))+_
 					str(int(remainder(DispTime,10)))
-				ui_element(TimeStr,560,6,5,DColor)
+				uiElement(TimeStr,560,6,5,DColor)
 			elseif .WarpTimer < 3600 then
 				TimeRem = .WarpTimer / 60
 				DispTime = int(TimeRem+1-(1e-10))
@@ -409,14 +409,14 @@ sub local_gameplay
 					str(int(remainder(DispTime,60)/10))+_
 					str(int(remainder(DispTime,10)))
 					
-				ui_element(TimeStr,560,6,5,rgba(128,128,128,224))
+				uiElement(TimeStr,560,6,5,rgba(128,128,128,224))
 			elseif ShowTopUI >= 60 then
-				ui_element("-:--",560,6,5,rgba(128,128,128,224))
+				uiElement("-:--",560,6,5,rgba(128,128,128,224))
 			end if
 
 			if ShowTopUI >= 60 then
 				'Player and Lives displays
-				ui_element(str(Player),343,6,0,rgba(255,255,255,224))
+				uiElement(str(Player),343,6,0,rgba(255,255,255,224))
 				if .Lives > 0 then
 					if CampaignBarrier then
 						DispLives = BarrierStrength
@@ -425,10 +425,10 @@ sub local_gameplay
 					else
 						DispLives = .Lives - sgn(ProhibitSpawn)
 					end if
-					ui_element(str(DispLives),386,6,0,rgba(255,255,255,224))
+					uiElement(str(DispLives),386,6,0,rgba(255,255,255,224))
 				else
 					DispLives = 0
-					ui_element("0",386,6,0,rgba(255,64,64,224))
+					uiElement("0",386,6,0,rgba(255,64,64,224))
 				end if
 				
 				'Ammo display
@@ -441,35 +441,35 @@ sub local_gameplay
 					end if
 					
 					if .MissileAmmo < 1000 then
-						ui_element(str(.MissileAmmo)+"M",671,6,4,Coloring)
+						uiElement(str(.MissileAmmo)+"M",671,6,4,Coloring)
 					else
-						ui_element("+++M",671,6,4,Coloring)
+						uiElement("+++M",671,6,4,Coloring)
 					end if
 				elseif .BulletAmmo > 0 then
 					if .BulletAmmo < 1000 then
-						ui_element(str(.BulletAmmo)+"B",671,6,4,rgb(255,255,255))
+						uiElement(str(.BulletAmmo)+"B",671,6,4,rgb(255,255,255))
 					else
-						ui_element("+++B",671,6,4,rgb(255,255,255))
+						uiElement("+++B",671,6,4,rgb(255,255,255))
 					end if
 				else
-					ui_element("----",671,6,4,rgb(128,128,128))
+					uiElement("----",671,6,4,rgb(128,128,128))
 				end if
 		
 				'Password display
 				if CampaignFolder = EndlessFolder then
 					'Intentionally blank
 				elseif CampaignPassword = "--------" then
-					ui_element("Fatal!",764,6,7,rgb(255,128,128))
+					uiElement("Fatal!",764,6,7,rgb(255,128,128))
 				elseif CampaignPassword <> "++++++++" AND .LevelNum <= HighLevel AND ShuffleLevels = 0 then
 					if .Difficulty >= 6.5 then
-						ui_element(CampaignPassword,764,6,0,rgb(128,128,128))
+						uiElement(CampaignPassword,764,6,0,rgb(128,128,128))
 					else
-						ui_element(CampaignPassword,764,6,0,rgb(255,255,255))
+						uiElement(CampaignPassword,764,6,0,rgb(255,255,255))
 					end if
 				end if
 	
 				'Level display
-				ui_element(str(.LevelNum),935,6,3,rgb(255,255,255))
+				uiElement(str(.LevelNum),935,6,3,rgb(255,255,255))
 				GameInfo = CampaignName + ": " + CampaignLevelName
 				
 				if (GameStyle AND (1 SHL STYLE_BOSS)) = 0 AND (GameStyle AND (1 SHL STYLE_BREAKABLE_CEILING)) = 0 then
@@ -486,7 +486,7 @@ sub local_gameplay
 				if .BossHealth <= 0 then
 					.BossHealth = 0
 					if .BossLastHit = 1 AND (GameStyle AND (1 SHL STYLE_BOSS)) then
-						play_clip(SFX_WALL_BROKEN)
+						playClip(SFX_WALL_BROKEN)
 						for YID as ubyte = 1 to 24
 							for XID as ubyte = 1 to 20*(CondensedLevel+1)
 								PlayerSlot(Player).TileSet(XID,YID).BrickID = 0
@@ -520,7 +520,7 @@ sub local_gameplay
 		if ShowTopUI < 59 OR (HeadingUpwards = 0 AND ShowTopUI < 60) then
 			ShowTopUI += 1
 		end if
-		BrickCount = disp_wall(PowerTick*(1-GamePaused),1)
+		BrickCount = dispWall(PowerTick*(1-GamePaused),1)
 		
 		if CampaignBarrier then
 			dim as uinteger BarrierColors(1 to 9) => {_
@@ -587,7 +587,7 @@ sub local_gameplay
 									PaddleHealth -= int(sqr(ActiveDifficulty) + 0.5) * 60
 									
 									if PaddleHealth <= 0 then
-										render_paddle(0)
+										renderPaddle(0)
 									end if
 								end if
 							next PaddleID
@@ -601,7 +601,7 @@ sub local_gameplay
 			end if
 		end if
 
-		particle_system
+		particleSystem
 		
 		if TotalBC > 0 AND ProhibitSpawn > 0 then
 			GracePeriod = 240
@@ -619,10 +619,10 @@ sub local_gameplay
 
 		with PlayerSlot(Player)
 			if TotalBC = 0 AND ProhibitSpawn > 0 AND GracePeriod = 0 AND CapsFalling = 0 AND BulletsInPlay = 0 AND LevelClear = 0 then
-				play_clip(SFX_DEATH)
+				playClip(SFX_DEATH)
 				ProhibitSpawn = 0
 				Combo = 0
-				reset_paddle
+				resetPaddle
 				.PerfectClear = 0
 	
 				if (GameStyle AND (1 SHL STYLE_BONUS)) then
@@ -632,19 +632,19 @@ sub local_gameplay
 				end if
 				
 				if .Lives = 0 then
-					game_over
+					gameOver
 					LastPlayed = timer
 					FrameTime = timer
 				end if
 	
 				if (GameStyle AND (1 SHL STYLE_BONUS)) = 0 then
-					transfer_control
+					transferControl
 				end if
 			end if
 		end with
 			
 		if TotalBC = 1 AND ContinuousSplit = 1 then
-			force_release_balls
+			forceReleaseBalls
 			for BID as short = 1 to NumBalls
 				with Ball(BID)
 					if .Speed > 0 then
@@ -868,7 +868,7 @@ sub local_gameplay
 			if .X > 992 - PaddleSize/2 then .X = 992 - PaddleSize/2
 			
 			if PaddleSize > 0 then
-				render_paddle(PaddleSize)
+				renderPaddle(PaddleSize)
 				put (.X-PaddleSize/2,.Y),PaddlePic,trans
 				if PlayerSlot(Player).MissileAmmo > 0 then
 					line(.X-PaddleSize/2,.Y)-(.X+PaddleSize/2-1,.Y+PaddleHeight-1),rgba(255,64,64,128),bf
@@ -1049,7 +1049,7 @@ sub local_gameplay
 			InPassword = "--------"
 			if actionButton AND PaddleSize > 0 AND TotalBC > 0 AND WepCooldown = 0 then
 				if PlayerSlot(Player).BulletAmmo > 0 AND Bullet(BulletStart).Y <= MinPlayHeight - 20 AND Bullet(BulletStart+1).Y <= MinPlayHeight - 20 then
-					play_clip(SFX_SHOOT_BULLET,Paddle(1).X)
+					playClip(SFX_SHOOT_BULLET,Paddle(1).X)
 					WepCooldown = 15
 					
 					for PaddleID as byte = 1 to 2
@@ -1071,7 +1071,7 @@ sub local_gameplay
 				end if
 				
 				if PlayerSlot(Player).MissileAmmo > 0 AND Bullet(BulletStart).Y <= MinPlayHeight - 20 then
-					play_clip(SFX_SHOOT_MISSILE,Paddle(1).X)
+					playClip(SFX_SHOOT_MISSILE,Paddle(1).X)
 					WepCooldown = 90
 					
 					for PaddleID as byte = 2 to 1 step -1
@@ -1111,39 +1111,41 @@ sub local_gameplay
 							if YRef > 0 AND YRef <= 20 AND PlayerSlot(Player).TileSet(XRef,YRef).BrickID > 0 then
 								if Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade = 0 then
 									ScoreBrick = 1
-									play_clip(SFX_BRICK,.X)
+									playClip(SFX_BRICK,.X)
 								elseif Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade <> PlayerSlot(Player).TileSet(XRef,YRef).BrickID then
 									ScoreBrick = 1
-									play_clip(SFX_HARDEN,.X)
+									playClip(SFX_HARDEN,.X)
 								else
-									play_clip(SFX_INVINCIBLE,.X)
+									playClip(SFX_INVINCIBLE,.X)
 								end if
 								
 								if ScoreBrick then
-									generate_capsule(XRef,YRef)
+									generateCapsule(XRef,YRef)
 									with Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID)
 										PlayerSlot(Player).Score += .ScoreValue
-										generate_particles(.ScoreValue,XRef,YRef,rgb(255,255,255))
+										generateParticles(.ScoreValue,XRef,YRef,rgb(255,255,255))
 									end with
 								end if
 								
 								Invis = 12
-								damage_brick(XRef,YRef,Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade,0)
+								damageBrick(XRef,YRef,Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade,0)
 								.Y = -25
 							end if
 						else
 							put(.X-5,.Y),MissilePic,trans
 							if YRef > 0 AND YRef <= 20 AND PlayerSlot(Player).TileSet(XRef,YRef).BrickID > 0 then
+								dim as short RefBrick 
 								ScoreBrick = Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).ZapDegrade
-																
-								generate_capsule(XRef,YRef)
+								RefBrick = Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).CalcedInvulnerable
+								
+								generateCapsule(XRef,YRef)
 								with Pallete(ScoreBrick)
 									PlayerSlot(Player).Score += .ScoreValue
-									generate_particles(.ScoreValue,XRef,YRef,rgb(255,255,255))
+									generateParticles(.ScoreValue,XRef,YRef,rgb(255,255,255))
 								end with
 								
 								Invis = 12
-								damage_brick(XRef,YRef,ExplodeDelay,0)
+								damageBrick(XRef,YRef,min(ExplodeDelay,ExplodeDelay + (100 * (RefBrick + 1))),0)
 								.Y = -25
 							end if
 						end if
@@ -1273,13 +1275,13 @@ sub local_gameplay
 									.LHY = 0
 								end if
 
-								play_clip(SFX_WALL,.X,convert_speed(.Speed))
-								adjust_speed(BID,ActiveDifficulty / 100)
+								playClip(SFX_WALL,.X,convertSpeed(.Speed))
+								adjustSpeed(BID,ActiveDifficulty / 100)
 								if .Power = -2 then
 									.Power = 0
 									TotalBC += 1
 								end if
-								inc_tick_mark(Ball(BID))
+								incTickMark(Ball(BID))
 								.Angle = 180 - .Angle
 							elseif .X > 992 - BallSize AND _
 								(remainder(.Angle+3600,360) < 90 OR _
@@ -1292,16 +1294,16 @@ sub local_gameplay
 									.LHY = 0
 								end if
 
-								play_clip(SFX_WALL,.X,convert_speed(.Speed))
-								adjust_speed(BID,ActiveDifficulty / 100)
+								playClip(SFX_WALL,.X,convertSpeed(.Speed))
+								adjustSpeed(BID,ActiveDifficulty / 100)
 								if .Power = -2 then
 									.Power = 0
 									TotalBC += 1
 								end if
-								inc_tick_mark(Ball(BID))
+								incTickMark(Ball(BID))
 								.Angle = 180 - .Angle
 							end if
-							brick_collisions(BID)
+							brickCollisions(BID)
 							
 							'Bounce off paddle(s)
 							for PaddleID as byte = 1 to 2
@@ -1313,9 +1315,9 @@ sub local_gameplay
 									'Bounce off paddle
 									
 									if PaddleSize > MinSize AND PaddleAdjust < 0 then
-										render_paddle(PaddleSize - 1)
+										renderPaddle(PaddleSize - 1)
 									elseif PaddleSize < MaxSize AND PaddleAdjust > 0 then
-										render_paddle(PaddleSize + 1)
+										renderPaddle(PaddleSize + 1)
 									end if
 	
 									.LHX = 0
@@ -1352,7 +1354,7 @@ sub local_gameplay
 											next XID
 										next YID
 										
-										play_clip(SFX_POWER_DOWN,.X)
+										playClip(SFX_POWER_DOWN,.X)
 									end if
 
 									PaddlePercent = (.X - Paddle(1).X+PaddleSize/2+BallSize)/(PaddleSize+BallSize*2) * 100
@@ -1362,12 +1364,12 @@ sub local_gameplay
 									if GameStyle AND (1 SHL STYLE_BOSS) then
 										.Trapped = 0
 									else
-										inc_tick_mark(Ball(BID))
+										incTickMark(Ball(BID))
 									end if
 									.Spawned = 0
-									dynamic_speed_clip(.Speed,.X)
+									dynamicSpeedClip(.Speed,.X)
 									if .Speed < 20 then
-										adjust_speed(BID,ActiveDifficulty / 100)
+										adjustSpeed(BID,ActiveDifficulty / 100)
 									end if
 									.Angle = int(165 - PaddlePercent/100*150 + .5)
 	
@@ -1432,17 +1434,17 @@ sub local_gameplay
 									TotalBC += 1
 								end if
 
-								play_clip(SFX_WALL,.X,convert_speed(.Speed))
-								adjust_speed(BID,ActiveDifficulty / 100)
+								playClip(SFX_WALL,.X,convertSpeed(.Speed))
+								adjustSpeed(BID,ActiveDifficulty / 100)
 								if (GameStyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
 									with PlayerSlot(Player)
 										if .BossHealth > 0 then
 											.BossLastHealth = .BossHealth
 											.BossLastHit = 0
 											.BossHealth -= int(Ball(BID).Speed)
-											.Score += int(Ball(BID).Speed) * ball_ct_bonus
+											.Score += int(Ball(BID).Speed) * ballCtBonus
 											if .BossHealth <= 0 then
-												play_clip(SFX_WALL_BROKEN)
+												playClip(SFX_WALL_BROKEN)
 											end if
 										else
 											if LevelClear < 1 then
@@ -1451,17 +1453,17 @@ sub local_gameplay
 										end if
 									end with
 								else
-									inc_tick_mark(Ball(BID))
+									incTickMark(Ball(BID))
 								end if
 								.Y = MinPlayHeight + BallSize
 								.Invul = 0
 								.Angle = -.Angle
 								if Paddle(1).Spawned = 0 AND (Gamestyle AND (1 SHL STYLE_SHRINK_CEILING)) then
-									render_paddle(PaddleSize - (StandardSize - MinSize))
+									renderPaddle(PaddleSize - (StandardSize - MinSize))
 									Paddle(1).Spawned = 1
 
 									if PaddleSize < MinSize then
-										render_paddle(MinSize)
+										renderPaddle(MinSize)
 									end if
 								end if
 							end if
@@ -1540,7 +1542,7 @@ sub local_gameplay
 				NextLevel = .LevelNum + 1
 				
 				if ((NextLevel >= SecretLevels AND HighLevel < SecretLevels AND SecretLevels > 0) OR _
-					check_level(NextLevel) = "") AND CampaignFolder <> EndlessFolder then
+					checkLevel(NextLevel) = "") AND CampaignFolder <> EndlessFolder then
 					Bonuses(4) = .Lives * BaseCapsuleValue * 2
 
 					if RecalcGems AND LevelClear > 25 then
@@ -1749,7 +1751,7 @@ sub local_gameplay
 										end with
 									next PID
 									
-									while LowestLevel > 1 AND check_level(LowestLevel) = "--------"
+									while LowestLevel > 1 AND checkLevel(LowestLevel) = "--------"
 										LowestLevel -= 1
 									wend
 								else
@@ -1763,7 +1765,7 @@ sub local_gameplay
 									.LevelNum = .LevelNum
 									.Difficulty = DifficultyRAM(NumPlayers)
 
-									fresh_level(NumPlayers)
+									freshLevel(NumPlayers)
 								end with
 								
 								Instructions = "Here comes a new challenger! Turns will cycle as usual."
@@ -1774,7 +1776,7 @@ sub local_gameplay
 							elseif TotalBC > 0 then
 								Instructions = "Not available if there are already balls in play"
 							else
-								transfer_control
+								transferControl
 								Instructions = "Skip successful. Ready to go, Player "+str(Player)+"?"
 							end if
 						elseif DebugCode = "PUMPKINEATER" then
@@ -1790,21 +1792,21 @@ sub local_gameplay
 								.Lives += 3
 							elseif DebugCode = "BIGGIEPADDLE" then
 								Instructions = "Paddle size increased"
-								render_paddle(PaddleSize + 70)
+								renderPaddle(PaddleSize + 70)
 							elseif DebugCode = "PEWPEW" then
 								.BulletAmmo += 100
 								.MissileAmmo = 0
 								Instructions = "Bullet stock granted"
 							elseif DebugCode = "CAPSHOWER" then
 								for GenID as byte = 1 to 120
-									generate_capsule(irandom(1,20*(CondensedLevel+1)),irandom(1,20))
+									generateCapsule(irandom(1,20*(CondensedLevel+1)),irandom(1,20))
 								next GenID
 								Instructions = "Capsule shower granted"
 							elseif DebugCode = "WARPAWAY" then
 								if LevelClear < 1 then LevelClear = 1024
 								Instructions = "Level warp granted"
 							elseif DebugCode = "BACKINTIME" then
-								load_level(.LevelNum)
+								loadLevel(.LevelNum)
 								Instructions = "Level restart granted"
 							elseif DebugCode = "TIMEFROST" then
 								with Paddle(1)
@@ -1823,7 +1825,7 @@ sub local_gameplay
 								Instructions = "Gravity granted"
 							else
 								dim as ubyte PunishRoll
-								force_release_balls
+								forceReleaseBalls
 								Instructions = "Trying to cheat? Take this!"
 								PunishRoll = irandom(1,6)
 								select case PunishRoll
@@ -1837,7 +1839,7 @@ sub local_gameplay
 											.Lives -= 1
 										end if
 									case 3
-										reset_paddle(1)
+										resetPaddle(1)
 									case 4
 										for BID as short = 1 to NumBalls
 											with Ball(BID)
@@ -1852,10 +1854,10 @@ sub local_gameplay
 										Paddle(1).Reverse = irandom(15,45) * 60
 										PaddleAdjust = -2
 									case 6
-										render_paddle(5)
+										renderPaddle(5)
 								end select
 								if .Lives <= 0 AND NumPlayers > 1 then
-									transfer_control
+									transferControl
 								end if
 							end if
 						else
@@ -1886,7 +1888,7 @@ sub local_gameplay
 				end if
 				InstructExpire = timer + 1
 				if multikey(SC_TAB) then
-					auxillary_view(InstruAlpha, InstruBeta)
+					auxillaryView(InstruAlpha, InstruBeta)
 				end if
 			end if
 			
@@ -1930,13 +1932,13 @@ sub local_gameplay
 								dim as ushort BonusPts, ChooseParticle
 								.Y = 800
 								if PaddleSize + 5 < MinSize then 
-									render_paddle(PaddleSize + 5)
+									renderPaddle(PaddleSize + 5)
 								elseif PaddleSize < MinSize then 
-									render_paddle(MinSize)
+									renderPaddle(MinSize)
 								end if
 								select case .Angle
 									case CAP_SLOW
-										capsule_message("SLOWER BALLS: All ball speeds slowed to minimum",-1)
+										capsuleMessage("SLOWER BALLS: All ball speeds slowed to minimum",-1)
 										for BID as short = 1 to NumBalls
 											with Ball(BID)
 												if .Speed > 0 AND .Power <> -2 then
@@ -1945,61 +1947,61 @@ sub local_gameplay
 												end if
 											end with
 										next BID
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_FAST
-										capsule_message("FASTER BALLS",-1)
+										capsuleMessage("FASTER BALLS",-1)
 										for BID as short = 1 to NumBalls
 											with Ball(BID)
 												if .Speed > 0 AND .Power <> -2 then
-													adjust_speed(BID,min(4,int(ActiveDifficulty+0.5)))
+													adjustSpeed(BID,min(4,int(ActiveDifficulty+0.5)))
 												end if
 											end with
 										next BID
-										play_clip(SFX_POWER_DOWN,.X)
+										playClip(SFX_POWER_DOWN,.X)
 									case CAP_EXPAND
 										if PaddleSize < MinSize then
-											render_paddle(MinSize)
+											renderPaddle(MinSize)
 										end if
 										if PaddleSize < MaxSize then
-											render_paddle(PaddleSize + 40)
+											renderPaddle(PaddleSize + 40)
 											if PaddleSize > MaxSize then
-												render_paddle(MaxSize)
+												renderPaddle(MaxSize)
 											end if
 										end if
 										PaddleAdjust = max(PaddleAdjust,0)
-										capsule_message("EXPAND PADDLE: Size +40 pixels = "+str(PaddleSize)+" pixels",-1)
-										force_release_balls
-										play_clip(SFX_POWER_UP,.X)
+										capsuleMessage("EXPAND PADDLE: Size +40 pixels = "+str(PaddleSize)+" pixels",-1)
+										forceReleaseBalls
+										playClip(SFX_POWER_UP,.X)
 									case CAP_REDUCE
 										if PaddleSize > MinSize then
-											render_paddle(PaddleSize - 40)
+											renderPaddle(PaddleSize - 40)
 											if PaddleSize < MinSize then
-												render_paddle(MinSize)
+												renderPaddle(MinSize)
 											end if
 										end if
 										PaddleAdjust = min(PaddleAdjust,0)
-										capsule_message("REDUCE PADDLE: Size -40 pixels = "+str(PaddleSize)+" pixels",-1)
-										force_release_balls
-										play_clip(SFX_POWER_DOWN,.X)
+										capsuleMessage("REDUCE PADDLE: Size -40 pixels = "+str(PaddleSize)+" pixels",-1)
+										forceReleaseBalls
+										playClip(SFX_POWER_DOWN,.X)
 									case CAP_LIFE
-										capsule_message("EXTRA LIFE")
+										capsuleMessage("EXTRA LIFE")
 										PlayerSlot(Player).Lives += 1
-										play_clip(SFX_LIFE,.X)
+										playClip(SFX_LIFE,.X)
 									case CAP_BLIZZARD
-										capsule_message("BLIZZARD: Slow down movement speeds")
+										capsuleMessage("BLIZZARD: Slow down movement speeds")
 										with Paddle(1)
 											.Blizzard += 1800
 										end with
 										FreezeStr = (FreezeStr + 60) / 2 
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_REPAIR
-										capsule_message("FASTER REPAIRS: Repair rate temporarily quadrupled")
+										capsuleMessage("FASTER REPAIRS: Repair rate temporarily quadrupled")
 										Paddle(1).Repairs += 1800
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_DISRUPT
 										dim as short TotalNew = 0, BallsFound, RollBall
-										capsule_message("DISRUPTION: One ball splits into eight")
-										force_release_balls
+										capsuleMessage("DISRUPTION: One ball splits into eight")
+										forceReleaseBalls
 										RollBall = irandom(1,TotalBC)
 										
 										for BID as short = 1 to NumBalls
@@ -2008,7 +2010,7 @@ sub local_gameplay
 													BallsFound += 1
 													
 													if BallsFound = RollBall then
-														adjust_speed(BID,4)
+														adjustSpeed(BID,4)
 														for NewBall as short = 1 to 100
 															with Ball(NewBall)
 																if .Speed <= 0 then
@@ -2035,11 +2037,11 @@ sub local_gameplay
 												end if
 											end with
 										next BID
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_SPLIT_BALL
 										dim as ubyte Splitted(NumBalls)
-										capsule_message("SPLIT BALL",-1)
-										force_release_balls
+										capsuleMessage("SPLIT BALL",-1)
+										forceReleaseBalls
 										for BID as short = 1 to NumBalls
 											with Ball(BID)
 												if .Speed > 0 AND Splitted(BID) = 0 AND .Power <> -2 then
@@ -2065,9 +2067,9 @@ sub local_gameplay
 											end with
 										next BID
 										erase Splitted
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_ZAP
-										capsule_message("ZAP BLOCKS: Remaining blocks are visible and soft")
+										capsuleMessage("ZAP BLOCKS: Remaining blocks are visible and soft")
 										for YID as ubyte = 1 to 24
 											for XID as ubyte = 1 to 20*(CondensedLevel+1)
 												with Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID)
@@ -2088,45 +2090,45 @@ sub local_gameplay
 										if (Gamestyle AND (1 SHL STYLE_INVIS)) then
 											Gamestyle -= 2^STYLE_INVIS
 										end if
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_MYSTERY
 										dim as single Effects = rnd
 										if Effects < .05 then
-											capsule_message("MYSTERY CAPSULE: Gradual Reduction",1)
+											capsuleMessage("MYSTERY CAPSULE: Gradual Reduction",1)
 											PaddleAdjust = -1
-											play_clip(SFX_POWER_DOWN,.X)
+											playClip(SFX_POWER_DOWN,.X)
 										elseif Effects < .15 then
-											capsule_message("MYSTERY CAPSULE: Mega Reduce! Size = "+str(MinSize)+" pixels",1)
-											render_paddle(MinSize)
-											force_release_balls
-											play_clip(SFX_POWER_DOWN,.X)
+											capsuleMessage("MYSTERY CAPSULE: Mega Reduce! Size = "+str(MinSize)+" pixels",1)
+											renderPaddle(MinSize)
+											forceReleaseBalls
+											playClip(SFX_POWER_DOWN,.X)
 										elseif Effects < .35 then
-											render_paddle(PaddleSize - 100)
+											renderPaddle(PaddleSize - 100)
 											if PaddleSize < MinSize then
-												render_paddle(MinSize)
+												renderPaddle(MinSize)
 											end if
-											force_release_balls
-											capsule_message("MYSTERY CAPSULE: Super Reduce! Size -100 = "+str(PaddleSize)+" pixels",1)
-											play_clip(SFX_POWER_DOWN,.X)
+											forceReleaseBalls
+											capsuleMessage("MYSTERY CAPSULE: Super Reduce! Size -100 = "+str(PaddleSize)+" pixels",1)
+											playClip(SFX_POWER_DOWN,.X)
 										elseif Effects < .4 then
-											capsule_message("MYSTERY CAPSULE: Gradual Expansion",1)
+											capsuleMessage("MYSTERY CAPSULE: Gradual Expansion",1)
 											PaddleAdjust = 1
-											play_clip(SFX_POWER_UP,.X)
+											playClip(SFX_POWER_UP,.X)
 										elseif Effects < .6 then
 											if PaddleSize < MinSize then
-												render_paddle(MinSize)
+												renderPaddle(MinSize)
 											end if
-											render_paddle(PaddleSize + 100)
+											renderPaddle(PaddleSize + 100)
 											if PaddleSize > MaxSize then
-												render_paddle(MaxSize)
+												renderPaddle(MaxSize)
 											end if
-											force_release_balls
-											capsule_message("MYSTERY CAPSULE: Super Expand! Size +100 = "+str(PaddleSize)+" pixels",1)
-											play_clip(SFX_POWER_UP,.X)
+											forceReleaseBalls
+											capsuleMessage("MYSTERY CAPSULE: Super Expand! Size +100 = "+str(PaddleSize)+" pixels",1)
+											playClip(SFX_POWER_UP,.X)
 										elseif Effects < .7 then
 											dim as ubyte TotalNew = 0, Splitted(NumBalls)
-											capsule_message("MYSTERY CAPSULE: Quad Split",1)
-											force_release_balls
+											capsuleMessage("MYSTERY CAPSULE: Quad Split",1)
+											forceReleaseBalls
 											for BID as short = 1 to NumBalls
 												with Ball(BID)
 													if .Speed > 0 AND Splitted(BID) = 0 AND .Power <> -2 then
@@ -2154,11 +2156,11 @@ sub local_gameplay
 												end with
 											next BID
 											erase Splitted
-											play_clip(SFX_POWER_UP,.X)
+											playClip(SFX_POWER_UP,.X)
 										elseif Effects < .725 then
 											dim as ubyte Splitted(NumBalls)
-											capsule_message("MYSTERY CAPSULE: Split Deluxe",1)
-											force_release_balls
+											capsuleMessage("MYSTERY CAPSULE: Split Deluxe",1)
+											forceReleaseBalls
 											ContinuousSplit = 1
 											for BID as short = 1 to NumBalls
 												with Ball(BID)
@@ -2183,14 +2185,14 @@ sub local_gameplay
 												end with
 											next BID
 											erase Splitted
-											play_clip(SFX_POWER_UP,.X)
+											playClip(SFX_POWER_UP,.X)
 										elseif Effects < .75 then
-											capsule_message("MYSTERY CAPSULE: Deep Freeze!",1)
+											capsuleMessage("MYSTERY CAPSULE: Deep Freeze!",1)
 											Paddle(1).Blizzard = 3600
 											FreezeStr = 60
-											play_clip(SFX_POWER_UP,.X)
+											playClip(SFX_POWER_UP,.X)
 										elseif Effects < .85 AND (Gamestyle AND (1 SHL STYLE_BOSS)) = 0 then
-											capsule_message("MYSTERY CAPSULE: Random ball damage!",1)
+											capsuleMessage("MYSTERY CAPSULE: Random ball damage!",1)
 											for BID as short = 1 to NumBalls
 												with Ball(BID)
 													if .Speed > 0 AND .Power >= -1 then
@@ -2202,20 +2204,20 @@ sub local_gameplay
 													end if
 												end with
 											next BID
-											force_release_balls
-											play_clip(SFX_BRICKS_RESPAWN,.X)
+											forceReleaseBalls
+											playClip(SFX_BRICKS_RESPAWN,.X)
 										elseif Effects < .85 AND PaddleHealth < 97 * 60 then
-											capsule_message("MYSTERY CAPSULE: Full repair!",1)
+											capsuleMessage("MYSTERY CAPSULE: Full repair!",1)
 											PaddleHealth = 110 * 60
-											play_clip(SFX_POWER_UP,.X)
+											playClip(SFX_POWER_UP,.X)
 										else
-											capsule_message("MYSTERY CAPSULE: No effect",1)
-											play_clip(SFX_INVINCIBLE,.X)
+											capsuleMessage("MYSTERY CAPSULE: No effect",1)
+											playClip(SFX_INVINCIBLE,.X)
 										end if
 										InstructExpire = timer + 10
 									case CAP_EXTENDER
 										dim as byte ExtraLen = 15
-										capsule_message("EFFECT EXTENDER: Timed effects last 0:"+str(ExtraLen)+" longer")
+										capsuleMessage("EFFECT EXTENDER: Timed effects last 0:"+str(ExtraLen)+" longer")
 										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Duration > 0 AND .Power > -2 then
@@ -2243,9 +2245,9 @@ sub local_gameplay
 												.Blizzard += ExtraLen*60
 											end if
 										end with
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_NEGATER
-										capsule_message("EFFECT NEGATER: Timed effects ended early")
+										capsuleMessage("EFFECT NEGATER: Timed effects ended early")
 										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Power > -2 then
@@ -2262,10 +2264,10 @@ sub local_gameplay
 											.Reverse = 0
 											.Blizzard = 0
 										end with
-										force_release_balls
-										play_clip(SFX_POWER_DOWN,.X)
+										forceReleaseBalls
+										playClip(SFX_POWER_DOWN,.X)
 									case CAP_WEAK
-										capsule_message("WEAKENED BALLS: Ball damage is temporarily inconsistent",-1)
+										capsuleMessage("WEAKENED BALLS: Ball damage is temporarily inconsistent",-1)
 										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Power <> -2 then
@@ -2278,10 +2280,10 @@ sub local_gameplay
 												end if
 											end with
 										next FID
-										force_release_balls
-										play_clip(SFX_POWER_DOWN,.X)
+										forceReleaseBalls
+										playClip(SFX_POWER_DOWN,.X)
 									case CAP_FIRE
-										capsule_message("FIRE BALLS: Explosive damage")
+										capsuleMessage("FIRE BALLS: Explosive damage")
 										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Power <> -2 then
@@ -2300,10 +2302,10 @@ sub local_gameplay
 												end if
 											end with
 										next FID
-										force_release_balls
-										play_clip(SFX_POWER_UP,.X)
+										forceReleaseBalls
+										playClip(SFX_POWER_UP,.X)
 									case CAP_THRU
-										capsule_message("BREAKTHRU BALLS: Balls do not bounce off of bricks")
+										capsuleMessage("BREAKTHRU BALLS: Balls do not bounce off of bricks")
 										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Power <> -2 then
@@ -2322,10 +2324,10 @@ sub local_gameplay
 												end if
 											end with
 										next FID
-										force_release_balls
-										play_clip(SFX_POWER_UP,.X)
+										forceReleaseBalls
+										playClip(SFX_POWER_UP,.X)
 									case CAP_GRAVITY
-										capsule_message("GRAVITY BALLS: Balls temporarily curve towards the paddle")
+										capsuleMessage("GRAVITY BALLS: Balls temporarily curve towards the paddle")
 										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Power <> -2 then
@@ -2333,10 +2335,10 @@ sub local_gameplay
 												end if
 											end with
 										next FID
-										force_release_balls
-										play_clip(SFX_POWER_DOWN,.X)
+										forceReleaseBalls
+										playClip(SFX_POWER_DOWN,.X)
 									case CAP_MAXIMIZE
-										capsule_message("MAXIMUM BALL SPEED!!! Brace yourself!")
+										capsuleMessage("MAXIMUM BALL SPEED!!! Brace yourself!")
 										for FID as short = 1 to NumBalls
 											with Ball(FID)
 												if .Speed > 0 AND .Power <> -2 then
@@ -2344,27 +2346,27 @@ sub local_gameplay
 												end if
 											end with
 										next FID
-										play_clip(SFX_POWER_DOWN,.X)
+										playClip(SFX_POWER_DOWN,.X)
 									case CAP_GRAB
-										capsule_message("GRABBING PADDLE",-1)
+										capsuleMessage("GRABBING PADDLE",-1)
 										Paddle(1).Grabbing += 1800
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_SLOW_PAD
-										capsule_message("SLOW PADDLE")
+										capsuleMessage("SLOW PADDLE")
 										Paddle(1).Sluggish = max(Paddle(1).Sluggish,900)
-										play_clip(SFX_POWER_DOWN,.X)
+										playClip(SFX_POWER_DOWN,.X)
 									case CAP_WEP_BULLET
-										capsule_message("BULLET PADDLE: Ammo that deals normal damage")
+										capsuleMessage("BULLET PADDLE: Ammo that deals normal damage")
 										PlayerSlot(Player).BulletAmmo += 100
 										PlayerSlot(Player).MissileAmmo = 0
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_WEP_MISSILE
-										capsule_message("MISSILE PADDLE: Ammo that deals explosive damage")
+										capsuleMessage("MISSILE PADDLE: Ammo that deals explosive damage")
 										PlayerSlot(Player).MissileAmmo += 10
 										PlayerSlot(Player).BulletAmmo = 0
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_REVERSE
-										capsule_message("REVERSE PADDLE")
+										capsuleMessage("REVERSE PADDLE")
 										with Paddle(1)
 											if .Reverse = 0 then
 												if ControlStyle <= CTRL_LAPTOP then
@@ -2378,10 +2380,10 @@ sub local_gameplay
 											
 											.Reverse = max(.Reverse,900)
 										end with
-										play_clip(SFX_POWER_DOWN,.X)
+										playClip(SFX_POWER_DOWN,.X)
 									case CAP_SPREAD
 										dim as ubyte AlreadySpread(40,20)
-										capsule_message("SPREAD EXPLODING",-1)
+										capsuleMessage("SPREAD EXPLODING",-1)
 										for YID as byte = 1 to 20
 											for XID as byte = 1 to 20*(CondensedLevel+1)
 												with PlayerSlot(Player).TileSet(XID,YID)
@@ -2412,14 +2414,14 @@ sub local_gameplay
 										for YID as byte = 1 to 20
 											for XID as byte = 1 to 20*(CondensedLevel+1)
 												if AlreadySpread(XID,YID) then
-													damage_brick(XID,YID,PlayerSlot(Player).TileSet(XID,YID).BrickID)
+													damageBrick(XID,YID,PlayerSlot(Player).TileSet(XID,YID).BrickID)
 												end if
 											next XID
 										next YID
 										erase AlreadySpread
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_DETONATE
-										capsule_message("DETONATE EXPLODING",-1)
+										capsuleMessage("DETONATE EXPLODING",-1)
 										for YID as ubyte = 1 to 20
 											for XID as ubyte = 1 to 20*(CondensedLevel+1)
 												with Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID)
@@ -2429,13 +2431,13 @@ sub local_gameplay
 												end with
 											next XID
 										next YID
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_WARP
-										capsule_message("WARP LEVEL")
+										capsuleMessage("WARP LEVEL")
 										if LevelClear < 1 then
 											LevelClear = 1
 										end if
-										play_clip(SFX_POWER_UP,.X)
+										playClip(SFX_POWER_UP,.X)
 									case CAP_GEM_R, CAP_GEM_G, CAP_GEM_B, CAP_GEM_Y, CAP_GEM_P, CAP_GEM_C, CAP_GEM_W
 										dim as string GemType, HandScored
 										dim as byte GemsCollected = 1
@@ -2462,23 +2464,23 @@ sub local_gameplay
 											end if
 										next HandID
 										if GemsCollected > 5 then
-											empty_hand(Player)
+											emptyHand(Player)
 											GemsCollected = 1
-											render_hand
+											renderHand
 										elseif GemsCollected = 1 then
-											render_hand
+											renderHand
 										end if
 										
 										PlayerSlot(Player).PokerHand(GemsCollected) = .Angle - CAP_GEM_R + 1
 										if GemsCollected = 5 then
 											GemMultiplier = score_hand
 										end if
-										render_hand(GemsCollected)
+										renderHand(GemsCollected)
 										RecalcGems = 1
 										
 										if GemMultiplier = 0 then
-											capsule_message(GemType+" GEM collected",-1)
-											play_clip(SFX_HARDEN,.X)
+											capsuleMessage(GemType+" GEM collected",-1)
+											playClip(SFX_HARDEN,.X)
 										else
 											PlayerSlot(Player).Score += BaseCapsuleValue * GemMultiplier
 											
@@ -2494,9 +2496,9 @@ sub local_gameplay
 												HandScored = "Two Pair"
 											end if
 											
-											capsule_message(GemType+" GEM collected: Bonus "+str(BaseCapsuleValue * GemMultiplier)+" for completing a "+HandScored)
-											play_clip(SFX_POWER_UP,.X)
-											empty_hand(Player)
+											capsuleMessage(GemType+" GEM collected: Bonus "+str(BaseCapsuleValue * GemMultiplier)+" for completing a "+HandScored)
+											playClip(SFX_POWER_UP,.X)
+											emptyHand(Player)
 										end if
 								end select
 								
@@ -2531,7 +2533,7 @@ sub local_gameplay
 					.Threshold = 0
 					Instructions = "Extra life earned"
 				end if
-				play_clip(SFX_LIFE)
+				playClip(SFX_LIFE)
 				.Lives += 1
 				InstructExpire = timer + 10
 			end if
@@ -2553,11 +2555,11 @@ sub local_gameplay
 
 		if total_lives <= 0 AND ProhibitSpawn = 0 then
 			if multikey(SC_TAB) then
-				auxillary_view(InstruAlpha, InstruBeta)
+				auxillaryView(InstruAlpha, InstruBeta)
 			end if
 
 			setmouse(,,0,0)
-			release_music
+			releaseMusic
 			Paddle(1).Blizzard = 0
 			Paddle(1).Grabbing = 0
 			if ucase(InType) >= "A" AND ucase(InType) <= "Z" AND PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignName <> PlaytestName then
@@ -2565,7 +2567,7 @@ sub local_gameplay
 			end if
 			
 			if InType = FunctionFour AND PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignFolder <> EndlessFolder AND CampaignName <> PlaytestName then
-				InPassword = level_list
+				InPassword = levelList
 				FrameTime = timer
 			end if
 
@@ -2586,9 +2588,9 @@ sub local_gameplay
 					dim as string ActualPassword
 					dim as short TestNum = 2, Result
 					do
-						ActualPassword = check_level(TestNum)
+						ActualPassword = checkLevel(TestNum)
 						if (ActualPassword = InPassword AND InPassword <> "++++++++") then
-							begin_local_game(NumPlayers, TestNum)
+							beginLocalGame(NumPlayers, TestNum)
 
 							Instructions = "Password successful"
 							InstructExpire = timer + 5
@@ -2609,7 +2611,7 @@ sub local_gameplay
 					MPAlternate += 1
 					if MPAlternate >= 400 then
 						MPAlternate = 0
-						transfer_control(1)
+						transferControl(1)
 					end if
 				end if
 				
@@ -2674,7 +2676,7 @@ sub local_gameplay
 					Paddle(1).Reverse = min(Paddle(1).Reverse,180)
 					
 					.Lives -= 1
-					play_clip(SFX_POWER_DOWN)
+					playClip(SFX_POWER_DOWN)
 					PaddleHealth += 50 * 60
 					.PerfectClear = 0
 	
@@ -2695,12 +2697,12 @@ sub local_gameplay
 					end if
 	
 					if PaddleSize < MinSize then
-						render_paddle(MinSize)
+						renderPaddle(MinSize)
 					end if
 					if PaddleSize < StandardSize - 40 then
-						render_paddle(PaddleSize + 40)
+						renderPaddle(PaddleSize + 40)
 					elseif PaddleSize < StandardSize then
-						render_paddle(StandardSize)
+						renderPaddle(StandardSize)
 					end if
 				end with
 			else
@@ -2806,7 +2808,7 @@ sub local_gameplay
 		if total_lives = 0 then
 			for PID as ubyte = 0 to MaxPlayers
 				if InType = str(PID) AND InPassword = "--------" then
-					begin_local_game(PID, 1)
+					beginLocalGame(PID, 1)
 					
 					Instructions = ""
 					InstructExpire = timer
@@ -2838,10 +2840,10 @@ sub local_gameplay
 			
 			if MusicPlrEnabled then
 				Instructions = "Music player activated"
-				rotate_music
+				rotateMusic
 			else
 				Instructions = "Music player disabled"
-				release_music
+				releaseMusic
 			end if
 			InstructExpire = timer + 5
 			#ENDIF
@@ -2853,7 +2855,7 @@ sub local_gameplay
 			LastPlayed = timer
 			FrameTime = timer
 		elseif InType = FunctionTwelve then
-			play_clip(SFX_BRICKS_RESPAWN)
+			playClip(SFX_BRICKS_RESPAWN)
 			bsave("screen"+str(ShotIndex)+".bmp",0)
 			ShotIndex += 1
 		end if
@@ -2869,8 +2871,8 @@ sub local_gameplay
 			LevelClear = 0
 			
 			dim as ubyte InPlay
-			destroy_ammo
-			destroy_capsules
+			destroyAmmo
+			destroyCapsules
 			
 			with PlayerSlot(Player)
 				if .Lives < StartingLives AND .Difficulty < 3.5 AND CampaignFolder <> EndlessFolder then
@@ -2888,12 +2890,12 @@ sub local_gameplay
 						exit for
 					end if
 				next BID
-				destroy_balls
+				destroyBalls
 				
 				if .LevelNum >= SecretLevels AND HighLevel < SecretLevels AND SecretLevels > 0 then
-					play_clip(SFX_EXPLODE)
+					playClip(SFX_EXPLODE)
 					if DQ = 0 then
-						high_score_input(Player)
+						highScoreInput(Player)
 						if ControlStyle >= CTRL_DESKTOP then
 							TotalXP += int(.Score * .Difficulty)
 							if FileExists(CampaignName+".flag") = 0 then
@@ -2903,25 +2905,25 @@ sub local_gameplay
 							end if
 						end if
 					end if
-					empty_hand(Player)
+					emptyHand(Player)
 	
 					LastPlayed = timer
 					FrameTime = timer
 					.LevelNum -= 1
 					.Lives = 0
 					.SetCleared = 1
-					save_config
-				elseif check_level(.LevelNum) <> "" then
+					saveConfig
+				elseif checkLevel(.LevelNum) <> "" then
 					Gamestyle = 0
-					rotate_back
-					load_level(.LevelNum)
-					fresh_level(Player)
+					rotateBack
+					loadLevel(.LevelNum)
+					freshLevel(Player)
 					Paddle(1).Sluggish = 0
 					Paddle(1).Spawned = 0
 				else
-					play_clip(SFX_LIFE)
+					playClip(SFX_LIFE)
 					if DQ = 0 then
-						high_score_input(Player)
+						highScoreInput(Player)
 						if ControlStyle >= CTRL_DESKTOP then
 							TotalXP += int(.Score * .Difficulty * 2)
 							if FileExists(CampaignName+".flag") = 0 then
@@ -2931,18 +2933,18 @@ sub local_gameplay
 							end if
 						end if
 					end if
-					empty_hand(Player)
+					emptyHand(Player)
 	
 					LastPlayed = timer
 					FrameTime = timer
 					.SetCleared = 1
 					.LevelNum -= 1
 					.Lives = 0
-					save_config
+					saveConfig
 				end if
 			end with
-			transfer_control
-			generate_cavity
+			transferControl
+			generateCavity
 		end if
 		
 		while PowerTick >= 100
@@ -2959,9 +2961,9 @@ sub local_gameplay
 				if GameStyle AND (1 SHL STYLE_BONUS) then
 					GameStyle -= 2^STYLE_BONUS
 				end if
-				destroy_ammo
-				destroy_balls
-				destroy_capsules
+				destroyAmmo
+				destroyBalls
+				destroyCapsules
 				GamePaused = 0
 			else
 				exit do
@@ -2970,12 +2972,12 @@ sub local_gameplay
 			exit do
 		end if
 	loop
-	release_music
+	releaseMusic
 	for PID as ubyte = 1 to MaxPlayers
 		with PlayerSlot(PID)
 			if .Lives > 0 AND DQ = 0 then
 				TotalXP += int(.Score * .Difficulty)
-				high_score_input(PID,1)
+				highScoreInput(PID,1)
 			end if
 		end with
 	next PID
@@ -2989,8 +2991,8 @@ sub local_gameplay
 	ControlStyle = SavedControls
 	kill("Stats.dat")
 	if InType = XBox then
-		clean_up
-		save_config
+		cleanUp
+		saveConfig
 		end 0
 	end if
 	erase EndlessShuffList

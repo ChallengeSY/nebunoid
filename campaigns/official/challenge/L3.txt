@@ -30,37 +30,37 @@ Brush 5 Color         := &h80FF8080
 Brush 5 Score Value   := 10*
 Brush 5 Hit Degrade   := 0
 Brush 5 Increase Spd  := FALSE
-Brush 6 Color         := &h80FFC0C0
+Brush 6 Color         := &h80FFA0A0
 Brush 6 Score Value   := 10*
 Brush 6 Hit Degrade   := 0
 Brush 6 Increase Spd  := FALSE
-Brush 7 Color         := &h80FFE0E0
+Brush 7 Color         := &h80FFC0C0
 Brush 7 Score Value   := 10*
 Brush 7 Hit Degrade   := 0
 Brush 7 Increase Spd  := FALSE
-Brush 8 Color         := &h80404040
+Brush 8 Color         := &h80FFE0E0
 Brush 8 Score Value   := 10*
 Brush 8 Hit Degrade   := 0
 Brush 8 Increase Spd  := FALSE
-Brush 9 Color         := &h80808080
-Brush 9 Score Value   := 2
-Brush 9 Hit Degrade   := 8
+Brush 9 Color         := &h80404040
+Brush 9 Score Value   := 10*
+Brush 9 Hit Degrade   := 0
 Brush 9 Increase Spd  := FALSE
-Brush 10 Color        := &h80FFFFFF
+Brush 10 Color        := &h80808080
 Brush 10 Score Value  := 2
 Brush 10 Hit Degrade  := 9
 Brush 10 Increase Spd := FALSE
-Brush 11 Color        := &hB0FFD700
-Brush 11 Score Value  := 10*
-Brush 11 Hit Degrade  := 11
+Brush 11 Color        := &h80FFFFFF
+Brush 11 Score Value  := 2
+Brush 11 Hit Degrade  := 10
 Brush 11 Increase Spd := FALSE
-Brush 12 Color        := &hB0CD7F32
-Brush 12 Score Value  := 2
-Brush 12 Hit Degrade  := 11
+Brush 12 Color        := &hB0FFD700
+Brush 12 Score Value  := 10*
+Brush 12 Hit Degrade  := 12
 Brush 12 Increase Spd := FALSE
-Brush 13 Color        := &h80FFA0A0
-Brush 13 Score Value  := 10*
-Brush 13 Hit Degrade  := 0
+Brush 13 Color        := &hB0CD7F32
+Brush 13 Score Value  := 2
+Brush 13 Hit Degrade  := 12
 Brush 13 Increase Spd := FALSE
 Brush 14 Color        := &h80FF4000
 Brush 14 Score Value  := 10*
@@ -71,22 +71,22 @@ Level Grid  11111111112
    12345678901234567890
 -----------------------
  1|EEEEEEEEEEEEEEEEEEEE
- 2|EBBBBEBBBEEBBBEBBBBE
- 3|EBCCBEBCBEEBCBEBCCBE
- 4|ECCCCECCCEECCCECCCCE
- 5|111C222C1111C111C222
- 6|111C222C2222C111C222
- 7|111C222C3333C111C222
- 8|333C444C4444C333C444
- 9|333C444C5555C333C444
-10|333CDDDCDDDDC555C444
-11|555CDDDC6666C555CDDD
-12|555CDDDC7777C555CDDD
-13|555C777CAAAAC666CDDD
-14|666C777C    C666C777
-15|666CAAAC    CAAAC777
-16|666C            C777
-17|AAAC            CAAA
+ 2|ECCCCECCCEECCCECCCCE
+ 3|ECDDCECDCEECDCECDDCE
+ 4|EDDDDEDDDEEDDDEDDDDE
+ 5|111D222D1111D111D222
+ 6|111D222D2222D111D222
+ 7|111D222D3333D111D222
+ 8|333D444D4444D333D444
+ 9|333D444D5555D333D444
+10|333D666D6666D555D444
+11|555D666D7777D555D666
+12|555D666D8888D555D666
+13|555D888DBBBBD777D666
+14|777D888D    D777D888
+15|777DBBBD    DBBBD888
+16|777D            D888
+17|BBBD            DBBB
 18|                    
 19|                    
 20|                    

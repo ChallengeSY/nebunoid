@@ -54,9 +54,9 @@ SFXNames(SFX_WALL_BROKEN) = "wallBroken"
 SFXNames(SFX_BALL) = "paddle"
 SFXNames(SFX_WALL) = "wall"
 
-declare sub clean_up
+declare sub cleanUp
 declare sub shuffle_music
-declare sub preload_music(ByVal InternalPtr as any ptr = 0)
+declare sub preloadMusic(ByVal InternalPtr as any ptr = 0)
 
 screen 20,24,2,GFX_ALPHA_PRIMITIVES OR GFX_NO_SWITCH
 ScreenCreated = 1
@@ -73,7 +73,7 @@ if fbs_Init(44100,2) = FALSE then
 	open "stderr.txt" for output as #1
 	print #1, "Unable to initialize audio!"
 	close #1
-	clean_up
+	cleanUp
 	end 1
 end if
 
@@ -95,7 +95,7 @@ for PID as short = 0 to clipCount
 		print "Erorr! Unable to load clip ";PID
 		screencopy
 		sleep
-		clean_up
+		cleanUp
 		end 1
 	end if
 next PID
@@ -165,7 +165,7 @@ end if
 
 if PreloadLock = 0 then
 	'No multi-thread, just pre-load the old way
-	preload_music
+	preloadMusic
 
 	if WarningsFound > 0 then
 		print "Some songs could not be loaded. Offending songs will be ignored in the playlist."
@@ -194,10 +194,10 @@ if PreloadLock = 0 then
 	end if
 else
 	'Success! Create a thread and go straight to main menu!
-	PreloadThread = ThreadCreate(@preload_music)
+	PreloadThread = ThreadCreate(@preloadMusic)
 end if
 
-sub preload_music(ByVal InternalPtr as any ptr = 0)
+sub preloadMusic(ByVal InternalPtr as any ptr = 0)
 	dim as any ptr LoadingBar
 
 	if PreloadLock = 0 then
@@ -281,7 +281,7 @@ sub shuffle_music
 	erase SlotUsed
 end sub
 
-sub play_clip(ID as byte, Panning as short = 512, HertzMod as short = 100)
+sub playClip(ID as byte, Panning as short = 512, HertzMod as short = 100)
 	if ID >= 0 then
 		dim as ubyte PauseLength(0 to clipCount)
 		for clipID as ubyte = 0 to clipCount
@@ -293,13 +293,13 @@ sub play_clip(ID as byte, Panning as short = 512, HertzMod as short = 100)
 		end if
 	end if
 end sub
-function convert_speed(InSpeed as double) as short
+function convertSpeed(InSpeed as double) as short
 	return 100+(int(InSpeed)-8)*5
 End Function
-sub dynamic_speed_clip(BallSpeed as double, Panning as short = 512)
-	play_clip(SFX_BALL,Panning,convert_speed(BallSpeed))
+sub dynamicSpeedClip(BallSpeed as double, Panning as short = 512)
+	playClip(SFX_BALL,Panning,convertSpeed(BallSpeed))
 end sub
-sub decrement_pauses
+sub decrementPauses
 	for ID as ubyte = 0 to clipCount
 		if clipPause(ID) > 0 then
 			clipPause(ID) -= 1
@@ -307,15 +307,15 @@ sub decrement_pauses
 	next ID
 end sub
 
-sub release_music
+sub releaseMusic
 	if MusicActive then
 		fbs_Destroy_Sound(@musicPlr)
 		MusicActive = 0
 	end if
 end sub
-sub rotate_music
+sub rotateMusic
 	if MusicPlrEnabled AND (MusicLoaded > 1 OR (MusicActive = 0 AND MusicLoaded > 0)) then
-		release_music
+		releaseMusic
 		
 		do
 			MusicIter += 1
