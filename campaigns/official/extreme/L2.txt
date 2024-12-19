@@ -4,7 +4,7 @@ LEVEL DATA FILE - MAXIMUM INSANITY LEVEL 2
 *BEGIN*
 ================================================================================
 
-Level Name            := Semi-Fused
+Level Name            := Unevenly Exposed
 Level Description     := 
 Level Password        := ++++++++
 Level game number     := 3
