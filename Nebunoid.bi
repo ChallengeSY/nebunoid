@@ -1322,26 +1322,31 @@ function dispWall(FrameTick as short, DispSetting as byte = 0) as integer
 						end if
 					elseif DispGrid then
 						dim as uinteger LineStyle = &b0011110000111100
+						dim as uinteger BorderColor = rgb(255,255,255)
+						if YID > 20 then
+							BorderColor = rgb(128,128,128)
+						end if
+						
 						if YID <= 20 OR (GameStyle AND (1 SHL STYLE_PROGRESSIVE)) then
 							if CondensedLevel then
 								if XID < 40 ANDALSO PlayerSlot(Player).Tileset(XID+1,YID).BrickID = 0 then
 									line(31+(XID)*24,96+(YID-1)*24)-_
-										(31+(XID)*24,95+(YID)*24),rgb(255,255,255),,LineStyle
+										(31+(XID)*24,95+(YID)*24),BorderColor,,LineStyle
 								end if
 								
 								if YID >= 24 ORELSE PlayerSlot(Player).Tileset(XID,YID+1).BrickID = 0 then
 									line(32+(XID-1)*24,95+(YID)*24)-_
-										(31+(XID)*24,95+(YID)*24),rgb(255,255,255),,LineStyle
+										(31+(XID)*24,95+(YID)*24),BorderColor,,LineStyle
 								end if
 							else
 								if XID < 20 ANDALSO PlayerSlot(Player).Tileset(XID+1,YID).BrickID = 0 then
 									line(31+(XID)*48,96+(YID-1)*24)-_
-										(31+(XID)*48,95+(YID)*24),rgb(255,255,255),,LineStyle
+										(31+(XID)*48,95+(YID)*24),BorderColor,,LineStyle
 								end if
 								
 								if YID >= 24 ORELSE PlayerSlot(Player).Tileset(XID,YID+1).BrickID = 0 then
 									line(32+(XID-1)*48,95+(YID)*24)-_
-										(31+(XID)*48,95+(YID)*24),rgb(255,255,255),,LineStyle
+										(31+(XID)*48,95+(YID)*24),BorderColor,,LineStyle
 								end if
 							end if
 						end if
@@ -1591,3 +1596,4 @@ function actionButton(HoldCheck as byte = 0) as integer
 	
 	return (ControlStyle = CTRL_AI)
 end function
+
