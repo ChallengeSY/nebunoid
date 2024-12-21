@@ -17,7 +17,7 @@ As soon as all of the scorable blocks are *eliminated* (from a regular ball's pe
 * Paddles are not permitted to have both bullets and missiles stockpiled at the same time. When picking up one of these capsules, it will zero out the other's ammunition
 * Extra Life has a variable rarity. Its gold color significanies its very rare status under normal conditions, but it has a double appearance chance (akin to a purple "rare" capsule)
 * The Shuffle Levels option shuffles most levels in a campaign, ignoring fatal levels in the process
-* Grabble Paddles automatically release each held ball after 5 seconds. In addition, several capsules force release held balls. Both are intentional to counter a multiplier that exists simply for having multiple balls in play
+* Grabbing Paddles automatically release each held ball after 5 seconds. In addition, several capsules force release held balls. Both are intentional to counter a multiplier that exists simply for having multiple balls in play
 
 #### Auto Play
 Nebunoid supports watching an Auto Play session; just start a *0* player session. Fair warning; the computer player will neither give stars, nor award passwords for levels that the player has never played before. Any high scores it is able to submit will be auto-named as such.
