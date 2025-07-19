@@ -41,7 +41,7 @@ In addition to highlighting controls mentioned above, mirror options can be adju
 
 Block "brushes" are managed on a per-level basis. A new brush can be easily made by clicking on the empty + sign. Existing brushes can be edited by right clicking as such.
 
-There can be a maximum of 35 brushes per level. There also exist automatically generated zap and bloom brushes (named after zap blocks and bloomed blocks made), which do not count against the 35 brush limit.
+There can be a maximum of 35 brushes per level. There also exist automatically generated zap and bloom brushes (named after the respective effects); which are not accessible from the editor, but do not count against the 35 brush limit.
 
 #### Keyboard controls
 * 1-4: Quickly toggles a supported mirror control

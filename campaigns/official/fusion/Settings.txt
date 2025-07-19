@@ -4,7 +4,7 @@ LEVEL DATA FILE - FUSION DESIGNS SETTINGS
 *BEGIN*
 ================================================================================
 
-Camapign Name         := Fusion Designs
+Campaign Name         := Fusion Designs
 Starting Lives        := 3
 Base capsule value    := 100
 Initial life bonus    := 25000

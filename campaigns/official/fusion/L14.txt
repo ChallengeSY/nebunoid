@@ -4,7 +4,7 @@ LEVEL DATA FILE - FUSION DESIGNS LEVEL 14
 *BEGIN*
 ================================================================================
 
-Level Name            := PsuedoHex
+Level Name            := PseudoHex
 Level Description     := 
 Level Password        := ACHLOBFJ
 Level game number     := 2051

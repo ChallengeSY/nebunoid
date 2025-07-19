@@ -107,18 +107,18 @@ Fusion Designs is a hybrid 20-level campaign. This campaign makes use of the new
 #### Challenge Campaign
 The 30-level Challenge Campaign amps up the difficulty several notches by spamming strong blocks like it is hard to believe. Every level demonstrates one or more of the following: Invincible blocks, strong blocks (some will be bio-regenerative), and invisible blocks that may lead to any of the preceding elements.
 
-Additionally, save points appear less frequently than they did in previous campaigns; appearing every three levels starting with level 1, up to level 28. As usual, the final level disallows continues.
+Additionally, save points appear less frequently than they did in previous campaigns; appearing every three levels starting with level 1, up to level 28. (Short: 1-28) As usual, the final level disallows continues.
 
 #### Ungated Adaptations
-This 40-level campaign was originally built as a trilogy of sets for a script-enhanced title. Although scripting itself is absent, this campaign takes near full advantage of Nebunoid's own mechanics in order to form an overpowering experience.
+This 40-level campaign was originally built as a trilogy of sets for a script-enhanced title. Although scripting itself is absent, this campaign takes near full advantage of Nebunoid's own mechanics in order to form an overpowering experience. Adding to the experience is how infrequent save points are; once per four levels (1-37).
 
 #### Maximum Insanity
-Maximum Insanity makes Challenge Campaign look easy by mixing the most dangerous elements into 30 levels worth of sinister combinations. Save points appear even less frequently; every five levels starting with level 1, up to level 26.
+Maximum Insanity makes Challenge Campaign look easy by mixing the most dangerous elements into 30 levels worth of sinister combinations. Save points appear even less frequently; every five levels (1-26).
 
 #### Celestial Journey
 Celestial Journey is another long official campaign, at 40 levels. It makes plenty of cross-universe references, and is still on par with that of the **Challenge Campaign**.
 
-Like Maximum Insanity, save points appear every five levels starting with level 1. In addition to a final boss at level 40, there is a mid-boss at level 20. Both of these levels disallow continues.
+Like Maximum Insanity, save points appear every five levels (1-36). In addition to a final boss at level 40, there is a mid-boss at level 20. Both of these levels disallow continues.
 
 #### Endless Shuffle
 Endless Shuffle is a unique official campaign, technically comprised of unlimited length. Specifically, this campaign will shuffle *all* of the previous levels into a single gigantic experience. Because of its unique shuffling mechanism, its difficulty is naturally unpredictable. This campaign is also the hardest / takes the longest to unlock, requiring a true 100% completion to even unlock.
@@ -128,4 +128,4 @@ In addition to its shuffle, it brings forth several other unique mechanics not a
 * The minimum difficulty rises as more levels are cleared. If the starting difficulty becomes less than this threshold, then it will increase accordingly. A maximum difficulty of 6.5 (Hard) can be reached this way, achieved by reaching level 43. (If the starting difficulty is already at least this high, then this mechanic is ineffective.)
 * Since the objective is to simply score as high as possible, no continues are allowed throughout the campaign. If the available lives are exhausted, then the game simply ends on the spot.
 
-*Nebunoid (C) 2023-2024 Paul Ruediger. Nebulae artwork courtesy of NASA, ESA, and/or other astrophysical observatories and stations. Please check the [credits](credits.md) for more details.*
+*Nebunoid (C) 2023-2025 Paul Ruediger. Nebulae artwork courtesy of NASA, ESA, and/or other astrophysical observatories and stations. Please check the [credits](credits.md) for more details.*
