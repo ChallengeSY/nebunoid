@@ -114,12 +114,11 @@ sub localGameplay
 		AttackBricks = 0
 		if RotationFrame >= 20 then
 			if (GameStyle AND (1 SHL STYLE_ROTATION)) then
-				dim as short MapX(40), FlashX(40), LastHitX(40)
 				dim as TileSpecs TilesetX(40)
 				for YID as ubyte = 1 to 24
-					if Pallete(PlayerSlot(Player).TileSet(1,YID).BrickID).CalcedInvulnerable = 0 then
+					if isBrickMovable(PlayerSlot(Player).TileSet(1,YID)) then
 						for DXID as byte = 20*(CondensedLevel+1) to 2 step -1
-							if Pallete(PlayerSlot(Player).TileSet(DXID,YID).BrickID).CalcedInvulnerable = 0 then
+							if isBrickMovable(PlayerSlot(Player).TileSet(DXID,YID)) then
 								TilesetX(1) = PlayerSlot(Player).TileSet(DXID,YID)
 								exit for
 							end if
@@ -129,9 +128,9 @@ sub localGameplay
 					end if
 
 					for XID as ubyte = 2 to 20*(CondensedLevel+1)
-						if Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).CalcedInvulnerable = 0 then
+						if isBrickMovable(PlayerSlot(Player).TileSet(XID,YID)) then
 							for DXID as byte = XID - 1 to 1 step -1
-								if Pallete(PlayerSlot(Player).TileSet(DXID,YID).BrickID).CalcedInvulnerable = 0 then
+								if isBrickMovable(PlayerSlot(Player).TileSet(DXID,YID)) then
 									TilesetX(XID) = PlayerSlot(Player).TileSet(DXID,YID)
 									exit for
 								end if

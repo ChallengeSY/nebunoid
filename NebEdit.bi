@@ -438,6 +438,7 @@ sub importBrushes(LevID as short)
 			if eof(8) then
 				Instructions = "Brush data not found"
 				InstructExpire = timer + 10
+				close #8
 				
 				exit sub
 			end if
@@ -1705,7 +1706,7 @@ function saveCampaign(SaveLvNum as short) as integer
 		print #3, string(80,"=")
 		print #3,
 	
-		print #3, "Camapign Name         := "+CampaignName
+		print #3, "Campaign Name         := "+CampaignName
 		print #3, "Starting Lives        := "+str(StartingLives);
 		if ExtraBarrierPoint then
 			print #3, "*"

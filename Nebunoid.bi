@@ -904,6 +904,10 @@ end sub
 
 declare sub damageBrick(BaseX as short, BaseY as short, NewPalette as short, NewID as short = 0, OnlySelf as byte = 0)
 
+function isBrickMovable(BrickSlot as TileSpecs) as byte
+	return (BrickSlot.BrickID <= 0 ORELSE Pallete(BrickSlot.BrickID).CalcedInvulnerable <= 0)
+end function
+
 function dispWall(FrameTick as short, DispSetting as byte = 0) as integer
 	dim as ubyte AlphaV
 	dim as uinteger XColoring, ScoreBonus, Count, XPanning
@@ -978,12 +982,13 @@ function dispWall(FrameTick as short, DispSetting as byte = 0) as integer
 								'Finish exploding
 								for YDID as byte = YID - 1 to YID + 1
 									for XDID as byte = XID - 1 to XID + 1
-										if XDID > 0 AND XDID <= 20*(CondensedLevel+1) AND YDID > 0 AND YDID <= 20 then
-											RefPallete = PlayerSlot(Player).TileSet(XDID,YDID).BrickID
+										if ((XDID > 0 AND XDID <= 20*(CondensedLevel+1)) OR (GameStyle AND (1 SHL STYLE_ROTATION))) AND YDID > 0 AND YDID <= 20 then
+											dim as short InnerRefX = (XDID + 20*(CondensedLevel+1) - 1) mod (20*(CondensedLevel+1)) + 1 
+											RefPallete = PlayerSlot(Player).TileSet(InnerRefX,YDID).BrickID
 											
-											if (RefPallete >= 0 AND RefPallete <> FinalBrush) OR (XDID = XID AND YDID = YID) then
+											if (RefPallete >= 0 AND RefPallete <> FinalBrush) OR (InnerRefX = XID AND YDID = YID) then
 												if (RefPallete >= 0 AND Pallete(RefPallete).CalcedInvulnerable >= 0) OR _
-													(XDID = XID AND YDID = YID) then
+													(InnerRefX = XID AND YDID = YID) then
 													
 													if RefPallete = 0 then
 														ScoreBonus = 0
@@ -994,19 +999,19 @@ function dispWall(FrameTick as short, DispSetting as byte = 0) as integer
 													end if
 													
 													PlayerSlot(Player).Score += ScoreBonus
-													damageBrick(XDID,YDID,FinalBrush,0,(XDID = XID AND YDID = YID))
+													damageBrick(InnerRefX,YDID,FinalBrush,0,(InnerRefX = XID AND YDID = YID))
 													Invis = 12
-													generateCapsule(XDID,YDID,1)
-													generateParticles(ScoreBonus,XDID,YDID,rgb(255,192,160))
+													generateCapsule(InnerRefX,YDID,1)
+													generateParticles(ScoreBonus,InnerRefX,YDID,rgb(255,192,160))
 													
 												else
-													damageBrick(XDID,YDID,ExplodeDelay + (100 * (Pallete(RefPallete).CalcedInvulnerable + 1)),0)
+													damageBrick(InnerRefX,YDID,ExplodeDelay + (100 * (Pallete(RefPallete).CalcedInvulnerable + 1)),0)
 													
-													if (XDID > XID AND YID = YDID) OR YDID > YID then
-														PlayerSlot(Player).TileSet(XDID,YDID).BrickID -= 1 
+													if (InnerRefX > XID AND YID = YDID) OR YDID > YID then
+														PlayerSlot(Player).TileSet(InnerRefX,YDID).BrickID -= 1 
 													end if
 													
-													generateCapsule(XDID,YDID,1)
+													generateCapsule(InnerRefX,YDID,1)
 													Invis = 12
 												end if
 												

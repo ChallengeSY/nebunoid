@@ -15,7 +15,7 @@ As soon as all of the scorable blocks are *eliminated* (from a regular ball's pe
 * There is a "softlock" guard mechanism that causes balls otherwise stuck to become "metallic". These balls destroy *any* block in one hit
 * Weakened Balls will negate any balls that are powered up, only truly weakening balls that are previously normal balls to have a 40% chance of not damaging a block
 * Paddles are not permitted to have both bullets and missiles stockpiled at the same time. When picking up one of these capsules, it will zero out the other's ammunition
-* Extra Life has a variable rarity. Its gold color significanies its very rare status under normal conditions, but it has a double appearance chance (akin to a purple "rare" capsule)
+* Extra Life has a variable rarity. Its gold color significanies its very rare status under normal conditions, but it has a double appearance chance (akin to a purple "rare" capsule) while on a last life
 * The Shuffle Levels option shuffles most levels in a campaign, ignoring fatal levels in the process
 * Grabbing Paddles automatically release each held ball after 5 seconds. In addition, several capsules force release held balls. Both are intentional to counter a multiplier that exists simply for having multiple balls in play
 

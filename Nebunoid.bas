@@ -36,7 +36,7 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.19"
+windowtitle "Nebunoid 1.20"
 
 'Foreground assets
 loadBrickGfx(MasterDir+"/gfx/blocks/")
