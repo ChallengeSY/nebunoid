@@ -10,7 +10,7 @@ Main engine + sound effects + foreground assets by Paul Ruediger. Licensed under
 * **Unbreaking Modules** by Paul Ruediger. Remixed from Corwin's **Break It**.
 
 ### Included nebulae backgrounds
-* **Crab Neubla** courtesy of NASA, ESA, and the Arizona State University. Public domain.
+* **Crab Nebula** courtesy of NASA, ESA, and the Arizona State University. Public domain.
 * **Flame Nebula** courtesy of NASA. Public domain.
 * **Horsehead Nebula** courtesy of NASA, NOAO, ESA, Hubble, and STScl. Public domain.
 * **Lagoon Nebula** courtesy of ESO. Licensed under Creative Commons (BY 4.0).
