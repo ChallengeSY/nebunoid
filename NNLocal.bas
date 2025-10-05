@@ -2833,7 +2833,12 @@ sub localGameplay
 			end with
 		end if
 		
-		if InType = FunctionFive AND total_lives > 0 then
+		if InType = FunctionOne then
+			BGBrightness -= 25
+			if BGBrightness < 0 then
+			 	BGBrightness = 100
+			end if
+		elseif InType = FunctionFive AND total_lives > 0 then
 			#IFDEF __USE_FBSOUND__
 			MusicPlrEnabled = 1 - MusicPlrEnabled
 			

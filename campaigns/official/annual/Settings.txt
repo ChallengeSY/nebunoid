@@ -4,7 +4,7 @@ LEVEL DATA FILE - TIMES OF THE YEAR SETTINGS
 *BEGIN*
 ================================================================================
 
-Camapign Name         := Times of the Year
+Campaign Name         := Times of the Year
 Starting Lives        := 3
 Base capsule value    := 100
 Initial life bonus    := 0

@@ -4,7 +4,7 @@ LEVEL DATA FILE - UNGATED ADAPTATIONS SETTINGS
 *BEGIN*
 ================================================================================
 
-Camapign Name         := Ungated Adaptations
+Campaign Name         := Ungated Adaptations
 Starting Lives        := 3*
 Base capsule value    := 100
 Initial life bonus    := 25000

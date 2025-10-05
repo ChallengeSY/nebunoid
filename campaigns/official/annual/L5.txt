@@ -9,7 +9,7 @@ Level Description     := "Explooming" blocks are related to exploding blocks in 
 Level Password        := LBQXINJJ
 Level game number     := 3
 Level time limit      := 0
-Number of Brushes     := 3
+Number of Brushes     := 4
 Brush 1 Color         := &h80804000
 Brush 1 Score Value   := 10*
 Brush 1 Hit Degrade   := 0
@@ -18,27 +18,31 @@ Brush 2 Color         := &h80FFFF00
 Brush 2 Score Value   := 10*
 Brush 2 Hit Degrade   := 0
 Brush 2 Increase Spd  := FALSE
-Brush 3 Color         := &h808080FF
+Brush 3 Color         := &h80FFFFFF
 Brush 3 Score Value   := 10*
-Brush 3 Hit Degrade   := -2
+Brush 3 Hit Degrade   := 0
 Brush 3 Increase Spd  := FALSE
+Brush 4 Color         := &h808080FF
+Brush 4 Score Value   := 10*
+Brush 4 Hit Degrade   := -2
+Brush 4 Increase Spd  := FALSE
 
 Level Grid  11111111112
    12345678901234567890
 -----------------------
  1|                    
- 2|         3 3        
+ 2|         4 4        
  3|                    
  4|          2         
  5|         222        
- 6|     3  22222  3    
- 7|       2222222      
- 8|        22222       
- 9|  3 3    222   3 3  
+ 6|     4  22322  4    
+ 7|       2233322      
+ 8|        22322       
+ 9|  4 4    222   4 4  
 10|          2         
 11|   2      1     2   
 12|  222     1    222  
-13| 22222    1   22222 
+13| 22322    1   22322 
 14|  222     1    222  
 15|   2      1     2   
 16|   1      1     1   

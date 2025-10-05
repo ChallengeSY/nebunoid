@@ -733,7 +733,7 @@ sub shop
 						case 5
 							ItemDesc = "Toggle between Full Screen and a Windowed application (Shortcut: F7)"
 						case 6
-							ItemDesc = "Determines how dark to make the backgrounds."
+							ItemDesc = "Determines how dark to make the backgrounds. (Shortcut: F1)"
 						case 7
 							ItemDesc = "Determines whether music will play while a game is in progress (Shortcut: F5)"
 					end select
@@ -798,7 +798,7 @@ sub shop
 						if ButtonCombo > 0 AND HoldClick = 0 then
 							BGBrightness -= 25
 							if BGBrightness < 0 then
-							 	BGBrightness = 75
+							 	BGBrightness = 100
 							end if
 						end if
 					end if

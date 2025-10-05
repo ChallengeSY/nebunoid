@@ -4,7 +4,7 @@ LEVEL DATA FILE - CELESTIAL JOURNEY SETTINGS
 *BEGIN*
 ================================================================================
 
-Camapign Name         := Celestial Journey
+Campaign Name         := Celestial Journey
 Starting Lives        := 5
 Base capsule value    := 100
 Initial life bonus    := 25000

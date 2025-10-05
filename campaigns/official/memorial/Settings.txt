@@ -4,7 +4,7 @@ LEVEL DATA FILE - PATRIARCH MEMORIAL SETTINGS
 *BEGIN*
 ================================================================================
 
-Camapign Name         := Patriarch Memorial
+Campaign Name         := Patriarch Memorial
 Starting Lives        := 3
 Base capsule value    := 100
 Initial life bonus    := 25000
