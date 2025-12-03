@@ -58,7 +58,7 @@ const FunctionTwelve = chr(255,134)
 const FPS = 60
 const SavedHighSlots = 10
 const TotalHighSlots = SavedHighSlots + 4
-const TotalOfficialLevels = 323
+const TotalOfficialLevels = 328
 const MaxBullets = 60
 const BaseFlash = 128
 const LevelClearDelay = 720
@@ -77,7 +77,7 @@ enum Difficulties
 	DIFF_INSANE
 end enum
 enum DifferentGames
-	STYLE_POWERUPS
+	STYLE_POWERUPS = 0
 	STYLE_EXTRA_HEIGHT
 	STYLE_DUAL_PADDLES
 	STYLE_DOUBLE_BALLS
@@ -285,7 +285,7 @@ dim shared as HighSlot HighScore(TotalHighSlots)
 dim shared as uinteger MouseX, MouseY, MouseColor, ButtonCombo, TotalXP, TotalStars
 dim shared as uinteger GameStyle, TourneyStyle, TourneyScore, ShotIndex
 
-dim shared as ubyte Fullscreen, ConfigLoaded = 0, JoyAnalog, JoyInvertAxes, TapWindow, CondensedLevel, AllowHandicap, ShuffleLevels
+dim shared as ubyte Fullscreen, ConfigLoaded = 0, JoyAnalog, JoyInvertAxes, TapWindow, CondensedLevel, AllowHandicap, ShuffleSet
 dim shared as integer LastActive, Result, OrigX(1), DesireX, JoyButtonCombo, ExplodingValue, BGBrightness
 dim shared as single JoyAxis(7)
 dim shared as short TotalBC, FrameSkip, PaddleCycle, ExplodeCycle, KeyboardSpeed, JoyKeySetting, ProgressiveBounces, ProgressiveDelay, BlockBrushes
@@ -327,7 +327,7 @@ enum BounceDirections
 	BOUNCE_SE
 end enum
 
-function total_lives as integer
+function totalLives as integer
 	dim as integer LivesFound
 	for PID as ubyte = 1 to MaxPlayers
 		with PlayerSlot(PID)
@@ -390,7 +390,7 @@ sub readCampaigns(StarsOnly as ubyte = 0)
 					.Namee = "Fusion Designs"
 					.Folder = "official/fusion"
 					.Difficulty = "Medium to Hard"
-					.SetSize = 20
+					.SetSize = 25
 					.StarsToUnlock = 15
 				case 9
 					.Namee = "Challenge Campaign"
@@ -507,7 +507,7 @@ sub loadTitleCapsules
 	next PID
 end sub 
 
-sub toggle_fullscreen(ForceSetting as byte = 0)
+sub toggleFullscreen(ForceSetting as byte = 0)
 	if (FullScreen = 0 OR ForceSetting = 1) AND ForceSetting <> -1 then
 		FullScreen = 1
 		screen 20,24,2,GFX_FULLSCREEN OR GFX_ALPHA_PRIMITIVES OR GFX_NO_SWITCH
@@ -808,7 +808,7 @@ sub saveConfig
 	print #10, "enhanced,"& EnhancedGFX
 	print #10, "controls,"& ControlStyle
 	print #10, "campbarr,"& CampaignBarrier
-	print #10, "shuffle,";ShuffleLevels
+	print #10, "shuffle,";ShuffleSet
 	print #10, "bgbright,"& BGBrightness
 	print #10, "musplayer,"& MusicPlrEnabled
 	print #10, "xp,"& TotalXP
@@ -844,7 +844,7 @@ sub loadConfig
 				case "campbarr"
 					input #10, CampaignBarrier
 				case "shuffle"
-					input #10, ShuffleLevels
+					input #10, ShuffleSet
 				case "musplayer"
 					input #10, MusicPlrEnabled
 				case "bgbright"
@@ -994,7 +994,7 @@ function dispWall(FrameTick as short, DispSetting as byte = 0) as integer
 														ScoreBonus = 0
 													elseif TotalBC > 0 then
 														ScoreBonus = ballCtBonus * ExplodingValue
-													elseif total_lives > 0 then
+													elseif totalLives > 0 then
 														ScoreBonus = ExplodingValue
 													end if
 													
@@ -1065,7 +1065,7 @@ function dispWall(FrameTick as short, DispSetting as byte = 0) as integer
 									if PlayerSlot(Player).TileSet(XID,YID).BrickID <> .HitDegrade AND .CalcedInvulnerable < 2 then
 										Count += 1
 									end if
-								elseif (Invis > 0 OR (GameStyle AND (1 SHL STYLE_INVIS)) = 0 OR total_lives = 0) then
+								elseif (Invis > 0 OR (GameStyle AND (1 SHL STYLE_INVIS)) = 0 OR totalLives = 0) then
 									dim as any ptr UseBrick, UseConnL, UseConnR, UseConnT, UseConnB
 									
 									if CondensedLevel then
@@ -1416,7 +1416,7 @@ sub dispMouse(MX as integer, MY as integer, MC as uinteger)
 	line (MX+10,MY+10)-(MX+10,MY+20),rgb(0,0,0)
 end sub
 
-sub shuffle_backs
+sub shuffleBacks
 	randomize timer
 
 	dim as byte SlotUsed(BackCount)

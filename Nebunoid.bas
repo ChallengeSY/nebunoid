@@ -110,7 +110,7 @@ while NullString <> ""
 	if BacksLoaded > BackCount then exit while
 	NullString = dir()
 wend
-shuffle_backs
+shuffleBacks
 
 loadConfig
 if FileExists("xp.dat") then
@@ -325,7 +325,7 @@ do
 		end if
 	end if
 	if InType = FunctionSeven then
-		toggle_fullscreen
+		toggleFullscreen
 	end if
 	if Result = 0 then
 		dispMouse(MouseX,MouseY,MouseColor)
@@ -744,12 +744,12 @@ sub shop
 					gfxstring(CustomItem(MISC,PID)+" (unsupported)",5,PosY,4,4,3,rgb(128,128,128))
 				elseif (PID = 2 AND EnhancedGFX = 1) OR _
 					(PID = 3 AND CampaignBarrier = 1) OR _
-					(PID = 4 AND ShuffleLevels = 1) OR _
+					(PID = 4 AND ShuffleSet = 1) OR _
 					(PID = 5 AND FullScreen = 1) then
 				#ELSE
 				if (PID = 2 AND EnhancedGFX = 1) OR _
 					(PID = 3 AND CampaignBarrier = 1) OR _
-					(PID = 4 AND ShuffleLevels = 1) OR _
+					(PID = 4 AND ShuffleSet = 1) OR _
 					(PID = 5 AND FullScreen = 1) OR _
 					(PID = 7 AND MusicPlrEnabled = 1) then
 				#ENDIF
@@ -763,9 +763,9 @@ sub shop
 								case 3
 									CampaignBarrier = 0
 								case 4
-									ShuffleLevels = 0
+									ShuffleSet = 0
 								case 5
-									toggle_fullscreen(-1)
+									toggleFullscreen(-1)
 								case 7
 									MusicPlrEnabled = 0
 							end select
@@ -813,9 +813,9 @@ sub shop
 								case 3
 									CampaignBarrier = 1
 								case 4
-									ShuffleLevels = 1
+									ShuffleSet = 1
 								case 5
-									toggle_fullscreen(1)
+									toggleFullscreen(1)
 								case 7
 									MusicPlrEnabled = 1
 							end select

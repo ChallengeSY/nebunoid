@@ -9,15 +9,15 @@ Levels may be designed with a wide variety of variations in mind that alter the 
 * Dual Paddles (4): The player controls two paddles, separated by some vertical space
 * Double Juggling (8): Each life starts with two balls
 * Cavity (16): Some balls are caged, and must be freed to aid the player
-* Progressive (32): Rows will shift down at a progressively faster rate, resetting only when a life is lost. Overrides Cavity and Fusion Brushes
+* Progressive (32): Rows will shift down at a progressively faster rate, resetting only when a life is lost. Overrides **Cavity**
 * Steerable Balls (64): Paddle movement will manipulate any balls heading towards the ceiling
 * Invisible (128): The level is invisible, flashing only when a block is hit
 * Hyper Speed (256): Balls move 50% faster
-* Boss Battle (512): Duke it out against a boss whose attacks can damage and destroy your paddle. Negates Breakable Ceiling
-* Horizontal Rotation (1024): Non-invincible blocks rotate horizontally across the board, wrapping as necessary. Overrides Cavity and Fusion Brushes
+* Boss Battle (512): Duke it out against a boss whose attacks can damage and destroy your paddle
+* Horizontal Rotation (1024): Non-invincible blocks rotate horizontally across the board, wrapping as necessary. Overrides **Cavity**. Also overrides **Fusion Brushes**, if there are any invincible brushes present
 * Fusion Brushes (2048): Blocks of the same "brush" fuse together to form bigger blocks
 * Shrink Ceiling (4096): Paddle shrinks the first time a ball hits the ceiling on each life
-* Breakable Ceiling (8192): Blocks respawn by brush indefinitely. Break and bypass the ceiling to clear the level instead. Negates Boss Battle
+* Breakable Ceiling (8192): Blocks respawn by brush almost indefinitely. Break and bypass the ceiling to clear the level instead
 * Fatal Timer (16384): If time limit runs out, the game immediately ends no matter how many lives.  
   (Otherwise; if time runs out, one life is lost, and the rest of the level is skipped.)
 
@@ -26,11 +26,12 @@ Boss battles are handled a little differently than a regular level. Brush #1 is 
 
 When a ball causes damage to a boss, the damage the boss receives is controlled by the speed. Faster balls deal more damage per hit.
 
+Fair warning; if both this gimmick and **Breakable Ceiling** are active, they share the same health system.
+
 ### Campaign editing controls
 The editor uses mouse and keyboard to carry out its functionality. Several controls can be easily edited by tapping on a given control when highlighted.
 
 #### Keyboard controls
-* Ctrl+G: Toggles the grid display
 * Ctrl+L: Loads a campaign folder, or creates a new one if it does not exist
 * Ctrl+S: Saves the current level and campagin
 * Plus sign: Goes forward one level
@@ -46,20 +47,21 @@ There can be a maximum of 35 brushes per level. There also exist automatically g
 #### Keyboard controls
 * 1-4: Quickly toggles a supported mirror control
 * Arrow keys: Shifts the entire level horizontally or vertically, wrapping around as necessary
+* Ctrl+G: Toggles the grid display
 * Ctrl+P: Launches a program that immediately loads a single-level playtest "campaign"
 
 #### New brush controls
 Some influence can be performed over a brush by holding down key(s) while creating a brush. Presence is preferred over absence in case of conflicting keys, unless noted otherwise.
 
-* __W__hite: Creates a white colored brush (max red/green/blue). Combinable with C/U/Y
-* Blac__k__: Creates a black colored brush (zero red/green/blue). Combinable with R/G/B
-* __R__ed: Creates a brush with maximum red
-* __G__reen: Creates a brush with maximum green
-* __B__lue: Creates a brush with maximum blue
-* __C__yan: Creates a brush with zero red
-* P__u__rple: Creates a brush with zero green
-* __Y__ellow: Creates a brush with zero blue
-* __I__nvisible: Creates an invisible brush (overrides all of the above)
+* **W**hite: Creates a white colored brush (max red/green/blue). Combinable with C/U/Y
+* Blac**k**: Creates a black colored brush (zero red/green/blue). Combinable with R/G/B
+* **R**ed: Creates a brush with maximum red
+* **G**reen: Creates a brush with maximum green
+* **B**lue: Creates a brush with maximum blue
+* **C**yan: Creates a brush with zero red
+* P**u**rple: Creates a brush with zero green
+* **Y**ellow: Creates a brush with zero blue
+* **I**nvisible: Creates an invisible brush (overrides all of the above)
 
 ### Block compositions
 Nebunoid supports a fair amount of block types and compositions. 

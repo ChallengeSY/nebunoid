@@ -20,7 +20,7 @@ As soon as all of the scorable blocks are *eliminated* (from a regular ball's pe
 * Grabbing Paddles automatically release each held ball after 5 seconds. In addition, several capsules force release held balls. Both are intentional to counter a multiplier that exists simply for having multiple balls in play
 
 #### Auto Play
-Nebunoid supports watching an Auto Play session; just start a *0* player session. Fair warning; the computer player will neither give stars, nor award passwords for levels that the player has never played before. Any high scores it is able to submit will be auto-named as such.
+Nebunoid supports watching an Auto Play session; just start a *0* player session. Fair warning; the computer player will neither give stars, nor award passwords for levels that the player has never played before. Any high scores it is able to submit will be auto-named as such. See [codes.md](codes.md)
 
 #### Skip Level feature
 Not all levels are made the same. Nonetheless, Nebunoid rewards preserverence. When the required 2 legitimate game overs in a row is reached, it will allow the player the option to skip the level. This feature is available when not on a level before a "fatal" level (a level that disallows continues outright).
@@ -72,7 +72,7 @@ In addition, there is a collection of 7 gem-themed capsules available outside of
 ----
 
 ### Campaigns
-There are 293 levels, split into twelve (12) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
+There are 298 levels, split into twelve (12) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
 
 Stars are earned by completing levels for the first time. Harder campaigns require a certain number of stars to break their locks open.
 
@@ -82,7 +82,7 @@ A [level editor](editor.md) also exists, allowing community campaigns to be crea
 Introductory Training is a much shorter 10-level campaign, geared to introduce players new to the genre. Few obstacles exist throughout this campaign, and the player is given a maximum quantity of lives.
 
 #### Geometric Designs
-Geometric Designs is another short 10-level campaign. Although less accomodating than Introductory Training, this set is still fairly easy in difficulty. Save points are present in every level, except for the final level.
+Geometric Designs is another short 10-level campaign. Although less accomodating than Introductory Training (player starts with 3 lives by default), this set is still fairly easy in difficulty. Save points are present in every level, except for the final level.
 
 #### Times of the Year
 Times of the Year is a short 12-level campaign, with roughly the same specifications as Geometric Designs. This is also the first campaign to introduce exploding blocks that bloom instead of destroy outright.
@@ -102,12 +102,12 @@ Electric Recharge is an artistic 20-level campaign, referencing a computing them
 Patriarch Memorial is an artistic 25-level campaign, designed as a memory of the past. Moderate-Hard difficulty. Save points are present in every level up to level 23. No continues are permitted beyond this level.
 
 #### Fusion Designs
-Fusion Designs is a hybrid 20-level campaign. This campaign makes use of the newly introduced "brick fusion" mechanic, allowing for blocks of *any* shape. Save points are present in every level up to level 19.
+Fusion Designs is a hybrid 25-level campaign. This campaign makes use of the "fusion blocks" mechanic, allowing for blocks of *any* shape. Save points are present in every level up to level 21. From here on out, continues are disabled on the final level(s). (Unless specified otherwise.)
 
 #### Challenge Campaign
 The 30-level Challenge Campaign amps up the difficulty several notches by spamming strong blocks like it is hard to believe. Every level demonstrates one or more of the following: Invincible blocks, strong blocks (some will be bio-regenerative), and invisible blocks that may lead to any of the preceding elements.
 
-Additionally, save points appear less frequently than they did in previous campaigns; appearing every three levels starting with level 1, up to level 28. (Short: 1-28) As usual, the final level disallows continues.
+Additionally, save points appear less frequently than they did in previous campaigns; appearing every three levels starting with level 1, up to level 28. (Short: 1-28.) This is counter-balanced by the player starting with 5 lives instead of the usual 3.
 
 #### Ungated Adaptations
 This 40-level campaign was originally built as a trilogy of sets for a script-enhanced title. Although scripting itself is absent, this campaign takes near full advantage of Nebunoid's own mechanics in order to form an overpowering experience. Adding to the experience is how infrequent save points are; once per four levels (1-37).

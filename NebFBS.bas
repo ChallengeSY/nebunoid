@@ -55,7 +55,7 @@ SFXNames(SFX_BALL) = "paddle"
 SFXNames(SFX_WALL) = "wall"
 
 declare sub cleanUp
-declare sub shuffle_music
+declare sub shuffleMusic
 declare sub preloadMusic(ByVal InternalPtr as any ptr = 0)
 
 screen 20,24,2,GFX_ALPHA_PRIMITIVES OR GFX_NO_SWITCH
@@ -152,7 +152,7 @@ if Command(1) <> "-s" then
 	wend
 end if
 
-shuffle_music
+shuffleMusic
 
 open "sfx/mus/Settings.txt" for input as #2
 input #2, NullString, OtherMusVol
@@ -263,7 +263,7 @@ sub preloadMusic(ByVal InternalPtr as any ptr = 0)
 	end if
 end sub
 
-sub shuffle_music
+sub shuffleMusic
 	randomize timer
 
 	dim as byte SlotUsed(musCount)

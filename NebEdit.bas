@@ -245,7 +245,7 @@ do
 					CampaignFolder = ActiveFolder + "/" + CampaignFolder
 				end if
 				if FileExists(MasterDir + "/campaigns/" + CampaignFolder + "/Settings.txt") then
-					load_settings
+					loadSettings
 				else
 					CampaignName = "Blank campaign"
 					StartingLives = 3

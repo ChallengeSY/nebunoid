@@ -23,17 +23,12 @@ const CtrlP = chr(16)
 const CtrlS = chr(19)
 const CtrlG = chr(7)
 
-#IF __FB_DEBUG__
-'Debug mode exclusive switch that would otherwise force the editor to modify exclusively community campaigns 
 dim shared as string ActiveFolder
 if Command(1) = "--dev" then
 	ActiveFolder = "official"
 else
 	ActiveFolder = "community"
 end if
-#ELSE
-const as string ActiveFolder = "community"
-#ENDIF
 
 MirrorOptions(0) = "Mirror horizontally"
 MirrorOptions(1) = "Mirror vertically"

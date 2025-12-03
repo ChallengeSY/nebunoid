@@ -5,7 +5,7 @@ LEVEL DATA FILE - CHALLENGE CAMPAIGN SETTINGS
 ================================================================================
 
 Campaign Name         := Challenge Campaign
-Starting Lives        := 3*
+Starting Lives        := 5
 Base capsule value    := 100
 Initial life bonus    := 25000
 Life bonus every      := 35000

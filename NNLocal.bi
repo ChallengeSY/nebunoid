@@ -16,7 +16,7 @@ dim shared as integer EndlessShuffList(TotalOfficialLevels)
 
 BackIter = irandom(0,BacksLoaded-1)
 
-sub apply_diff_specs
+sub applyDiffSpecs
 	/'
     ' General rule of thumb; the higher the difficulty,
     ' the faster the gameplay, and the smaller the paddle/balls
@@ -87,7 +87,7 @@ sub apply_diff_specs
 	end select
 end sub
 
-sub adjust_speed(BallID as short, AdjustBy as double)
+sub adjustSpeed(BallID as short, AdjustBy as double)
 	with Ball(BallID)
 		if .Speed < BaseMaxSpeed then
 			.Speed = min(.Speed + AdjustBy,BaseMaxSpeed)
@@ -96,7 +96,7 @@ sub adjust_speed(BallID as short, AdjustBy as double)
 		end if
 	end with
 end sub
-function convert_char(InChar as string) as integer
+function convertChar(InChar as string) as integer
 	dim as ubyte BrickEquiv
 	InChar = ucase(InChar)
 	if InChar >= "1" AND InChar <= "9" then
@@ -107,22 +107,22 @@ function convert_char(InChar as string) as integer
 	end if
 	return BrickEquiv
 end function
-sub ui_element(Text as string, XPos as short, YPos as short, Length as short = 0, Coloring as uinteger = rgb(255,255,255))
+sub uiElement(Text as string, XPos as short, YPos as short, Length as short = 0, Coloring as uinteger = rgb(255,255,255))
 	if len(Text) < Length then
 		gfxString(Text,XPos+(Length-len(Text))*18,YPos,5,5,3,Coloring)
 	else
 		gfxString(Text,XPos,YPos,5,5,3,Coloring)
 	end if
 end sub
-sub fix_first_level
+sub fixFirstLevel
 	with PlayerSlot(1)
 		.PerfectClear = 1
 		.SetCleared = 0
 	end with
 end sub
-sub reset_paddle(OnlyGoods as byte = 0)
-	apply_diff_specs
-	render_paddle(StandardSize)
+sub resetPaddle(OnlyGoods as byte = 0)
+	applyDiffSpecs
+	renderPaddle(StandardSize)
 	PaddleAdjust = 0
 	with PlayerSlot(Player)
 		if ActiveDifficulty < 1.45 then
@@ -152,7 +152,7 @@ sub reset_paddle(OnlyGoods as byte = 0)
 	ProgressiveBounces = 0
 	ProgressiveQuota = 8
 end sub
-sub empty_hand(PlayerID as byte)
+sub emptyHand(PlayerID as byte)
 	if PlayerID = 0 then
 		for HandID as byte = 1 to 5
 			NewPlrSlot.PokerHand(HandID) = 0
@@ -163,7 +163,7 @@ sub empty_hand(PlayerID as byte)
 		next HandID
 	end if
 end sub
-sub render_hand(SlotID as byte = 0)
+sub renderHand(SlotID as byte = 0)
 	dim as string GemLetters(7) => {"", "R", "G", "B", "Y", "P", "C", "W"}
 	dim as byte GemFound
 	
@@ -185,7 +185,7 @@ sub render_hand(SlotID as byte = 0)
 		next HandID
 	end if
 end sub
-function score_hand as short
+function scoreHand as short
 	dim as byte ColorCounts(7), PrimaryColor, HighestCounts(1)
 	dim as short GemMultiplier
 	for HandID as byte = 1 to 5
@@ -217,7 +217,7 @@ function score_hand as short
 	
 	return GemMultiplier
 end function
-sub destroy_balls
+sub destroyBalls
 	for BID as ubyte = 1 to NumBalls
 		with Ball(BID)
 			.X = 512
@@ -233,7 +233,7 @@ sub destroy_balls
 	next BID
 	TotalBC = 0
 end sub
-sub destroy_ammo
+sub destroyAmmo
 	BulletStart = 1
 	for MSID as ubyte = 1 to MaxBullets
 		with Bullet(MSID)
@@ -241,12 +241,12 @@ sub destroy_ammo
 		end with
 	next MSID
 end sub
-sub destroy_capsules
+sub destroyCapsules
 	for CID as ubyte = 1 to MaxFallCaps
 		Capsule(CID).Y = 800
 	next CID
 end sub
-sub copy_wall
+sub copyWall
 	with NewPlrSlot
 		.InitialLevel = .LevelNum
 
@@ -261,12 +261,12 @@ sub copy_wall
 		.BulletAmmo = PlayerSlot(1).BulletAmmo
 	end with
 end sub
-function box_detection(StartX as byte,StartY as byte,EndX as byte,EndY as byte) as byte
+function boxDetection(StartX as byte,StartY as byte,EndX as byte,EndY as byte) as byte
 	dim as ubyte BoxSatisfied = 1
 	for YID as byte = StartY to EndY 
 		for XID as byte = StartX to EndX
 			if XID = StartX OR XID = EndX OR YID = StartY OR YID = EndY then
-			if PlayerSlot(Player).TileSet(XID,YID).BrickID = 0 then
+				if PlayerSlot(Player).TileSet(XID,YID).BrickID = 0 then
 					BoxSatisfied = 0
 					exit for,for
 				end if
@@ -278,7 +278,7 @@ function box_detection(StartX as byte,StartY as byte,EndX as byte,EndY as byte) 
 	next YID
 	return BoxSatisfied
 end function
-sub generate_cavity
+sub generateCavity
 	dim as ubyte BallsGenerated
 	for BID as ubyte = 11 to 100
 		with Ball(BID)
@@ -296,7 +296,7 @@ sub generate_cavity
 			for BoxWidth as ubyte = 3 to 5
 				for YID as ubyte = 1 to 20 - BoxHeight
 					for XID as ubyte = 1 to 20 * (CondensedLevel + 1) - BoxWidth
-						if box_detection(XID,YID,XID+BoxWidth,YID+BoxHeight) then
+						if boxDetection(XID,YID,XID+BoxWidth,YID+BoxHeight) then
 							BallsGenerated += 1
 							with Ball(10+Ballsgenerated)
 								if CondensedLevel then
@@ -321,7 +321,7 @@ sub generate_cavity
 		next BoxHeight
 	end if
 end sub
-sub load_scores
+sub loadScores
 	for HID as byte = 11 to TotalHighSlots
 		with HighScore(HID)
 			.Namee = ""
@@ -386,7 +386,7 @@ sub load_scores
 		end if
 	end if
 end sub
-sub save_scores
+sub saveScores
 	if CampaignFolder <> "community/misc" then
 		open CampaignName+".csv" for output as #1
 		print #1, "Name,"+quote("Raw Score")+","+quote("Game Time")+","+quote("Level Started")+","+quote("Level Ended")+",Difficulty"  
@@ -398,7 +398,7 @@ sub save_scores
 		close #1
 	end if
 end sub
-sub set_aux_pallete(WorkBrush as short, NewColoring as uinteger)
+sub setAuxPallete(WorkBrush as short, NewColoring as uinteger)
 	dim as byte BrushDiv = 1
 	select case WorkBrush
 		case ZapBrush
@@ -414,9 +414,10 @@ sub set_aux_pallete(WorkBrush as short, NewColoring as uinteger)
 		end if
 	end with
 end sub
-sub apply_block_properties
+function applyBlockProperties as ushort
 	dim as short TestGrade
 	dim as ubyte PalleteUsed(35)
+	dim as ushort InvinFound = 0
 
 	for BID as ushort = 1 to BlockBrushes
 		with Pallete(BID)
@@ -435,7 +436,7 @@ sub apply_block_properties
 				if TestGrade = Pallete(TestGrade).HitDegrade then
 					.CalcedInvulnerable = 1
 					if BID = TestGrade then
-						set_aux_pallete(ZapBrush,.PColoring)
+						setAuxPallete(ZapBrush,.PColoring)
 					end if
 					.ZapDegrade = ZapBrush
 					exit while
@@ -453,21 +454,26 @@ sub apply_block_properties
 							.CalcedInvulnerable = 1
 						end if
 						if .CalcedInvulnerable = 1 then
-							set_aux_pallete(ZapBrush,.PColoring)
+							setAuxPallete(ZapBrush,.PColoring)
 						end if
 						.ZapDegrade = ZapBrush
 						exit while
 					end if
 				end if
 			wend
+			
 			if TestGrade < 0 then
-				.CalcedInvulnerable = -1
+				.CalcedInvulnerable = TestGrade
 				
 				if TestGrade = -2 then
-					set_aux_pallete(BloomBrush,.PColoring)
+					setAuxPallete(BloomBrush,.PColoring)
 				end if
 			end if
-
+			
+			if .CalcedInvulnerable > 0 then
+				InvinFound += 1
+			end if
+			
 			if .CanRegen > 0 then
 				for CID as ubyte = 1 to BlockBrushes
 					if Pallete(CID).HitDegrade = BID then
@@ -477,12 +483,15 @@ sub apply_block_properties
 				next CID
 			end if
 		end with
-	next
-end sub
+	next BID
+	
+	return InvinFound
+end function
 
-function load_level_file(LoadLevel as string) as integer
+function loadLevelFile(LoadLevel as string) as integer
 	dim as string FindBegin, LoadData, LoadFile
 	dim as short MaxHeight = 20
+	dim as ushort InvinFound = 0
 	for BID as ushort = 1 to 35
 		Pallete(BID) = Pallete(0)
 	next BID
@@ -506,21 +515,13 @@ function load_level_file(LoadLevel as string) as integer
 	input #1, LoadData
 	CampaignPassword = right(LoadData,len(LoadData)-25)
 	input #1, LoadData
-	Gamestyle = valint(right(LoadData,len(LoadData)-25))
+	GameStyle = valint(right(LoadData,len(LoadData)-25))
 	
-	'Overrides Cavity and/or Fusion Brushes if a conflicting variation is found
+	'Overrides Cavity if a conflicting variation is found
 	if (GameStyle AND (1 SHL STYLE_PROGRESSIVE)) OR (GameStyle AND (1 SHL STYLE_ROTATION)) then
 		if (GameStyle AND (1 SHL STYLE_CAVITY)) then
 			GameStyle -= 2^STYLE_CAVITY
 		end if
-
-		if (GameStyle AND (1 SHL STYLE_FUSION)) then
-			GameStyle -= 2^STYLE_FUSION
-		end if
-	end if
-	'Boss Battle and Breakable Ceiling use many of the same mechanics, so they negate each other instead
-	if (GameStyle AND (1 SHL STYLE_BOSS)) AND (GameStyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
-		GameStyle -= 2^STYLE_BOSS + 2^STYLE_BREAKABLE_CEILING
 	end if
 
 	input #1, LoadData
@@ -575,7 +576,7 @@ function load_level_file(LoadLevel as string) as integer
 
 
 	'Phase 2: Apply regeneration, breakability, and zappability
-	apply_block_properties
+	InvinFound = applyBlockProperties
 	line input #1, NullString
 	line input #1, NullString
 	line input #1, NullString
@@ -592,6 +593,11 @@ function load_level_file(LoadLevel as string) as integer
 		MaxHeight = 24
 	end if
 	
+	'If Invin brushes are found, disallow Fusion if Rotation is active.
+	if InvinFound > 0 AND sgn(GameStyle AND (1 SHL STYLE_ROTATION)) AND sgn(GameStyle AND (1 SHL STYLE_FUSION)) then
+		GameStyle -= 2^STYLE_FUSION
+	end if
+	
 	'Phase 3 - Create layout, but only if this is a fresh level
 	if PlayerSlot(Player).PerfectClear > 0 AND PlayerSlot(Player).SetCleared = 0 then
 		for YID as ubyte = 1 to 24
@@ -604,7 +610,7 @@ function load_level_file(LoadLevel as string) as integer
 					if LoadData = "*END*" OR len(LoadData) < XID OR YID > MaxHeight then
 						.BrickID = 0
 					else
-						.BrickID = convert_char(mid(LoadData,3+XID,1))
+						.BrickID = convertChar(mid(LoadData,3+XID,1))
 						if .BrickID > 0 AND .BrickID <> Pallete(PlayerSlot(Player).TileSet(XID,YID).BrickID).HitDegrade AND _
 							Pallete(.BrickID).CalcedInvulnerable < 2 then
 							CampaignBricks += 1
@@ -641,9 +647,9 @@ function load_level_file(LoadLevel as string) as integer
 	
 	return 0
 end function
-function load_level(LevNum as short) as integer
+function loadLevel(LevNum as short) as integer
 	if QuickPlayFile <> "" then
-		return load_level_file(QuickPlayFile)
+		return loadLevelFile(QuickPlayFile)
 	end if
 	if CampaignFolder = EndlessFolder then
 		dim as string LevelFile
@@ -651,24 +657,24 @@ function load_level(LevNum as short) as integer
 		dim as integer LevelsLeftover = EndlessShuffList(TrueNum)
 		
 		if LevelsLeftover > 0 then
-			apply_diff_specs
+			applyDiffSpecs
 			for OCID as ubyte = 1 to CampaignsPerPage
 				with OfficialCampaigns(OCID)
 					if LevelsLeftover > .TrueSize then
 						LevelsLeftover -= .TrueSize
 					else
-						return load_level_file(.Folder+"/L"+str(LevelsLeftover))
+						return loadLevelFile(.Folder+"/L"+str(LevelsLeftover))
 					end if
 				end with
 			next OCID
 		end if
-	elseif ShuffleLevels then
-		return load_level_file(CampaignFolder+"/L"+str(ShuffleList(LevNum)))
+	elseif ShuffleSet then
+		return loadLevelFile(CampaignFolder+"/L"+str(ShuffleList(LevNum)))
 	end if
 	
-	return load_level_file(CampaignFolder+"/L"+str(LevNum)) 
+	return loadLevelFile(CampaignFolder+"/L"+str(LevNum)) 
 end function
-function load_settings as integer
+function loadSettings as integer
 	dim as string FindBegin, LoadData
 	open MasterDir+"/campaigns/"+CampaignFolder+"/Settings.txt" for input as #1
 	do
@@ -701,16 +707,16 @@ function load_settings as integer
 	SecretLevels = valint(right(LoadData,len(LoadData)-25))
 	close #1
 	
-	return load_level(1)
+	return loadLevel(1)
 end function
-function check_level(LoadLevel as short) as string
+function checkLevel(LoadLev as short) as string
 	if CampaignFolder = EndlessFolder then
 		return "INFINITE"
 	end if
 	
 	'Reads a password from the level to check
 	dim as string FindBegin, LoadFile, LoadData, TestPassword
-	LoadFile = MasterDir+"/campaigns/"+CampaignFolder+"/L"+str(LoadLevel)+".txt"
+	LoadFile = MasterDir+"/campaigns/"+CampaignFolder+"/L"+str(LoadLev)+".txt"
 	if FileExists(LoadFile) then
 		open LoadFile for input as #1
 		do
@@ -732,7 +738,7 @@ function check_level(LoadLevel as short) as string
 	end if
 end function
 
-function level_list as string
+function levelList as string
 	dim as short SelectLevel = 1, LevelsRegistered, AdjustPagination, LegalLevel, LegalChoice
 	dim as string LevelPass, OutPass
 
@@ -746,7 +752,7 @@ function level_list as string
 				LegalLevel = 1
 				LevelPass = "++++++++"
 			else
-				LevelPass = check_level(LevelID)
+				LevelPass = checkLevel(LevelID)
 				if LevelPass <> "--------" AND LevelPass <> "++++++++" then
 					LegalLevel = 1
 				else
@@ -807,15 +813,37 @@ function level_list as string
 	return OutPass
 end function
 
-function brick_adjacent(ChainX as short, ChainY as short, BasePallete as short) as integer
+function brickAdjacent(ChainX as short, ChainY as short, BasePallete as short) as integer
+	dim as byte XDID, YDID, SlotsAdjacent
+	
 	for YID as byte = ChainY - 1 to ChainY + 1
 		for XID as byte = ChainX - 1 to ChainX + 1
-			if XID > 0 AND YID > 0 AND XID <= 40 AND YID <= 20 AND abs(ChainX-XID) + abs(ChainY-YID) = 1 then
+			XDID = XID
+			YDID = YID
+			if (GameStyle AND (1 SHL STYLE_ROTATION)) then
+				if XDID <= 0 then
+					XDID = XDID + 20 * (CondensedLevel + 1)
+				elseif XDID > 20 * (CondensedLevel + 1) then
+					XDID = XDID - 20 * (CondensedLevel + 1)
+				end if
+			end if
+			
+			if (GameStyle AND (1 SHL STYLE_PROGRESSIVE)) then
+				if YDID <= 0 then
+					YDID = YDID + 24
+				elseif YDID > 24 then
+					YDID = YDID - 24
+				end if
+			end if
+			
+			'Same type are considered adjacent and, thus, fair game to chain
+			if XDID > 0 AND YDID > 0 AND XDID <= 40 AND YDID <= 24 AND abs(ChainX-XID) + abs(ChainY-YID) = 1 then
 				with PlayerSlot(Player).TileSet(ChainX,ChainY)
-					if .BaseBrickID = BasePallete AND PlayerSlot(Player).TileSet(XID,YID).Flash >= BaseFlash AND _
-						PlayerSlot(Player).TileSet(XID,YID).BaseBrickID = .BaseBrickID AND _
-						(PlayerSlot(Player).TileSet(XID,YID).Flash <> .Flash OR _
-						PlayerSlot(Player).TileSet(XID,YID).LastBall <> .LastBall) then
+					if .BaseBrickID = BasePallete AND PlayerSlot(Player).TileSet(XDID,YDID).Flash >= BaseFlash AND _
+						PlayerSlot(Player).TileSet(XDID,YDID).BaseBrickID = .BaseBrickID AND _
+						(PlayerSlot(Player).TileSet(XDID,YDID).Flash <> .Flash OR _
+						PlayerSlot(Player).TileSet(XDID,YDID).LastBall <> .LastBall) then
+						
 						return -1
 					end if
 				end with
@@ -826,7 +854,7 @@ function brick_adjacent(ChainX as short, ChainY as short, BasePallete as short) 
 	return 0
 end function
 
-sub damage_brick(BaseX as short, BaseY as short, NewPalette as short, NewID as short = 0, OnlySelf as byte = 0)
+sub damageBrick(BaseX as short, BaseY as short, NewPalette as short, NewID as short = 0, OnlySelf as byte = 0)
 	dim as byte NewPaints
 	
 	with PlayerSlot(Player).TileSet(BaseX,BaseY)
@@ -840,9 +868,9 @@ sub damage_brick(BaseX as short, BaseY as short, NewPalette as short, NewID as s
 			do
 				NewPaints = 0
 				
-				for YID as byte = 1 to 20			
+				for YID as byte = 1 to 24			
 					for XID as byte = 1 to 40
-						if brick_adjacent(XID, YID, .BaseBrickID) then
+						if brickAdjacent(XID, YID, .BaseBrickID) then
 							PlayerSlot(Player).TileSet(XID,YID).Flash = BaseFlash
 							PlayerSlot(Player).TileSet(XID,YID).HitTime = 0
 							PlayerSlot(Player).TileSet(XID,YID).BrickID = NewPalette
@@ -854,7 +882,7 @@ sub damage_brick(BaseX as short, BaseY as short, NewPalette as short, NewID as s
 			loop until NewPaints = 0
 
 			'Allow multiple hits on the very same frame
-			for BID as byte = 1 to 20
+			for BID as byte = 1 to 24
 				for AID as byte = 1 to 40
 					with PlayerSlot(Player).TileSet(AID,BID)
 						if .Flash >= BaseFlash then
@@ -867,7 +895,7 @@ sub damage_brick(BaseX as short, BaseY as short, NewPalette as short, NewID as s
 	end with
 end sub
 
-sub inc_tick_mark(ActiveObj as Basics)
+sub incTickMark(ActiveObj as Basics)
 	with ActiveObj
 		.Trapped += 1
 		if .Trapped >= TrapThreshold then
@@ -895,7 +923,7 @@ sub inc_tick_mark(ActiveObj as Basics)
 	end with
 end sub
 
-sub brick_collisions(BallID as short)
+sub brickCollisions(BallID as short)
 	dim as ubyte HitFailed, PointsScored, ChooseParticle
 	dim as uinteger ColorDestroyed
 	dim as short ScoreMultiplier, BonusMultiplier, MinX, MaxX, MinY, MaxY, CenterX, CenterY, WidthX, FinalX, FinalY, NewPalette
@@ -955,44 +983,44 @@ sub brick_collisions(BallID as short)
 			
 			if .Power = -2 then
 				'Ball is trapped in a cavity; deals no damage in this state
-				optimal_direction(BallID,FinalX,FinalY)
+				optimalDirection(BallID,FinalX,FinalY)
 			elseif HitFailed AND .Spawned = 0 then
 				'Failed to damage a brick
-				optimal_direction(BallID,FinalX,FinalY)
+				optimalDirection(BallID,FinalX,FinalY)
 				
 				if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).IncreaseSpeed then
 					if .Speed < 12 then
 						.Speed = 12
 					else
-						adjust_speed(BallID,ActiveDifficulty / 50)
+						adjustSpeed(BallID,ActiveDifficulty / 50)
 					end if
 				else
-					adjust_speed(BallID,ActiveDifficulty / 100)
+					adjustSpeed(BallID,ActiveDifficulty / 100)
 				end if
 
 				NewPalette = PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID
-				play_clip(SFX_INVINCIBLE,.X,convert_speed(.Speed))
+				playClip(SFX_INVINCIBLE,.X,convertSpeed(.Speed))
 				Invis = 12
 			elseif .Invul = 0 AND .Spawned = 0 then
 				'Breakthru Balls and Lightning Balls do not bounce off of blocks
 				if .Power <> 3 AND .Power <> 4 then
-					optimal_direction(BallID,FinalX,FinalY)
+					optimalDirection(BallID,FinalX,FinalY)
 				end if
 
 				if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade = PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID AND .Power <= 0 then
 					'Invincible bricks are immune to normal damage
 					NewPalette = PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID
-					play_clip(SFX_INVINCIBLE,.X,convert_speed(.Speed))
+					playClip(SFX_INVINCIBLE,.X,convertSpeed(.Speed))
 					if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).IncreaseSpeed then
 						if .Speed < 12 then
 							.Speed = 12
 						else
-							adjust_speed(BallID,ActiveDifficulty / 50)
+							adjustSpeed(BallID,ActiveDifficulty / 50)
 						end if
 					else
-						adjust_speed(BallID,ActiveDifficulty / 100)
+						adjustSpeed(BallID,ActiveDifficulty / 100)
 					end if
-					inc_tick_mark(Ball(BallID))
+					incTickMark(Ball(BallID))
 				else
 					'Deal damage accordingly
 					dim as ubyte PalleteRef, NewBrick, ColorRef
@@ -1006,7 +1034,7 @@ sub brick_collisions(BallID as short)
 					
 					if .Power <= 0 then
 						if Pallete(PalleteRef).CalcedInvulnerable >= 2 then
-							inc_tick_mark(Ball(BallID))
+							incTickMark(Ball(BallID))
 						elseif NewBrick = 0 OR Pallete(NewBrick).CanRegen = 0 then
 							'Reset trap and (if needed) warp timer, but do not apply these to regen blocks
 							.Trapped = 0
@@ -1048,7 +1076,7 @@ sub brick_collisions(BallID as short)
 						ScoreMultiplier = 100
 					end if
 					
-					ActualGain = int(Pallete(PalleteRef).ScoreValue * ball_ct_bonus * ScoreMultiplier / 100)
+					ActualGain = int(Pallete(PalleteRef).ScoreValue * ballCtBonus * ScoreMultiplier / 100)
 
 					with Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID)
 						PlayerSlot(Player).Score += ActualGain
@@ -1070,40 +1098,40 @@ sub brick_collisions(BallID as short)
 						if .Speed < 12 then
 							.Speed = 12
 						else
-							adjust_speed(BallID,ActiveDifficulty / 50)
+							adjustSpeed(BallID,ActiveDifficulty / 50)
 						end if
 						if ProgressiveQuota > 4 then
 							ProgressiveQuota = 4
 						end if 
 					else
-						adjust_speed(BallID,ActiveDifficulty / 100)
+						adjustSpeed(BallID,ActiveDifficulty / 100)
 					end if
 					
-					generate_capsule(FinalX,FinalY)
+					generateCapsule(FinalX,FinalY)
 					if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade < 0 OR .Power = 2 OR .Power = 4 then
 						if .Power = 2 then
-							PlayerSlot(Player).Score += 2 * ball_ct_bonus
-							PointsScored += 2 * ball_ct_bonus
+							PlayerSlot(Player).Score += 2 * ballCtBonus
+							PointsScored += 2 * ballCtBonus
 						end if
-						NewPalette = min(ExplodeDelay,ExplodeDelay + (Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade + 1) * 100)
+						NewPalette = min(ExplodeDelay,ExplodeDelay + (100 * (Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).CalcedInvulnerable + 1)))
 					elseif .Power = 3 AND Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).CalcedInvulnerable >= 2 then
 						NewPalette = 0
-						play_clip(SFX_BRICK,.X)
+						playClip(SFX_BRICK,.X)
 					elseif .Power = 1 then
 						if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade > 0 then
-							PlayerSlot(Player).Score += 2 * ball_ct_bonus
-							PointsScored += 2 * ball_ct_bonus
+							PlayerSlot(Player).Score += 2 * ballCtBonus
+							PointsScored += 2 * ballCtBonus
 						end if
 						NewPalette = 0
-						play_clip(SFX_BRICK,.X)
+						playClip(SFX_BRICK,.X)
 					elseif Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade = PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID then
 						NewPalette = 0
-						play_clip(SFX_BRICK,.X)
+						playClip(SFX_BRICK,.X)
 					else
 						if Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade = 0 then
-							play_clip(SFX_BRICK,.X)
+							playClip(SFX_BRICK,.X)
 						else
-							play_clip(SFX_HARDEN,.X,convert_speed(.Speed))
+							playClip(SFX_HARDEN,.X,convertSpeed(.Speed))
 						end if
 						NewPalette = Pallete(PlayerSlot(Player).TileSet(FinalX,FinalY).BrickID).HitDegrade
 					end if
@@ -1112,13 +1140,13 @@ sub brick_collisions(BallID as short)
 			end if
 
 			if .Spawned = 0 AND .Power > -2 then
-				damage_brick(FinalX,FinalY,NewPalette,BallID)
+				damageBrick(FinalX,FinalY,NewPalette,BallID)
 			end if
-			generate_particles(PointsScored,FinalX,FinalY,ColorDestroyed)
+			generateParticles(PointsScored,FinalX,FinalY,ColorDestroyed)
 		end if
 	end with
 end sub
-sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
+sub generateCapsule(InX as byte, InY as byte, Explode as ubyte = 0)
 	dim as ubyte Award, CapWeight(CAP_MAX)
 	dim as short TotalWeight, RollPower, MaxRoll, CapsuleChance
 	dim as string CapPic
@@ -1169,7 +1197,7 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 		end if
 		
 		if (SecretLevels > 0 AND .LevelNum >= SecretLevels - 1) OR _
-			(check_level(.LevelNum + 1) = "" AND CampaignFolder <> EndlessFolder) then
+			(checkLevel(.LevelNum + 1) = "" AND CampaignFolder <> EndlessFolder) then
 			CapWeight(CAP_WARP) = 0
 		else
 			CapWeight(CAP_WARP) = 1
@@ -1348,7 +1376,7 @@ sub generate_capsule(InX as byte, InY as byte, Explode as ubyte = 0)
 	end with
 end sub
 
-sub rotate_back(ForceLoad as byte = 0)
+sub rotateBack(ForceLoad as byte = 0)
 	if BacksLoaded > 1 OR (ForceLoad > 0 AND BacksLoaded > 0) then
 		BackIter += 1
 		if BackIter >= BacksLoaded then
@@ -1361,7 +1389,7 @@ sub rotate_back(ForceLoad as byte = 0)
 	end if
 end sub
 
-sub auxillary_view(ByRef TextAlpha as short, ByRef TextBeta as short)
+sub auxillaryView(ByRef TextAlpha as short, ByRef TextBeta as short)
 	dim as string DynamicString, DispDiff, DispLevel, DispLives, DispWeight
 	dim as integer DynamicX, LowScores
 	dim as uinteger TxtColoring
@@ -1457,7 +1485,7 @@ sub auxillary_view(ByRef TextAlpha as short, ByRef TextBeta as short)
 	
 end sub
 
-sub high_score_input(PlayerNum as byte, Automatic as byte = 0)
+sub highScoreInput(PlayerNum as byte, Automatic as byte = 0)
 	if DQ OR CampaignName = PlaytestName OR PlayerSlot(PlayerNum).Difficulty > 12 then
 		exit sub
 	end if
@@ -1505,7 +1533,7 @@ sub high_score_input(PlayerNum as byte, Automatic as byte = 0)
 					CenterX = 512-gfxlength(PrintStr,4,3,3)/2
 					gfxstring(PrintStr,CenterX,419,4,3,3,rgb(255,255,255))
 					
-					draw_box(372,414,651,443)
+					drawBox(372,414,651,443)
 			
 					sleep 10
 					InType = inkey
@@ -1540,11 +1568,11 @@ sub high_score_input(PlayerNum as byte, Automatic as byte = 0)
 			.NewEntry = 1
 		end with
 		
-		save_scores
+		saveScores
 	end if
 end sub
 
-sub fresh_level(PlrID as byte)
+sub freshLevel(PlrID as byte)
 	with PlayerSlot(PlrID)
 		if (GameStyle AND (1 SHL STYLE_BOSS)) OR (GameStyle AND (1 SHL STYLE_BREAKABLE_CEILING)) then
 			.BossHealth = .BossMaxHealth
@@ -1558,7 +1586,7 @@ sub fresh_level(PlrID as byte)
 	end with
 end sub
 
-sub game_over
+sub gameOver
 	setmouse(,,0,0)
 	dim as string PrintStr
 	dim as short CenterX
@@ -1584,9 +1612,9 @@ sub game_over
 	
 	with PlayerSlot(Player)
 		if DQ = 0 then
-			high_score_input(Player)
+			highScoreInput(Player)
 			TotalXP += int(.Score * .Difficulty)
-			save_config
+			saveConfig
 		end if
 		
 		if .Score > 0 then
@@ -1595,7 +1623,7 @@ sub game_over
 			.GameOverCombo = 0
 		end if
 		
-		LevelSkippable = (.GameOverCombo >= 2 AND check_level(.LevelNum+1) <> "--------" AND check_level(.LevelNum+1) <> "" AND _
+		LevelSkippable = (.GameOverCombo >= 2 AND checkLevel(.LevelNum+1) <> "--------" AND checkLevel(.LevelNum+1) <> "" AND _
 			(.LevelNum < SecretLevels - 1 OR SecretLevels <= 0))
 	end with
 
@@ -1641,7 +1669,7 @@ sub game_over
 			end if
 			
 			if UseChoice = COption then
-				draw_box(372,354+COption*30,651,383+COption*30)
+				drawBox(372,354+COption*30,651,383+COption*30)
 			end if
 		next COption
 
@@ -1691,14 +1719,14 @@ sub game_over
 			end if
 			
 			'Use a continue
-			fresh_level(Player)
-			load_level(.LevelNum)
-			generate_cavity
+			freshLevel(Player)
+			loadLevel(.LevelNum)
+			generateCavity
 			.Score = 0
 			.DispScore = 0
 			.InitialLevel = .LevelNum
-			empty_hand(Player)
-			render_hand
+			emptyHand(Player)
+			renderHand
 			if InitialExtraLife = 0 then
 				.Threshold = SubsequentExtraLives
 			else
@@ -1710,7 +1738,7 @@ sub game_over
 	setmouse(,,0,1)
 end sub
 
-sub transfer_control(GameEnded as ubyte = 0)
+sub transferControl(GameEnded as ubyte = 0)
 	dim as ubyte OldPlayer
 	for LsrID as ubyte = 1 to 20
 		for LsrPt as ubyte = 1 to 15
@@ -1730,9 +1758,9 @@ sub transfer_control(GameEnded as ubyte = 0)
 				Player = 1
 			end if
 		loop until Player = OldPlayer OR Playerslot(Player).Lives > 0 OR GameEnded > 0
-		generate_cavity
-		rotate_back
-		load_level(PlayerSlot(Player).LevelNum)
+		generateCavity
+		rotateBack
+		loadLevel(PlayerSlot(Player).LevelNum)
 		
 		if Playerslot(Player).Lives > 0 AND ControlStyle >= CTRL_DESKTOP then
 			GamePaused = 1
@@ -1741,20 +1769,20 @@ sub transfer_control(GameEnded as ubyte = 0)
 	
 	if GameEnded = 0 then
 		PaddleHealth = 110 * 60
-		reset_paddle
-		rotate_music
+		resetPaddle
+		rotateMusic
 	end if
-	render_hand
+	renderHand
 end sub
 
-sub capsule_message(NewText as string, AlwaysShow as byte = 0)
+sub capsuleMessage(NewText as string, AlwaysShow as byte = 0)
 	if HintLevel >= 1 - AlwaysShow then
 		Instructions = NewText
 		InstructExpire = timer + max(5,2+len(NewText)/4)
 	end if
 end sub
 
-sub shuffle_levels
+sub shuffleLevels
 	dim as short NumLevels, LID, LevelUsed
 	if CampaignFolder = EndlessFolder then
 		'Endless Shuffle randomizes ALL official campaigns levels!
@@ -1774,7 +1802,7 @@ sub shuffle_levels
 			loop until LevelUsed = 0
 		next LID
 	else
-		if ShuffleLevels = 0 then
+		if ShuffleSet = 0 then
 			exit sub
 		end if
 		
@@ -1794,12 +1822,12 @@ sub shuffle_levels
 		 ' - Secret levels are also excluded, if they have not already been known
 		 '/
 		for LID = 1 to NumLevels
-			if check_level(LID) = "--------" OR (LID >= SecretLevels AND HighLevel < SecretLevels) then
+			if checkLevel(LID) = "--------" OR (LID >= SecretLevels AND HighLevel < SecretLevels) then
 				ShuffleList(LID) = LID
 			else
 				do
 					ShuffleList(LID) = irandom(1,NumLevels)
-					LevelUsed = sgn(abs(check_level(ShuffleList(LID)) = "--------" OR _
+					LevelUsed = sgn(abs(checkLevel(ShuffleList(LID)) = "--------" OR _
 						(ShuffleList(LID) >= SecretLevels AND HighLevel < SecretLevels)))
 					if LevelUsed = 0 then
 						for JID as short = 1 to LID - 1
@@ -1815,7 +1843,7 @@ sub shuffle_levels
 	end if
 end sub
 
-sub begin_local_game(InitPlayers as byte, InitLevel as short)
+sub beginLocalGame(InitPlayers as byte, InitLevel as short)
 	if InitPlayers > 0 then
 		setmouse(,,0,1)
 	end if
@@ -1823,10 +1851,10 @@ sub begin_local_game(InitPlayers as byte, InitLevel as short)
 
 	Player = 1
 	NumPlayers = max(InitPlayers,1)
-	reset_paddle
-	destroy_ammo
-	destroy_balls
-	destroy_capsules
+	resetPaddle
+	destroyAmmo
+	destroyBalls
+	destroyCapsules
 	LevelDesc = 0
 
 	for HID as byte = 1 to 10
@@ -1841,35 +1869,36 @@ sub begin_local_game(InitPlayers as byte, InitLevel as short)
 		end if
 		
 		if InitLevel = 1 then
-			shuffle_levels
+			shuffleLevels
 		
-			fix_first_level
-			load_level(1)
+			fixFirstLevel
+			loadLevel(1)
 		else
-			fix_first_level
-			load_level_file(CampaignFolder+"/L"+str(InitLevel))
+			fixFirstLevel
+			loadLevelFile(CampaignFolder+"/L"+str(InitLevel))
 		end if
-		rotate_music
+		rotateMusic
 	else
-		load_level(1)
+		loadLevel(1)
 	end if
-	rotate_back
-	generate_cavity
+	rotateBack
+	generateCavity
 
 	NewPlrSlot.LevelNum = InitLevel
-	copy_wall
+	copyWall
 	for PDID as ubyte = 1 to MaxPlayers
 		DifficultyRAM(PDID) = PlayerSlot(PDID).Difficulty
 		PlayerSlot(PDID) = NewPlrSlot
 		PlayerSlot(PDID).Difficulty = DifficultyRAM(PDID)
 		PlayerSlot(PDID).PlayTime = 0
-		fresh_level(PDID)
+		freshLevel(PDID)
 		if PDID > InitPlayers AND (PDID <> 1 OR InitPlayers < 0) then
 			PlayerSlot(PDID).Lives = 0
 		end if
 	next PDID
-	render_hand
+	renderHand
 
 	FrameTime = timer
 end sub
+
 

@@ -20,7 +20,7 @@ sub localGameplay
 	ShuffleList(1) = 1
 	fixFirstLevel
 	if QuickPlayFile = "" then
-		LoadErrors = load_settings
+		LoadErrors = loadSettings
 	else
 		CampaignName = PlaytestName
 		
@@ -459,7 +459,7 @@ sub localGameplay
 					'Intentionally blank
 				elseif CampaignPassword = "--------" then
 					uiElement("Fatal!",764,6,7,rgb(255,128,128))
-				elseif CampaignPassword <> "++++++++" AND .LevelNum <= HighLevel AND ShuffleLevels = 0 then
+				elseif CampaignPassword <> "++++++++" AND .LevelNum <= HighLevel AND ShuffleSet = 0 then
 					if .Difficulty >= 6.5 then
 						uiElement(CampaignPassword,764,6,0,rgb(128,128,128))
 					else
@@ -1039,7 +1039,7 @@ sub localGameplay
 			PlayerSlot(Player).PlayTime += 1
 		end if
 			
-		if total_lives > 0 AND GamePaused = 0 AND LevelClear = 0 then
+		if totalLives > 0 AND GamePaused = 0 AND LevelClear = 0 then
 			if multikey(SC_TAB) then
 				Instructions = "Auxilliary lists may not be accessed while a game is running."
 				InstructExpire = timer + 7
@@ -1547,7 +1547,7 @@ sub localGameplay
 					if RecalcGems AND LevelClear > 25 then
 						.Score -= Bonuses(3)
 					end if
-					Bonuses(3) = score_hand * BaseCapsuleValue
+					Bonuses(3) = scoreHand * BaseCapsuleValue
 					if RecalcGems then
 						.Score += Bonuses(3)
 						if .DispScore < .Score then
@@ -1778,6 +1778,17 @@ sub localGameplay
 								transferControl
 								Instructions = "Skip successful. Ready to go, Player "+str(Player)+"?"
 							end if
+						elseif DebugCode = "GETMEOUT" then
+							if LevelTimeLimit <= 0 then
+								Instructions = "No effect in an untimed level"
+							elseif PlayerSlot(Player).Lives <= 1 OR (GameStyle AND (1 SHL STYLE_FATAL_TIMER)) then
+								Instructions = "Not available if time expiration would cause a game over"
+							elseif TotalBC > 0 then
+								Instructions = "Not available if there are already balls in play"
+							else
+								Instructions = "Skip successful. Hopefully that was worth trading away a life..."
+								PlayerSlot(Player).LevelTimer = 1
+							end if
 						elseif DebugCode = "PUMPKINEATER" then
 							if DQ = 0 then
 								Instructions = "Cheat mode turned on! High scores will not be saved"
@@ -1874,6 +1885,7 @@ sub localGameplay
 						end with
 						AboveLine = 1
 						InstructExpire = timer + 5
+						FrameTime = timer
 						DebugConsole = 0
 						HoldAction = 1
 						GamePaused = 0
@@ -1905,6 +1917,7 @@ sub localGameplay
 					TapWindow = 0
 				end if
 				Instructions = "Game resumed"
+				FrameTime = timer
 				AboveLine = 1
 				InstructExpire = timer + 5
 				HoldAction = 1
@@ -1912,7 +1925,7 @@ sub localGameplay
 			end if
 		end if
 		
-		if InType = FunctionEleven AND total_lives > 0 then
+		if InType = FunctionEleven AND totalLives > 0 then
 			DebugCode = ""
 			DebugConsole = 1 
 		end if
@@ -2472,7 +2485,7 @@ sub localGameplay
 										
 										PlayerSlot(Player).PokerHand(GemsCollected) = .Angle - CAP_GEM_R + 1
 										if GemsCollected = 5 then
-											GemMultiplier = score_hand
+											GemMultiplier = scoreHand
 										end if
 										renderHand(GemsCollected)
 										RecalcGems = 1
@@ -2552,7 +2565,7 @@ sub localGameplay
 			end if
 		end with
 
-		if total_lives <= 0 AND ProhibitSpawn = 0 then
+		if totalLives <= 0 AND ProhibitSpawn = 0 then
 			if multikey(SC_TAB) then
 				auxillaryView(InstruAlpha, InstruBeta)
 			end if
@@ -2561,11 +2574,11 @@ sub localGameplay
 			releaseMusic
 			Paddle(1).Blizzard = 0
 			Paddle(1).Grabbing = 0
-			if ucase(InType) >= "A" AND ucase(InType) <= "Z" AND PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignName <> PlaytestName then
+			if ucase(InType) >= "A" AND ucase(InType) <= "Z" AND PlayerSlot(0).Difficulty < 6.5 AND ShuffleSet = 0 AND CampaignName <> PlaytestName then
 				InPassword = right(InPassword,7) + ucase(InType)
 			end if
 			
-			if InType = FunctionFour AND PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignFolder <> EndlessFolder AND CampaignName <> PlaytestName then
+			if InType = FunctionFour AND PlayerSlot(0).Difficulty < 6.5 AND ShuffleSet = 0 AND CampaignFolder <> EndlessFolder AND CampaignName <> PlaytestName then
 				InPassword = levelList
 				FrameTime = timer
 			end if
@@ -2614,7 +2627,7 @@ sub localGameplay
 					end if
 				end if
 				
-				if PlayerSlot(0).Difficulty < 6.5 AND ShuffleLevels = 0 AND CampaignFolder <> EndlessFolder AND CampaignName <> PlaytestName AND Phase <> 0 then
+				if PlayerSlot(0).Difficulty < 6.5 AND ShuffleSet = 0 AND CampaignFolder <> EndlessFolder AND CampaignName <> PlaytestName AND Phase <> 0 then
 					Instructions = "Push F4 to open the level screen"
 				else
 					Instructions = "Push 0-"+str(MaxPlayers)+" to start a new campaign with that many players"
@@ -2631,7 +2644,7 @@ sub localGameplay
 			Instructions = "The more you juggle, the more points you earn."
 			InstructExpire = timer + 10
 			GameHints(2) = 1
-		elseif total_lives > 0 AND GameHints(4) = 0 AND PlayerSlot(Player).WarpTimer < 3540 then
+		elseif totalLives > 0 AND GameHints(4) = 0 AND PlayerSlot(Player).WarpTimer < 3540 then
 			Instructions = "When three breakable blocks remain, a warp timer starts"
 			InstructExpire = timer + 10
 			GameHints(4) = 1
@@ -2790,7 +2803,7 @@ sub localGameplay
 		end if
 		
 		gfxstring(Instructions,512-gfxlength(Instructions,5,3,3)/2,740,5,3,3,rgba(255,255,255,InstruGamma),rgba(255,255,255,InstruBeta))
-		if (total_lives = 0 AND InPassword = "--------") OR timer > InstructExpire OR abs(InstruAlpha) < 320 then
+		if (totalLives = 0 AND InPassword = "--------") OR timer > InstructExpire OR abs(InstruAlpha) < 320 then
 			InstruAlpha += 4
 		end if
 
@@ -2804,10 +2817,11 @@ sub localGameplay
 			end if
 		wend
 		InType = inkey
-		if total_lives = 0 then
+		if totalLives = 0 then
 			for PID as ubyte = 0 to MaxPlayers
 				if InType = str(PID) AND InPassword = "--------" then
 					beginLocalGame(PID, 1)
+					FrameTime = timer
 					
 					Instructions = ""
 					InstructExpire = timer
@@ -2838,7 +2852,7 @@ sub localGameplay
 			if BGBrightness < 0 then
 			 	BGBrightness = 100
 			end if
-		elseif InType = FunctionFive AND total_lives > 0 then
+		elseif InType = FunctionFive AND totalLives > 0 then
 			#IFDEF __USE_FBSOUND__
 			MusicPlrEnabled = 1 - MusicPlrEnabled
 			
@@ -2852,8 +2866,8 @@ sub localGameplay
 			InstructExpire = timer + 5
 			#ENDIF
 		elseif InType = FunctionSeven then
-			toggle_fullscreen
-			if total_lives > 0 AND LevelClear = 0 then
+			toggleFullscreen
+			if totalLives > 0 AND LevelClear = 0 then
 				GamePaused = 1
 			end if
 			LastPlayed = timer
@@ -2912,7 +2926,6 @@ sub localGameplay
 					emptyHand(Player)
 	
 					LastPlayed = timer
-					FrameTime = timer
 					.LevelNum -= 1
 					.Lives = 0
 					.SetCleared = 1
@@ -2940,7 +2953,6 @@ sub localGameplay
 					emptyHand(Player)
 	
 					LastPlayed = timer
-					FrameTime = timer
 					.SetCleared = 1
 					.LevelNum -= 1
 					.Lives = 0
@@ -2949,6 +2961,7 @@ sub localGameplay
 			end with
 			transferControl
 			generateCavity
+			FrameTime = timer
 		end if
 		
 		while PowerTick >= 100
@@ -2956,9 +2969,9 @@ sub localGameplay
 		wend
 		
 		if InType = chr(27) then
-			if total_lives > 0 AND GamePaused = 0 then
+			if totalLives > 0 AND GamePaused = 0 then
 				GamePaused = 1
-			elseif total_lives > 0 AND CampaignName <> PlaytestName then
+			elseif totalLives > 0 AND CampaignName <> PlaytestName then
 				PlayerSlot(Player).Lives = 1
 				PlayerSlot(Player).GameOverCombo = -1
 				ProhibitSpawn = 2

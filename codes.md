@@ -5,6 +5,7 @@ Nebunoid comes with a collection of cheat codes, accessed via **F11** while the 
 * LevelAxe: Resets level progress and makes the game forget passwords. Fair warning; this will also cause secret levels to be forgotten, and stars to be lost.
 * IwantToPlay: Adds a new player to the match. Uses the lowest current level of the existing players, difficulty permitting. Max 6 players in a match.
 * SkipTurn: Skips the active player's turn without messing with the life count. Only effective in a hotseat match while the active player has no balls in play.
+* GetMeOut: Causes the level timer to instantly run out. Only available if time expiration would *not* end a game, and while the active player has no balls in play.
 * PumpkinEater: Expresses acknowledgement that the player(s) are cheating. Required to activate any cheat code underneath.
 * Immortal: Adds 3 lives to the active player's stock.
 * BiggiePaddle: Extends paddle size by 70 pixels.
