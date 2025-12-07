@@ -152,7 +152,7 @@ do
 	put (0,0),Sideframes,trans
 	Result = getmouse(MouseX,MouseY,0,ButtonCombo)
 	put (371,10),TitleBanner,trans
-	gfxstring("Copyright (C) 2023-2024 Paul Ruediger",40,753,3,3,2,rgb(255,255,255))
+	gfxstring("Copyright (C) 2023-2025 Paul Ruediger",40,753,3,3,2,rgb(255,255,255))
 
 	gfxstring("Exit",40,200,5,5,3,rgb(255,255,255))
 

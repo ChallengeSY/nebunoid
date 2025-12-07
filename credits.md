@@ -4,6 +4,7 @@ Main engine + sound effects + foreground assets by Paul Ruediger. Licensed under
 ### Included music compositions
 * **Beatrave Tales** by Paul Ruediger. Remixed from SideWinder's **Beatwave** and **Tales from the Rave II**.
 * **Ethno Raiders** by Paul Ruediger. Remixed from Roland's **Ethno Pa** and SideWinder's **Dust Raiders**.
+* **Dance of Pan** by Paul Ruediger. Remixed from Eliran Ben-Ishai's **Pan's Dance**.
 * **Defeat by Entropy** by Paul Ruediger. Remixed from SideWinder's **What Life?** / **Wonderfull**.
 * **Lunarbase Construction** by Paul Ruediger. Remixed from SideWinder's **Behind the Moon Remix**, and a piece of soundtrack from the ill-fated **VGA Planets 5: StarCube**.
 * **Space Cadet Once Again** by Paul Ruediger. Remixed from SideWinder's **Once and Again**, and subtlely one of Matt Ridgway's pieces from the **Space Cadet** pinball table.
