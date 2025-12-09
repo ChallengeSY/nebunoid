@@ -5,7 +5,7 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 32
 ================================================================================
 
 Level Name            := Belated unlock
-Level Description     := Oh, and congratulations on unlocking the secret levels!
+Level Description     := Oh, and congratulations on unlocking Regular Season's secret levels!
 Level Password        := SCZTUXIU
 Level game number     := 3
 Level time limit      := 0

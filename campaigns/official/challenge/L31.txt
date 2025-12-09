@@ -5,7 +5,7 @@ LEVEL DATA FILE - CHALLENGE CAMPAIGN LEVEL 31
 ================================================================================
 
 Level Name            := Challenging Columns!
-Level Description     := Congratulations! You unlocked the secret levels.
+Level Description     := Congratulations! You have unlocked Challenge Campaign's secret levels.
 Level Password        := TICKTOCK
 Level game number     := 3
 Level time limit      := 0
