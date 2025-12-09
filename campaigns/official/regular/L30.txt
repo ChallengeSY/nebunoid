@@ -5,7 +5,7 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 30
 ================================================================================
 
 Level Name            := The Finale?
-Level Description     := This is the last level... or is it?
+Level Description     := 
 Level Password        := --------
 Level game number     := 4099
 Level time limit      := 0

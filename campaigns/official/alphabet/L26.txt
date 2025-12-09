@@ -5,7 +5,7 @@ LEVEL DATA FILE - FORTIFIED LETTERS LEVEL 26
 ================================================================================
 
 Level Name            := Zhang
-Level Description     := This is the last level! Good luck!
+Level Description     := 
 Level Password        := --------
 Level game number     := 4099
 Level time limit      := 0

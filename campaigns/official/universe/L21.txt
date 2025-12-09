@@ -5,7 +5,7 @@ LEVEL DATA FILE - CELESTIAL JOURNEY LEVEL 21
 ================================================================================
 
 Level Name            := Stellar 2600
-Level Description     := More good old days incoming
+Level Description     := 
 Level Password        := VCSTELLA
 Level game number     := 4355
 Level time limit      := 0

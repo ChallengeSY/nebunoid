@@ -5,7 +5,7 @@ LEVEL DATA FILE - REGULAR SEASON LEVEL 35
 ================================================================================
 
 Level Name            := Alien Mothership
-Level Description     := Destroy the alien mothership to clear the campaign!
+Level Description     := Destroy the alien mothership to clear Regular Season!
 Level Password        := --------
 Level game number     := 515
 Level time limit      := 0
