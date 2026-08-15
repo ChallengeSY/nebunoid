@@ -1780,7 +1780,14 @@ sub localGameplay
 							end if
 						elseif DebugCode = "GETMEOUT" then
 							if LevelTimeLimit <= 0 then
-								Instructions = "No effect in an untimed level"
+								if BrickCount > 3 then
+									Instructions = "3 or fewer blocks required to activate Warp Drive"
+								elseif TotalBC > 0 then
+									Instructions = "Not available if there are already balls in play"
+								else
+									PlayerSlot(Player).WarpTimer = 1
+									Instructions = "Warp Drive activated"
+								end if
 							elseif PlayerSlot(Player).Lives <= 1 OR (GameStyle AND (1 SHL STYLE_FATAL_TIMER)) then
 								Instructions = "Not available if time expiration would cause a game over"
 							elseif TotalBC > 0 then
@@ -2574,13 +2581,16 @@ sub localGameplay
 			releaseMusic
 			Paddle(1).Blizzard = 0
 			Paddle(1).Grabbing = 0
-			if ucase(InType) >= "A" AND ucase(InType) <= "Z" AND PlayerSlot(0).Difficulty < 6.5 AND ShuffleSet = 0 AND CampaignName <> PlaytestName then
-				InPassword = right(InPassword,7) + ucase(InType)
-			end if
-			
-			if InType = FunctionFour AND PlayerSlot(0).Difficulty < 6.5 AND ShuffleSet = 0 AND CampaignFolder <> EndlessFolder AND CampaignName <> PlaytestName then
-				InPassword = levelList
-				FrameTime = timer
+			if PlayerSlot(0).Difficulty < 6.5 AND ShuffleSet = 0 AND CampaignFolder <> EndlessFolder AND CampaignName <> PlaytestName then
+				'Password / Level Select features available only in a fixed campaign and on a low difficulty level
+				if ucase(InType) >= "A" AND ucase(InType) <= "Z" then
+					InPassword = right(InPassword,7) + ucase(InType)
+				end if
+				
+				if InType = FunctionFour then
+					InPassword = levelList
+					FrameTime = timer
+				end if
 			end if
 
 			if InPassword <> "--------" then

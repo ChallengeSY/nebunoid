@@ -1,6 +1,8 @@
 ## Nebunoid credits
 Main engine + sound effects + foreground assets by Paul Ruediger. Licensed under [MIT](license.md).
 
+No generative automation systems were used in native assets; and we believe imported background assets also follow this principal.
+
 ### Included music compositions
 * **Beatrave Tales** by Paul Ruediger. Remixed from SideWinder's **Beatwave** and **Tales from the Rave II**.
 * **Ethno Raiders** by Paul Ruediger. Remixed from Roland's **Ethno Pa** and SideWinder's **Dust Raiders**.
