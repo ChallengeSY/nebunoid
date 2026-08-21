@@ -13,10 +13,14 @@ No generative automation systems were used in native assets; and we believe impo
 * **Unbreaking Modules** by Paul Ruediger. Remixed from Corwin's **Break It**.
 
 ### Included nebulae backgrounds
+* **California Nebula** courtesy of Taavi Niittee of the Tõrva Astronomy Club. Licensed under Creative Commons (BY 4.0).
+* **Carina Nebula** courtesy of ESA and T. Preibisch. Licensed under Creative Commons (BY 4.0).
 * **Crab Nebula** courtesy of NASA, ESA, and the Arizona State University. Public domain.
+* **Eagle Nebula** courtesy of Gianni Icaroce. Licensed under Creative Commons (BY 4.0).
 * **Flame Nebula** courtesy of NASA. Public domain.
 * **Horsehead Nebula** courtesy of NASA, NOAO, ESA, Hubble, and STScl. Public domain.
 * **Lagoon Nebula** courtesy of ESO. Licensed under Creative Commons (BY 4.0).
 * **Omega Nebula** courtesy of NASA, ESA, and the Arizona State University. Public domain.
 * **Orion Nebula** courtesy of ESO. Licensed under Creative Commons (BY 4.0).
+* **Rosette Nebula** courtesy of Chuck Ayoub. Licensed under Creative Commons - Public Domain Dedication.
 * **Tarantula Nebula** courtesy of NASA and STScl. Public domain.
