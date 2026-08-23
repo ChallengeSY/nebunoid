@@ -2162,6 +2162,7 @@ sub localGameplay
 																	.X = Ball(BID).X
 																	.Y = Ball(BID).Y
 																	.Spawned = 0
+																	.Gravity = Ball(BID).Gravity
 																	.Power = Ball(BID).Power
 																	.Duration = Ball(BID).Duration
 																	.Angle = Ball(BID).Angle + 90 * TotalNew
@@ -2193,6 +2194,7 @@ sub localGameplay
 																	.X = Ball(BID).X
 																	.Y = Ball(BID).Y
 																	.Spawned = 0
+																	.Gravity = Ball(BID).Gravity
 																	.Power = Ball(BID).Power
 																	.Duration = Ball(BID).Duration
 																	.Angle = Ball(BID).Angle + 90
