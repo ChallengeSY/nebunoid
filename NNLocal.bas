@@ -650,14 +650,10 @@ sub localGameplay
 						for NewBall as short = 1 to 100
 							with Ball(NewBall)
 								if .Speed <= 0 then
+									Ball(NewBall) = Ball(BID)
 									.Speed = int(Ball(BID).Speed)
-									.X = Ball(BID).X
-									.Y = Ball(BID).Y
 									.Spawned = 0
-									.Gravity = Ball(BID).Gravity
-									.Power = Ball(BID).Power
-									.Duration = Ball(BID).Duration
-									.Angle = Ball(BID).Angle + 90
+									.Angle = Ball(BID).Angle - 90 + irandom(0,1) * 180
 									TotalBC += 1
 									exit for,for
 								end if
@@ -2035,13 +2031,8 @@ sub localGameplay
 															with Ball(NewBall)
 																if .Speed <= 0 then
 																	TotalNew += 1
+																	Ball(NewBall) = Ball(BID)
 																	.Speed = int(Ball(BID).Speed)
-																	.X = Ball(BID).X
-																	.Y = Ball(BID).Y
-																	.Gravity = Ball(BID).Gravity
-																	.Spawned = 0
-																	.Power = Ball(BID).Power
-																	.Duration = Ball(BID).Duration
 																	.Angle = Ball(BID).Angle + 45 * TotalNew
 																	.ForceUngrab = 6
 																	TotalBC += 1
@@ -2069,14 +2060,11 @@ sub localGameplay
 														with Ball(NewBall)
 															if .Speed <= 0 then
 																Splitted(NewBall) = 1
+																
+																Ball(NewBall) = Ball(BID)
 																.Speed = int(Ball(BID).Speed)
-																.X = Ball(BID).X
-																.Y = Ball(BID).Y
-																.Gravity = Ball(BID).Gravity
 																.Spawned = 0
-																.Power = Ball(BID).Power
-																.Duration = Ball(BID).Duration
-																.Angle = Ball(BID).Angle + 90
+																.Angle = Ball(BID).Angle - 90 + irandom(0,1) * 180
 																.ForceUngrab = 6
 																TotalBC += 1
 																exit for
@@ -2158,13 +2146,9 @@ sub localGameplay
 																if .Speed <= 0 then
 																	TotalNew += 1
 																	Splitted(NewBall) = 1
+																	Ball(NewBall) = Ball(BID)
 																	.Speed = int(Ball(BID).Speed)
-																	.X = Ball(BID).X
-																	.Y = Ball(BID).Y
 																	.Spawned = 0
-																	.Gravity = Ball(BID).Gravity
-																	.Power = Ball(BID).Power
-																	.Duration = Ball(BID).Duration
 																	.Angle = Ball(BID).Angle + 90 * TotalNew
 																	TotalBC += 1
 																	if TotalNew >= 3 then
@@ -2190,14 +2174,10 @@ sub localGameplay
 															with Ball(NewBall)
 																if .Speed <= 0 then
 																	Splitted(NewBall) = 1
+																	Ball(NewBall) = Ball(BID)
 																	.Speed = int(Ball(BID).Speed)
-																	.X = Ball(BID).X
-																	.Y = Ball(BID).Y
 																	.Spawned = 0
-																	.Gravity = Ball(BID).Gravity
-																	.Power = Ball(BID).Power
-																	.Duration = Ball(BID).Duration
-																	.Angle = Ball(BID).Angle + 90
+																	.Angle = Ball(BID).Angle - 90 + irandom(0,1) * 180
 																	TotalBC += 1
 																	exit for
 																end if
