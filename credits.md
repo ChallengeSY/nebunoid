@@ -5,7 +5,7 @@ No generative automation systems were used in native assets; and we believe impo
 
 ### Included music compositions
 * **Beatrave Tales** by Paul Ruediger. Remixed from SideWinder's **Beatwave** and **Tales from the Rave II**.
-* **Ethno Raiders** by Paul Ruediger. Remixed from Roland's **Ethno Pa** and SideWinder's **Dust Raiders**.
+* **Ethno Raiders** by Paul Ruediger. Remixed from Jun-ichi Kawaguchi's **Ethno Papa** and SideWinder's **Dust Raiders**.
 * **Dance of Pan** by Paul Ruediger. Remixed from Eliran Ben-Ishai's **Pan's Dance**.
 * **Defeat by Entropy** by Paul Ruediger. Remixed from SideWinder's **What Life?** / **Wonderfull**.
 * **Lunarbase Construction** by Paul Ruediger. Remixed from SideWinder's **Behind the Moon Remix**, and a piece of soundtrack from the ill-fated **VGA Planets 5: StarCube**.
