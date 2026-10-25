@@ -52,7 +52,7 @@ Nebunoid supports a difficulty scale for *each* player, allowing players of vary
 ----
 
 ### Powerup Capsules
-Nebunoid has 27 capsules of varying power, and rarity. The power-up capsules are colored green, blue, purple, or gold (depending on its rarity), and may be collected to acquire special abilities. The power-down capsules are all colored red, and will generally make the gameplay more challenging when collected. Neutral capsules are colored grey, and can cause some interesting effects when collected. In any case, powerup capsules which have a more potent effect tend to spawn less frequently than weaker capsules.
+Nebunoid has 27 capsules of varying power, and rarity. The power-up capsules are colored green, blue, purple, or gold (depending on its rarity), and may be collected to acquire special abilities. The power-down capsules are all colored red, and will generally make the gameplay more challenging when collected. Neutral capsules are colored grey, and can cause some interesting effects when collected. In any case, capsules which have a more potent effect tend to spawn less frequently than weaker capsules.
 
 Some capsules have a timed duration. Power-up capsules (but not power-down capsules) have a stacking effect whenever multiples are collected in a short duration of time. These capsules also provide a little bit of recovery when in a boss battle.
 
@@ -88,7 +88,7 @@ Geometric Designs is another short 10-level campaign. Although less accomodating
 Times of the Year is a short 12-level campaign, with roughly the same specifications as Geometric Designs. This is also the first campaign to introduce exploding blocks that bloom instead of destroy outright.
 
 #### Regular Season
-Regular Season is the most balanced campaign, containing 30 levels. A wide variety of obstacles are demonstrated in this campaign, but no bio blocks are present.
+Regular Season is the most balanced campaign, containing 30 levels. A wide variety of obstacles are demonstrated in this campaign, but no bio-regenerative blocks are present.
 
 Save points are available for nearly every level in the campaign, being absent only from the last level of the campaign. Instead, players who lose their last life on the final level will not be permitted to continue, and must end their game.
 

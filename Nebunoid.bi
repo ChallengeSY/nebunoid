@@ -478,6 +478,7 @@ sub readCampaigns(StarsOnly as ubyte = 0)
 			if CommunityFolder <> "." AND CommunityFolder <> ".." then
 				CommunityFoldersFound += 1
 				redim preserve CommunityCampaigns(CommunityFoldersFound)
+				
 				with CommunityCampaigns(CommunityFoldersFound)
 					.Namee = CommunityFolder
 					.Folder = "community/"+CommunityFolder
@@ -1601,4 +1602,3 @@ function actionButton(HoldCheck as byte = 0) as integer
 	
 	return (ControlStyle = CTRL_AI)
 end function
-

@@ -1900,5 +1900,3 @@ sub beginLocalGame(InitPlayers as byte, InitLevel as short)
 
 	FrameTime = timer
 end sub
-
-

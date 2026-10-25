@@ -3010,7 +3010,6 @@ sub localGameplay
 		end if
 	end if
 	ControlStyle = SavedControls
-	kill("Stats.dat")
 	if InType = XBox then
 		cleanUp
 		saveConfig
@@ -3019,5 +3018,3 @@ sub localGameplay
 	erase EndlessShuffList
 	setmouse(,,0,0)
 end sub
-
-

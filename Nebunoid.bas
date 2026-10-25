@@ -36,7 +36,7 @@ if ScreenCreated = 0 OR FileExists("FS.ini") then
 		bload(MasterDir+"/gfx/banner.bmp",TitleBanner)
 	end if
 end if
-windowtitle "Nebunoid 1.21"
+windowtitle "Nebunoid 1.22"
 
 'Foreground assets
 loadBrickGfx(MasterDir+"/gfx/blocks/")
@@ -176,6 +176,7 @@ do
 			put(520,315+(PID-13)*25),CapsulePic(PID),trans
 			gfxstring(TitleCapNames(PID),560,315+(PID-13)*25,4,4,3,rgb(255,255,255))
 		next PID
+
 	elseif MenuMode = 1 then
 		dim as uinteger Availability
 		gfxstring("Official Campaign Selection",40,290,5,4,3,rgb(255,192,64))
@@ -281,6 +282,7 @@ do
 								loadTitleCapsules
 								MenuMode = 0
 								while inkey <> "":wend
+								exit for
 							end if
 						end if
 					end if
@@ -303,7 +305,9 @@ do
 								localGameplay
 								loadTitleCapsules
 								MenuMode = 0
+								HoldClick = 1
 								while inkey <> "":wend
+								exit for
 							end if
 						end if
 					end with
