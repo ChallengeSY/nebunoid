@@ -778,34 +778,46 @@ sub shop
 				elseif PID = 1 then
 					select case HintLevel
 						case 0
-							gfxstring(CustomItem(MISC,PID)+" (No hints active)",5,PosY,4,4,3,rgb(255,255,255))
+							gfxstring(CustomItem(MISC,PID)+" (No hints)",5,PosY,4,4,3,rgb(255,255,255))
 						case 1
-							gfxstring(CustomItem(MISC,PID)+" (Uncommon hints active)",5,PosY,4,4,3,rgb(128,255,128))
+							gfxstring(CustomItem(MISC,PID)+" (Uncommon hints)",5,PosY,4,4,3,rgb(128,255,128))
 						case 2
-							gfxstring(CustomItem(MISC,PID)+" (Capsule and level hints active)",5,PosY,4,4,3,rgb(128,255,128))
+							gfxstring(CustomItem(MISC,PID)+" (Capsule and level hints)",5,PosY,4,4,3,rgb(128,255,128))
 						case else
-							gfxstring(CustomItem(MISC,PID)+" (All hints active)",5,PosY,4,4,3,rgb(0,255,0))
+							gfxstring(CustomItem(MISC,PID)+" (All hints)",5,PosY,4,4,3,rgb(0,255,0))
 					end select
-					if MouseY >= SelY AND MouseY < SelY+30 then
-						drawBox(0,SelY,1023,SelY+29)
-						if ButtonCombo > 0 AND HoldClick = 0 then
-							HintLevel -= 1
-							if HintLevel < 0 then
-							 	HintLevel = 3
+					
+					for BID as byte = 0 to 3
+						if HintLevel >= BID then
+							line (900+BID*25,PosY)-(919+BID*25,PosY+19),rgb(255,255,255),bf
+						else
+							line (900+BID*25,PosY)-(919+BID*25,PosY+19),rgb(255,255,255),b
+						end if
+						
+						if MouseX >= 900+BID*25 AND MouseX < 920+BID*25 AND MouseY >= PosY AND MouseY < PosY+20 then
+							drawBox(900+BID*25,PosY,919+BID*25,PosY+19)
+							if ButtonCombo > 0 AND HoldClick = 0 then
+								HintLevel = BID
 							end if
 						end if
-					end if
+					next BID
 				elseif PID = 6 then
 					gfxstring(CustomItem(MISC,PID)+" ("+str(BGBrightness)+"%)",5,PosY,4,4,3,rgb(255,255,255))
-					if MouseY >= SelY AND MouseY < SelY+30 then
-						drawBox(0,SelY,1023,SelY+29)
-						if ButtonCombo > 0 AND HoldClick = 0 then
-							BGBrightness -= 25
-							if BGBrightness < 0 then
-							 	BGBrightness = 100
+					
+					for BID as byte = 0 to 4
+						if BGBrightness >= BID*25 then
+							line (900+BID*25,PosY)-(919+BID*25,PosY+19),rgb(255,255,255),bf
+						else
+							line (900+BID*25,PosY)-(919+BID*25,PosY+19),rgb(255,255,255),b
+						end if
+						
+						if MouseX >= 900+BID*25 AND MouseX < 920+BID*25 AND MouseY >= PosY AND MouseY < PosY+20 then
+							drawBox(900+BID*25,PosY,919+BID*25,PosY+19)
+							if ButtonCombo > 0 AND HoldClick = 0 then
+								BGBrightness = BID * 25
 							end if
 						end if
-					end if
+					next BID
 				else
 					gfxstring(CustomItem(MISC,PID)+" (inactive)",5,PosY,4,4,3,rgb(255,255,255))
 					if MouseY >= SelY AND MouseY < SelY+30 then

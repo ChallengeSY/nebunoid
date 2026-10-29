@@ -1107,7 +1107,9 @@ sub localGameplay
 						if .Power = 0 then
 							put(.X-2,.Y),BulletPic,trans
 							if YRef > 0 AND YRef <= 20 AND PlayerSlot(Player).TileSet(XRef,YRef).BrickID > 0 then
-								if Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade = 0 then
+								if Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade < 0 then
+									ScoreBrick = 2
+								elseif Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade = 0 then
 									ScoreBrick = 1
 									playClip(SFX_BRICK,.X)
 								elseif Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade <> PlayerSlot(Player).TileSet(XRef,YRef).BrickID then
@@ -1126,7 +1128,11 @@ sub localGameplay
 								end if
 								
 								Invis = 12
-								damageBrick(XRef,YRef,Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade,0)
+								if ScoreBrick = 2 then
+									damageBrick(XRef,YRef,ExplodeDelay + (100 * (Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).CalcedInvulnerable + 1)),0)
+								else
+									damageBrick(XRef,YRef,Pallete(PlayerSlot(Player).TileSet(XRef,YRef).BrickID).HitDegrade,0)
+								end if
 								.Y = -25
 							end if
 						else
