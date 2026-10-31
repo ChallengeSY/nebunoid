@@ -109,8 +109,18 @@ function convertChar(InChar as string) as integer
 end function
 sub uiElement(Text as string, XPos as short, YPos as short, Length as short = 0, Coloring as uinteger = rgb(255,255,255))
 	if len(Text) < Length then
+		gfxString(Text,XPos+(Length-len(Text))*18-1,YPos-1,5,5,3,rgb(0,0,0))
+		gfxString(Text,XPos+(Length-len(Text))*18+1,YPos-1,5,5,3,rgb(0,0,0))
+		gfxString(Text,XPos+(Length-len(Text))*18-1,YPos+1,5,5,3,rgb(0,0,0))
+		gfxString(Text,XPos+(Length-len(Text))*18+1,YPos+1,5,5,3,rgb(0,0,0))
+		
 		gfxString(Text,XPos+(Length-len(Text))*18,YPos,5,5,3,Coloring)
 	else
+		gfxString(Text,XPos-1,YPos-1,5,5,3,rgb(0,0,0))
+		gfxString(Text,XPos+1,YPos-1,5,5,3,rgb(0,0,0))
+		gfxString(Text,XPos-1,YPos+1,5,5,3,rgb(0,0,0))
+		gfxString(Text,XPos+1,YPos+1,5,5,3,rgb(0,0,0))
+		
 		gfxString(Text,XPos,YPos,5,5,3,Coloring)
 	end if
 end sub
@@ -1458,7 +1468,7 @@ sub auxillaryView(ByRef TextAlpha as short, ByRef TextBeta as short)
 		
 		for PID as ubyte = 0 to NumPlayers
 			if PID = 0 then
-				DynamicString = "Player      Score    Level   Lives   Diff"
+				DynamicString = "Player          Score    Level   Lives   Diff"
 				DynamicX = 512 - gfxlength(DynamicString,4,4,3)/2
 				gfxstring(DynamicString,DynamicX,580+(PID)*25,4,4,3,rgb(0,255,255))
 			else
@@ -1472,7 +1482,7 @@ sub auxillaryView(ByRef TextAlpha as short, ByRef TextBeta as short)
 						TxtColoring = rgb(255,255,255)
 					end if
 					
-					DynamicString = "Player "+str(PID)+space(10-len(commaSep(.Score)))+commaSep(.Score)+_
+					DynamicString = "Player "+str(PID)+space(14-len(commaSep(.Score)))+commaSep(.Score)+_
 						space(8-len(DispLevel))+DispLevel+_
 						space(8-len(DispLives))+DispLives+_
 						space(7-len(DispDiff))+DispDiff
