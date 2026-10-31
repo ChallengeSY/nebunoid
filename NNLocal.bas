@@ -276,7 +276,7 @@ sub localGameplay
 			else
 				ScoreRef = commaSep(int(.Score/1e9))+"B"
 			end if
-			uiElement(ScoreRef,45,6,7,rgba(255,255,255,224))
+			uiElement(ScoreRef,45,6,7,rgb(255,255,255))
 			
 			/'
 			 ' Target score display - Changes based on number of players:
@@ -316,14 +316,14 @@ sub localGameplay
 					ScoreRef = commaSep(int(ModdedHiScore / 1e9))+"B"
 				end if
 				
-				TargetColoring = rgba(255,255,255,224)
+				TargetColoring = rgb(255,255,255)
 				if TargetPos = -1 then
-					TargetColoring = rgba(128,128,128,224)
+					TargetColoring = rgb(128,128,128)
 				elseif TargetPos = 0 then
 					if .Score < ModdedHiScore then
-						TargetColoring = rgba(255,215,0,224)
+						TargetColoring = rgb(255,215,0)
 					else
-						TargetColoring = rgba(0,255,255,224)
+						TargetColoring = rgb(0,255,255)
 						if .Score < 1e6 then
 							ScoreRef = commaSep(.Score)
 						elseif .Score < 1e8 then
@@ -335,9 +335,9 @@ sub localGameplay
 						end if
 					end if
 				elseif TargetPos = 1 then
-					TargetColoring = rgba(192,192,192,224)
+					TargetColoring = rgb(192,192,192)
 				elseif TargetPos = 2 then
-					TargetColoring = rgba(205,127,50,224)
+					TargetColoring = rgb(205,127,50)
 				end if
 				uiElement(ScoreRef,192,6,7,TargetColoring)
 			end if
@@ -352,7 +352,7 @@ sub localGameplay
 				TimeStr = str(int(DispTime/60))+":"+_
 					str(int(remainder(DispTime,60)/10))+_
 					str(int(remainder(DispTime,10)))
-				uiElement(str(TimeStr),560,6,5,rgba(255,255,0,224))
+				uiElement(str(TimeStr),560,6,5,rgb(255,255,0))
 	
 				if .WarpTimer = 0 AND LevelClear = 0 then
 					playClip(SFX_EXPLODE)
@@ -408,14 +408,14 @@ sub localGameplay
 					str(int(remainder(DispTime,60)/10))+_
 					str(int(remainder(DispTime,10)))
 					
-				uiElement(TimeStr,560,6,5,rgba(128,128,128,224))
+				uiElement(TimeStr,560,6,5,rgb(128,128,128))
 			elseif ShowTopUI >= 60 then
-				uiElement("-:--",560,6,5,rgba(128,128,128,224))
+				uiElement("-:--",560,6,5,rgb(128,128,128))
 			end if
 
 			if ShowTopUI >= 60 then
 				'Player and Lives displays
-				uiElement(str(Player),343,6,0,rgba(255,255,255,224))
+				uiElement(str(Player),343,6,0,rgb(255,255,255))
 				if .Lives > 0 then
 					if CampaignBarrier then
 						DispLives = BarrierStrength
@@ -424,10 +424,10 @@ sub localGameplay
 					else
 						DispLives = .Lives - sgn(ProhibitSpawn)
 					end if
-					uiElement(str(DispLives),386,6,0,rgba(255,255,255,224))
+					uiElement(str(DispLives),386,6,0,rgb(255,255,255))
 				else
 					DispLives = 0
-					uiElement("0",386,6,0,rgba(255,64,64,224))
+					uiElement("0",386,6,0,rgb(255,64,64))
 				end if
 				
 				'Ammo display
