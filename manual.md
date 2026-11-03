@@ -74,9 +74,9 @@ In addition, there is a collection of 7 gem-themed capsules available outside of
 ### Campaigns
 There are 298 levels, split into twelve (12) official campaigns of varying size and difficulty. A wide variety of blocks are available, from multi-hit blocks, to invincible blocks, to blocks that can gain hit points over time. Various obstacles may be mixed together. Rumor has it that some campaigns may have hidden levels...
 
-Stars are earned by completing levels for the first time. Harder campaigns require a certain number of stars to break their locks open.
+Stars are earned by completing levels in these official campaigns for the first time. Harder campaigns require a certain number of stars to break their locks open.
 
-A [level editor](editor.md) also exists, allowing community campaigns to be created.
+A [level editor](editor.md) also exists, allowing community campaigns to be created and shared. Community levels award no stars.
 
 #### Introductory Training
 Introductory Training is a much shorter 10-level campaign, geared to introduce players new to the genre. Few obstacles exist throughout this campaign, and the player is given a maximum quantity of lives.
@@ -98,11 +98,11 @@ Fortified Letters is decently more challenging than Regular Season. Every Englis
 #### Electric Recharge
 Electric Recharge is an artistic 20-level campaign, referencing a computing themed universe. Save points are present in every level up to level 19, with the exception of level 13.
 
-#### Patriarch Memorial
-Patriarch Memorial is an artistic 25-level campaign, designed as a memory of the past. Moderate-Hard difficulty. Save points are present in every level up to level 23. No continues are permitted beyond this level.
-
 #### Fusion Designs
 Fusion Designs is a hybrid 25-level campaign. This campaign makes use of the "fusion blocks" mechanic, allowing for blocks of *any* shape. Save points are present in every level up to level 21. From here on out, continues are disabled on the final level(s). (Unless specified otherwise.)
+
+#### Patriarch Memorial
+Patriarch Memorial is an artistic 25-level campaign, designed as a memory of the past. Moderate-Hard difficulty. Save points are present in every level up to level 23, with continues being disabled afterwards.
 
 #### Challenge Campaign
 The 30-level Challenge Campaign amps up the difficulty several notches by spamming strong blocks like it is hard to believe. Every level demonstrates one or more of the following: Invincible blocks, strong blocks (some will be bio-regenerative), and invisible blocks that may lead to any of the preceding elements.

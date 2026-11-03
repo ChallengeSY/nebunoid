@@ -382,42 +382,43 @@ sub readCampaigns(StarsOnly as ubyte = 0)
 					.SetSize = 20
 					.TrueSize = 25
 				case 7
-					.Namee = "Patriarch Memorial"
-					.Folder = "official/memorial"
-					.Difficulty = "Medium to Hard"
-					.SetSize = 25
-				case 8
 					.Namee = "Fusion Designs"
 					.Folder = "official/fusion"
 					.Difficulty = "Medium to Hard"
 					.SetSize = 25
 					.StarsToUnlock = 15
+				case 8
+					.Namee = "Patriarch Memorial"
+					.Folder = "official/memorial"
+					.Difficulty = "Medium to Hard"
+					.SetSize = 25
+					.StarsToUnlock = 35
 				case 9
 					.Namee = "Challenge Campaign"
 					.Folder = "official/challenge"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 30
 					.TrueSize = 35
-					.StarsToUnlock = 25
+					.StarsToUnlock = 65
 				case 10
 					.Namee = "Ungated Adaptations"
 					.Folder = "official/ungated"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 40
-					.StarsToUnlock = 50
+					.StarsToUnlock = 100
 				case 11
 					.Namee = "Maximum Insanity"
 					.Folder = "official/extreme"
 					.Difficulty = "Very Hard to Extreme"
 					.SetSize = 30
-					.StarsToUnlock = 100
+					.StarsToUnlock = 135
 				case 12
 					.Namee = "Celestial Journey"
 					.Folder = "official/universe"
 					.Difficulty = "Hard to Extreme"
 					.SetSize = 40
 					.TrueSize = 50
-					.StarsToUnlock = 150
+					.StarsToUnlock = 175
 				case 13
 					.Namee = "Endless Shuffle"
 					.Folder = "official/endless"
